@@ -34,6 +34,12 @@ Page {
         }
     }
 
+    TextField {
+        id:test
+        height:0
+        width:0
+    }
+
     Flickable {
         id: flickable
         anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }

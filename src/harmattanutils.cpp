@@ -21,8 +21,8 @@
 #include <QtCore/QTimer>
 
 #ifdef Q_OS_HARMATTAN
-#include <MDataUri>
-#include <maemo-meegotouch-interfaces/shareuiinterface.h>
+//#include <MDataUri>
+//#include <maemo-meegotouch-interfaces/shareuiinterface.h>
 #include <MNotification>
 #include <MRemoteAction>
 #include <QtDBus/QDBusConnection>
@@ -52,7 +52,7 @@ HarmattanUtils::HarmattanUtils(QObject *parent) :
 
 void HarmattanUtils::shareLink(const QString &url, const QString &title)
 {
-#ifdef Q_OS_HARMATTAN
+#ifdef TODO_Q_OS_HARMATTAN
     MDataUri uri;
     uri.setMimeType("text/x-url");
     uri.setTextData(url);
