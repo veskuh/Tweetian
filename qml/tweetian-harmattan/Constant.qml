@@ -17,17 +17,17 @@
 */
 
 import QtQuick 1.1
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
 
 QtObject {
     id: constant
 
     // color
-    property color colorHighlighted: colorLight
-    property color colorLight: settings.invertedTheme ? "#191919" : "#ffffff"
-    property color colorMid: settings.invertedTheme ? "#666666" : "#8c8c8c"
-    property color colorTextSelection: "#4591ff"
-    property color colorDisabled: settings.invertedTheme ? "#b2b2b4" : "#444444"
+    property color colorHighlighted: theme.highlightColor
+    property color colorLight: theme.primaryColor
+    property color colorMid: theme.secondaryColor
+    property color colorTextSelection: theme.secondaryHighlightColor
+    property color colorDisabled: theme.secondaryColor
 
     // padding size
     property int paddingSmall: 4
@@ -36,12 +36,12 @@ QtObject {
     property int paddingXLarge: 16
 
     // font size
-    property int fontSizeXSmall: 20
-    property int fontSizeSmall: 22
-    property int fontSizeMedium: 24
-    property int fontSizeLarge: 26
-    property int fontSizeXLarge: 28
-    property int fontSizeXXLarge: 32
+    property int fontSizeXSmall: theme.fontSizeSmall
+    property int fontSizeSmall: theme.fontSizeSmall
+    property int fontSizeMedium: theme.fontSizeMedium
+    property int fontSizeLarge: theme.fontSizeLarge
+    property int fontSizeXLarge: theme.fontSizeExtraLarge
+    property int fontSizeXXLarge: theme.fontSizeExtraLarge
 
     // graphic size
     property int graphicSizeTiny: 24
@@ -52,7 +52,8 @@ QtObject {
     property int thumbnailSize: 150
 
     // other
-    property int headerHeight: inPortrait ? 65 : 55
+   // property int headerHeight: inPortrait ? 65 : 55
+property int headerHeight: 65
 
     property int charReservedPerMedia: 23
     property url twitterBirdIcon: settings.invertedTheme ? "Image/twitter-bird-light.png" : "Image/twitter-bird-dark.png"

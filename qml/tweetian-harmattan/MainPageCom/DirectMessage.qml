@@ -17,7 +17,7 @@
 */
 
 import QtQuick 1.1
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
 import "../Component"
 import "../Delegate"
 import "../Utils/Database.js" as Database
@@ -126,13 +126,13 @@ Item {
         text: qsTr("No message")
     }
 
-    ScrollDecorator { flickableItem: directMsgView }
+    //ScrollDecorator { flickableItem: directMsgView }
 
     Timer {
         id: refreshTimeStampTimer
         interval: 1 * 60 * 1000 // 1 minute
         repeat: true
-        running: platformWindow.active
+        running: window.applicationActive
         triggeredOnStart: true
         onTriggered: if (directMsgView.count > 0) internal.refreshDMTime()
     }

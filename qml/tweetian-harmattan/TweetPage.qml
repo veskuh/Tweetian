@@ -17,7 +17,7 @@
 */
 
 import QtQuick 1.1
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
 import "Services/Twitter.js" as Twitter
 import "Component"
 import "Delegate"
@@ -34,6 +34,7 @@ Page {
     id: tweetPage
 
     property variant tweet
+
     property bool favouritedTweet: false
 
     property ListModel ancestorModel: ListModel {}
@@ -50,7 +51,7 @@ Page {
         JS.getConversationFromTimelineAndMentions()
     }
 
-    tools: ToolBarLayout {
+    /* tools: ToolBarLayout {
         ToolIcon {
             id: backButton
             platformIconId: "toolbar-back" + (enabled ? "" : "-dimmed")
@@ -84,17 +85,21 @@ Page {
             platformIconId: "toolbar-view-menu"
             onClicked: tweetMenu.open()
         }
-    }
+    }*/
 
-    Menu {
-        id: tweetMenu
 
-        MenuLayout {
+
+    SilicaFlickable {
+        id: tweetPageFlickable
+
+        PullDownMenu {
+
+            id: tweetMenu
             MenuItem {
                 text: qsTr("Copy tweet")
                 onClicked: {
                     QMLUtils.copyToClipboard("@" + tweet.screenName + ": " + tweet.plainText)
-                    infoBanner.showText(qsTr("Tweet copied to clipboard"))
+                    //infoBanner.showText(qsTr("Tweet copied to clipboard"))
                 }
             }
             MenuItem {
@@ -118,7 +123,7 @@ Page {
                     var permalink = "http://twitter.com/" + tweet.retweetScreenName + "/status/" + tweet.id
                     dialog.createOpenLinkDialog(permalink)
                 }
-                platformStyle: MenuItemStyle { position: deleteTweetButton.visible ? "vertical-center" : "vertical-bottom" }
+                //platformStyle: MenuItemStyle { position: deleteTweetButton.visible ? "vertical-center" : "vertical-bottom" }
             }
             MenuItem {
                 id: deleteTweetButton
@@ -127,10 +132,8 @@ Page {
                 onClicked: JS.createDeleteTweetDialog()
             }
         }
-    }
 
-    Flickable {
-        id: tweetPageFlickable
+
         anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
         contentHeight: mainColumn.height
 
@@ -274,9 +277,9 @@ Page {
                                 else {
                                     if (model.link) {
                                         var success = Qt.openUrlExternally(model.link)
-                                        if (!success) infoBanner.showText(qsTr("Error opening link: %1").arg(model.link))
+                                        //if (!success) infoBanner.showText(qsTr("Error opening link: %1").arg(model.link))
                                     }
-                                    else infoBanner.showText(qsTr("Streaming link is not available"))
+                                    //else infoBanner.showText(qsTr("Streaming link is not available"))
                                 }
                             }
                         }
@@ -298,7 +301,7 @@ Page {
         }
     }
 
-    ScrollDecorator { flickableItem: tweetPageFlickable }
+    //ScrollDecorator { flickableItem: tweetPageFlickable }
 
     PageHeader {
         id: header

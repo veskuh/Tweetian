@@ -32,7 +32,7 @@ QtObject {
                 settings[s] = results[s]
             }
         }
-        theme.inverted = !invertedTheme
+        //theme.inverted = !invertedTheme
         settingsLoaded()
     }
 
