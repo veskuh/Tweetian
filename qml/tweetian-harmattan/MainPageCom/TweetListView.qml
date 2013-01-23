@@ -17,7 +17,7 @@
 */
 
 import QtQuick 1.1
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
 import "../Utils/Calculations.js" as Calculate
 import "../Utils/Database.js" as Database
 import "../Component"
@@ -36,8 +36,10 @@ Item {
     property int unreadCount: 0
 
     property string reloadType: "all" //"older", "newer" or "all"
-    property bool active: platformWindow.active && mainPage.status === PageStatus.Active &&
-                          mainView.currentIndex === (type === "Timeline" ? 0 : 1)
+    //property bool active: platformWindow.active && mainPage.status === PageStatus.Active &&
+    //                      mainView.currentIndex === (type === "Timeline" ? 0 : 1)
+
+    property bool active: true
 
     function initialize() {
         var msg = {
@@ -113,8 +115,20 @@ Item {
         if (unreadCount === 0 && type === "Mentions") harmattanUtils.clearNotification("tweetian.mention")
     }
 
-    PullDownListView {
+    SilicaListView {
         id: tweetView
+        property string lastUpdate: ""
+        PullDownMenu {
+            MenuItem {
+               onClicked: pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"), {type: "New"})
+               text: "New tweet"
+            }
+            MenuItem {
+               onClicked: if (userStream.status === 0) refresh("newer")
+               text: "Refresh"
+            }
+        }
+
 
         property bool stayAtCurrentPosition: (userStream.connected && !active) ||
                                              (!userStream.connected && reloadType === "newer")
@@ -123,13 +137,12 @@ Item {
         model: ListModel {}
         section.property: "timeDiff" // for FastScroll
         delegate: TweetDelegate {}
-        header: settings.enableStreaming ? streamingHeader : pullToRefreshHeader
         footer: LoadMoreButton {
             visible: tweetView.count > 0
             enabled: !busy
             onClicked: refresh("older")
         }
-        onPulledDown: if (!userStream.connected) refresh("newer")
+       // onPulledDown: if (userStream.status === 0) refresh("newer")
         onAtYBeginningChanged: if (atYBeginning) unreadCount = 0
         onContentYChanged: refreshUnreadCountTimer.running = true
 
@@ -151,7 +164,7 @@ Item {
     Timer {
         interval: 60000 // 1 minute
         repeat: true
-        running: platformWindow.active
+        running: window.applicationActive
         triggeredOnStart: true
         onTriggered: internal.refreshTimeDiff()
     }
