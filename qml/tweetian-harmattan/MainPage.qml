@@ -17,7 +17,7 @@
 */
 
 import QtQuick 1.1
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
 import "Services/Twitter.js" as Twitter
 import "Component"
 import "MainPageCom"
@@ -34,6 +34,7 @@ Page {
 
     onStatusChanged: if (status == PageStatus.Activating) loadingRect.visible = false
 
+    /*
     tools: ToolBarLayout {
         ToolIcon {
             platformIconId: "toolbar-back-dimmed"
@@ -58,12 +59,14 @@ Page {
             platformIconId: "toolbar-view-menu"
             onClicked: mainMenu.open()
         }
-    }
+    }*/
 
-    Menu {
-        id: mainMenu
 
-        MenuLayout {
+    SilicaListView {
+        id: mainView
+        objectName: "mainView"
+
+/*        PullDownMenu {
             MenuItem {
                 text: qsTr("Refresh cache")
                 enabled: !mainView.currentItem.busy
@@ -77,12 +80,7 @@ Page {
                 text: qsTr("About")
                 onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
             }
-        }
-    }
-
-    ListView {
-        id: mainView
-        objectName: "mainView"
+        }*/
 
         property int __contentXOffset: 0
 
@@ -91,11 +89,12 @@ Page {
             columnMovingAnimation.restart()
         }
 
+        clip:true
         anchors { top: mainPageHeader.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
         highlightRangeMode: ListView.StrictlyEnforceRange
         snapMode: ListView.SnapOneItem
         orientation: ListView.Horizontal
-        boundsBehavior: Flickable.StopAtBounds
+        //boundsBehavior: Flickable.StopAtBounds
         model: VisualItemModel {
             TweetListView { id: timeline; type: "Timeline" }
             TweetListView { id: mentions; type: "Mentions" }

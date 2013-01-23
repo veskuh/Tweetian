@@ -17,8 +17,7 @@
 */
 
 import QtQuick 1.1
-import com.nokia.meego 1.0
-import com.nokia.extras 1.1
+import Sailfish.Silica 1.0
 import QtMobility.location 1.2
 import "Services/Twitter.js" as Twitter
 import "Services/TwitLonger.js" as TwitLonger
@@ -40,7 +39,7 @@ Page {
 
     onStatusChanged: if (status === PageStatus.Activating) preventTouch.enabled = false
 
-    tools: ToolBarLayout {
+   /* tools: ToolBarLayout {
         parent: newTweetPage
         anchors { left: parent.left; right: parent.right; margins: constant.graphicSizeLarge }
         enabled: !preventTouch.enabled
@@ -92,7 +91,7 @@ Page {
                 onClicked: pageStack.pop()
             }
         }
-    }
+    }*/
 
     TextArea {
         id: tweetTextArea
@@ -102,7 +101,7 @@ Page {
             bottomMargin: autoCompleter.height + 2 * buttonColumn.anchors.margins
         }
         readOnly: header.busy
-        textFormat: TextEdit.PlainText
+        //textFormat: TextEdit.PlainText
         errorHighlight: charLeftText.text < 0 && type != "RT"
         font.pixelSize: constant.fontSizeXXLarge
         placeholderText: qsTr("Tap to write...")
@@ -179,23 +178,27 @@ Page {
             height: constant.graphicSizeMedium
             model: ListModel {}
             visible: inputContext.softwareInputPanelVisible || screen.keyboardOpen
-            delegate: ListButton {
+            delegate: Label {
                 height: ListView.view.height
                 text: model.completeWord
-                onClicked: {
-                    var word = model.completeWord
-                    var leftIndex = tweetTextArea.text.slice(0, tweetTextArea.cursorPosition).search(/\S+$/)
-                    if (leftIndex < 0) leftIndex = tweetTextArea.cursorPosition
-                    var rightIndex = tweetTextArea.text.slice(tweetTextArea.cursorPosition).search(/\s/)
-                    if (rightIndex < 0) {
-                        rightIndex = 0
-                        word += " "
+                MouseArea {
+                    anchors.fill: parent
+
+                    onClicked: {
+                        var word = model.completeWord
+                        var leftIndex = tweetTextArea.text.slice(0, tweetTextArea.cursorPosition).search(/\S+$/)
+                        if (leftIndex < 0) leftIndex = tweetTextArea.cursorPosition
+                        var rightIndex = tweetTextArea.text.slice(tweetTextArea.cursorPosition).search(/\s/)
+                        if (rightIndex < 0) {
+                            rightIndex = 0
+                            word += " "
+                        }
+                        tweetTextArea.text = tweetTextArea.text.slice(0, leftIndex) + word
+                                + tweetTextArea.text.slice(rightIndex + tweetTextArea.cursorPosition)
+                        tweetTextArea.cursorPosition = leftIndex + word.length
+                        tweetTextArea.forceActiveFocus()
+                        autoCompleter.model.clear()
                     }
-                    tweetTextArea.text = tweetTextArea.text.slice(0, leftIndex) + word
-                            + tweetTextArea.text.slice(rightIndex + tweetTextArea.cursorPosition)
-                    tweetTextArea.cursorPosition = leftIndex + word.length
-                    tweetTextArea.forceActiveFocus()
-                    autoCompleter.model.clear()
                 }
             }
             orientation: ListView.Horizontal
@@ -211,7 +214,7 @@ Page {
 
             Button {
                 id: locationButton
-                iconSource: settings.invertedTheme ? "Image/add_my_location_inverse.svg" : "Image/add_my_location.svg"
+                //iconSource: settings.invertedTheme ? "Image/add_my_location_inverse.svg" : "Image/add_my_location.svg"
                 width: (parent.width - constant.paddingMedium) / 2
                 text: qsTr("Add")
                 enabled: !header.busy
@@ -221,7 +224,7 @@ Page {
                         PropertyChanges {
                             target: locationButton
                             text: qsTr("Updating...")
-                            checked: false
+                        //    checked: false
                         }
                     },
                     State {
@@ -229,9 +232,9 @@ Page {
                         PropertyChanges {
                             target: locationButton
                             text: qsTr("View/Remove")
-                            iconSource: settings.invertedTheme ? "Image/location_mark_inverse.svg"
-                                                               : "Image/location_mark.svg"
-                            checked: true
+                  //          iconSource: settings.invertedTheme ? "Image/location_mark_inverse.svg"
+                    //                                           : "Image/location_mark.svg"
+                      //      checked: true
                         }
                     }
                 ]
@@ -246,11 +249,11 @@ Page {
 
             Button {
                 id: addImageButton
-                iconSource: settings.invertedTheme ? "Image/photos_inverse.svg" : "Image/photos.svg"
+             //   iconSource: settings.invertedTheme ? "Image/photos_inverse.svg" : "Image/photos.svg"
                 width: (parent.width - constant.paddingMedium) / 2
                 text: checked ? qsTr("View/Remove") : qsTr("Add")
                 enabled: !header.busy
-                checked: imagePath != ""
+               // checked: imagePath != ""
                 onClicked: {
                     if (checked) imageDialogComponent.createObject(newTweetPage)
                     else pageStack.push(Qt.resolvedUrl("SelectImagePage.qml"), {newTweetPage: newTweetPage})
@@ -287,7 +290,7 @@ Page {
     }
 
     // This menu can't be dynamically load as it will cause "Segmentation fault" when loading MapPage
-    ContextMenu {
+    /*ContextMenu {
         id: locationDialog
 
         MenuLayout {
@@ -307,9 +310,9 @@ Page {
                 }
             }
         }
-    }
+    }*/
 
-    Component {
+    /*Component {
         id: imageDialogComponent
 
         Menu {
@@ -334,7 +337,7 @@ Page {
                 else if (status === DialogStatus.Closed && __isClosing) imageDialog.destroy(250)
             }
         }
-    }
+    }*/
 
     // this is to prevent any interaction in this page when loading the MapPage
     MouseArea {

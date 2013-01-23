@@ -17,15 +17,16 @@
 */
 
 import QtQuick 1.1
-import com.nokia.meego 1.0
-import com.nokia.extras 1.1
+import Sailfish.Silica 1.0
 import QtMobility.feedback 1.1
 
-PageStackWindow {
+ApplicationWindow {
     id: window
     initialPage: MainPage { id: mainPage }
-    showStatusBar: inPortrait
-    showToolBar: true
+    cover:undefined
+
+    //showStatusBar: inPortrait
+    //showToolBar: true
 
     Settings { id: settings }
     Cache { id: cache }
@@ -33,7 +34,7 @@ PageStackWindow {
 
     ThemeEffect { id: basicHapticEffect; effect: ThemeEffect.Basic }
 
-    InfoBanner {
+    /*InfoBanner {
         id: infoBanner
         topMargin: showStatusBar ? 40 : 8
 
@@ -47,7 +48,7 @@ PageStackWindow {
             else if (errorCode === 429) showText(qsTr("Rate limit reached, please try again later"))
             else showText(qsTr("Error: %1").arg(errorMessage + " (" + errorCode + ")"))
         }
-    }
+    }*/
 
     Item {
         id: loadingRect
@@ -61,12 +62,12 @@ PageStackWindow {
             opacity: 0.5
         }
 
-        BusyIndicator {
+       /* BusyIndicator {
             visible: loadingRect.visible
             running: visible
             anchors.centerIn: parent
             platformStyle: BusyIndicatorStyle { size: "large" }
-        }
+        }*/
     }
 
     QtObject {
