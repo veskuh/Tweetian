@@ -39,6 +39,7 @@ simulator{
     SOURCES += src/harmattanutils.cpp src/symbianutils.cpp
 }
 
+
 contains(MEEGO_EDITION,harmattan){
     QT += dbus
     CONFIG += qdeclarative-boostable shareuiinterface-maemo-meegotouch share-ui-plugin share-ui-common mdatauri
@@ -81,7 +82,8 @@ symbian{
 OTHER_FILES += qtc_packaging/debian_harmattan/* \
     i18n/tweetian_*.ts \
     tweetian_harmattan.desktop \
-    README.md
+    README.md \
+    qml/tweetian-harmattan/*
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
