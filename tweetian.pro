@@ -36,6 +36,10 @@ simulator{
     RESOURCES += qml-harmattan.qrc qml-symbian.qrc
 }
 
+PKGCONFIG += mlite
+CONFIG += link_pkgconfig
+
+MEEGO_EDITION=harmattan
 simulator|contains(MEEGO_EDITION,harmattan){
     include(notifications/notifications.pri)
 
@@ -47,6 +51,7 @@ simulator|contains(MEEGO_EDITION,harmattan){
     HEADERS += src/harmattanutils.h
     SOURCES += src/harmattanutils.cpp
 }
+
 
 contains(MEEGO_EDITION,harmattan){
     QT += dbus
@@ -79,7 +84,8 @@ symbian{
 OTHER_FILES += qtc_packaging/debian_harmattan/* \
     i18n/tweetian_*.ts \
     tweetian_harmattan.desktop \
-    README.md
+    README.md \
+    qml/tweetian-harmattan/*
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
