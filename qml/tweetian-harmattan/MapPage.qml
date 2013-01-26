@@ -17,7 +17,7 @@
 */
 
 import QtQuick 1.1
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
 import QtMobility.location 1.2
 import "Dialog"
 import "Utils/Calculations.js" as Calculate
@@ -28,7 +28,7 @@ Page {
     property double latitude: 0
     property double longitude: 0
 
-    tools: ToolBarLayout {
+  /*  tools: ToolBarLayout {
         ToolIcon {
             platformIconId: "toolbar-back"
             onClicked: pageStack.pop()
@@ -52,7 +52,7 @@ Page {
                 onClicked: Qt.openUrlExternally("geo:" + latitude + "," + longitude)
             }
         }
-    }
+    } */
 
     Coordinate {
         id: tweetCoordinates
@@ -160,9 +160,9 @@ Page {
         height: parent.height / 2
         maximumValue: map.maximumZoomLevel
         minimumValue: map.minimumZoomLevel
-        stepSize: 1
+    /*    stepSize: 1
         orientation: Qt.Vertical
-        valueIndicatorVisible: true
+        valueIndicatorVisible: true */
         onValueChanged: if (pressed) map.zoomLevel = value
 
         // Create binding of slider value to zoomLevel when not sliding
@@ -193,7 +193,7 @@ Page {
                 height: childrenRect.height + 2 * anchors.topMargin
                 spacing: constant.paddingMedium
 
-                ButtonRow {
+             /*   ButtonRow {
                     anchors { left: parent.left; right: parent.right }
                     Button {
                         id: degree
@@ -203,7 +203,7 @@ Page {
                         id: decimal
                         text: qsTr("Decimal")
                     }
-                }
+                } */
                 TextField {
                     id: coordinateTextField
                     anchors { left: parent.left; right: parent.right }

@@ -17,20 +17,20 @@
 */
 
 import QtQuick 1.1
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
 import "Component"
 import "Services/Twitter.js" as Twitter
 
 Page {
     id: aboutPage
-    tools: ToolBarLayout {
+   /* tools: ToolBarLayout {
         ToolIcon {
             platformIconId: "toolbar-back"
             onClicked: pageStack.pop()
         }
-    }
+    }*/
 
-    Flickable {
+    SilicaFlickable {
         id: aboutPageFlickable
         anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
         contentHeight: aboutColumn.height
@@ -134,13 +134,12 @@ smartphone. Tweetian is open source and licensed under GPL v3.")
         }
     }
 
-    ScrollDecorator { flickableItem: aboutPageFlickable }
+   // ScrollDecorator { flickableItem: aboutPageFlickable }
 
     PageHeader {
         id: header
-        headerIcon: "Image/information_userguide.svg"
-        headerText: qsTr("About Tweetian")
-        onClicked: aboutPageFlickable.contentY = 0
+        title: qsTr("About Tweetian")
+
     }
 
     QtObject {

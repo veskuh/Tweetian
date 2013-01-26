@@ -39,7 +39,7 @@ Page {
 
     onStatusChanged: if (status === PageStatus.Activating) preventTouch.enabled = false
 
-   /* tools: ToolBarLayout {
+    /* tools: ToolBarLayout {
         parent: newTweetPage
         anchors { left: parent.left; right: parent.right; margins: constant.graphicSizeLarge }
         enabled: !preventTouch.enabled
@@ -93,6 +93,26 @@ Page {
         }
     }*/
 
+    PageHeader {
+        id: header
+        //headerIcon: type == "DM" ? "Image/create_message.svg" : "image://theme/icon-m-toolbar-edit-white-selected"
+        title: updateTitle()
+
+
+        function updateTitle() {
+            if (imageUploader.progress > 0) return qsTr("Uploading...") + Math.round(imageUploader.progress * 100) + "%"
+
+            switch (type) {
+            case "New": return qsTr("New Tweet")
+            case "Reply": return qsTr("Reply to %1").arg(placedText.substring(0, placedText.indexOf(" ")))
+            case "RT": return qsTr("Retweet")
+            case "DM": return qsTr("DM to %1").arg("@" + screenName)
+            }
+        }
+        //visible: inPortrait || !inputContext.softwareInputPanelVisible
+        //height: visible ? undefined : 0
+    }
+
     TextArea {
         id: tweetTextArea
         anchors {
@@ -100,10 +120,10 @@ Page {
             margins: constant.paddingMedium
             bottomMargin: autoCompleter.height + 2 * buttonColumn.anchors.margins
         }
-        readOnly: header.busy
+        //readOnly: header.busy
         //textFormat: TextEdit.PlainText
         errorHighlight: charLeftText.text < 0 && type != "RT"
-        font.pixelSize: constant.fontSizeXXLarge
+        font.pixelSize: constant.fontSizeMedium
         placeholderText: qsTr("Tap to write...")
         text: placedText
         states: [
@@ -129,9 +149,9 @@ Page {
             }
 
             anchors { right: parent.right; bottom: parent.bottom; margins: constant.paddingMedium }
-            font.pixelSize: constant.fontSizeLarge
+            font.pixelSize: constant.fontSizeMedium
             color: constant.colorMid
-            text: 140 - shortenText.length - (addImageButton.checked ? constant.charReservedPerMedia : 0)
+            text: 140 - shortenText.length // - (addImageButton.checked ? constant.charReservedPerMedia : 0)
         }
     }
 
@@ -156,14 +176,14 @@ Page {
 
                 MouseArea {
                     anchors.fill: parent
-                    enabled: !header.busy
+                    //enabled: !header.busy
                     onClicked: {
                         tweetTextArea.forceActiveFocus()
                         type = "New"
                     }
                 }
             }
-       }
+        }
     }
 
     Column {
@@ -177,7 +197,7 @@ Page {
             anchors { left: parent.left; right: parent.right }
             height: constant.graphicSizeMedium
             model: ListModel {}
-            visible: inputContext.softwareInputPanelVisible || screen.keyboardOpen
+            // visible: inputContext.softwareInputPanelVisible || screen.keyboardOpen
             delegate: Label {
                 height: ListView.view.height
                 text: model.completeWord
@@ -205,6 +225,45 @@ Page {
             spacing: constant.paddingSmall
         }
 
+        Button {
+            id: tweetButton
+            text: {
+                switch (type) {
+                case "New": return qsTr("Tweet")
+                case "Reply": return qsTr("Reply")
+                case "RT": return qsTr("Retweet")
+                case "DM": return qsTr("DM")
+                }
+            }
+            anchors.horizontalCenter: parent.horizontalCenter
+            enabled: (tweetTextArea.text.length != 0 ) // || addImageButton.checked)
+                     && ((settings.enableTwitLonger /* && !addImageButton.checked */)  || !tweetTextArea.errorHighlight)
+
+            onClicked: {
+                if (type == "New" || type == "Reply") {
+                    //if (addImageButton.checked) imageUploader.run()
+                    //else {
+                    if (tweetTextArea.errorHighlight) internal.createUseTwitLongerDialog()
+                    else {
+                        Twitter.postStatus(tweetTextArea.text, tweetId ,latitude, longitude,
+                                           internal.postStatusOnSuccess, internal.commonOnFailure)
+                        // header.busy = true
+                    }
+                    //}
+                }
+                else if (type == "RT") {
+                    Twitter.postRetweet(tweetId, internal.postStatusOnSuccess, internal.commonOnFailure)
+                    // header.busy = true
+                }
+                else if (type == "DM") {
+                    Twitter.postDirectMsg(tweetTextArea.text, screenName,
+                                          internal.postStatusOnSuccess, internal.commonOnFailure)
+                    // header.busy = true
+                }
+            }
+        }
+
+        /*
         Row {
             id: newTweetButtonRow
             anchors { left: parent.left; right: parent.right }
@@ -261,36 +320,21 @@ Page {
             }
         }
 
-        SectionHeader { text: qsTr("Quick Tweet"); visible: newTweetButtonRow.visible }
+       // SectionHeader { text: qsTr("Quick Tweet"); visible: newTweetButtonRow.visible }
 
-        Button {
+        /*Button {
             anchors { left: parent.left; right: parent.right }
             visible: newTweetButtonRow.visible
             enabled: !header.busy
             text: qsTr("Music Player: Now Playing")
             onClicked: harmattanUtils.getNowPlayingMedia()
         }
-    }
+    }*/
 
-    PageHeader {
-        id: header
-        headerIcon: type == "DM" ? "Image/create_message.svg" : "image://theme/icon-m-toolbar-edit-white-selected"
-        headerText: {
-            if (imageUploader.progress > 0) return qsTr("Uploading...") + Math.round(imageUploader.progress * 100) + "%"
 
-            switch (type) {
-            case "New": return qsTr("New Tweet")
-            case "Reply": return qsTr("Reply to %1").arg(placedText.substring(0, placedText.indexOf(" ")))
-            case "RT": return qsTr("Retweet")
-            case "DM": return qsTr("DM to %1").arg("@" + screenName)
-            }
-        }
-        visible: inPortrait || !inputContext.softwareInputPanelVisible
-        height: visible ? undefined : 0
-    }
 
-    // This menu can't be dynamically load as it will cause "Segmentation fault" when loading MapPage
-    /*ContextMenu {
+        // This menu can't be dynamically load as it will cause "Segmentation fault" when loading MapPage
+        /*ContextMenu {
         id: locationDialog
 
         MenuLayout {
@@ -312,7 +356,7 @@ Page {
         }
     }*/
 
-    /*Component {
+        /*Component {
         id: imageDialogComponent
 
         Menu {
@@ -336,8 +380,8 @@ Page {
                 if (status === DialogStatus.Closing) __isClosing = true
                 else if (status === DialogStatus.Closed && __isClosing) imageDialog.destroy(250)
             }
-        }
-    }*/
+        }*/
+    }
 
     // this is to prevent any interaction in this page when loading the MapPage
     MouseArea {
@@ -405,7 +449,7 @@ Page {
                 imageUploader.setParameter("message", tweetTextArea.text)
                 imageUploader.setAuthorizationHeader(Twitter.getOAuthEchoAuthHeader())
             }
-            header.busy = true
+            // header.busy = true
             imageUploader.send()
         }
     }
@@ -454,12 +498,12 @@ Page {
         }
 
         function postStatusOnSuccess(data) {
-            switch (type) {
+            /*       switch (type) {
             case "New": infoBanner.showText(qsTr("Tweet sent successfully")); break;
             case "Reply": infoBanner.showText(qsTr("Reply sent successfully")); break;
             case "DM":infoBanner.showText(qsTr("Direct message sent successfully")); break;
             case "RT": infoBanner.showText(qsTr("Retweet sent successfully")); break;
-            }
+            }*/
             pageStack.pop()
         }
 
@@ -479,8 +523,9 @@ Page {
         }
 
         function commonOnFailure(status, statusText) {
-            infoBanner.showHttpError(status, statusText)
-            header.busy = false
+            // infoBanner.showHttpError(status, statusText)
+            //header.busy = false
+            console.log("error" + statusText)
         }
 
         function createUseTwitLongerDialog() {
@@ -491,7 +536,7 @@ Note: The tweet content will be publicly visible even if your tweet is private."
                 var replyScreenName = placedText ? placedText.substring(1, placedText.indexOf(" ")) : ""
                 TwitLonger.postTweet(constant, settings.userScreenName, tweetTextArea.text, tweetId, replyScreenName,
                                      twitLongerOnSuccess, commonOnFailure)
-                header.busy = true
+                // header.busy = true
             })
         }
     }

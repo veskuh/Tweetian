@@ -17,7 +17,7 @@
 */
 
 import QtQuick 1.1
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
 import "Services/Twitter.js" as Twitter
 import "Component"
 import "SearchPageCom"
@@ -34,7 +34,7 @@ Page {
         if (!isSavedSearch || !savedSearchId) internal.checkIsSavedSearch()
         if (!searchListView.currentItem.firstTimeLoaded) searchListView.currentItem.refresh("all")
     }
-
+/*
     tools: ToolBarLayout {
         ToolIcon {
             id: backButton
@@ -46,7 +46,7 @@ Page {
             onClicked: isSavedSearch ? internal.createRemoveSavedSearchDialog() : internal.createSaveSearchDialog()
         }
         Item { width: 80; height: 64 }
-    }
+    } */
 
     ListView {
         id: searchListView
@@ -99,7 +99,7 @@ Page {
             anchors { top: parent.top; left: parent.left; right: searchButton.left; margins: constant.paddingMedium }
             placeholderText: qsTr("Search for tweets or users")
             text: searchString
-            platformSipAttributes: SipAttributes {
+         /*   platformSipAttributes: SipAttributes {
                 actionKeyEnabled: searchTextField.text || searchTextField.platformPreedit
                 actionKeyHighlighted: true
                 actionKeyLabel: qsTr("Search")
@@ -107,7 +107,7 @@ Page {
             onAccepted: {
                 parent.focus = true // remove activeFocus on searchTextField
                 internal.changeSearch()
-            }
+            } */
             onActiveFocusChanged: if (!activeFocus) resetSearchTextTimer.start()
         }
 
@@ -125,7 +125,7 @@ Page {
             // in textField because it will set enabled to false when keyboard closing
             //enabled: searchTextField.text || searchTextField.platformPreedit
             //opacity: enabled ? 1 : 0.25
-            iconSource: "image://theme/icon-m-toolbar-search" + (settings.invertedTheme ? "" : "-white-selected")
+           // iconSource: "image://theme/icon-m-toolbar-search" + (settings.invertedTheme ? "" : "-white-selected")
             onClicked: internal.changeSearch()
         }
     }

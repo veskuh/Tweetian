@@ -17,7 +17,7 @@
 */
 
 import QtQuick 1.1
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
 import "../Component"
 
 Page {
@@ -40,13 +40,13 @@ Page {
     onStatusChanged: if (status === PageStatus.Deactivating) loadingRect.visible = false
     Component.onCompleted: reload()
 
-    tools: ToolBarLayout {
+   /* tools: ToolBarLayout {
         ToolIcon {
             platformIconId: "toolbar-back" + (enabled ? "" : "-dimmed")
             enabled: backButtonEnabled
             onClicked: pageStack.pop()
         }
-    }
+    }*/
 
     PullDownListView {
         id: listView
@@ -74,14 +74,10 @@ Page {
         text: root.emptyText
     }
 
-    ScrollDecorator { flickableItem: listView }
+   // ScrollDecorator { flickableItem: listView }
 
     PageHeader {
         id: header
-        headerIcon: user.profileImageUrl
-        headerText: "@" + user.screenName + ": " + root.headerText
-        countBubbleVisible: true
-        countBubbleValue: root.headerNumber
-        onClicked: listView.positionViewAtBeginning()
+        title: "@" + userInfoData.screenName + ": " + root.headerText
     }
 }

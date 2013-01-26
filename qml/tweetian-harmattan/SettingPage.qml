@@ -17,14 +17,14 @@
 */
 
 import QtQuick 1.1
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
 import "SettingsPageCom"
 import "Utils/Database.js" as Database
 
 Page {
     id: settingPage
 
-    tools: ToolBarLayout {
+   /* tools: ToolBarLayout {
         ToolIcon {
             platformIconId: "toolbar-back"
             onClicked: pageStack.pop()
@@ -69,7 +69,7 @@ Page {
         TabButton { tab: refreshTab; text: qsTr("Update") }
         TabButton { tab: accountTab; text: qsTr("Account") }
         TabButton { tab: muteTab; text: qsTr("Mute") }
-    }
+    }*/
 
     QtObject {
         id: infoText

@@ -17,7 +17,8 @@
 */
 
 import QtQuick 1.1
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
+
 import "Component"
 
 Page {
@@ -27,14 +28,14 @@ Page {
     property string headerText: ""
     property url headerIcon: ""
 
-    tools: ToolBarLayout {
+  /*  tools: ToolBarLayout {
         ToolIcon {
             platformIconId: "toolbar-back"
             onClicked: pageStack.pop()
         }
-    }
+    }*/
 
-    Flickable {
+    SilicaFlickable {
         id: textFlickable
         anchors { top: pageHeader.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
         flickableDirection: Flickable.VerticalFlick
@@ -49,12 +50,10 @@ Page {
         }
     }
 
-    ScrollDecorator { flickableItem: textFlickable }
+    //ScrollDecorator { flickableItem: textFlickable }
 
     PageHeader {
         id: pageHeader
-        headerText: textPage.headerText
-        headerIcon: textPage.headerIcon
-        onClicked: textFlickable.contentY = 0
+        title: textPage.headerText
     }
 }
