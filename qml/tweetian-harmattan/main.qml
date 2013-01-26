@@ -107,5 +107,10 @@ ApplicationWindow {
         }
     }
 
-    Component.onCompleted: settings.loadSettings()
+    Component.onCompleted: {
+
+        console.log("theme:" + theme.highlightColor)
+        //globalHighlight = theme.highlightColor.name()
+        settings.loadSettings()
+    }
 }

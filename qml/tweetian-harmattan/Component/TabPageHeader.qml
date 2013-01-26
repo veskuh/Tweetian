@@ -34,11 +34,11 @@ Item {
     anchors { top: parent.top; left: parent.left; right: parent.right }
     height: constant.headerHeight
 
-  /*  Image {
+    Image {
         id: background
         anchors.fill: parent
-        source:
-    }*/
+        source: "image://theme/graphic-header"
+    }
 
     Row {
         anchors.fill: parent
@@ -106,7 +106,7 @@ Item {
 
     Rectangle {
         id: currentSectionIndicator
-        anchors.bottom: parent.bottom
+        anchors.top: parent.top
         color: theme.highlightColor
         height: constant.paddingSmall
         width: listView.visibleArea.widthRatio * parent.width

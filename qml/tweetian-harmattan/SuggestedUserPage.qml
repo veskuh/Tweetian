@@ -48,11 +48,8 @@ Page {
 
     PageHeader {
         id: header
-        headerIcon: "image://theme/icon-m-toolbar-people-white-selected"
-        headerText: qsTr("Suggested Users")
-        countBubbleValue: suggestedUserView.count
-        countBubbleVisible: countBubbleValue != 0
-        onClicked: suggestedUserView.positionViewAtBeginning()
+        title: qsTr("Suggested Users")
+
     }
 
     WorkerScript {

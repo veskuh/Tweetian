@@ -224,14 +224,13 @@ function expandTwitLonger() {
 
 function getConversationFromTimelineAndMentions() {
     if (!tweet.inReplyToStatusId) return
-    backButton.enabled = false
     var msg = {
         ancestorModel: ancestorModel, descendantModel: descendantModel,
         timelineModel: mainPage.timeline.model, mentionsModel: mainPage.mentions.model,
         inReplyToStatusId: tweet.inReplyToStatusId
     }
     conversationParser.sendMessage(msg)
-    header.busy = true
+  //  header.busy = true
 }
 
 function contructReplyText() {

@@ -17,7 +17,7 @@
 */
 
 import QtQuick 1.1
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
 import "../Services/Twitter.js" as Twitter
 import "../Component"
 import "../Delegate"
@@ -69,7 +69,7 @@ Item {
         text: qsTr("No search result")
     }
 
-    ScrollDecorator { flickableItem: userSearchListView }
+    //ScrollDecorator { flickableItem: userSearchListView }
 
     WorkerScript {
         id: userSearchParser

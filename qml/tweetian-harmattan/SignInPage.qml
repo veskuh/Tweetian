@@ -17,7 +17,7 @@
 */
 
 import QtQuick 1.1
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
 import "Services/Twitter.js" as Twitter
 import "Component"
 
@@ -27,20 +27,13 @@ Page {
     property string tokenTempo: ""
     property string tokenSecretTempo: ""
 
-    tools: ToolBarLayout {
-        ToolIcon {
-            platformIconId: "toolbar-back-dimmed"
-            enabled: false
-        }
-    }
-
     TextField {
         id:test
         height:0
         width:0
     }
 
-    Flickable {
+    SilicaFlickable {
         id: flickable
         anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
         contentHeight: mainColumn.height + 2 * mainColumn.anchors.topMargin
@@ -133,8 +126,7 @@ below and click done.")
 
     PageHeader {
         id: header
-        headerText: qsTr("Sign In to Twitter")
-        headerIcon: "Image/sign_in.svg"
+        title: qsTr("Sign In to Twitter")
     }
 
     QtObject {

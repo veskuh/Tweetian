@@ -17,7 +17,7 @@
 */
 
 import QtQuick 1.1
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
 
 Page {
     id: tweetImagePage
@@ -25,7 +25,7 @@ Page {
     property string imageLink: ""
     property url imageUrl: ""
 
-    tools: ToolBarLayout {
+    /*tools: ToolBarLayout {
         ToolIcon {
             platformIconId: "toolbar-back"
             onClicked: pageStack.pop()
@@ -54,9 +54,9 @@ Page {
                 else infoBanner.showText(qsTr("Failed to save image"))
             }
         }
-    }
+    }*/
 
-    Flickable {
+    SilicaFlickable {
         id: imageFlickable
         anchors.fill: parent
         contentWidth: imageContainer.width; contentHeight: imageContainer.height
@@ -171,11 +171,10 @@ Page {
                 height: childrenRect.height
                 width: tweetImagePage.width
 
-                BusyIndicator {
+                Label {
                     id: imageLoadingIndicator
                     anchors.horizontalCenter: parent.horizontalCenter
-                    running: true
-                    platformStyle: BusyIndicatorStyle { size: "large" }
+                    text: "Busy"
                 }
 
                 Text {
@@ -201,5 +200,5 @@ Page {
         }
     }
 
-    ScrollDecorator { flickableItem: imageFlickable }
+    //ScrollDecorator { flickableItem: imageFlickable }
 }

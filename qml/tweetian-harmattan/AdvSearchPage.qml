@@ -17,7 +17,7 @@
 */
 
 import QtQuick 1.1
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
 import "Component"
 import "SettingsPageCom"
 
@@ -63,7 +63,7 @@ Page {
         return query
     }
 
-    tools: ToolBarLayout {
+   /* tools: ToolBarLayout {
         Item { width: 80; height: 64 }
         ButtonRow {
             exclusive: false
@@ -79,9 +79,9 @@ Page {
             }
         }
         Item { width: 80; height: 64 }
-    }
+    }*/
 
-    Flickable {
+    SilicaFlickable {
         id: mainFlickable
         anchors { left: parent.left; right: parent.right; top: header.bottom; bottom: parent.bottom }
         contentHeight: mainColumn.height
@@ -232,21 +232,20 @@ Page {
         }
     }
 
-    ScrollDecorator { flickableItem: mainFlickable }
+    //ScrollDecorator { flickableItem: mainFlickable }
 
     PageHeader {
         id: header
-        headerIcon: "image://theme/icon-m-toolbar-search-white-selected"
-        headerText: qsTr("Advanced Search")
-        onClicked: mainFlickable.contentY = 0
+
+        title: qsTr("Advanced Search")
     }
 
-    SelectionDialog {
+   /* SelectionDialog {
         id: languageSelectionDialog
         titleText: qsTr("Language")
         model: languageModel
         selectedIndex: 0
-    }
+    }*/
 
     ListModel {
         id: languageModel

@@ -84,9 +84,12 @@ OTHER_FILES += qtc_packaging/debian_harmattan/* \
     tweetian_harmattan.desktop \
     README.md \
     qml/tweetian-harmattan/*.qml \
+    qml/tweetian-harmattan/*.js \
     qml/tweetian-harmattan/MainPageCom/*.qml \
     qml/tweetian-harmattan/Component/*.qml \
-    qml/tweetian-harmattan/Delegate/*.qml
+    qml/tweetian-harmattan/Delegate/*.qml \
+    qml/tweetian-harmattan/Dialog/*.qml \
+    qml/tweetian-harmattan/Utils/*js
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)

@@ -19,7 +19,7 @@
 import QtQuick 1.1
 import Sailfish.Silica 1.0
 
-Item {
+PageHeader {
     id: root
 
     property url headerIcon: ""

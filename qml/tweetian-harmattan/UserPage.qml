@@ -17,7 +17,7 @@
 */
 
 import QtQuick 1.1
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
 import "Services/Twitter.js" as Twitter
 import "Component"
 import "Utils/Calculations.js" as Calculate
@@ -40,7 +40,7 @@ Page {
         else internal.refresh();
     }
 
-    tools: ToolBarLayout {
+    /*tools: ToolBarLayout {
         ToolIcon {
             platformIconId: "toolbar-back"
             onClicked: pageStack.pop()
@@ -84,22 +84,37 @@ Page {
                 onClicked: internal.createReportSpamDialog()
             }
         }
-    }
+    }*/
 
-    Flickable {
+    SilicaFlickable {
         id: userFlickable
         anchors.fill: parent
         flickableDirection: Flickable.VerticalFlick
         contentHeight: userColumn.height
 
+        PageHeader {
+            id:header
+            title: "@" + screenName
+        }
+
+        PullDownMenu {
+            MenuItem {
+                text: userInfoData.following ? qsTr("Unfollow %1").arg("@" + screenName)
+                                             : qsTr("Follow %1").arg("@" + screenName)
+                enabled: screenName !== settings.userScreenName
+                onClicked: internal.createFollowUserDialog()
+            }
+        }
+
+
         Column {
             id: userColumn
-            anchors { left: parent.left; right: parent.right }
+            anchors { top: header.bottom; left: parent.left; right: parent.right }
 
             Item {
                 id: headerItem
                 anchors { left: parent.left; right: parent.right }
-                height: inPortrait ? width / 2 : width / 4
+                height: window.orientation === Orientation.Portrait ? width / 2 : width / 4
 
                 Image {
                     id: headerImage
@@ -108,8 +123,8 @@ Page {
                     fillMode: Image.PreserveAspectCrop
                     clip: true
                     source: {
-                        if (user.profileBannerUrl)
-                            return user.profileBannerUrl.concat(inPortrait ? "/web" : "/mobile_retina")
+                        if (userInfoData.bannerImageUrl)
+                            return user.bannerImageUrl.concat(window.orientation === Orientation.Portrait ? "/web" : "/mobile_retina")
                         else
                             return "Image/banner_empty.jpg"
                     }
@@ -158,7 +173,8 @@ Page {
                             margins: constant.paddingMedium
                         }
                         font.bold: true
-                        font.pixelSize: constant.fontSizeXLarge
+                        font.pixelSize: constant.fontSizeMedium
+                        font.family: theme.fontFamily
                         color: "white"
                         style: Text.Outline
                         styleColor: "black"
@@ -172,7 +188,8 @@ Page {
                             left: profileImageContainer.right; leftMargin: constant.paddingMedium
                             right: parent.right; rightMargin: constant.paddingMedium
                         }
-                        font.pixelSize: constant.fontSizeLarge
+                        font.pixelSize: constant.fontSizeMedium
+                        font.family: theme.fontFamily
                         color: "white"
                         style: Text.Outline
                         styleColor: "black"
@@ -191,8 +208,9 @@ Page {
                     }
                     wrapMode: Text.Wrap
                     elide: Text.ElideRight
-                    maximumLineCount: inPortrait ? 5 : 4 // TODO: remove hardcoded value
+                    maximumLineCount: window.orientation === Orientation.Portrait ? 5 : 4 // TODO: remove hardcoded value
                     font.pixelSize: constant.fontSizeSmall
+                    font.family: theme.fontFamily
                     verticalAlignment: Text.AlignBottom
                     color: "white"
                     style: Text.Outline
@@ -247,7 +265,8 @@ Page {
                             id: titleText
                             anchors { left: parent.left; right: parent.right }
                             wrapMode: Text.Wrap
-                            font.bold: true
+
+                            font.family: theme.fontFamily
                             font.pixelSize: constant.fontSizeMedium
                             color: listItem.enabled ? constant.colorLight : constant.colorDisabled
                             text: title
@@ -258,6 +277,7 @@ Page {
                             visible: subtitle !== ""
                             wrapMode: Text.Wrap
                             font.pixelSize: constant.fontSizeMedium
+                            font.family: theme.fontFamily
                             color: listItem.enabled ? constant.colorMid : constant.colorDisabled
                             text: subtitle
                         }
@@ -267,7 +287,7 @@ Page {
         }
     }
 
-    ScrollDecorator { flickableItem: userFlickable }
+    // ScrollDecorator { flickableItem: userFlickable }
 
     QtObject {
         id: internal
@@ -307,30 +327,30 @@ Page {
         }
 
         function userInfoOnFailure(status, statusText) {
-            if (status === 404) infoBanner.showText(qsTr("The user %1 does not exist").arg("@" + userPage.screenName))
-            else infoBanner.showHttpError(status, statusText)
+            if (status === 404) console.log(qsTr("The user %1 does not exist").arg("@" + userPage.screenName))
+            else console.log(statusText)
             loadingRect.visible = false
         }
 
         function followOnSuccess(data, following) {
             isFollowing = following;
-            if (isFollowing) infoBanner.showText(qsTr("Followed the user %1 successfully").arg("@" + data.screen_name))
-            else infoBanner.showText(qsTr("Unfollowed the user %1 successfully").arg("@" + data.screen_name))
+            if (isFollowing) console.log(qsTr("Followed the user %1 successfully").arg("@" + data.screen_name))
+            else console.log(qsTr("Unfollowed the user %1 successfully").arg("@" + data.screen_name))
             loadingRect.visible = false
         }
 
         function followOnFailure(status, statusText) {
-            infoBanner.showHttpError(status, statusText)
+            console.log(statusText)
             loadingRect.visible = false
         }
 
         function reportSpamOnSuccess(data) {
-            infoBanner.showText(qsTr("Reported and blocked the user %1 successfully").arg("@" + data.screen_name))
+            console.log(qsTr("Reported and blocked the user %1 successfully").arg("@" + data.screen_name))
             loadingRect.visible = false
         }
 
         function reportSpamOnFailure(status, statusText) {
-            infoBanner.showHttpError(status, statusText)
+            console.log("error" + statusText)
             loadingRect.visible = false
         }
 

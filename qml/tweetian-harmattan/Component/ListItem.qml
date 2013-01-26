@@ -17,10 +17,9 @@
 */
 
 import QtQuick 1.1
-import com.nokia.meego 1.0
-import com.nokia.extras 1.1
+import Sailfish.Silica 1.0
 
-Item {
+BackgroundItem {
     id: root
 
     property bool marginLineVisible: true
@@ -31,28 +30,14 @@ Item {
     property Item imageItem: imageLoader
     property int listItemRightMargin: subItemIndicator ? iconLoader.width + iconLoader.anchors.rightMargin : 0
 
-    signal pressed
-    signal clicked
+
     signal pressAndHold
 
     implicitWidth: parent ? parent.width : 0
     implicitHeight: imageSource ? imageLoader.height + 2 * imageLoader.anchors.margins : 0
 
-    Image {
-        id: background
-        anchors.fill: parent
-        visible: mouseArea.pressed
-        source: settings.invertedTheme ? "image://theme/meegotouch-panel-background-pressed"
-                                       : "image://theme/meegotouch-panel-inverted-background-pressed"
-    }
 
-    Rectangle {
-        id: bottomLine
-        height: 1
-        anchors { left: root.left; right: root.right; bottom: parent.bottom }
-        color: constant.colorDisabled
-        visible: root.marginLineVisible
-    }
+
 
     Loader {
         id: iconLoader
@@ -86,10 +71,10 @@ Item {
     Component {
         id: imageComponent
 
-        MaskedItem {
+        Item {
             id: pic
             width: constant.graphicSizeMedium; height: constant.graphicSizeMedium
-            mask: Image { source: "../Image/pic_mask.png"}
+        //    mask: Image { source: "../Image/pic_mask.png"}
 
             Image {
                 id: profileImage
@@ -101,13 +86,6 @@ Item {
         }
     }
 
-    MouseArea {
-        id: mouseArea
-        anchors.fill: parent
-        onPressed: root.pressed()
-        onClicked: root.clicked()
-        onPressAndHold: root.pressAndHold()
-    }
 
     ListView.onAdd: NumberAnimation {
         target: root

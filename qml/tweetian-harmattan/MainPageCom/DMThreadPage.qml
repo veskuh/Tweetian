@@ -17,7 +17,7 @@
 */
 
 import QtQuick 1.1
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
 import "../Component"
 import "../Delegate"
 import "../Dialog"
@@ -32,7 +32,7 @@ Page {
 
     Component.onCompleted: internal.insertDMs(mainPage.directMsg.fullModel.count)
 
-    tools: ToolBarLayout {
+    /*tools: ToolBarLayout {
         ToolIcon {
             platformIconId: "toolbar-back" + (enabled ? "" : "-dimmed")
             enabled: !internal.workerScriptRunning
@@ -47,7 +47,7 @@ Page {
             enabled: !userStream.connected
             onClicked: mainPage.directMsg.refresh("newer")
         }
-    }
+    }*/
 
     PullDownListView {
         id: dMConversationView
@@ -58,15 +58,12 @@ Page {
         onPulledDown: if (!userStream.connected) mainPage.directMsg.refresh("newer")
     }
 
-    ScrollDecorator { flickableItem: dMConversationView }
+    //ScrollDecorator { flickableItem: dMConversationView }
 
     PageHeader {
         id: header
-        headerText: qsTr("DM: %1").arg("@" + screenName)
-        headerIcon: "../Image/inbox.svg"
-        busy: internal.workerScriptRunning || mainPage.directMsg.busy
-        onClicked: dMConversationView.positionViewAtBeginning()
-    }
+        title: qsTr("DM: %1").arg("@" + screenName)
+     }
 
     WorkerScript {
         id: dmConversationParser
