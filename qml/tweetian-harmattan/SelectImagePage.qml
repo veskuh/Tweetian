@@ -17,7 +17,7 @@
 */
 
 import QtQuick 1.1
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
 import QtMobility.gallery 1.1
 import "Component"
 
@@ -26,7 +26,7 @@ Page {
 
     property Item newTweetPage: null
 
-    tools: ToolBarLayout {
+  /*  tools: ToolBarLayout {
         ToolIcon {
             platformIconId: "toolbar-back"
             onClicked: pageStack.pop()
@@ -58,7 +58,7 @@ Page {
                 onClicked: Qt.openUrlExternally(imageMenu.selectedImageUrl)
             }
         }
-    }
+    } */
 
     GridView {
         id: galleryGridView
@@ -77,13 +77,11 @@ Page {
         visible: galleryModel.ready && galleryModel.count == 0
     }
 
-    ScrollDecorator { flickableItem: galleryModel.ready ? galleryGridView : null }
+    // ScrollDecorator { flickableItem: galleryModel.ready ? galleryGridView : null }
 
     PageHeader {
         id: header
-        headerText: qsTr("Select Image")
-        headerIcon: "Image/photos.svg"
-        onClicked: galleryGridView.positionViewAtBeginning()
+        title: qsTr("Select Image")
     }
 
     DocumentGalleryModel {
@@ -153,10 +151,10 @@ Page {
                 Component {
                     id: busy
 
-                    BusyIndicator {
+                    /* BusyIndicator {
                         width: constant.graphicSizeMedium; height: constant.graphicSizeMedium
                         running: true
-                    }
+                    } */
                 }
             }
 
@@ -175,7 +173,7 @@ Page {
     Component {
         id: chooseServiceDialogComponent
 
-        SelectionDialog {
+      /* SelectionDialog {
             id: chooseServiceDialog
             property bool __isClosing: false
             titleText: qsTr("Image Upload Service")
@@ -192,6 +190,6 @@ Page {
                 if (status === DialogStatus.Closing) __isClosing = true
                 else if (status === DialogStatus.Closed && __isClosing) chooseServiceDialog.destroy(250)
             }
-        }
+        }*/
     }
 }

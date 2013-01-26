@@ -17,7 +17,7 @@
 */
 
 import QtQuick 1.1
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
 import "../Services/Twitter.js" as Twitter
 import "../Component"
 
@@ -44,7 +44,7 @@ Item {
         listInfoListView.positionViewAtBeginning()
     }
 
-    ListView {
+    SilicaListView {
         id: listInfoListView
         anchors.fill: parent
         model: ListModel {}

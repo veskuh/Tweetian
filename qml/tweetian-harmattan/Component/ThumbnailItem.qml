@@ -17,7 +17,7 @@
 */
 
 import QtQuick 1.1
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
 
 Item {
     id: root
@@ -55,9 +55,12 @@ Item {
     Component {
         id: loading
 
-        BusyIndicator {
+        /*BusyIndicator {
             width: constant.graphicSizeSmall; height: constant.graphicSizeSmall
             running: true
+        }*/
+        Label {
+            text: "Busy"
         }
     }
 

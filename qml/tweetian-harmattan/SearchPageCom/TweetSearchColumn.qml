@@ -17,7 +17,7 @@
 */
 
 import QtQuick 1.1
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
 import "../Services/Twitter.js" as Twitter
 import "../Utils/Calculations.js" as Calculate
 import "../Component"

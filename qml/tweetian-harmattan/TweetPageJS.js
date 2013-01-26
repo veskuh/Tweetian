@@ -218,21 +218,20 @@ function getRTAndFavCount() {
 
 function getConversationFromTimelineAndMentions() {
     if (!tweet.inReplyToStatusId) return
-    backButton.enabled = false
     var msg = {
         ancestorModel: ancestorModel, descendantModel: descendantModel,
         timelineModel: mainPage.timeline.model, mentionsModel: mainPage.mentions.model,
         inReplyToStatusId: tweet.inReplyToStatusId
     }
     conversationParser.sendMessage(msg)
-    header.busy = true
+  //  header.busy = true
 }
 
 function getConversationFromTwitter() {
     if (!networkMonitor.online) return
     Twitter.getConversation(tweet.id, function(data) {
         if (tweetPage.status === PageStatus.Deactivating) return
-        backButton.enabled = false
+
         conversationParser.sendMessage({data: data, ancestorModel: ancestorModel, descendantModel:descendantModel})
     }, function(status, statusText) {
         console.log("Error caliing Twitter.getConversation():", status, statusText)

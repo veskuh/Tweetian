@@ -17,9 +17,9 @@
 */
 
 import QtQuick 1.1
-import com.nokia.meego 1.0 // for Style
+import Sailfish.Silica 1.0 // for Style
 
-Style {
+Item {
 
     // Font
     property int fontPixelSize: 68

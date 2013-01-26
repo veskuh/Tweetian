@@ -18,7 +18,7 @@
 
 // Source: <http://forum.meego.com/showthread.php?t=4600>
 import QtQuick 1.1
-import com.nokia.meego 1.0 // for Style
+import Sailfish.Silica 1.0
 import "FastScroll.js" as Sections
 
 Item {
@@ -35,7 +35,7 @@ Item {
 
     property int __hideTimeout: 500
 
-    property Style platformStyle: FastScrollStyle {}
+    //property Style platformStyle: FastScrollStyle {}
 
     // This function ensures that we always anchor the decorator correctly according
     // to the page margins.

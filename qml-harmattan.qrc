@@ -31,7 +31,7 @@
         <file>qml/tweetian-harmattan/Component/LargePageHeader.qml</file>
         <file>qml/tweetian-harmattan/Component/ListItem.qml</file>
         <file>qml/tweetian-harmattan/Component/LoadMoreButton.qml</file>
-        <file>qml/tweetian-harmattan/Component/PageHeader.qml</file>
+        <file>qml/tweetian-harmattan/Component/TwPageHeader.qml</file>
         <file>qml/tweetian-harmattan/Component/PaneIndicator.qml</file>
         <file>qml/tweetian-harmattan/Component/PullDownListView.qml</file>
         <file>qml/tweetian-harmattan/Component/PullToRefreshHeader.qml</file>

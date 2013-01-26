@@ -17,7 +17,7 @@
 */
 
 import QtQuick 1.1
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
 import "Component"
 import "Delegate"
 import "Services/Twitter.js" as Twitter
@@ -47,13 +47,13 @@ Page {
         header.busy = true
     }
 
-    tools: ToolBarLayout {
+    /* tools: ToolBarLayout {
         ToolIcon {
             id: backButton
             platformIconId: "toolbar-back" + (enabled ? "" : "-dimmed")
             onClicked: pageStack.pop()
         }
-    }
+    }*/
 
     ListView {
         id: usersListView
@@ -71,12 +71,10 @@ Page {
         text: qsTr("No user")
     }
 
-    ScrollDecorator { flickableItem: usersListView }
+    ScrollDecorator { flickable: usersListView }
 
     PageHeader {
         id: header
-        countBubbleVisible: true
-        onClicked: usersListView.positionViewAtBeginning()
     }
 
     WorkerScript {

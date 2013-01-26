@@ -17,10 +17,9 @@
 */
 
 import QtQuick 1.1
-import com.nokia.meego 1.0
-import com.nokia.extras 1.1
+import Sailfish.Silica 1.0
 
-Item {
+BackgroundItem {
     id: root
 
     default property alias content: contentColumn.children
@@ -28,9 +27,9 @@ Item {
     property string imageSource: profileImageUrl
     property bool subItemIndicator: false
 
-    property bool highlighted: highlight.visible // read-only
+    property bool highlighted: pressed // read-only
 
-    signal clicked
+    //signal clicked
     signal pressAndHold
 
     property int __originalHeight: height // private
@@ -38,20 +37,14 @@ Item {
     implicitWidth: ListView.view ? ListView.view.width : 0
     implicitHeight: Math.max(contentColumn.height, profileImage.height) + 2 * constant.paddingLarge
 
-    Image {
+   /* Image {
         id: highlight
         anchors.fill: parent
         visible: mouseArea.pressed
         source: settings.invertedTheme ? "image://theme/meegotouch-panel-background-pressed"
                                        : "image://theme/meegotouch-panel-inverted-background-pressed"
-    }
+    } */
 
-    Rectangle {
-        id: bottomLine
-        anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
-        height: 1
-        color: constant.colorDisabled
-    }
 
     Loader {
         id: sideRectLoader
@@ -62,34 +55,18 @@ Item {
             id: sideRect
 
             Rectangle {
-                height: root.height - bottomLine.height
+                height: root.height
                 width: constant.paddingSmall
                 color: sideRectColor
             }
         }
     }
 
-    Loader {
-        id: subIconLoader
-        anchors { verticalCenter: parent.verticalCenter; right: parent.right; rightMargin: constant.paddingSmall }
-        sourceComponent: subItemIndicator ? subIconComponent : undefined
-
-        Component {
-            id: subIconComponent
-
-            Image {
-                height: sourceSize.height; width: sourceSize.width
-                sourceSize { width: constant.graphicSizeSmall; height: constant.graphicSizeSmall }
-                source: "image://theme/icon-m-common-drilldown-arrow" + (settings.invertedTheme ? "" : "-inverse")
-            }
-        }
-    }
-
-    MaskedItem {
+    Item {
         id: profileImageMaskedItem
         anchors { top: parent.top; left: parent.left; margins: constant.paddingLarge }
         width: constant.graphicSizeMedium; height: constant.graphicSizeMedium
-        mask: Image { source: "../Image/pic_mask.png"}
+    //    mask: Image { source: "../Image/pic_mask.png"}
 
         Image {
             id: profileImage
@@ -144,19 +121,9 @@ Item {
             top: parent.top; topMargin: constant.paddingLarge
             left: profileImageMaskedItem.right; leftMargin: constant.paddingMedium
             right: parent.right
-            rightMargin: subIconLoader.status == Loader.Ready
-                         ? (constant.paddingSmall + subIconLoader.width + constant.paddingSmall)
-                         : constant.paddingMedium
+            rightMargin: constant.paddingMedium
         }
         height: childrenRect.height
-    }
-
-    MouseArea {
-        id: mouseArea
-        anchors.fill: parent
-        enabled: root.enabled
-        onClicked: root.clicked()
-        onPressAndHold: root.pressAndHold()
     }
 
     Timer {

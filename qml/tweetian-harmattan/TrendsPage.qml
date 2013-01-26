@@ -179,10 +179,7 @@ Page {
 
     PageHeader {
         id: header
-        headerIcon: "image://theme/icon-m-toolbar-search-white-selected"
-        headerText: qsTr("Trends & Search")
-        busy: savedSearchLoading || trendingLoading
-        onClicked: trendsPageListView.positionViewAtBeginning()
+        title: qsTr("Trends & Search")
     }
 
     QtObject {
