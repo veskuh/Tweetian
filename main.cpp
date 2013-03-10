@@ -24,6 +24,7 @@
 #include <QtCore/QLocale>
 #include <QtCore/QFile>
 #include "qmlapplicationviewer.h"
+#include <QInputContext>
 
 #if defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
 #include <QtGui/QSplashScreen>
@@ -48,6 +49,32 @@
 #include <QtDBus/QDBusConnection>
 #include "src/tweetianif.h"
 #endif
+
+
+#ifdef Q_OS_HARMATTAN
+class EventFilter : public QObject
+{
+protected:
+    bool eventFilter(QObject *obj, QEvent *event) {
+        QInputContext *ic = qApp->inputContext();
+        if (ic) {
+            if (ic->focusWidget() == 0 && prevFocusWidget) {
+                QEvent closeSIPEvent(QEvent::CloseSoftwareInputPanel);
+                ic->filterEvent(&closeSIPEvent);
+            } else if (prevFocusWidget == 0 && ic->focusWidget()) {
+                QEvent openSIPEvent(QEvent::RequestSoftwareInputPanel);
+                ic->filterEvent(&openSIPEvent);
+            }
+            prevFocusWidget = ic->focusWidget();
+        }
+        return QObject::eventFilter(obj,event);
+    }
+
+private:
+    QWidget *prevFocusWidget;
+};
+#endif
+
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
@@ -105,6 +132,11 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 #if defined(Q_OS_HARMATTAN) || defined(Q_WS_SIMULATOR)
     HarmattanUtils harmattanUtils;
     view.rootContext()->setContextProperty("harmattanUtils", &harmattanUtils);
+
+    EventFilter ef;
+    view.installEventFilter(&ef);
+
+
 #endif
 
 #if defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
@@ -132,3 +164,8 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     return app->exec();
 }
+
+
+
+
+
