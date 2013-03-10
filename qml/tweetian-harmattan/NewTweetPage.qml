@@ -125,6 +125,7 @@ Page {
         errorHighlight: charLeftText.text < 0 && type != "RT"
         font.pixelSize: constant.fontSizeMedium
         placeholderText: qsTr("Tap to write...")
+        color: constant.colorLight
         text: placedText
         states: [
             State {
@@ -149,7 +150,7 @@ Page {
             }
 
             anchors { right: parent.right; bottom: parent.bottom; margins: constant.paddingMedium }
-            font.pixelSize: constant.fontSizeMedium
+            font.pixelSize: constant.fontSizeSmall
             color: constant.colorMid
             text: 140 - shortenText.length // - (addImageButton.checked ? constant.charReservedPerMedia : 0)
         }
