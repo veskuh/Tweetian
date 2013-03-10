@@ -36,9 +36,9 @@ QtObject {
     property int paddingXLarge: 16
 
     // font size
-    property int fontSizeXSmall: theme.fontSizeSmall
+    property int fontSizeXSmall: theme.fontSizeExtraSmall
     property int fontSizeSmall: theme.fontSizeSmall
-    property int fontSizeMedium: theme.fontSizeMedium
+    property int fontSizeMedium: theme.fontSizeSmall
     property int fontSizeLarge: theme.fontSizeLarge
     property int fontSizeXLarge: theme.fontSizeExtraLarge
     property int fontSizeXXLarge: theme.fontSizeExtraLarge
