@@ -122,7 +122,7 @@ below and click done.")
         }
     }
 
-    ScrollDecorator { flickableItem: flickable }
+    ScrollDecorator { flickable: flickable }
 
     PageHeader {
         id: header
