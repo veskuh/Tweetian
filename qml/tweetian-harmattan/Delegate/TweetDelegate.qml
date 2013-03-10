@@ -84,7 +84,6 @@ AbstractDelegate {
         font.family: theme.fontFamily
         wrapMode: Text.Wrap
         color: highlighted ? constant.colorHighlighted : constant.colorLight
-        textFormat: Text.RichText
         text: model.richText
     }
 
