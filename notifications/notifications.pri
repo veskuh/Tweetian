@@ -12,4 +12,4 @@ nicons.path = /usr/share/themes/blanco/meegotouch/icons
 eventtype.files = $$PWD/tweetian.mention.conf $$PWD/tweetian.message.conf
 eventtype.path = /usr/share/meegotouch/notifications/eventtypes
 
-INSTALLS += nicons eventtype
+#INSTALLS += nicons eventtype

@@ -46,7 +46,13 @@ simulator|contains(MEEGO_EDITION,harmattan){
     splash.files = splash/tweetian-splash-portrait.jpg splash/tweetian-splash-landscape.jpg
     splash.path = /opt/tweetian/splash
 
-    INSTALLS += splash
+#        desktopfile.files = $${TARGET}_harmattan.desktop
+#        desktopfile.path = /usr/share/applications
+
+#        icon.files = $${TARGET}80.png
+#        icon.path = /usr/share/icons/hicolor/80x80/apps
+
+#    INSTALLS += splash
 
     HEADERS += src/harmattanutils.h
     SOURCES += src/harmattanutils.cpp
