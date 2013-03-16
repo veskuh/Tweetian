@@ -124,7 +124,7 @@ Item {
                text: "New tweet"
             }
             MenuItem {
-               onClicked: if (userStream.status === 0) refresh("newer")
+               onClicked: if (!userStream.connected) refresh("newer")
                text: "Refresh"
             }
         }
