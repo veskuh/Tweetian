@@ -63,7 +63,7 @@ Item {
                         top: parent.top; topMargin: constant.paddingSmall
                         left: icon.right; leftMargin: -constant.paddingMedium
                     }
-                    visible: value > 0
+                    visible: listView.model.children[index].unreadCount > 0
                     font.pixelSize: theme.fontSizeSmall
                     color: theme.highlightColor
 
