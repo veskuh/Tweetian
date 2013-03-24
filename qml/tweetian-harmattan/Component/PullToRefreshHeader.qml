@@ -22,7 +22,7 @@ import "../Utils/Calculations.js" as Calculate
 Item {
     id: root
     height: 0
-    width: ListView.view.width
+    /*width: ListView.view.width
 
     Item {
         id: container
@@ -64,5 +64,5 @@ Item {
                 }
             }
         }
-    }
+    }*/
 }

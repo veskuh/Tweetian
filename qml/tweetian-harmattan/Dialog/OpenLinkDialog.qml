@@ -32,7 +32,7 @@ ContextMenu {
 
     property bool __isClosing: false
 
-    platformTitle: Text {
+    /*platformTitle: Text {
         id: linkText
         anchors { left: parent.left; right: parent.right }
         horizontalAlignment: Text.AlignHCenter
@@ -43,7 +43,7 @@ ContextMenu {
         elide: Text.ElideRight
         maximumLineCount: 3
         wrapMode: Text.WrapAnywhere
-    }
+    }*/
 
     MenuLayout {
         MenuItem {

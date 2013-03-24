@@ -99,7 +99,7 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: userInfoData.following ? qsTr("Unfollow %1").arg("@" + screenName)
+                text: user.following ? qsTr("Unfollow %1").arg("@" + screenName)
                                              : qsTr("Follow %1").arg("@" + screenName)
                 enabled: screenName !== settings.userScreenName
                 onClicked: internal.createFollowUserDialog()
@@ -123,7 +123,7 @@ Page {
                     fillMode: Image.PreserveAspectCrop
                     clip: true
                     source: {
-                        if (userInfoData.bannerImageUrl)
+                        if (user.bannerImageUrl)
                             return user.bannerImageUrl.concat(window.orientation === Orientation.Portrait ? "/web" : "/mobile_retina")
                         else
                             return "Image/banner_empty.jpg"
