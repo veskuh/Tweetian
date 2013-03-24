@@ -26,12 +26,13 @@ SilicaListView {
     signal pulledDown()
 
     // Private
-    property bool __wasAtYBeginning: false
+    // On Silica We use pulldown menu for refresh instead
+    /*property bool __wasAtYBeginning: false
     property int __initialContentY: 0
     property bool __toBeRefresh: false
 
     flickableDirection: Flickable.VerticalFlick
-    header: PullToRefreshHeader {}
+    //header: PullToRefreshHeader {}
     onMovementStarted: {
         __wasAtYBeginning = atYBeginning
         __initialContentY = contentY
@@ -48,5 +49,5 @@ SilicaListView {
         id: detectPullDownTimer
         interval: 250
         onTriggered: if (__wasAtYBeginning && __initialContentY - contentY > 100) __toBeRefresh = true
-    }
+    }*/
 }

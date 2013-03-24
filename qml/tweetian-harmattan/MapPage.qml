@@ -181,9 +181,9 @@ Page {
             id: coordinateDialog
             property bool __isClosing: false
             titleText: qsTr("Location Coordinates")
-            titleIcon: "image://theme/icon-l-location-test"
+            //titleIcon: "image://theme/icon-l-location-test"
             buttonTexts: [qsTr("Copy"), qsTr("Close")]
-            content: Column {
+            sourceComponent: Column {
                 anchors {
                     top: parent.top; topMargin: coordinateDialog.platformStyle.contentMargin
                     left: parent.left
