@@ -78,6 +78,6 @@ Page {
 
     PageHeader {
         id: header
-        title: "@" + userInfoData.screenName + ": " + root.headerText
+        title: "@" + user.screenName + ": " + root.headerText
     }
 }

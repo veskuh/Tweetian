@@ -60,6 +60,7 @@ Page {
         PageHeader {
             id: header
             title: qsTr("Tweet")
+            property bool busy: false
         }
 
         PullDownMenu {
