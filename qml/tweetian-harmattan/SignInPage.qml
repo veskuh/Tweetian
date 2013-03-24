@@ -127,6 +127,7 @@ below and click done.")
     PageHeader {
         id: header
         title: qsTr("Sign In to Twitter")
+        property bool busy: false
     }
 
     QtObject {
@@ -158,7 +159,7 @@ Make sure the time/date of your phone is set correctly."))
                 settings.oauthToken = token
                 settings.oauthTokenSecret = tokenSecret
                 settings.userScreenName = screenName
-                infoBanner.showText(qsTr("Signed in successfully"))
+            //    infoBanner.showText(qsTr("Signed in successfully"))
                 settings.settingsLoaded()
                 pageStack.pop(null)
             }, function(status, statusText) {
