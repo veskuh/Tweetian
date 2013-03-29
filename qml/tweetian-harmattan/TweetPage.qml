@@ -76,7 +76,7 @@ Page {
             MenuItem {
                 text: qsTr("Tweet permalink")
                 onClicked: {
-                    var permalink = "http://twitter.com/" + currentTweet.screenName + "/status/" + currentTweet.tweetId
+                    var permalink = "http://twitter.com/" + tweet.screenName + "/status/" + tweet.id
                     dialog.createOpenLinkDialog(permalink)
                 }
                 //platformStyle: MenuItemStyle { position: deleteTweetButton.visible ? "vertical-center" : "vertical-bottom" }
@@ -110,7 +110,7 @@ Page {
             MenuItem {
                 text: qsTr("Favourite")
                 onClicked: {
-                    Twitter.postFavourite(currentTweet.tweetId, JS.favouriteOnSuccess, JS.commonOnFailure)
+                    Twitter.postFavourite(tweet.id, JS.favouriteOnSuccess, JS.commonOnFailure)
                     header.busy = true
                 }
                 visible: !favouritedTweet
@@ -119,7 +119,7 @@ Page {
             MenuItem {
                 text: qsTr("Remove favourite")
                 onClicked: {
-                    Twitter.postUnfavourite(currentTweet.tweetId, JS.favouriteOnSuccess, JS.commonOnFailure)
+                    Twitter.postUnfavourite(tweet.id, JS.favouriteOnSuccess, JS.commonOnFailure)
                     header.busy = true
                 }
                 visible: favouritedTweet
@@ -129,7 +129,7 @@ Page {
             MenuItem {
                 text: qsTr("Reply")
                 onClicked: {
-                    var prop = { type: "Reply", placedText: JS.contructReplyText(), tweetId: currentTweet.tweetId }
+                    var prop = { type: "Reply", placedText: JS.contructReplyText(), tweetId: tweet.id }
                     pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), prop)
                 }
             }
@@ -137,7 +137,7 @@ Page {
             MenuItem {
                 text: qsTr("Retweet")
                 onClicked: {
-                    var prop = { type: "RT", placedText: JS.contructRetweetText(), tweetId: currentTweet.retweetId }
+                    var prop = { type: "RT", placedText: JS.contructRetweetText(), tweetId: tweet.id }
                     pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), prop)
                 }
             }
