@@ -34,13 +34,14 @@ ApplicationWindow {
 
     ThemeEffect { id: basicHapticEffect; effect: ThemeEffect.Basic }
 
-    /*InfoBanner {
+    QtObject {
         id: infoBanner
-        topMargin: showStatusBar ? 40 : 8
+        //topMargin: showStatusBar ? 40 : 8
 
         function showText(text) {
-            infoBanner.text = text
-            infoBanner.show()
+          //  infoBanner.text = text
+          //  infoBanner.show()
+            console.log("INFO: " + text)
         }
 
         function showHttpError(errorCode, errorMessage) {
@@ -48,7 +49,7 @@ ApplicationWindow {
             else if (errorCode === 429) showText(qsTr("Rate limit reached, please try again later"))
             else showText(qsTr("Error: %1").arg(errorMessage + " (" + errorCode + ")"))
         }
-    }*/
+    }
 
     Item {
         id: loadingRect
