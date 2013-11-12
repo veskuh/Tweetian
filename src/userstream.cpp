@@ -48,7 +48,7 @@ void UserStream::connectToStream(const QString &url, const QString &authHeader)
 
     QNetworkRequest request;
     request.setUrl(QUrl(url));
-    request.setRawHeader("User-Agent", QMLUtils::userAgent().toAscii());
+    request.setRawHeader("User-Agent", QMLUtils::userAgent().toLatin1());
     request.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
     request.setRawHeader("Authorization", authHeader.toUtf8());
     request.setRawHeader("Connection", "close");

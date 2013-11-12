@@ -24,7 +24,7 @@
 #include <QtDeclarative/QDeclarativeItem>
 #include <QtGui/QImage>
 #include <QtGui/QPainter>
-#include <QtGui/QStyleOptionGraphicsItem>
+#include <QStyleOptionGraphicsItem>
 #include <QtGui/QDesktopServices>
 
 ThumbnailCacher::ThumbnailCacher(QObject *parent) :
