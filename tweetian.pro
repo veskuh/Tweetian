@@ -9,7 +9,8 @@ DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 QT += network
 
 # Qt Mobility Library
-CONFIG += mobility
+CONFIG += mobility sailfishapp
+
 MOBILITY += feedback location gallery
 
 HEADERS += \
