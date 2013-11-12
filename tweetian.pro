@@ -9,7 +9,8 @@ DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 QT += network
 
 # Qt Mobility Library
-CONFIG += mobility
+CONFIG += mobility sailfishapp
+
 MOBILITY += feedback location gallery
 
 HEADERS += \
@@ -36,7 +37,7 @@ simulator{
     RESOURCES += qml-harmattan.qrc qml-symbian.qrc
 }
 
-PKGCONFIG += mlite
+PKGCONFIG += mlite5
 CONFIG += link_pkgconfig
 
 MEEGO_EDITION=harmattan

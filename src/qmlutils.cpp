@@ -19,10 +19,10 @@
 #include "qmlutils.h"
 
 #include <QtCore/QDateTime>
-#include <QtGui/QApplication>
+#include <QApplication>
 #include <QtGui/QClipboard>
 #include <QtGui/QImage>
-#include <QtGui/QStyleOptionGraphicsItem>
+#include <QStyleOptionGraphicsItem>
 #include <QtGui/QPainter>
 #include <QtGui/QDesktopServices>
 #include <QtDeclarative/QDeclarativeItem>
@@ -30,7 +30,7 @@
 #include <QtDeclarative/QDeclarativeEngine>
 #include <QtNetwork/QNetworkAccessManager>
 
-static const QString IMAGE_SAVING_PATH = QDesktopServices::storageLocation(QDesktopServices::PicturesLocation);
+static const QString IMAGE_SAVING_PATH = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
 #if defined(Q_OS_HARMATTAN)
 static const QString USER_AGENT = "Tweetian/" + QLatin1String(APP_VERSION) + " (Nokia; Qt; MeeGo/1.2; Harmattan)";
 #elif defined(Q_OS_SYMBIAN)

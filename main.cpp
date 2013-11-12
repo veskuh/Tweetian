@@ -16,7 +16,7 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <QtGui/QApplication>
+#include <QApplication>
 #include <QtDeclarative/QDeclarativeContext>
 #include <QtDeclarative/QDeclarativeView>
 #include <QtDeclarative/qdeclarative.h>
@@ -24,7 +24,7 @@
 #include <QtCore/QLocale>
 #include <QtCore/QFile>
 #include "qmlapplicationviewer.h"
-#include <QInputContext>
+//#include <QInputPanel>
 
 #if defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
 #include <QtGui/QSplashScreen>
@@ -52,7 +52,7 @@ class EventFilter : public QObject
 {
 protected:
     bool eventFilter(QObject *obj, QEvent *event) {
-        QInputContext *ic = qApp->inputContext();
+        /*QPlatformInputContext *ic = qApp->inputContext();
         if (ic) {
             if (ic->focusWidget() == 0 && prevFocusWidget) {
                 QEvent closeSIPEvent(QEvent::CloseSoftwareInputPanel);
@@ -62,7 +62,7 @@ protected:
                 ic->filterEvent(&openSIPEvent);
             }
             prevFocusWidget = ic->focusWidget();
-        }
+        }*/
         return QObject::eventFilter(obj,event);
     }
 
