@@ -22,7 +22,7 @@
 #include <QtCore/QObject>
 
 class QClipboard;
-class QQuickItem;
+class QQuickPaintedItem;
 class QQuickView;
 
 class QMLUtils : public QObject
@@ -36,7 +36,7 @@ public:
 
     // Save image from QML Image element as local file
     // Return the image path if save successfully or empty string if failed
-    Q_INVOKABLE QString saveImage(QQuickItem *imageObject) const;
+    Q_INVOKABLE QString saveImage(QQuickPaintedItem *imageObject) const;
 
     // Minimize the app, only on Symbian
     Q_INVOKABLE void minimizeApp() const;

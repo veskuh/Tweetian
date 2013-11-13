@@ -19,15 +19,15 @@
 #include "qmlutils.h"
 
 #include <QtCore/QDateTime>
-#include <QApplication>
+#include <QtWidgets/QApplication>
 #include <QtGui/QClipboard>
 #include <QtGui/QImage>
-#include <QStyleOptionGraphicsItem>
+#include <QtWidgets/QStyleOptionGraphicsItem>
 #include <QtGui/QPainter>
 #include <QtGui/QDesktopServices>
-#include <QtDeclarative/QDeclarativeItem>
-#include <QtDeclarative/QDeclarativeView>
-#include <QtDeclarative/QDeclarativeEngine>
+#include <QQuickPaintedItem>
+#include <QQuickView>
+#include <QQmlEngine>
 #include <QtNetwork/QNetworkAccessManager>
 
 static const QString IMAGE_SAVING_PATH = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
@@ -41,7 +41,7 @@ static const QString USER_AGENT = "Tweetian/" + QLatin1String(APP_VERSION) + " (
 static const QString USER_AGENT = "Tweetian/" + QLatin1String(APP_VERSION) + " (Qt; Unknown)";
 #endif
 
-QMLUtils::QMLUtils(QDeclarativeView *view, QObject *parent) :
+QMLUtils::QMLUtils(QQuickView *view, QObject *parent) :
     QObject(parent), m_view(view), clipboard(QApplication::clipboard())
 {
 }
@@ -55,7 +55,7 @@ void QMLUtils::copyToClipboard(const QString &text)
     clipboard->setText(text, QClipboard::Selection);
 }
 
-QString QMLUtils::saveImage(QDeclarativeItem *imageObject) const
+QString QMLUtils::saveImage(QQuickPaintedItem *imageObject) const
 {
     QString fileName = "tweetian_" + QDateTime::currentDateTime().toString("d-M-yy_h-m-s") + ".png";
     QString filePath = IMAGE_SAVING_PATH + "/" + fileName;
@@ -64,7 +64,9 @@ QString QMLUtils::saveImage(QDeclarativeItem *imageObject) const
     img.fill(QColor(0,0,0,0).rgba());
     QPainter painter(&img);
     QStyleOptionGraphicsItem styleOption;
-    imageObject->paint(&painter, &styleOption, 0);
+    //TODO: Find a way to paint the image
+    //imageObject->paint(&painter, &styleOption, 0);
+    Q_ASSERT(false);
     bool saved = img.save(filePath, "PNG");
 
     if (!saved) {
@@ -88,7 +90,7 @@ QObject *QMLUtils::networkAccessManager() const
 {
     QNetworkAccessManager *manager = m_view->engine()->networkAccessManager();
     // Not sure if this is necessary...
-    QDeclarativeEngine::setObjectOwnership(manager, QDeclarativeEngine::CppOwnership);
+    QQmlEngine::setObjectOwnership(manager, QQmlEngine::CppOwnership);
     return manager;
 }
 
