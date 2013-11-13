@@ -20,7 +20,7 @@
 #define USERSTREAM_H
 
 #include <QtCore/QObject>
-#include <QtDeclarative/QDeclarativeListProperty>
+#include <QQmlListProperty>
 
 class QNetworkAccessManager;
 class QNetworkReply;
@@ -46,7 +46,7 @@ public:
     QObject *networkAccessManager() const;
     void setNetworkAccessManager(QObject *manager);
 
-    QDeclarativeListProperty<QObject> resources();
+    QQmlListProperty<QObject> resources();
 
 signals:
     void connectedChanged();
