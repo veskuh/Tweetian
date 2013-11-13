@@ -17,7 +17,6 @@ PkgConfigBR:
 - sailfishapp
 Requires:
 - sailfishsilica-qt5
-- qt5-qtquick1
 Files:
 #- /usr/share/icons/hicolor/90x90/apps
 - /usr/share/applications
