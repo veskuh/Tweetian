@@ -96,9 +96,9 @@ void UserStream::setNetworkAccessManager(QObject *manager)
     m_networkAccessManager = qobject_cast<QNetworkAccessManager*>(manager);
 }
 
-QDeclarativeListProperty<QObject> UserStream::resources()
+QQmlListProperty<QObject> UserStream::resources()
 {
-    return QDeclarativeListProperty<QObject>(this, m_resources);
+    return QQmlListProperty<QObject>(this, m_resources);
 }
 
 void UserStream::replyRecieved()

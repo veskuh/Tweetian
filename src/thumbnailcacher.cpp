@@ -21,7 +21,7 @@
 #include <QtCore/QCryptographicHash>
 #include <QtCore/QFile>
 #include <QtCore/QDir>
-#include <QtDeclarative/QDeclarativeItem>
+#include <QQuickItem>
 #include <QtGui/QImage>
 #include <QtGui/QPainter>
 #include <QStyleOptionGraphicsItem>
@@ -70,7 +70,7 @@ QString ThumbnailCacher::get(const QString &id)
         return "";
 }
 
-void ThumbnailCacher::store(const QString &id, QDeclarativeItem *imageObj)
+void ThumbnailCacher::store(const QString &id, QQuickItem *imageObj)
 {
     QString thumbFile = getThumbFilePath(id);
 
@@ -81,7 +81,9 @@ void ThumbnailCacher::store(const QString &id, QDeclarativeItem *imageObj)
     thumb.fill(QColor(0,0,0,0).rgba());
     QPainter painter(&thumb);
     QStyleOptionGraphicsItem style;
-    imageObj->paint(&painter, &style, 0);
+    //TODO: Find a way to paint the image
+    //imageObj->paint(&painter, &style, 0);
+    Q_ASSERT(false);
     bool saved = thumb.save(thumbFile, "PNG");
 
     if (!saved)

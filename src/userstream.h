@@ -31,7 +31,7 @@ class UserStream : public QObject
 
     Q_PROPERTY(bool connected READ isConnected NOTIFY connectedChanged)
     Q_PROPERTY(QObject* networkAccessManager READ networkAccessManager WRITE setNetworkAccessManager)
-    Q_PROPERTY(QDeclarativeListProperty<QObject> resources READ resources DESIGNABLE false)
+    Q_PROPERTY(QQmlListProperty<QObject> resources READ resources DESIGNABLE false)
     Q_CLASSINFO("DefaultProperty", "resources")
 public:
     explicit UserStream(QObject *parent = 0);
