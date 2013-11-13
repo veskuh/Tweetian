@@ -13,10 +13,10 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QApplication>
-#include <QDeclarativeComponent>
-#include <QDeclarativeEngine>
-#include <QDeclarativeContext>
-
+#include <QQmlComponent>
+#include <QQmlEngine>
+#include <QQmlContext>
+#include <QQuickView>
 #include <qplatformdefs.h> // MEEGO_EDITION_HARMATTAN
 
 #ifdef HARMATTAN_BOOSTER
@@ -31,10 +31,10 @@
 #include <jsdebuggeragent.h>
 #endif
 #if !defined(NO_QMLOBSERVER)
-#include <qdeclarativeviewobserver.h>
+#include <QQuickViewobserver.h>
 #endif
 
-// Enable debugging before any QDeclarativeEngine is created
+// Enable debugging before any QQmlEngine is created
 struct QmlJsDebuggingEnabler
 {
     QmlJsDebuggingEnabler()
@@ -43,7 +43,7 @@ struct QmlJsDebuggingEnabler
     }
 };
 
-// Execute code in constructor before first QDeclarativeEngine is instantiated
+// Execute code in constructor before first QQmlEngine is instantiated
 static QmlJsDebuggingEnabler enableDebuggingHelper;
 
 #endif // QMLJSDEBUGGER
@@ -78,11 +78,12 @@ QString QmlApplicationViewerPrivate::adjustPath(const QString &path)
 }
 
 QmlApplicationViewer::QmlApplicationViewer(QWidget *parent)
-    : QDeclarativeView(parent)
+    //: QQuickView(parent)
+    : QQuickView()
     , d(new QmlApplicationViewerPrivate())
 {
     connect(engine(), SIGNAL(quit()), SLOT(close()));
-    setResizeMode(QDeclarativeView::SizeRootObjectToView);
+    setResizeMode(QQuickView::SizeRootObjectToView);
 
     // Qt versions prior to 4.8.0 don't have QML/JS debugging services built in
 #if defined(QMLJSDEBUGGER) && QT_VERSION < 0x040800
@@ -90,7 +91,7 @@ QmlApplicationViewer::QmlApplicationViewer(QWidget *parent)
     new QmlJSDebugger::JSDebuggerAgent(engine());
 #endif
 #if !defined(NO_QMLOBSERVER)
-    new QmlJSDebugger::QDeclarativeViewObserver(this, this);
+    new QmlJSDebugger::QQuickViewObserver(this, this);
 #endif
 #endif
 }

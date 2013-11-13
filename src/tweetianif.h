@@ -22,23 +22,23 @@
 #include <QtDBus/QDBusAbstractAdaptor>
 
 class QApplication;
-class QDeclarativeView;
-class QDeclarativeItem;
+class QQuickView;
+class QQuickItem;
 
 class TweetianIf : public QDBusAbstractAdaptor
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "com.tweetian")
 public:
-    explicit TweetianIf(QApplication *parent, QDeclarativeView *view);
+    explicit TweetianIf(QApplication *parent, QQuickView *view);
 
 public slots:
     void mention();
     void message();
 
 private:
-    QDeclarativeView *m_view;
-    QDeclarativeItem *qmlMainView;
+    QQuickView *m_view;
+    QQuickItem *qmlMainView;
 };
 
 #endif // TWEETIANIF_H
