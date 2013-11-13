@@ -18,7 +18,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import QtMobility.feedback 1.1
+import QtFeedback 5.0
 
 ApplicationWindow {
     id: window
