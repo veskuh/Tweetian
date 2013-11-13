@@ -20,7 +20,6 @@ License:    LICENSE
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  tweetian.yaml
 Requires:   sailfishsilica-qt5
-Requires:   qt5-qtquick1
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
