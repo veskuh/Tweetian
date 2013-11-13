@@ -16,10 +16,10 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <QApplication>
-#include <QtDeclarative/QDeclarativeContext>
-#include <QtDeclarative/QDeclarativeView>
-#include <QtDeclarative/qdeclarative.h>
+#include <QtWidgets/QApplication>
+#include <QQmlContext>
+#include <QQuickView>
+//#include <qdeclarative.h>
 #include <QtCore/QTranslator>
 #include <QtCore/QLocale>
 #include <QtCore/QFile>
@@ -108,7 +108,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     splash->showMessage(QSplashScreen::tr("Loading..."), Qt::AlignHCenter | Qt::AlignBottom, Qt::white);
 #endif
 
-    QDeclarativeView view;
+    QQuickView view;
 
 #ifdef Q_OS_HARMATTAN
     new TweetianIf(app.data(), &view);
@@ -135,8 +135,10 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
 #endif
 
-    qmlRegisterType<ImageUploader>("Uploader", 1, 0, "ImageUploader");
-    qmlRegisterType<UserStream>("UserStream", 1, 0, "UserStream");
+    //qmlRegisterType<ImageUploader>("Uploader", 1, 0, "ImageUploader");
+    //qmlRegisterType<UserStream>("UserStream", 1, 0, "UserStream");
+    view.rootContext()->setContextProperty("ImageUploader", new ImageUploader());
+    view.rootContext()->setContextProperty("UserStream", new UserStream());
 
 #if defined(Q_OS_HARMATTAN)
     view.setSource(QUrl("qrc:/qml/tweetian-harmattan/main.qml"));
