@@ -17,6 +17,7 @@
 */
 
 .pragma library
+.import QtQuick.LocalStorage 2.0 as Sql
 
 var QUERY = {
     CREATE_SETTINGS_TABLE: 'CREATE TABLE Settings(setting TEXT UNIQUE, value TEXT);',
@@ -33,7 +34,7 @@ var QUERY = {
     CREATE_SCREEN_NAMES_TABLE: 'CREATE TABLE ScreenNames(screenNames TEXT UNIQUE);'
 }
 
-var db = openDatabaseSync("Tweetian", "", "Tweetian Database", 1000000, function(db) {
+var db = Sql.LocalStorage.openDatabaseSync("Tweetian", "", "Tweetian Database", 1000000, function(db) {
     db.changeVersion(db.version, "1.1", function(tx) {
         tx.executeSql(QUERY.CREATE_SETTINGS_TABLE);
         tx.executeSql(QUERY.CREATE_TIMELINE_TABLE);
