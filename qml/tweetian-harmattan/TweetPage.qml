@@ -187,7 +187,7 @@ Page {
 
                         Text {
                             font.pixelSize: constant.fontSizeMedium
-                            font.family: theme.fontFamily
+                            font.family: Theme.fontFamily
                             color: constant.colorLight
                             font.bold: true
                             text: tweet.name
@@ -195,7 +195,7 @@ Page {
 
                         Text {
                             font.pixelSize: constant.fontSizeSmall
-                            font.family: theme.fontFamily
+                            font.family: Theme.fontFamily
                             color: userItem.highlighted ? constant.colorHighlighted : constant.colorMid
                             text: "@" + tweet.screenName
                         }
@@ -206,7 +206,7 @@ Page {
                     id: tweetTextText
                     anchors { left: parent.left; right: parent.right }
                     font.pixelSize: constant.fontSizeMedium
-                    font.family: theme.fontFamily
+                    font.family: Theme.fontFamily
                     color: constant.colorLight
                     textFormat: Text.RichText
                     wrapMode: Text.Wrap
@@ -226,7 +226,7 @@ Page {
                     anchors { left: parent.left; right: parent.right }
                     visible: tweet.isRetweet
                     font.pixelSize: constant.fontSizeMedium
-                    font.family: theme.fontFamily
+                    font.family: Theme.fontFamily
                     color: constant.colorMid
                     text: qsTr("Retweeted by %1").arg("@" + tweet.retweetScreenName)
                 }
@@ -256,7 +256,7 @@ Page {
                         id: timeAndSourceText
                         anchors { left: iconLoader.right; leftMargin: constant.paddingSmall; right: parent.right }
                         font.pixelSize: constant.fontSizeSmall
-                        font.family: theme.fontFamily
+                        font.family: Theme.fontFamily
                         horizontalAlignment: Text.AlignRight
                         color: constant.colorMid
                         text: tweet.source + " | " + Qt.formatDateTime(tweet.createdAt, "h:mm AP d MMM yy")
@@ -304,6 +304,7 @@ Page {
             }
 
             Loader { id: translatedTweetLoader; height: sourceComponent ? undefined : 0 }
+
             Loader { sourceComponent: descendantRepeater.count > 0 ? replyHeading : undefined }
 
             Column {

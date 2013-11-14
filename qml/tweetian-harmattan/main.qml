@@ -110,8 +110,8 @@ ApplicationWindow {
 
     Component.onCompleted: {
 
-        console.log("theme:" + theme.highlightColor)
-        //globalHighlight = theme.highlightColor.name()
+        console.log("Theme:" + Theme.highlightColor)
+        //globalHighlight = Theme.highlightColor.name()
         settings.loadSettings()
     }
 }

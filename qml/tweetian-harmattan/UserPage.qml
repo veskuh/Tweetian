@@ -174,7 +174,7 @@ Page {
                         }
                         font.bold: true
                         font.pixelSize: constant.fontSizeMedium
-                        font.family: theme.fontFamily
+                        font.family: Theme.fontFamily
                         color: "white"
                         style: Text.Outline
                         styleColor: "black"
@@ -189,7 +189,7 @@ Page {
                             right: parent.right; rightMargin: constant.paddingMedium
                         }
                         font.pixelSize: constant.fontSizeMedium
-                        font.family: theme.fontFamily
+                        font.family: Theme.fontFamily
                         color: "white"
                         style: Text.Outline
                         styleColor: "black"
@@ -210,7 +210,7 @@ Page {
                     elide: Text.ElideRight
                     maximumLineCount: window.orientation === Orientation.Portrait ? 5 : 4 // TODO: remove hardcoded value
                     font.pixelSize: constant.fontSizeSmall
-                    font.family: theme.fontFamily
+                    font.family: Theme.fontFamily
                     verticalAlignment: Text.AlignBottom
                     color: "white"
                     style: Text.Outline
@@ -266,7 +266,7 @@ Page {
                             anchors { left: parent.left; right: parent.right }
                             wrapMode: Text.Wrap
 
-                            font.family: theme.fontFamily
+                            font.family: Theme.fontFamily
                             font.pixelSize: constant.fontSizeMedium
                             color: listItem.enabled ? constant.colorLight : constant.colorDisabled
                             text: title
@@ -277,7 +277,7 @@ Page {
                             visible: subtitle !== ""
                             wrapMode: Text.Wrap
                             font.pixelSize: constant.fontSizeMedium
-                            font.family: theme.fontFamily
+                            font.family: Theme.fontFamily
                             color: listItem.enabled ? constant.colorMid : constant.colorDisabled
                             text: subtitle
                         }
