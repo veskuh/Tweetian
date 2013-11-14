@@ -82,7 +82,7 @@ Page {
                 elide: Text.ElideRight
                 text: model.name
                 font.pixelSize: constant.fontSizeLarge
-                font.family: theme.fontFamily
+                font.family: Theme.fontFamily
                 color: constant.colorLight
             }
 

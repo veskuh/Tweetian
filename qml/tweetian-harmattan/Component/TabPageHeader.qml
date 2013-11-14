@@ -64,8 +64,8 @@ Item {
                         left: icon.right; leftMargin: -constant.paddingMedium
                     }
                     visible: listView.model.children[index].unreadCount > 0
-                    font.pixelSize: theme.fontSizeSmall
-                    color: theme.highlightColor
+                    font.pixelSize: Theme.fontSizeSmall
+                    color: Theme.highlightColor
 
                     text: listView.model.children[index].unreadCount
                 }
@@ -107,7 +107,7 @@ Item {
     Rectangle {
         id: currentSectionIndicator
         anchors.top: parent.top
-        color: theme.highlightColor
+        color: Theme.highlightColor
         height: constant.paddingSmall
         width: listView.visibleArea.widthRatio * parent.width
         x: listView.visibleArea.xPosition * parent.width
