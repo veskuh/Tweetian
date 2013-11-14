@@ -32,7 +32,7 @@ QtObject {
                 settings[s] = results[s]
             }
         }
-        //theme.inverted = !invertedTheme
+        //Theme.inverted = !invertedTheme
         settingsLoaded()
     }
 
@@ -82,7 +82,7 @@ QtObject {
 
     property bool invertedTheme: false
     onInvertedThemeChanged: {
-        theme.inverted = !invertedTheme
+        Theme.inverted = !invertedTheme
         Database.setSetting({"invertedTheme": invertedTheme.toString()})
     }
     property bool hashtagsInReply: true

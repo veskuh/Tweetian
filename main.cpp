@@ -24,6 +24,7 @@
 #include <QtCore/QLocale>
 #include <QtCore/QFile>
 #include "qmlapplicationviewer.h"
+#include <QtQml>
 //#include <QInputPanel>
 
 #if defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
@@ -135,10 +136,10 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
 #endif
 
-    //qmlRegisterType<ImageUploader>("Uploader", 1, 0, "ImageUploader");
-    //qmlRegisterType<UserStream>("UserStream", 1, 0, "UserStream");
-    view.rootContext()->setContextProperty("ImageUploader", new ImageUploader());
-    view.rootContext()->setContextProperty("UserStream", new UserStream());
+    qmlRegisterType<ImageUploader>("Uploader", 1, 0, "ImageUploader");
+    qmlRegisterType<UserStream>("UserStream", 1, 0, "UserStream");
+    //view.rootContext()->setContextProperty("ImageUploader", new ImageUploader());
+    //view.rootContext()->setContextProperty("UserStream", new UserStream());
 
 #if defined(Q_OS_HARMATTAN)
     view.setSource(QUrl("qrc:/qml/tweetian-harmattan/main.qml"));

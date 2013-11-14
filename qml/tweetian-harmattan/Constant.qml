@@ -23,11 +23,11 @@ QtObject {
     id: constant
 
     // color
-    property color colorHighlighted: theme.highlightColor
-    property color colorLight: theme.primaryColor
-    property color colorMid: theme.secondaryColor
-    property color colorTextSelection: theme.secondaryHighlightColor
-    property color colorDisabled: theme.secondaryColor
+    property color colorHighlighted: Theme.highlightColor
+    property color colorLight: Theme.primaryColor
+    property color colorMid: Theme.secondaryColor
+    property color colorTextSelection: Theme.secondaryHighlightColor
+    property color colorDisabled: Theme.secondaryColor
 
     // padding size
     property int paddingSmall: 4
@@ -36,12 +36,12 @@ QtObject {
     property int paddingXLarge: 16
 
     // font size
-    property int fontSizeXSmall: theme.fontSizeExtraSmall
-    property int fontSizeSmall: theme.fontSizeSmall
-    property int fontSizeMedium: theme.fontSizeSmall
-    property int fontSizeLarge: theme.fontSizeLarge
-    property int fontSizeXLarge: theme.fontSizeExtraLarge
-    property int fontSizeXXLarge: theme.fontSizeExtraLarge
+    property int fontSizeXSmall: Theme.fontSizeExtraSmall
+    property int fontSizeSmall: Theme.fontSizeSmall
+    property int fontSizeMedium: Theme.fontSizeSmall
+    property int fontSizeLarge: Theme.fontSizeLarge
+    property int fontSizeXLarge: Theme.fontSizeExtraLarge
+    property int fontSizeXXLarge: Theme.fontSizeExtraLarge
 
     // graphic size
     property int graphicSizeTiny: 24
