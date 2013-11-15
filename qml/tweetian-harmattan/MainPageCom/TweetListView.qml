@@ -237,7 +237,7 @@ Item {
             if (type !== "Mentions") return;
 
             var body = qsTr("%n new mention(s)", "", unreadCount)
-            if (platformWindow.active) {
+            if (Qt.application.active) {
                 if (mainPage.status !== PageStatus.Active)
                     infoBanner.showText(body);
             }
