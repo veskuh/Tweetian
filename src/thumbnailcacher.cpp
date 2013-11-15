@@ -76,18 +76,19 @@ void ThumbnailCacher::store(const QString &id, QQuickItem *imageObj)
 
     if (QFile::exists(thumbFile))
         return;
-
+/*
+    //TODO: Find the right way to cache an image
     QImage thumb(imageObj->boundingRect().size().toSize(), QImage::Format_ARGB32);
     thumb.fill(QColor(0,0,0,0).rgba());
     QPainter painter(&thumb);
     QStyleOptionGraphicsItem style;
-    //TODO: Find a way to paint the image
     //imageObj->paint(&painter, &style, 0);
     Q_ASSERT(false);
     bool saved = thumb.save(thumbFile, "PNG");
 
     if (!saved)
         qWarning("ThumbnailCacher::cache: Failed to save thumbnails to %s", qPrintable(thumbFile));
+*/
 }
 
 int ThumbnailCacher::clearAll()

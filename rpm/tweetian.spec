@@ -20,7 +20,6 @@ License:    LICENSE
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  tweetian.yaml
 Requires:   sailfishsilica-qt5
-Requires:   qt5-qtlocation
 Requires:   qt5-qtdeclarative-import-location
 Requires:   qt5-qtdeclarative-import-positioning
 Requires:   qt5-qtsvg
