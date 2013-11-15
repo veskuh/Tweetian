@@ -6,7 +6,7 @@ VERSION = 1.8.1
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 # Qt Library
-QT += network widgets
+QT += network widgets location positioning
 
 # Qt Mobility Library
 CONFIG += mobility sailfishapp
