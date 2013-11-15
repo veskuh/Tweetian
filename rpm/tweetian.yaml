@@ -19,6 +19,9 @@ Requires:
 - sailfishsilica-qt5
 - qt5-qtdeclarative-import-location
 - qt5-qtdeclarative-import-positioning
+- qt5-qtsvg
+- qt5-plugin-imageformat-gif
+- qt5-qtsvg-plugin-imageformat-svg
 PkgBR:
 - qt5-qtdeclarative-import-location
 - qt5-qtdeclarative-import-positioning
