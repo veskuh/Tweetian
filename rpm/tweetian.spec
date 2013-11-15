@@ -20,10 +20,16 @@ License:    LICENSE
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  tweetian.yaml
 Requires:   sailfishsilica-qt5
+Requires:   qt5-qtdeclarative-import-location
+Requires:   qt5-qtdeclarative-import-positioning
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  pkgconfig(sailfishapp)
+BuildRequires:  qt5-qtdeclarative-import-location
+BuildRequires:  qt5-qtdeclarative-import-positioning
+BuildRequires:  qt5-qtlocation-devel
+BuildRequires:  qt5-qtpositioning-devel
 BuildRequires:  desktop-file-utils
 
 %description

@@ -32,7 +32,7 @@ ApplicationWindow {
     Cache { id: cache }
     Constant { id: constant }
 
-    ThemeEffect { id: basicHapticEffect; effect: ThemeEffect.Basic }
+    ThemeEffect { id: basicHapticEffect; effect: ThemeEffect.Appear }
 
     QtObject {
         id: infoBanner

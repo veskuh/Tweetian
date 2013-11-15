@@ -17,6 +17,13 @@ PkgConfigBR:
 - sailfishapp
 Requires:
 - sailfishsilica-qt5
+- qt5-qtdeclarative-import-location
+- qt5-qtdeclarative-import-positioning
+PkgBR:
+- qt5-qtdeclarative-import-location
+- qt5-qtdeclarative-import-positioning
+- qt5-qtlocation-devel
+- qt5-qtpositioning-devel
 Files:
 #- /usr/share/icons/hicolor/90x90/apps
 - /usr/share/applications
