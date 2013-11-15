@@ -16,6 +16,8 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+Qt.include("../Utils/Parser.js")
+
 var friendIDList = []
 
 function initialize() {
@@ -112,7 +114,7 @@ function log(message) {
 function saveUserInfo() {
     if (!settings.userFullName || !settings.userProfileImage || !settings.userScreenName) {
         Twitter.getVerifyCredentials(
-            function(data) { cache.userInfo = Parser.parseUser(data) },
+            function(data) { cache.userInfo = parseUser(data) },
             function(status, statusText) {console.log("[SaveUserInfo] VerifyCredentials returns:", status, statusText)}
         )
     }
