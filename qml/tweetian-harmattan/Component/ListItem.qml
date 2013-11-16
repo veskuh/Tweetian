@@ -51,11 +51,13 @@ BackgroundItem {
     Component {
         id: subItemIcon
 
+
         Image {
-            source: "image://theme/icon-m-common-drilldown-arrow"
-            .concat(settings.invertedTheme ? "" : "-inverse").concat(root.enabled ? "" : "-disabled")
+            source: "image://theme/icon-m-right"
+            //.concat(settings.invertedTheme ? "" : "-inverse").concat(root.enabled ? "" : "-disabled")
             sourceSize { width: constant.graphicSizeSmall; height: constant.graphicSizeSmall }
         }
+
     }
 
     Loader {

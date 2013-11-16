@@ -17,7 +17,6 @@
 */
 
 import QtQuick 2.0
-import com.nokia.meego 1.0
 import "../Delegate"
 import "../Services/Twitter.js" as Twitter
 import "../Utils/Database.js" as Database
