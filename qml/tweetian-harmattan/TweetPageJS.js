@@ -222,6 +222,7 @@ function expandTwitLonger() {
     header.busy = true
 }
 
+
 function getConversationFromTimelineAndMentions() {
     if (!tweet.inReplyToStatusId) return
     var msg = {

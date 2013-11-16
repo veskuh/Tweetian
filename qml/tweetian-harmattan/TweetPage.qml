@@ -42,11 +42,14 @@ Page {
 
     Component.onCompleted: {
         favouritedTweet = tweet.isFavourited
+        //TODO: Use plain QML instead of JS to show RT and Fav count
+        JS.getRTAndFavCount(tweet)
         JS.createPicThumb()
         JS.createMapThumb()
         if (networkMonitor.online) {
             JS.createYoutubeThumb()
             JS.expandTwitLonger()
+
         }
         JS.getConversationFromTimelineAndMentions()
     }
