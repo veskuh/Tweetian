@@ -187,33 +187,27 @@ function expandTwitLonger() {
     header.busy = true
 }
 
-function getRTAndFavCount() {
-    Twitter.getTweetActivitySummary(tweet.id, function(data) {
-        var rtCount = parseInt(data.retweeters_count, 10)
-        var favCount = parseInt(data.favoriters_count, 10)
-        if (rtCount > 0) {
-            var rtObj = {
-                text: qsTr("%n retweet(s)", "", rtCount),
-                headerText: qsTr("Retweeters"),
-                count: rtCount,
-                icon: settings.invertedTheme ? "Image/retweet_inverse.png" : "Image/retweet.png"
-            }
-            rtAndFavCountRepeater.model.append(rtObj)
+function getRTAndFavCount(tweet) {
+    var rtCount = tweet.retweet_count
+    var favCount = tweet.favorite_count
+    if (rtCount > 0) {
+        var rtObj = {
+            text: qsTr("%n retweet(s)", "", rtCount),
+            headerText: qsTr("Retweeters"),
+            count: rtCount,
+            icon: settings.invertedTheme ? "Image/retweet_inverse.png" : "Image/retweet.png"
         }
-        if (favCount > 0) {
-            var favObj = {
-                text: qsTr("%n favourite(s)", "", favCount),
-                headerText: qsTr("Favouriters"),
-                count: favCount,
-                icon: "image://theme/icon-m-toolbar-favorite-mark" + (settings.invertedTheme ? "" : "-white") + "-selected"
-            }
-            rtAndFavCountRepeater.model.append(favObj)
+        rtAndFavCountRepeater.model.append(rtObj)
+    }
+    if (favCount > 0) {
+        var favObj = {
+            text: qsTr("%n favourite(s)", "", favCount),
+            headerText: qsTr("Favouriters"),
+            count: favCount,
+            icon: "image://theme/icon-m-toolbar-favorite-mark" + (settings.invertedTheme ? "" : "-white") + "-selected"
         }
-        retweeters = data.retweeters
-        favoriters = data.favoriters
-    }, function(status, statusText) {
-        console.log("Error calling Twitter.getTweetActivitySummary():",status, statusText)
-    })
+        rtAndFavCountRepeater.model.append(favObj)
+    }
 }
 
 function getConversationFromTimelineAndMentions() {
