@@ -58,8 +58,8 @@ function parseTweet(tweetJson) {
     tweet.mediaUrl = "";
 
     if (originalTweetJson.geo) {
-        tweet.latitude = originalTweetJson.geo.coordinates[0];
-        tweet.longitude = originalTweetJson.geo.coordinates[1];
+        tweet.latitude = originalTweetJson.geo.coordinates[0].toString();
+        tweet.longitude = originalTweetJson.geo.coordinates[1].toString();
     }
 
     if (Array.isArray(originalTweetJson.entities.media) && originalTweetJson.entities.media.length > 0) {
