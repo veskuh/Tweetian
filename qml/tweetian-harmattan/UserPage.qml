@@ -305,15 +305,15 @@ Page {
             userInfoRepeater.append(qsTr("Tweets"), user.tweetsCount + " | " +
                                     Calculate.tweetsFrequency(user.createdAt, user.tweetsCount),
                                     "internal.pushUserPage(\"UserPageCom/UserTweetsPage.qml\")")
-            userInfoRepeater.append(qsTr("Following"), user.followingCount,
+            userInfoRepeater.append(qsTr("Following"), user.followingCount.toString(),
                                     "internal.pushUserPage(\"UserPageCom/UserFollowingPage.qml\")")
-            userInfoRepeater.append(qsTr("Followers"), user.followersCount,
+            userInfoRepeater.append(qsTr("Followers"), user.followersCount.toString(),
                                     "internal.pushUserPage(\"UserPageCom/UserFollowersPage.qml\")")
-            userInfoRepeater.append(qsTr("Favourites"), user.favouritesCount,
+            userInfoRepeater.append(qsTr("Favourites"), user.favouritesCount.toString(),
                                     "internal.pushUserPage(\"UserPageCom/UserFavouritesPage.qml\")")
             userInfoRepeater.append(qsTr("Subscribed List"), "",
                                     "internal.pushUserPage(\"UserPageCom/UserSubscribedListsPage.qml\")")
-            userInfoRepeater.append(qsTr("Listed"), user.listedCount,
+            userInfoRepeater.append(qsTr("Listed"), user.listedCount.toString(),
                                     "internal.pushUserPage(\"UserPageCom/UserListedPage.qml\")")
             isFollowing = user.isFollowing;
         }
