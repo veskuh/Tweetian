@@ -36,7 +36,9 @@ function parseTweet(tweetJson) {
         isFavourited: tweetJson.favorited,
         isRetweet: false,
         retweetScreenName: tweetJson.user.screen_name,
-        timeDiff: timeDiff(tweetJson.created_at)
+        timeDiff: timeDiff(tweetJson.created_at),
+        favorite_count: tweetJson.favorite_count,
+        retweet_count: tweetJson.retweet_count
     }
 
     var originalTweetJson = {};
