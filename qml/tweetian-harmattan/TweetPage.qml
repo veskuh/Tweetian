@@ -180,7 +180,6 @@ Page {
                     Component.onCompleted: {
                         imageSource = thumbnailCacher.get(tweet.profileImageUrl)
                                 || (networkMonitor.online ? tweet.profileImageUrl : constant.twitterBirdIcon)
-                        console.log("Image source is " + imageSource);
                     }
 
                     Column {
