@@ -21,7 +21,7 @@
 
 #include <QtDBus/QDBusAbstractAdaptor>
 
-class QApplication;
+class QGuiApplication;
 class QQuickView;
 class QQuickItem;
 
@@ -30,7 +30,7 @@ class TweetianIf : public QDBusAbstractAdaptor
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "com.tweetian")
 public:
-    explicit TweetianIf(QApplication *parent, QQuickView *view);
+    explicit TweetianIf(QGuiApplication *parent, QQuickView *view);
 
 public slots:
     void mention();

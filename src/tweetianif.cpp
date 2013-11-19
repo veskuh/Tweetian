@@ -23,7 +23,7 @@
 #include <QQuickItem>
 #include <QtGlobal>
 
-TweetianIf::TweetianIf(QApplication *parent, QQuickView *view) :
+TweetianIf::TweetianIf(QGuiApplication *parent, QQuickView *view) :
     QDBusAbstractAdaptor(parent), m_view(view)
 {
 }
