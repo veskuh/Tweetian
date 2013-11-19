@@ -168,12 +168,12 @@ void QmlApplicationViewer::showExpanded()
 #endif
 }
 
-QApplication *createApplication(int &argc, char **argv)
+QGuiApplication *createApplication(int &argc, char **argv)
 {
 #ifdef HARMATTAN_BOOSTER
     //return MDeclarativeCache::qApplication(argc, argv);
-    return new QApplication(argc, argv);
+    return new QGuiApplication(argc, argv);
 #else
-    return new QApplication(argc, argv);
+    return new QGuiApplication(argc, argv);
 #endif
 }
