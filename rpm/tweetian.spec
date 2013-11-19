@@ -12,11 +12,11 @@ Name:       tweetian
 %{!?qtc_qmake5:%define qtc_qmake5 %qmake5}
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
-Summary:    My SailfishOS Application
-Version:    0.1
+Summary:    Tweetian is a feature-rich Twitter app for Symbian and Harmattan, powered by Qt/QML. It comes with a simple, native and amazing UI that will surely make you enjoy the Twitter experience on your smartphone.
+Version:    1.8
 Release:    1
-Group:      Qt/Qt
-License:    LICENSE
+Group:      Applications/Communications
+License:    GPLv3
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  tweetian.yaml
 Requires:   sailfishsilica-qt5
@@ -29,14 +29,12 @@ BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  pkgconfig(sailfishapp)
-BuildRequires:  qt5-qtdeclarative-import-location
-BuildRequires:  qt5-qtdeclarative-import-positioning
 BuildRequires:  qt5-qtlocation-devel
 BuildRequires:  qt5-qtpositioning-devel
 BuildRequires:  desktop-file-utils
 
 %description
-Short description of my SailfishOS Application
+Tweetian is a feature-rich Twitter app for Symbian and Harmattan, powered by Qt/QML. It comes with a simple, native and amazing UI that will surely make you enjoy the Twitter experience on your smartphone.
 
 
 %prep
