@@ -109,6 +109,10 @@ below and click done.")
                         width: pinCodeTextFieldWrapper.width * 0.7
                         enabled: !header.busy
                         inputMethodHints: Qt.ImhDigitsOnly
+
+                        EnterKey.enabled: text.length > 0
+                        EnterKey.iconSource: "image://theme/icon-m-enter-accept"
+                        EnterKey.onClicked: internal.doneButtonClicked()
                     }
                 }
             }
