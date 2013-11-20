@@ -27,6 +27,7 @@ Requires:   qt5-plugin-imageformat-gif
 Requires:   qt5-qtsvg-plugin-imageformat-svg
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)
+BuildRequires:  pkgconfig(Qt5Svg)
 BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  pkgconfig(sailfishapp)
 BuildRequires:  qt5-qtlocation-devel

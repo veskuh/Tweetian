@@ -19,14 +19,13 @@
 #include "qmlutils.h"
 
 #include <QtCore/QDateTime>
-#include <QtWidgets/QApplication>
 #include <QtGui/QClipboard>
 #include <QtGui/QImage>
-#include <QtWidgets/QStyleOptionGraphicsItem>
 #include <QtGui/QPainter>
 #include <QtGui/QDesktopServices>
 #include <QQuickPaintedItem>
 #include <QQuickView>
+#include <QGuiApplication>
 #include <QQmlEngine>
 #include <QtNetwork/QNetworkAccessManager>
 
@@ -42,7 +41,7 @@ static const QString USER_AGENT = "Tweetian/" + QLatin1String(APP_VERSION) + " (
 #endif
 
 QMLUtils::QMLUtils(QQuickView *view, QObject *parent) :
-    QObject(parent), m_view(view), clipboard(QApplication::clipboard())
+    QObject(parent), m_view(view), clipboard(QGuiApplication::clipboard())
 {
 }
 
@@ -63,7 +62,6 @@ QString QMLUtils::saveImage(QQuickPaintedItem *imageObject) const
     QImage img(imageObject->boundingRect().size().toSize(), QImage::Format_ARGB32);
     img.fill(QColor(0,0,0,0).rgba());
     QPainter painter(&img);
-    QStyleOptionGraphicsItem styleOption;
     //TODO: Find a way to paint the image
     //imageObject->paint(&painter, &styleOption, 0);
     Q_ASSERT(false);

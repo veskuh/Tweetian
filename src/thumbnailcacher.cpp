@@ -24,7 +24,6 @@
 #include <QQuickItem>
 #include <QtGui/QImage>
 #include <QtGui/QPainter>
-#include <QStyleOptionGraphicsItem>
 #include <QtGui/QDesktopServices>
 
 ThumbnailCacher::ThumbnailCacher(QObject *parent) :
