@@ -43,7 +43,7 @@ simulator{
 
 contains(MEEGO_EDITION,harmattan){
     QT += dbus
-    CONFIG += qdeclarative-boostable shareuiinterface-maemo-meegotouch share-ui-plugin share-ui-common mdatauri
+    CONFIG += qdeclarative-boostable shareuiinterface-maemo-meegotouch share-ui-plugin share-ui-common mdatauri sailfishapp
     DEFINES += Q_OS_HARMATTAN
     RESOURCES += qml-harmattan.qrc
 
