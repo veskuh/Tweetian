@@ -63,12 +63,11 @@ ApplicationWindow {
             opacity: 0.5
         }
 
-       /* BusyIndicator {
+        BusyIndicator {
             visible: loadingRect.visible
             running: visible
             anchors.centerIn: parent
-            platformStyle: BusyIndicatorStyle { size: "large" }
-        }*/
+        }
     }
 
     QtObject {
@@ -80,14 +79,15 @@ ApplicationWindow {
         property Component __tweetLongPressMenu: null
 
         function createOpenLinkDialog(link, pocketCallback, instapaperCallback) {
-            if (!__openLinkDialog) __openLinkDialog = Qt.createComponent("Dialog/OpenLinkDialog.qml")
+            /*if (!__openLinkDialog) __openLinkDialog = Qt.createComponent("Dialog/OpenLinkDialog.qml")
             var showAddPageServices = pocketCallback && instapaperCallback ? true : false
             var prop = { link: link, showAddPageServices: showAddPageServices }
             var dialog = __openLinkDialog.createObject(pageStack.currentPage, prop)
             if (showAddPageServices) {
                 dialog.addToPocketClicked.connect(pocketCallback)
                 dialog.addToInstapaperClicked.connect(instapaperCallback)
-            }
+            }*/
+            Qt.openUrlExternally(link)
         }
 
         function createQueryDialog(titleText, titleIcon, message, acceptCallback) {
