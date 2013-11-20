@@ -18,43 +18,26 @@
 
 #include <QQmlContext>
 #include <QQuickView>
-//#include <qdeclarative.h>
 #include <QtCore/QTranslator>
 #include <QtCore/QLocale>
 #include <QtCore/QFile>
 #include <QGuiApplication>
-//#include "qmlapplicationviewer.h"
 #include <QtQml>
-//#include <QInputPanel>
-
-#if defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
-#include <QtGui/QSplashScreen>
-#include <QtGui/QPixmap>
-#endif
-
 #include "src/qmlutils.h"
 #include "src/imageuploader.h"
 #include "src/thumbnailcacher.h"
 #include "src/userstream.h"
 #include "src/networkmonitor.h"
-
-#if defined(Q_OS_HARMATTAN) || defined(Q_WS_SIMULATOR)
 #include "src/harmattanutils.h"
-#endif
 
-#if defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
-#include "src/symbianutils.h"
-#endif
-
-#ifdef Q_OS_HARMATTAN
 #include <QtDBus/QDBusConnection>
 #include "src/tweetianif.h"
-#endif
+#include <sailfishapp.h>
 
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
-    QScopedPointer<QGuiApplication> app(new QGuiApplication(argc, argv));
+    QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
 
     QString lang = QLocale::system().name();
     lang.truncate(2); // ignore the country code
@@ -81,56 +64,30 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     app->setApplicationName("Tweetian");
     app->setOrganizationName("Tweetian");
     app->setApplicationVersion(APP_VERSION);
-
-#if defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
-    QSplashScreen *splash = new QSplashScreen(QPixmap(":/splash/tweetian-splash-symbian.jpg"));
-    splash->show();
-    splash->showMessage(QSplashScreen::tr("Loading..."), Qt::AlignHCenter | Qt::AlignBottom, Qt::white);
-#endif
-
-    QQuickView view;
-
-#ifdef Q_OS_HARMATTAN
-    new TweetianIf(app.data(), &view);
+    QScopedPointer<QQuickView> view(SailfishApp::createView());
+    new TweetianIf(app.data(), view.data());
     QDBusConnection bus = QDBusConnection::sessionBus();
     bus.registerService("com.tweetian");
     bus.registerObject("/com/tweetian", app.data());
-#endif
 
-    QMLUtils qmlUtils(&view);
-    view.rootContext()->setContextProperty("QMLUtils", &qmlUtils);
+    QMLUtils qmlUtils(view.data());
+    view->rootContext()->setContextProperty("QMLUtils", &qmlUtils);
     ThumbnailCacher thumbnailCacher;
-    view.rootContext()->setContextProperty("thumbnailCacher", &thumbnailCacher);
+    view->rootContext()->setContextProperty("thumbnailCacher", &thumbnailCacher);
     NetworkMonitor networkMonitor;
-    view.rootContext()->setContextProperty("networkMonitor", &networkMonitor);
-    view.rootContext()->setContextProperty("APP_VERSION", APP_VERSION);
+    view->rootContext()->setContextProperty("networkMonitor", &networkMonitor);
+    view->rootContext()->setContextProperty("APP_VERSION", APP_VERSION);
 
-#if defined(Q_OS_HARMATTAN) || defined(Q_WS_SIMULATOR)
     HarmattanUtils harmattanUtils;
-    view.rootContext()->setContextProperty("harmattanUtils", &harmattanUtils);
-
-#endif
+    view->rootContext()->setContextProperty("harmattanUtils", &harmattanUtils);
 
     qmlRegisterType<ImageUploader>("Uploader", 1, 0, "ImageUploader");
     qmlRegisterType<UserStream>("UserStream", 1, 0, "UserStream");
     //view.rootContext()->setContextProperty("ImageUploader", new ImageUploader());
     //view.rootContext()->setContextProperty("UserStream", new UserStream());
 
-#if defined(Q_OS_HARMATTAN)
-    view.setSource(QUrl("qrc:/qml/tweetian-harmattan/main.qml"));
-#elif defined(Q_OS_SYMBIAN)
-    view.setSource(QUrl("qrc:/qml/tweetian-symbian/main.qml"));
-#else
-    view.setSource(QUrl("qrc:/qml/tweetian-harmattan/main.qml"));
-#endif
-
-    view.showFullScreen();
-
-#if defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
-    splash->finish(&view);
-    splash->deleteLater();
-#endif
-
+    view->setSource(QUrl("qrc:/qml/tweetian-harmattan/main.qml"));
+    view->showFullScreen();
     return app->exec();
 }
 
