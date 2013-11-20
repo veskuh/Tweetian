@@ -30,10 +30,10 @@ QtObject {
     property color colorDisabled: Theme.secondaryColor
 
     // padding size
-    property int paddingSmall: 4
-    property int paddingMedium: 8
-    property int paddingLarge: 12
-    property int paddingXLarge: 16
+    property int paddingSmall: Theme.paddingSmall
+    property int paddingMedium: Theme.paddingMedium
+    property int paddingLarge: Theme.paddingLarge
+    property int paddingXLarge: Theme.paddingExtraLarge
 
     // font size
     property int fontSizeXSmall: Theme.fontSizeExtraSmall
