@@ -84,12 +84,11 @@ Item {
 
                             Behavior on opacity { NumberAnimation { duration: 250 } }
 
-                          /*  BusyIndicator {
+                            BusyIndicator {
                                 opacity: 1
                                 anchors.centerIn: parent
                                 running: true
-                                platformStyle: BusyIndicatorStyle { inverted: true }
-                            }*/
+                            }
 
                             Component.onCompleted: opacity = 0.75
                         }

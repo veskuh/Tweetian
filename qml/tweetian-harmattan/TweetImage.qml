@@ -171,10 +171,10 @@ Page {
                 height: childrenRect.height
                 width: tweetImagePage.width
 
-                Label {
+                BusyIndicator {
                     id: imageLoadingIndicator
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text: "Busy"
+                    running: true
                 }
 
                 Text {
