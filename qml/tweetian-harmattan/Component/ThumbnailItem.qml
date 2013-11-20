@@ -55,12 +55,9 @@ Item {
     Component {
         id: loading
 
-        /*BusyIndicator {
+        BusyIndicator {
             width: constant.graphicSizeSmall; height: constant.graphicSizeSmall
             running: true
-        }*/
-        Label {
-            text: "Busy"
         }
     }
 
