@@ -7,8 +7,8 @@
 
 QT += qml quick
 
-SOURCES += $$PWD/qmlapplicationviewer.cpp
-HEADERS += $$PWD/qmlapplicationviewer.h
+//SOURCES += $$PWD/qmlapplicationviewer.cpp
+//HEADERS += $$PWD/qmlapplicationviewer.h
 INCLUDEPATH += $$PWD
 
 # Include JS debugger library if QMLJSDEBUGGER_PATH is set

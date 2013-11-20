@@ -16,14 +16,14 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <QtWidgets/QApplication>
 #include <QQmlContext>
 #include <QQuickView>
 //#include <qdeclarative.h>
 #include <QtCore/QTranslator>
 #include <QtCore/QLocale>
 #include <QtCore/QFile>
-#include "qmlapplicationviewer.h"
+#include <QGuiApplication>
+//#include "qmlapplicationviewer.h"
 #include <QtQml>
 //#include <QInputPanel>
 
@@ -52,34 +52,9 @@
 #endif
 
 
-#ifdef Q_OS_HARMATTAN
-class EventFilter : public QObject
-{
-protected:
-    bool eventFilter(QObject *obj, QEvent *event) {
-        /*QPlatformInputContext *ic = qApp->inputContext();
-        if (ic) {
-            if (ic->focusWidget() == 0 && prevFocusWidget) {
-                QEvent closeSIPEvent(QEvent::CloseSoftwareInputPanel);
-                ic->filterEvent(&closeSIPEvent);
-            } else if (prevFocusWidget == 0 && ic->focusWidget()) {
-                QEvent openSIPEvent(QEvent::RequestSoftwareInputPanel);
-                ic->filterEvent(&openSIPEvent);
-            }
-            prevFocusWidget = ic->focusWidget();
-        }*/
-        return QObject::eventFilter(obj,event);
-    }
-/*
-private:
-    QWidget *prevFocusWidget;*/
-};
-#endif
-
-
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
-    QScopedPointer<QGuiApplication> app(createApplication(argc, argv));
+    QScopedPointer<QGuiApplication> app(new QGuiApplication(argc, argv));
 
     QString lang = QLocale::system().name();
     lang.truncate(2); // ignore the country code
@@ -133,10 +108,6 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 #if defined(Q_OS_HARMATTAN) || defined(Q_WS_SIMULATOR)
     HarmattanUtils harmattanUtils;
     view.rootContext()->setContextProperty("harmattanUtils", &harmattanUtils);
-
-    EventFilter ef;
-    view.installEventFilter(&ef);
-
 
 #endif
 

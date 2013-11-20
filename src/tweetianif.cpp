@@ -18,7 +18,7 @@
 
 #include "tweetianif.h"
 
-#include <QApplication>
+#include <QGuiApplication>
 #include <QQuickView>
 #include <QQuickItem>
 #include <QtGlobal>
