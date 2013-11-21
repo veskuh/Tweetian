@@ -33,14 +33,14 @@ QtObject {
     property int paddingSmall: Theme.paddingSmall
     property int paddingMedium: Theme.paddingMedium
     property int paddingLarge: Theme.paddingLarge
-    property int paddingXLarge: Theme.paddingExtraLarge
+    property int paddingXLarge: Theme.paddingLarge
 
     // font size
-    property int fontSizeXSmall: Theme.fontSizeExtraSmall
-    property int fontSizeSmall: Theme.fontSizeSmall
+    property int fontSizeXSmall: Theme.fontSizeTiny
+    property int fontSizeSmall: Theme.fontSizeExtraSmall
     property int fontSizeMedium: Theme.fontSizeSmall
-    property int fontSizeLarge: Theme.fontSizeLarge
-    property int fontSizeXLarge: Theme.fontSizeExtraLarge
+    property int fontSizeLarge: Theme.fontSizeMedium
+    property int fontSizeXLarge: Theme.fontSizeLarge
     property int fontSizeXXLarge: Theme.fontSizeExtraLarge
 
     // graphic size

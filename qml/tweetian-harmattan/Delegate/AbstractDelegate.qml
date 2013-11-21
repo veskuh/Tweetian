@@ -35,7 +35,7 @@ BackgroundItem {
     property int __originalHeight: height // private
 
     implicitWidth: ListView.view ? ListView.view.width : 0
-    implicitHeight: Math.max(contentColumn.height, profileImage.height) + 2 * constant.paddingLarge
+    implicitHeight: Math.max(contentColumn.height, profileImage.height) + 2 * constant.paddingMedium
 
    /* Image {
         id: highlight
@@ -118,7 +118,7 @@ BackgroundItem {
     Column {
         id: contentColumn
         anchors {
-            top: parent.top; topMargin: constant.paddingLarge
+            top: parent.top; topMargin: constant.paddingMedium
             left: profileImageMaskedItem.right; leftMargin: constant.paddingMedium
             right: parent.right
             rightMargin: constant.paddingMedium
