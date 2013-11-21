@@ -22,8 +22,8 @@ Qt.include("Calculations.js")
 
 function linkText(text, href, italic) {
     var html = "";
-    if (italic) html = "<i><a style=\"color: LightSeaGreen; text-decoration: none\" href=\"%1\">%2</a></i>";
-    else html = "<a style=\"color: LightSeaGreen; text-decoration: none\" href=\"%1\">%2</a>";
+    if (italic) html = "<i><a style=\"color: white; text-decoration: none\" href=\"%1\">%2</a></i>";
+    else html = "<a style=\"color: DarkGray; text-decoration: none\" href=\"%1\">%2</a>";
 
     return html.arg(href).arg(text);
 }
