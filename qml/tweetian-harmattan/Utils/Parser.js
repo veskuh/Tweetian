@@ -52,7 +52,7 @@ function parseTweet(tweetJson) {
     tweet.richText = __toRichText(originalTweetJson.text, originalTweetJson.entities);
     tweet.name = originalTweetJson.user.name;
     tweet.screenName = originalTweetJson.user.screen_name;
-    tweet.profileImageUrl = originalTweetJson.user.profile_image_url;
+    tweet.profileImageUrl = originalTweetJson.user.profile_image_url.replace("_normal","_bigger");
     tweet.inReplyToScreenName = originalTweetJson.in_reply_to_screen_name;
     tweet.inReplyToStatusId = originalTweetJson.in_reply_to_status_id_str;
     tweet.latitude = "";

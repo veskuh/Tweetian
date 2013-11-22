@@ -64,8 +64,8 @@ BackgroundItem {
 
     Item {
         id: profileImageMaskedItem
-        anchors { top: parent.top; left: parent.left; margins: constant.paddingLarge }
-        width: constant.graphicSizeMedium; height: constant.graphicSizeMedium
+        anchors { top: parent.top; left: parent.left; topMargin: constant.paddingMedium; rightMargin: constant.paddingLarge; bottomMargin: constant.paddingMedium }
+        width: constant.graphicSizeLarge; height: constant.graphicSizeLarge
     //    mask: Image { source: "../Image/pic_mask.png"}
 
         Image {
