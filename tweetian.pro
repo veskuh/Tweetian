@@ -40,6 +40,11 @@ simulator{
     SOURCES += src/harmattanutils.cpp src/symbianutils.cpp
 }
 
+sailfish_icon.files = tweetian80.png
+sailfish_icon.path = /usr/share/icons/hicolor/80x80/apps
+INSTALLS+=sailfish_icon
+
+INSTALLS+=icon desktopfile
 
 contains(MEEGO_EDITION,harmattan){
     QT += dbus
