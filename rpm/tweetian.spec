@@ -25,6 +25,7 @@ Requires:   qt5-qtdeclarative-import-positioning
 Requires:   qt5-qtsvg
 Requires:   qt5-plugin-imageformat-gif
 Requires:   qt5-qtsvg-plugin-imageformat-svg
+Requires:   libsailfishapp
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Svg)

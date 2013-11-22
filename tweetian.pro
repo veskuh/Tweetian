@@ -9,7 +9,7 @@ DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 QT += network location positioning svg
 
 # Qt Mobility Library
-CONFIG += mobility sailfishapp
+CONFIG += mobility
 
 MOBILITY += feedback location gallery
 
@@ -39,12 +39,6 @@ simulator{
     HEADERS += src/harmattanutils.h src/symbianutils.h
     SOURCES += src/harmattanutils.cpp src/symbianutils.cpp
 }
-
-sailfish_icon.files = tweetian80.png
-sailfish_icon.path = /usr/share/icons/hicolor/80x80/apps
-INSTALLS+=sailfish_icon
-
-INSTALLS+=icon desktopfile
 
 contains(MEEGO_EDITION,harmattan){
     QT += dbus
@@ -96,6 +90,34 @@ OTHER_FILES += qtc_packaging/debian_harmattan/* \
     qml/tweetian-harmattan/Dialog/*.qml \
     qml/tweetian-harmattan/Utils/*js
 
+
+CONFIG += link_pkgconfig
+packagesExist(sailfishapp) {
+    CONFIG+= sailfishapp
+
+    include(notifications/notifications.pri)
+
+    desktopfile.files = $${TARGET}_harmattan.desktop
+    desktopfile.path = /usr/share/applications
+
+    export (desktopfile)
+
+    sailfish_icon.files = tweetian80.png
+    sailfish_icon.path = /usr/share/icons/hicolor/80x80/apps
+
+    INSTALLS += sailfish_icon desktopfile
+    QT += dbus
+    CONFIG += qdeclarative-boostable shareuiinterface-maemo-meegotouch share-ui-plugin share-ui-common mdatauri sailfishapp
+    DEFINES += Q_OS_HARMATTAN
+    RESOURCES += qml-harmattan.qrc
+
+    HEADERS += src/tweetianif.h
+    SOURCES += src/tweetianif.cpp
+
+    HEADERS += src/harmattanutils.h
+    SOURCES += src/harmattanutils.cpp
+} else {
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
 qtcAddDeployment()
+}
