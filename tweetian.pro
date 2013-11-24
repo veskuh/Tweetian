@@ -117,6 +117,7 @@ packagesExist(sailfishapp) {
 
     HEADERS += src/harmattanutils.h
     SOURCES += src/harmattanutils.cpp
+    OTHER_FILES += rpm/*
 } else {
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)

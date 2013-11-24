@@ -13,26 +13,25 @@ Name:       tweetian
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Tweetian is a feature-rich Twitter app for Symbian and Harmattan, powered by Qt/QML. It comes with a simple, native and amazing UI that will surely make you enjoy the Twitter experience on your smartphone.
-Version:    1.8
+Version:    1.8.1
 Release:    1
 Group:      Applications/Communications
 License:    GPLv3
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  tweetian.yaml
-Requires:   sailfishsilica-qt5
-Requires:   qt5-qtdeclarative-import-location
-Requires:   qt5-qtdeclarative-import-positioning
-Requires:   qt5-qtsvg
-Requires:   qt5-plugin-imageformat-gif
 Requires:   qt5-qtsvg-plugin-imageformat-svg
-Requires:   libsailfishapp
-BuildRequires:  pkgconfig(Qt5Core)
-BuildRequires:  pkgconfig(Qt5Qml)
-BuildRequires:  pkgconfig(Qt5Svg)
-BuildRequires:  pkgconfig(Qt5Quick)
+Requires:   qt5-plugin-imageformat-gif
+Requires:   qt5-qtsvg
+Requires:   qt5-qtdeclarative-import-positioning
+Requires:   qt5-qtdeclarative-import-location
+Requires:   sailfishsilica-qt5
+BuildRequires:  pkgconfig(Qt5Positioning)
+BuildRequires:  pkgconfig(Qt5Location)
 BuildRequires:  pkgconfig(sailfishapp)
-BuildRequires:  qt5-qtlocation-devel
-BuildRequires:  qt5-qtpositioning-devel
+BuildRequires:  pkgconfig(Qt5Quick)
+BuildRequires:  pkgconfig(Qt5Qml)
+BuildRequires:  pkgconfig(Qt5Core)
+BuildRequires:  pkgconfig(Qt5Svg)
 BuildRequires:  desktop-file-utils
 
 %description
@@ -67,16 +66,16 @@ rm -rf %{buildroot}
 
 desktop-file-install --delete-original       \
   --dir %{buildroot}%{_datadir}/applications             \
-   %{buildroot}%{_datadir}/applications/tweetian_harmattan.desktop
+   %{buildroot}%{_datadir}/applications/*.desktop
 
 %files
 %defattr(-,root,root,-)
-/usr/share/applications
-/usr/share/tweetian
-/usr/bin
-/usr/share/icons/hicolor/80x80/apps/*png
-%{_datadir}/applications/tweetian_harmattan.desktop
-%{_datadir}/%{name}/qml
 %{_bindir}
+%{_datadir}/%{name}/qml
+%{_datadir}/applications/%{name}.desktop
+/usr/bin
+/usr/share/tweetian
+/usr/share/applications
+/usr/share/icons/hicolor/80x80/apps
 # >> files
 # << files
