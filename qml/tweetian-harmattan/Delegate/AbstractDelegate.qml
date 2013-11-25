@@ -48,7 +48,7 @@ BackgroundItem {
 
     Loader {
         id: sideRectLoader
-        anchors { left: parent.left; top: parent.top }
+        anchors { right: parent.right; top: parent.top }
         sourceComponent: sideRectColor == "transparent" ? undefined : sideRect
 
         Component {

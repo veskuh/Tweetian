@@ -28,37 +28,13 @@ BackgroundItem {
 
     // READ-ONLY
     property Item imageItem: imageLoader
-    property int listItemRightMargin: subItemIndicator ? iconLoader.width + iconLoader.anchors.rightMargin : 0
+    property int listItemRightMargin: 0
 
 
     signal pressAndHold
 
     implicitWidth: parent ? parent.width : 0
     implicitHeight: imageSource ? imageLoader.height + 2 * imageLoader.anchors.margins : 0
-
-
-
-
-    Loader {
-        id: iconLoader
-        anchors {
-            right: parent.right; rightMargin: constant.paddingMedium
-            verticalCenter: parent.verticalCenter
-        }
-        sourceComponent: root.subItemIndicator ? subItemIcon : undefined
-    }
-
-    Component {
-        id: subItemIcon
-
-
-        Image {
-            source: "image://theme/icon-m-right"
-            //.concat(settings.invertedTheme ? "" : "-inverse").concat(root.enabled ? "" : "-disabled")
-            sourceSize { width: constant.graphicSizeSmall; height: constant.graphicSizeSmall }
-        }
-
-    }
 
     Loader {
         id: imageLoader

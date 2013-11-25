@@ -414,8 +414,6 @@ Page {
             positionSource.stop()
             locationButton.state = "done"
         }
-
-        Component.onDestruction: stop()
     }
 
     ImageUploader {
