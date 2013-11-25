@@ -207,7 +207,7 @@ Page {
 
                 Text {
                     id: tweetTextText
-                    anchors { left: parent.left; right: parent.right }
+                    anchors { left: parent.left; right: parent.right; leftMargin: constant.paddingMedium; rightMargin: constant.paddingMedium  }
                     font.pixelSize: constant.fontSizeMedium
                     font.family: Theme.fontFamily
                     color: constant.colorLight
@@ -226,7 +226,7 @@ Page {
                 }
 
                 Text {
-                    anchors { left: parent.left; right: parent.right }
+                    anchors { left: parent.left; right: parent.right; leftMargin: constant.paddingMedium; rightMargin: constant.paddingMedium  }
                     visible: tweet.isRetweet
                     font.pixelSize: constant.fontSizeMedium
                     font.family: Theme.fontFamily
@@ -235,7 +235,7 @@ Page {
                 }
 
                 Item {
-                    anchors { left: parent.left; right: parent.right }
+                    anchors { left: parent.left; right: parent.right; leftMargin: constant.paddingMedium; rightMargin: constant.paddingMedium  }
                     height: timeAndSourceText.height
 
                     Loader {
@@ -257,7 +257,7 @@ Page {
 
                     Text {
                         id: timeAndSourceText
-                        anchors { left: iconLoader.right; leftMargin: constant.paddingSmall; right: parent.right }
+                        anchors { left: iconLoader.right; leftMargin: constant.paddingSmall; right: parent.right;  }
                         font.pixelSize: constant.fontSizeSmall
                         font.family: Theme.fontFamily
                         horizontalAlignment: Text.AlignRight
