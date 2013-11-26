@@ -66,15 +66,13 @@ rm -rf %{buildroot}
 
 desktop-file-install --delete-original       \
   --dir %{buildroot}%{_datadir}/applications             \
-   %{buildroot}%{_datadir}/applications/*.desktop
+   %{buildroot}%{_datadir}/applications/%{name}_harmattan.desktop
 
 %files
 %defattr(-,root,root,-)
 %{_bindir}
-%{_datadir}/%{name}/qml
-%{_datadir}/applications/%{name}.desktop
+%{_datadir}/applications/%{name}_harmattan.desktop
 /usr/bin
-/usr/share/tweetian
 /usr/share/applications
 /usr/share/icons/hicolor/80x80/apps
 # >> files
