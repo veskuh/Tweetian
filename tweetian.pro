@@ -94,7 +94,8 @@ OTHER_FILES += qtc_packaging/debian_harmattan/* \
 
 CONFIG += link_pkgconfig
 packagesExist(sailfishapp) {
-    CONFIG+= sailfishapp
+message("sailfishapp")
+    PKGCONFIG += sailfishapp
 
     include(notifications/notifications.pri)
 
@@ -103,12 +104,16 @@ packagesExist(sailfishapp) {
 
     export (desktopfile)
 
+    target.path = /usr/bin
+
     sailfish_icon.files = tweetian80.png
     sailfish_icon.path = /usr/share/icons/hicolor/80x80/apps
 
-    INSTALLS += sailfish_icon desktopfile
-    QT += dbus
-    CONFIG += qdeclarative-boostable shareuiinterface-maemo-meegotouch share-ui-plugin share-ui-common mdatauri sailfishapp
+    INCLUDEPATH += /usr/include/sailfishapp
+
+    INSTALLS += target sailfish_icon desktopfile
+    QT += dbus quick qml
+    CONFIG += qdeclarative-boostable shareuiinterface-maemo-meegotouch share-ui-plugin share-ui-common mdatauri
     DEFINES += Q_OS_HARMATTAN
     RESOURCES += qml-harmattan.qrc
 
@@ -119,7 +124,7 @@ packagesExist(sailfishapp) {
     SOURCES += src/harmattanutils.cpp
     OTHER_FILES += rpm/*
 } else {
-# Please do not modify the following two lines. Required for deployment.
-include(qmlapplicationviewer/qmlapplicationviewer.pri)
-qtcAddDeployment()
+    # Please do not modify the following two lines. Required for deployment.
+    include(qmlapplicationviewer/qmlapplicationviewer.pri)
+    qtcAddDeployment()
 }

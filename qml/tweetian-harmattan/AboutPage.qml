@@ -23,12 +23,6 @@ import "Services/Twitter.js" as Twitter
 
 Page {
     id: aboutPage
-   /* tools: ToolBarLayout {
-        ToolIcon {
-            platformIconId: "toolbar-back"
-            onClicked: pageStack.pop()
-        }
-    }*/
 
     SilicaFlickable {
         id: aboutPageFlickable

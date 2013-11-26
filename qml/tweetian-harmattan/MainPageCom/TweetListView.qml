@@ -120,6 +120,11 @@ Item {
         property string lastUpdate: ""
         PullDownMenu {
             MenuItem {
+                onClicked: pageStack.push(Qt.resolvedUrl("../UserPage.qml"), {screenName: settings.userScreenName})
+                text: "User info"
+            }
+
+            MenuItem {
                onClicked: pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"), {type: "New"})
                text: "New tweet"
             }

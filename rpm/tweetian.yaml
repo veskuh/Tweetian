@@ -29,9 +29,9 @@ Requires:
 - sailfishsilica-qt5
 PkgBR: []
 Files:
+- /opt/tweetian/bin
 - '%{_bindir}'
-- '%{_datadir}/%{name}/qml'
-- '%{_datadir}/applications/%{name}.desktop'
+- '%{_datadir}/applications/%{name}_harmattan.desktop'
 - /usr/bin
 - /usr/share/tweetian
 - /usr/share/applications
