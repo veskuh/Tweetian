@@ -95,7 +95,7 @@ OTHER_FILES += qtc_packaging/debian_harmattan/* \
 CONFIG += link_pkgconfig
 packagesExist(sailfishapp) {
 message("sailfishapp")
-    PKGCONFIG += sailfishapp
+    PKGCONFIG += sailfishapp mlite5
 
     include(notifications/notifications.pri)
 

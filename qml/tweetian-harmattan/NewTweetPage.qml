@@ -404,7 +404,8 @@ Page {
 
     WorkerScript { id: autoCompleterWorkerScript; source: "WorkerScript/AutoCompleter.js" }
 
-    PositionSource {
+    /* TODO enable position source for tweet location
+PositionSource {
         id: positionSource
         updateInterval: 1000
 
@@ -414,7 +415,7 @@ Page {
             positionSource.stop()
             locationButton.state = "done"
         }
-    }
+    } */
 
     ImageUploader {
         id: imageUploader

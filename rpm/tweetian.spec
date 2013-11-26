@@ -13,7 +13,7 @@ Name:       tweetian
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Tweetian is a feature-rich Twitter app for Symbian and Harmattan, powered by Qt/QML. It comes with a simple, native and amazing UI that will surely make you enjoy the Twitter experience on your smartphone.
-Version:    1.8.1
+Version:    1.8.2
 Release:    1
 Group:      Applications/Communications
 License:    GPLv3
