@@ -84,18 +84,32 @@ smartphone. Tweetian is open source and licensed under GPL v3.")
                 onClicked: pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: "DicksonBeta"})
             }
 
+            SectionHeader { text: qsTr("About Sailfish OS port") }
+
+            Item {
+                anchors { left: parent.left; right: parent.right }
+                height: sailfishText.height + 2 * sailfishText.anchors.margins
+
+                Text {
+                    id: sailfishText
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                        left: parent.left; right: parent.right
+                        margins: constant.paddingMedium
+                    }
+                    font.pixelSize: constant.fontSizeMedium
+                    color: constant.colorLight
+                    wrapMode: Text.Wrap
+                    text: "This is a preview of Sailfish OS port maintained by @veskuh. Porting from Qt4 to Qt5 by @siteshwarv"
+                }
+            }
+
             SectionHeader { text: qsTr("Powered By") }
 
             AboutPageItem {
                 imageSource: "Image/twitter-bird-white-on-blue.png"
                 text: "Twitter"
                 onClicked: pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: "twitter"})
-            }
-
-            AboutPageItem {
-                imageSource: "Image/nokia_icon.png"
-                text: "Nokia"
-                onClicked: pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: "nokia"})
             }
 
             AboutPageItem {

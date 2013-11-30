@@ -18,7 +18,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import QtMobility.location 1.2
+import QtLocation 5.0
 import "Dialog"
 import "Utils/Calculations.js" as Calculate
 

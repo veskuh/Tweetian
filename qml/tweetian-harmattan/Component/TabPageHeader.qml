@@ -31,7 +31,7 @@ Item {
     property ListView listView: null
     property variant iconArray: []
 
-    anchors { top: parent.top; left: parent.left; right: parent.right }
+    anchors { bottom: parent.bottom; left: parent.left; right: parent.right }
     height: constant.headerHeight
 
     Image {
