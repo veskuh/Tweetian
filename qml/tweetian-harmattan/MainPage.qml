@@ -90,7 +90,7 @@ Page {
         }
 
         clip:true
-        anchors { top: mainPageHeader.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
+        anchors { top: parent.top; bottom: mainPageHeader.top; left: parent.left; right: parent.right }
         highlightRangeMode: ListView.StrictlyEnforceRange
         snapMode: ListView.SnapOneItem
         orientation: ListView.Horizontal
@@ -106,7 +106,7 @@ Page {
             id: columnMovingAnimation
             target: mainView
             property: "contentX"
-            duration: 500
+            duration: 300
             easing.type: Easing.InOutExpo
         }
     }

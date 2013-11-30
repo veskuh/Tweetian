@@ -75,15 +75,16 @@ Page {
                 }
             }
 
-            MenuItem {
+           /* MenuItem {
                 text: qsTr("Tweet permalink")
                 onClicked: {
                     var permalink = "http://twitter.com/" + tweet.screenName + "/status/" + tweet.id
                     dialog.createOpenLinkDialog(permalink)
                 }
                 //platformStyle: MenuItemStyle { position: deleteTweetButton.visible ? "vertical-center" : "vertical-bottom" }
-            }
+            }*/
 
+            /*
             MenuItem {
                 text: translatedTweetLoader.sourceComponent ? qsTr("Hide translated tweet") : qsTr("Translate tweet")
                 onClicked: {
@@ -98,7 +99,7 @@ Page {
                         header.busy = true
                     }
                 }
-            }
+            }*/
 
             MenuItem {
                 id: deleteTweetButton
@@ -139,7 +140,7 @@ Page {
             MenuItem {
                 text: qsTr("Retweet")
                 onClicked: {
-                    var prop = { type: "RT", placedText: JS.contructRetweetText(), tweetId: tweet.id }
+                    var prop = { type: "RT", placedText: JS.contructRetweetText(), tweetId: ""+ tweet.id }
                     pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), prop)
                 }
             }

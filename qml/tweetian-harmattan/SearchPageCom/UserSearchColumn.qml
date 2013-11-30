@@ -75,7 +75,6 @@ Item {
         id: userSearchParser
         source: "../WorkerScript/UserParser.js"
         onMessage: {
-            backButton.enabled = true
             busy = false
         }
     }
@@ -87,7 +86,6 @@ Item {
         property string reloadType: "all"
 
         function userSearchOnSuccess(data) {
-            backButton.enabled = false
             userSearchParser.sendMessage({ type: reloadType, data: data, model: userSearchListView.model })
         }
 

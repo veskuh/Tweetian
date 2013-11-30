@@ -74,6 +74,6 @@ desktop-file-install --delete-original       \
 %{_datadir}/applications/%{name}_harmattan.desktop
 /usr/bin
 /usr/share/applications
-/usr/share/icons/hicolor/80x80/apps
+/usr/share/icons/hicolor/86x86/apps
 # >> files
 # << files

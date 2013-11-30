@@ -36,10 +36,8 @@ Item {
     property int unreadCount: 0
 
     property string reloadType: "all" //"older", "newer" or "all"
-    //property bool active: platformWindow.active && mainPage.status === PageStatus.Active &&
-    //                      mainView.currentIndex === (type === "Timeline" ? 0 : 1)
-
-    property bool active: true
+    property bool active: Qt.application.active && mainPage.status === PageStatus.Active &&
+                          mainView.currentIndex === (type === "Timeline" ? 0 : 1)
 
     function initialize() {
         var msg = {
@@ -120,17 +118,22 @@ Item {
         property string lastUpdate: ""
         PullDownMenu {
             MenuItem {
+                text: qsTr("About")
+                onClicked: pageStack.push(Qt.resolvedUrl("../AboutPage.qml"))
+            }
+
+            MenuItem {
                 onClicked: pageStack.push(Qt.resolvedUrl("../UserPage.qml"), {screenName: settings.userScreenName})
-                text: "User info"
+                text: "@"+settings.userScreenName
             }
 
             MenuItem {
                onClicked: pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"), {type: "New"})
-               text: "New tweet"
+               text: qsTr("New Tweet")
             }
             MenuItem {
                onClicked: if (!userStream.connected) refresh("newer")
-               text: "Refresh"
+               text: qsTr("Refresh")
             }
         }
 

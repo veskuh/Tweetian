@@ -255,6 +255,7 @@ Page {
                     //}
                 }
                 else if (type == "RT") {
+                    console.log("id" + tweetId)
                     Twitter.postRetweet(tweetId, internal.postStatusOnSuccess, internal.commonOnFailure)
                     // header.busy = true
                 }

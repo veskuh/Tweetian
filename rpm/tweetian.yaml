@@ -29,10 +29,8 @@ Requires:
 - qt5-qtsvg-plugin-imageformat-svg
 PkgBR: []
 Files:
-- /usr/share/icons/hicolor/80x80/apps
 - /usr/share/applications
-- /usr/share/tweetian
 - /usr/bin
 - '%{_datadir}/applications/%{name}_harmattan.desktop'
 - '%{_bindir}'
-- /opt/tweetian/bin
+- /usr/share/icons/hicolor/86x86/apps

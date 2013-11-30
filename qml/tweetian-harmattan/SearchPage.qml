@@ -59,7 +59,7 @@ Page {
         }
 
         anchors {
-            top: searchTextFieldContainer.bottom; bottom: parent.bottom
+            top: searchTextFieldContainer.bottom; bottom: searchPageHeader.top
             left: parent.left; right: parent.right
         }
         highlightRangeMode: ListView.StrictlyEnforceRange
@@ -70,6 +70,7 @@ Page {
             TweetSearchColumn {}
             UserSearchColumn {}
         }
+        clip: true
         onCurrentIndexChanged: if (!currentItem.firstTimeLoaded) currentItem.refresh("all")
         onWidthChanged: __contentXOffset = contentX - (currentIndex * width)
 
@@ -84,30 +85,19 @@ Page {
 
     Item {
         id: searchTextFieldContainer
-        anchors { top: searchPageHeader.bottom; left: parent.left; right: parent.right }
+        anchors { top: parent.top; left: parent.left; right: parent.right }
         height: searchTextField.height + 2 * searchTextField.anchors.margins
-
-        BorderImage {
-            anchors.fill: parent
-            border { left: 22; top: 22; right: 22; bottom: 22 }
-            source: "image://theme/meegotouch-button" + (settings.invertedTheme ? "" : "-inverted")
-                    + "-background-horizontal-center"
-        }
 
         TextField {
             id: searchTextField
-            anchors { top: parent.top; left: parent.left; right: searchButton.left; margins: constant.paddingMedium }
+            anchors { top: parent.top; left: parent.left; right: parent.right; margins: constant.paddingMedium }
             placeholderText: qsTr("Search for tweets or users")
             text: searchString
-         /*   platformSipAttributes: SipAttributes {
-                actionKeyEnabled: searchTextField.text || searchTextField.platformPreedit
-                actionKeyHighlighted: true
-                actionKeyLabel: qsTr("Search")
-            }
-            onAccepted: {
+            EnterKey.text: qsTr("Search")
+            EnterKey.onClicked: {
                 parent.focus = true // remove activeFocus on searchTextField
                 internal.changeSearch()
-            } */
+            }
             onActiveFocusChanged: if (!activeFocus) resetSearchTextTimer.start()
         }
 
@@ -116,24 +106,12 @@ Page {
             interval: 100
             onTriggered: searchTextField.text = searchString
         }
-
-        Button {
-            id: searchButton
-            anchors { top: parent.top; bottom: parent.bottom; right: parent.right; margins: constant.paddingMedium }
-            width: height
-            // the following line will cause the button can not be clicked when there is pre-edit text
-            // in textField because it will set enabled to false when keyboard closing
-            //enabled: searchTextField.text || searchTextField.platformPreedit
-            //opacity: enabled ? 1 : 0.25
-           // iconSource: "image://theme/icon-m-toolbar-search" + (settings.invertedTheme ? "" : "-white-selected")
-            onClicked: internal.changeSearch()
-        }
     }
 
     TabPageHeader {
         id: searchPageHeader
         listView: searchListView
-        iconArray: [Qt.resolvedUrl("Image/chat.png"), "image://theme/icon-m-toolbar-contact-white-selected"]
+        iconArray: [Qt.resolvedUrl("Image/chat.png"), "image://theme/icon-m-people"]
     }
 
     QtObject {
