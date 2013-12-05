@@ -179,6 +179,7 @@ function appendTweetsFromDB(tweetsDB, model) {
         tweet.isFavourited = (tweet.isFavourited == 1 ? true : false);
         tweet.isRetweet = (tweet.isRetweet == 1 ? true : false);
         tweet.timeDiff = timeDiff(tweet.createdAt);
+        tweet.id = tweet.id.toString()
         tweetsArray.push(tweet);
     })
 

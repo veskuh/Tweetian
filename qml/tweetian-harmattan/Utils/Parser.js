@@ -30,7 +30,7 @@ function linkText(text, href, italic) {
 
 function parseTweet(tweetJson) {
     var tweet = {
-        id: parseInt(tweetJson.id_str),
+        id: tweetJson.id_str,
         source: tweetJson.source.replace(/<[^>]+>/ig, ""),
         createdAt: new Date(tweetJson.created_at),
         isFavourited: tweetJson.favorited,
