@@ -24,16 +24,7 @@ import "Utils/Database.js" as Database
 Page {
     id: settingPage
 
-   /* tools: ToolBarLayout {
-        ToolIcon {
-            platformIconId: "toolbar-back"
-            onClicked: pageStack.pop()
-        }
-        ToolIcon {
-            platformIconId: "toolbar-view-menu"
-            onClicked: settingPageMenu.open()
-        }
-    }
+   /*
 
     Menu {
         id: settingPageMenu

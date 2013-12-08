@@ -91,7 +91,6 @@ OTHER_FILES += qtc_packaging/debian_harmattan/* \
     qml/tweetian-harmattan/Dialog/*.qml \
     qml/tweetian-harmattan/Utils/*js
 
-
 CONFIG += link_pkgconfig
 packagesExist(sailfishapp) {
 message("sailfishapp")
@@ -123,7 +122,8 @@ message("sailfishapp")
     HEADERS += src/harmattanutils.h
     SOURCES += src/harmattanutils.cpp
     OTHER_FILES += rpm/* \
-                   qml/tweetian-harmattan/WorkerScript/*
+                   qml/tweetian-harmattan/WorkerScript/* \
+                   qml/tweetian-harmattan/SettingsPageCom/*qml
 
 } else {
     # Please do not modify the following two lines. Required for deployment.
