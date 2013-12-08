@@ -47,18 +47,15 @@ Page {
             for (var i=0; i<data.length; i++) {
                 userCategoryView.model.append(data[i])
             }
-            header.busy = false
         }
 
         function onFailure(status, statusText) {
             infoBanner.showHttpError(status, statusText)
-            header.busy = false
         }
 
         function refresh() {
             userCategoryView.model.clear()
             Twitter.getSuggestedUserCategories(onSuccess, onFailure)
-            header.busy = true
         }
     }
 
@@ -76,7 +73,7 @@ Page {
                 id: categoryText
                 anchors {
                     verticalCenter: parent.verticalCenter
-                    left: userCategoryItem.left; leftMargin: constant.paddingLarge
+                    left: parent.left; leftMargin: constant.paddingLarge
                     right: countBubble.left; rightMargin: constant.paddingMedium
                 }
                 elide: Text.ElideRight
