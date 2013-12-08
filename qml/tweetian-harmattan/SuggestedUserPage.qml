@@ -17,7 +17,7 @@
 */
 
 import QtQuick 2.0
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
 import "Component"
 import "Delegate"
 import "Services/Twitter.js" as Twitter
@@ -29,13 +29,14 @@ Page {
 
     Component.onCompleted: script.refresh()
 
+    /*
     tools: ToolBarLayout {
         ToolIcon {
             id: backButton
             platformIconId: "toolbar-back" + (enabled ? "" : "-dimmed")
             onClicked: pageStack.pop()
         }
-    }
+    }*/
 
     ListView {
         id: suggestedUserView
@@ -44,7 +45,7 @@ Page {
         model: ListModel {}
     }
 
-    ScrollDecorator { flickableItem: suggestedUserView }
+//    ScrollDecorator { flickableItem: suggestedUserView }
 
     PageHeader {
         id: header
@@ -56,8 +57,6 @@ Page {
         id: userParser
         source: "WorkerScript/UserParser.js"
         onMessage: {
-            backButton.enabled = true
-            header.busy = false
         }
     }
 
@@ -66,12 +65,10 @@ Page {
 
         function refresh() {
             Twitter.getSuggestedUser(slug, onSuccess, onFailure)
-            header.busy = true
         }
 
         function onSuccess(data) {
-            backButton.enabled = false
-            header.headerText += ": " + data.name
+            header.title += ": " + data.name
             var msg = {
                 type: "all",
                 data: data.users,
@@ -82,7 +79,6 @@ Page {
 
         function onFailure(status, statusText) {
             infoBanner.showHttpError(status, statusText)
-            header.busy = false
         }
     }
 }
