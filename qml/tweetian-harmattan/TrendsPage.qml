@@ -17,7 +17,7 @@
 */
 
 import QtQuick 2.0
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
 import "Services/Twitter.js" as Twitter
 import "Component"
 
@@ -32,6 +32,7 @@ Page {
 
     Component.onCompleted: if (cache.trendsModel.count === 0) internal.refresh()
 
+    /*
     tools: ToolBarLayout {
         ToolIcon {
             platformIconId: "toolbar-back"
@@ -70,11 +71,70 @@ Page {
                 }
             }
         }
-    }
+    } */
 
     PullDownListView {
         id: trendsPageListView
-        anchors { top: searchTextFieldContainer.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
+        anchors.fill: parent
+
+        header: Column {
+            PageHeader {
+                id: header
+                title: qsTr("Trends & Search")
+            }
+            Item {
+                height: searchTextField.height
+                width: trendsPageListView.width
+
+                TextField {
+                    id: searchTextField
+                    anchors { top: parent.top; left: parent.left; right: searchButton.left; margins: constant.paddingMedium }
+                    placeholderText: qsTr("Search for tweets or users")
+                    label: qsTr("Search")
+
+                    EnterKey.enabled: searchTextField.text
+                    EnterKey.text: qsTr("Search")
+                    EnterKey.onClicked:{
+                        parent.focus = true // remove activeFocus on searchTextField
+                        pageStack.push(Qt.resolvedUrl("SearchPage.qml"), { searchString: searchTextField.text })
+                    }
+                    /*
+                    onActiveFocusChanged: {
+                        if (activeFocus) trendsPageListView.model = autoCompleterModel
+                        else if (internal.pressedOnListItem) {
+                            switchToTrendsModelDelayTimer.start()
+                            internal.pressedOnListItem = false
+                        }
+                        else trendsPageListView.model = cache.trendsModel
+                    }
+                    onTextChanged: internal.updateAutoCompleter()
+                    onPlatformPreeditChanged: internal.updateAutoCompleter() */
+                }
+
+                // If trendsPageListView.model is immediately switch to trendsModel, the trendsPageListView.delegate
+                // clicked action can not be trigger because the model changed and that pressed delegate is destroyed
+                // Therefore, a dirty timer is used for delay switching to trendsModel if the delegate is pressed
+                Timer {
+                    id: switchToTrendsModelDelayTimer
+                    interval: 250
+                    onTriggered: trendsPageListView.model = cache.trendsModel
+                }
+
+                IconButton {
+                    id: searchButton
+                    anchors { top: parent.top; bottom: parent.bottom; right: parent.right; margins: constant.paddingMedium }
+                    width: height
+                    // the following line will cause the button can not be clicked when there is pre-edit text
+                    // in textField because it will set enabled to false when keyboard closing
+                    //enabled: searchTextField.text || searchTextField.platformPreedit
+                    //opacity: enabled ? 1 : 0.25
+                    icon.source: "image://theme/icon-m-search"
+                    onClicked: pageStack.push(Qt.resolvedUrl("SearchPage.qml"), { searchString: searchTextField.text })
+                }
+            }
+        }
+
+
         model: cache.trendsModel
         lastUpdate: cache.trendsLastUpdate
         section.property: model == cache.trendsModel ? "type" : ""
@@ -116,71 +176,7 @@ Page {
         onPulledDown: if (model === cache.trendsModel) internal.refresh()
     }
 
-    ScrollDecorator { flickableItem: trendsPageListView }
-
-    Item {
-        id: searchTextFieldContainer
-        anchors { top: header.bottom; left: parent.left; right: parent.right }
-        height: searchTextField.height + 2 * searchTextField.anchors.margins
-
-        BorderImage {
-            anchors.fill: parent
-            border { left: 22; top: 22; right: 22; bottom: 22 }
-            source: "image://theme/meegotouch-button" + (settings.invertedTheme ? "" : "-inverted")
-                    + "-background-horizontal-center"
-        }
-
-        TextField {
-            id: searchTextField
-            anchors { top: parent.top; left: parent.left; right: searchButton.left; margins: constant.paddingMedium }
-            placeholderText: qsTr("Search for tweets or users")
-            platformSipAttributes: SipAttributes {
-                actionKeyEnabled: searchTextField.text || searchTextField.platformPreedit
-                actionKeyHighlighted: true
-                actionKeyLabel: qsTr("Search")
-            }
-            onAccepted: {
-                parent.focus = true // remove activeFocus on searchTextField
-                pageStack.push(Qt.resolvedUrl("SearchPage.qml"), { searchString: searchTextField.text })
-            }
-            onActiveFocusChanged: {
-                if (activeFocus) trendsPageListView.model = autoCompleterModel
-                else if (internal.pressedOnListItem) {
-                    switchToTrendsModelDelayTimer.start()
-                    internal.pressedOnListItem = false
-                }
-                else trendsPageListView.model = cache.trendsModel
-            }
-            onTextChanged: internal.updateAutoCompleter()
-            onPlatformPreeditChanged: internal.updateAutoCompleter()
-        }
-
-        // If trendsPageListView.model is immediately switch to trendsModel, the trendsPageListView.delegate
-        // clicked action can not be trigger because the model changed and that pressed delegate is destroyed
-        // Therefore, a dirty timer is used for delay switching to trendsModel if the delegate is pressed
-        Timer {
-            id: switchToTrendsModelDelayTimer
-            interval: 250
-            onTriggered: trendsPageListView.model = cache.trendsModel
-        }
-
-        Button {
-            id: searchButton
-            anchors { top: parent.top; bottom: parent.bottom; right: parent.right; margins: constant.paddingMedium }
-            width: height
-            // the following line will cause the button can not be clicked when there is pre-edit text
-            // in textField because it will set enabled to false when keyboard closing
-            //enabled: searchTextField.text || searchTextField.platformPreedit
-            //opacity: enabled ? 1 : 0.25
-            iconSource: "image://theme/icon-m-toolbar-search" + (settings.invertedTheme ? "" : "-white-selected")
-            onClicked: pageStack.push(Qt.resolvedUrl("SearchPage.qml"), { searchString: searchTextField.text })
-        }
-    }
-
-    PageHeader {
-        id: header
-        title: qsTr("Trends & Search")
-    }
+    //    ScrollDecorator { flickableItem: trendsPageListView }
 
     QtObject {
         id: internal
@@ -204,7 +200,7 @@ Page {
             if (!fullText) return
             switch (fullText.charAt(0)) {
             case "@": case "#": break;
-            default: fullText = "@" + fullText; break;
+                      default: fullText = "@" + fullText; break;
             }
             var msg = {
                 word: fullText,
