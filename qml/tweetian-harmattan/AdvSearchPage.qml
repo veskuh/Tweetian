@@ -35,8 +35,8 @@ Page {
             query += anyOfTheseWordsField.textFieldText.replace(/ /g, " OR ") + " "
         if (noneOfTheseWordsField.textFieldText && noneOfTheseWordsField.acceptableInput)
             query += "-" + noneOfTheseWordsField.textFieldText.replace(/ /g, " -") + " "
-        if (languageSelectionDialog.model.get(languageSelectionDialog.selectedIndex).code)
-            query += "lang:" + languageSelectionDialog.model.get(languageSelectionDialog.selectedIndex).code + " "
+        //if (languageSelectionDialog.model.get(languageSelectionDialog.selectedIndex).code)
+        //    query += "lang:" + languageSelectionDialog.model.get(languageSelectionDialog.selectedIndex).code + " "
         if (fromTheseUsersField.textFieldText && fromTheseUsersField.acceptableInput)
             query += "from:" + fromTheseUsersField.textFieldText.replace(/@/g, "").replace(/ /g, " OR from:") + " "
         if (toTheseUsersField.textFieldText && toTheseUsersField.acceptableInput)
@@ -63,35 +63,32 @@ Page {
         return query
     }
 
-   /* tools: ToolBarLayout {
-        Item { width: 80; height: 64 }
-        ButtonRow {
-            exclusive: false
-            spacing: constant.paddingMedium
-
-            ToolButton {
-                text: qsTr("Search")
-                onClicked: pageStack.push(Qt.resolvedUrl("SearchPage.qml"), {searchString: __contructQuery()})
-            }
-            ToolButton {
-                text: qsTr("Cancel")
-                onClicked: pageStack.pop()
-            }
-        }
-        Item { width: 80; height: 64 }
-    }*/
+    Button {
+        id: advSearchButton
+        anchors.bottom: advSearchPage.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        text: qsTr("Search")
+        onClicked: pageStack.push(Qt.resolvedUrl("SearchPage.qml"), {searchString: __contructQuery()})
+    }
 
     SilicaFlickable {
         id: mainFlickable
-        anchors { left: parent.left; right: parent.right; top: header.bottom; bottom: parent.bottom }
+        anchors { left: parent.left; right: parent.right; top: parent.top; bottom: advSearchButton.top }
         contentHeight: mainColumn.height
         flickableDirection: Flickable.VerticalFlick
+        clip: true
 
         Column {
             id: mainColumn
             anchors { left: parent.left; right: parent.right }
             height: childrenRect.height
             spacing: constant.paddingLarge
+            PageHeader {
+                id: header
+
+                title: qsTr("Advanced Search")
+            }
+
 
             SectionHeader { text: qsTr("Words") }
 
@@ -123,6 +120,7 @@ Page {
                 placeHolderText: qsTr("eg. %1").arg("iPhone Android")
             }
 
+            /*
             ListItem {
                 marginLineVisible: false
                 height: textColumn.height + 2 * textColumn.anchors.margins
@@ -159,7 +157,7 @@ Page {
                                                    : "Image/choice_list_indicator.svg"
                 }
                 onClicked: languageSelectionDialog.open()
-            }
+            } */
 
             SectionHeader { text: qsTr("Users") }
 
@@ -234,11 +232,6 @@ Page {
 
     //ScrollDecorator { flickableItem: mainFlickable }
 
-    PageHeader {
-        id: header
-
-        title: qsTr("Advanced Search")
-    }
 
    /* SelectionDialog {
         id: languageSelectionDialog
