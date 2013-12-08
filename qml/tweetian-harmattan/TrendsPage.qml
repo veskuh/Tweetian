@@ -173,7 +173,28 @@ Page {
                 }
             }
         }
-        onPulledDown: if (model === cache.trendsModel) internal.refresh()
+        PullDownMenu {
+            MenuItem {
+                text: "Advanced search"
+                onClicked: pageStack.push(Qt.resolvedUrl("AdvSearchPage.qml"))
+            }
+
+            MenuItem {
+                text: "Tweets nearby"
+                onClicked: pageStack.push(Qt.resolvedUrl("NearbyTweetsPage.qml"))
+            }
+
+            MenuItem {
+                text: "Suggested users to follow"
+                onClicked: pageStack.push(Qt.resolvedUrl("UserCategoryPage.qml"))
+            }
+
+            MenuItem {
+                text: "Reload"
+                visible: trendsPageListView.model === cache.trendsMode
+                onClicked: internal.refresh()
+            }
+        }
     }
 
     //    ScrollDecorator { flickableItem: trendsPageListView }
