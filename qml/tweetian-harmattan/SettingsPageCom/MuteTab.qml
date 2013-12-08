@@ -17,20 +17,28 @@
 */
 
 import QtQuick 2.0
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
 
 Page {
     id: muteTab
 
+    PageHeader {
+        id: header
+        title: qsTr("Mute")
+    }
+
     TextArea {
         id: muteTextArea
         anchors {
-            fill: parent
+            top: header.bottom
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
+
             margins: constant.paddingMedium
-            bottomMargin: inputContext.softwareInputPanelVisible
+            bottomMargin: Qt.inputMethod.visible
                           ? anchors.margins : buttonContainer.height + 2 * buttonContainer.anchors.margins
         }
-        textFormat: TextEdit.PlainText
         font.pixelSize: constant.fontSizeXLarge
         placeholderText: qsTr("Example:\n%1").arg("@nokia #SwitchtoLumia\nsource:Tweet_Button\niPhone")
         text: settings.muteString

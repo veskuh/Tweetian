@@ -17,7 +17,7 @@
 */
 
 import QtQuick 2.0
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
 
 Item {
     id: root
@@ -45,8 +45,7 @@ Item {
         anchors { top: mainText.bottom; left: parent.left; right: parent.right; margins: constant.paddingSmall }
         enabled: root.enabled
         minimumValue: 0
-        valueIndicatorText: value == 0 ? "Off" : value
-        valueIndicatorVisible: true
+        valueText: value == 0 ? "Off" : value
         onPressedChanged: if (!pressed) root.released()
     }
 }

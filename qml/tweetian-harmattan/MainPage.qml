@@ -34,34 +34,6 @@ Page {
 
     onStatusChanged: if (status == PageStatus.Activating) loadingRect.visible = false
 
-    /*
-    tools: ToolBarLayout {
-        ToolIcon {
-            platformIconId: "toolbar-back-dimmed"
-            enabled: false
-        }
-        ToolIcon {
-            id: newTweetButton
-            platformIconId: "toolbar-edit"
-            onClicked: pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), {type: "New"})
-        }
-        ToolIcon {
-            id: messageButton
-            platformIconId: "toolbar-search"
-            onClicked: pageStack.push(Qt.resolvedUrl("TrendsPage.qml"))
-        }
-        ToolIcon {
-            platformIconId: "toolbar-contact"
-            onClicked: pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: settings.userScreenName})
-        }
-        ToolIcon {
-            id: optionsButton
-            platformIconId: "toolbar-view-menu"
-            onClicked: mainMenu.open()
-        }
-    }*/
-
-
     SilicaListView {
         id: mainView
         objectName: "mainView"
