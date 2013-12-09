@@ -5,7 +5,7 @@ Type=Application
 Terminal=false
 Name=Tweetian
 Exec=/usr/bin/invoker --type=silica-qt5 -s /usr/bin/tweetian
-Icon=tweetian80.png
+Icon=tweetian80
 X-Window-Icon=
 X-HildonDesk-ShowInToolbar=true
 X-Osso-Type=application/x-executable

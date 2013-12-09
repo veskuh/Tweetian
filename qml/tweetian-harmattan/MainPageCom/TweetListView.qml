@@ -124,7 +124,7 @@ Item {
 
             MenuItem {
                 onClicked: pageStack.push(Qt.resolvedUrl("../TrendsPage.qml"))
-                text: qsTr("Search")
+                text: qsTr("Trends & Search")
             }
 
             MenuItem {
