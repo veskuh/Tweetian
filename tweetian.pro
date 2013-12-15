@@ -105,7 +105,7 @@ message("sailfishapp")
 
     target.path = /usr/bin
 
-    sailfish_icon.files = tweetian80.png
+    sailfish_icon.files = tweetian86.png
     sailfish_icon.path = /usr/share/icons/hicolor/86x86/apps
 
     INCLUDEPATH += /usr/include/sailfishapp
