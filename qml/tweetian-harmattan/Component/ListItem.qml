@@ -51,7 +51,7 @@ BackgroundItem {
 
         Item {
             id: pic
-            width: constant.graphicSizeMedium; height: constant.graphicSizeMedium
+            width: constant.graphicSizeLarge; height: constant.graphicSizeLarge
         //    mask: Image { source: "../Image/pic_mask.png"}
 
             Image {
