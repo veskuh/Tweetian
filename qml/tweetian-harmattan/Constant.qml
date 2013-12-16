@@ -49,7 +49,7 @@ QtObject {
     property int graphicSizeMedium: 48
     property int graphicSizeLarge: 72
 
-    property int thumbnailSize: 150
+    property int thumbnailSize: 200
 
     // other
    // property int headerHeight: inPortrait ? 65 : 55

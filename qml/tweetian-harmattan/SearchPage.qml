@@ -83,14 +83,19 @@ Page {
         }
     }
 
+    PageHeader {
+        id: titleHeader
+        title: qsTr("Search")
+    }
+
     Item {
         id: searchTextFieldContainer
-        anchors { top: parent.top; left: parent.left; right: parent.right }
+        anchors { top: titleHeader.bottom; left: parent.left; right: parent.right }
         height: searchTextField.height + 2 * searchTextField.anchors.margins
 
         TextField {
             id: searchTextField
-            anchors { top: parent.top; left: parent.left; right: parent.right; margins: constant.paddingMedium }
+            anchors { top: parent.top; left: parent.left; right: parent.right; margins: 0 }
             placeholderText: qsTr("Search for tweets or users")
             text: searchString
             EnterKey.text: qsTr("Search")
