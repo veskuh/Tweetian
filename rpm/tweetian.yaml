@@ -27,6 +27,7 @@ Requires:
 - qt5-qtdeclarative-import-positioning
 - qt5-qtdeclarative-import-location
 - sailfishsilica-qt5
+- qt5-qtlocation
 PkgBR: []
 Files:
 - /usr/share/icons/hicolor/86x86/apps

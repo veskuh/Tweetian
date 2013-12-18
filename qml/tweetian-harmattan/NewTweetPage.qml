@@ -127,6 +127,7 @@ Page {
         errorHighlight: charLeftText.text < 0 && type != "RT"
         font.pixelSize: constant.fontSizeMedium
         placeholderText: qsTr("Tap to write...")
+        focus: true
         color: constant.colorLight
         text: placedText
         states: [
