@@ -24,7 +24,7 @@ import QtPositioning 5.0
 import "Services/Twitter.js" as Twitter
 import "Services/TwitLonger.js" as TwitLonger
 import "Component"
-import Uploader 1.0
+import harbour.tweetian.Uploader 1.0
 
 Page {
     id: newTweetPage
