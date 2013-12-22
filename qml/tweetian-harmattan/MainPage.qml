@@ -21,7 +21,7 @@ import Sailfish.Silica 1.0
 import "Services/Twitter.js" as Twitter
 import "Component"
 import "MainPageCom"
-import UserStream 1.0
+import harbour.tweetian.UserStream 1.0
 import "MainPageCom/UserStream.js" as StreamScript
 import "Utils/Parser.js" as Parser
 

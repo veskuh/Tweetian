@@ -81,8 +81,8 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     HarmattanUtils harmattanUtils;
     view->rootContext()->setContextProperty("harmattanUtils", &harmattanUtils);
 
-    qmlRegisterType<ImageUploader>("Uploader", 1, 0, "ImageUploader");
-    qmlRegisterType<UserStream>("UserStream", 1, 0, "UserStream");
+    qmlRegisterType<ImageUploader>("harbour.tweetian.Uploader", 1, 0, "ImageUploader");
+    qmlRegisterType<UserStream>("harbour.tweetian.UserStream", 1, 0, "UserStream");
     //view.rootContext()->setContextProperty("ImageUploader", new ImageUploader());
     //view.rootContext()->setContextProperty("UserStream", new UserStream());
 
