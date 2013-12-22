@@ -165,6 +165,8 @@ Item {
         Component { id: streamingHeader; StreamingHeader {} }
     }
 
+    ScrollDecorator { flickable: tweetView }
+
    // FastScroll { listView: tweetView }
 
     // Timer used for refresh the timestamp of every tweet every minute. triggeredOnStart is set to true
