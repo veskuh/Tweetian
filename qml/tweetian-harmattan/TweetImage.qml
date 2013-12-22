@@ -24,6 +24,7 @@ Page {
 
     property string imageLink: ""
     property url imageUrl: ""
+    allowedOrientations: Orientation.All
 
     /*tools: ToolBarLayout {
         ToolIcon {
