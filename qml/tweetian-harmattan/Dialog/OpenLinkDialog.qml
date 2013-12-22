@@ -16,7 +16,7 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 2.0
+import QtQuick 2.1
 import Sailfish.Silica 1.0
 
 import "../Component"
@@ -49,8 +49,8 @@ ContextMenu {
         MenuItem {
             text: qsTr("Open link in web browser")
             onClicked: {
-                Qt.openUrlExternally(link)
                 infoBanner.showText(qsTr("Launching web browser..."))
+                Qt.openUrlExternally(link)
             }
         }
         MenuItem {
