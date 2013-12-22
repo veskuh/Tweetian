@@ -66,6 +66,8 @@ Page {
         }
     }
 
+    ScrollDecorator { flickable: listView }
+
     Text {
         anchors.centerIn: parent
         visible: listView.count == 0 && !loadingRect.visible
@@ -73,8 +75,6 @@ Page {
         color: constant.colorMid
         text: root.emptyText
     }
-
-   // ScrollDecorator { flickableItem: listView }
 
     PageHeader {
         id: header
