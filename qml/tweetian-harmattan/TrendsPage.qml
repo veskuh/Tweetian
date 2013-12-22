@@ -197,7 +197,7 @@ Page {
         }
     }
 
-    //    ScrollDecorator { flickableItem: trendsPageListView }
+    ScrollDecorator { flickable: trendsPageListView }
 
     QtObject {
         id: internal
