@@ -78,7 +78,7 @@ function parseDM(dmJson, isReceiveDM) {
         name: (isReceiveDM ? dmJson.sender.name : dmJson.recipient.name),
         screenName: (isReceiveDM ? dmJson.sender_screen_name : dmJson.recipient_screen_name),
         profileImageUrl: (isReceiveDM ? dmJson.sender.profile_image_url : dmJson.recipient.profile_image_url),
-        createdAt: dmJson.created_at,
+        createdAt: new Date(dmJson.created_at),
         isReceiveDM: isReceiveDM
     }
     return dm;
