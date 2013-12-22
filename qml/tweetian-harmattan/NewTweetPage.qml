@@ -16,7 +16,7 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 2.0
+import QtQuick 2.1
 import Sailfish.Silica 1.0
 import QtLocation 5.0
 import QtPositioning 5.0
@@ -502,12 +502,12 @@ PositionSource {
         }
 
         function postStatusOnSuccess(data) {
-            /*       switch (type) {
+            switch (type) {
             case "New": infoBanner.showText(qsTr("Tweet sent successfully")); break;
             case "Reply": infoBanner.showText(qsTr("Reply sent successfully")); break;
             case "DM":infoBanner.showText(qsTr("Direct message sent successfully")); break;
             case "RT": infoBanner.showText(qsTr("Retweet sent successfully")); break;
-            }*/
+            }
             pageStack.pop()
         }
 
@@ -527,7 +527,7 @@ PositionSource {
         }
 
         function commonOnFailure(status, statusText) {
-            // infoBanner.showHttpError(status, statusText)
+            infoBanner.showHttpError(status, statusText)
             //header.busy = false
             console.log("error" + statusText)
         }

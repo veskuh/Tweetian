@@ -16,7 +16,7 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 2.0
+import QtQuick 2.1
 import Sailfish.Silica 1.0
 import "Services/Twitter.js" as Twitter
 import "Component"
@@ -143,15 +143,15 @@ below and click done.")
                 tokenSecretTempo = tokenSecret;
                 var signInUrl = "https://api.twitter.com/oauth/authorize?oauth_token=" + tokenTempo;
                 Qt.openUrlExternally(signInUrl);
-                //infoBanner.showText("Launching external web browser...");
+                infoBanner.showText("Launching external web browser...");
                 header.busy = false;
                 console.log("Launching web browser with url:", signInUrl);
              }, function(status, statusText) {
                  if (status === 401)
                      console.log(qsTr("Error: Unable to authorize with Twitter. \
 Make sure the time/date of your phone is set correctly."))
-                 //else
-                 //    infoBanner.showHttpError(status, statusText);
+                 else
+                     infoBanner.showHttpError(status, statusText);
                  //header.busy = false;
              });
             // header.busy = true;
@@ -163,7 +163,7 @@ Make sure the time/date of your phone is set correctly."))
                 settings.oauthToken = token
                 settings.oauthTokenSecret = tokenSecret
                 settings.userScreenName = screenName
-            //    infoBanner.showText(qsTr("Signed in successfully"))
+                infoBanner.showText(qsTr("Signed in successfully"))
                 settings.settingsLoaded()
                 pageStack.pop(null)
             }, function(status, statusText) {

@@ -16,7 +16,7 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 2.0
+import QtQuick 2.1
 import Sailfish.Silica 1.0
 import "Services/Twitter.js" as Twitter
 import "Component"
@@ -71,7 +71,7 @@ Page {
                 text: qsTr("Copy tweet")
                 onClicked: {
                     QMLUtils.copyToClipboard("@" + tweet.screenName + ": " + tweet.plainText)
-                    //infoBanner.showText(qsTr("Tweet copied to clipboard"))
+                    infoBanner.showText(qsTr("Tweet copied to clipboard"))
                 }
             }
 
@@ -296,9 +296,9 @@ Page {
                                 else {
                                     if (model.link) {
                                         var success = Qt.openUrlExternally(model.link)
-                                        //if (!success) infoBanner.showText(qsTr("Error opening link: %1").arg(model.link))
+                                        if (!success) infoBanner.showText(qsTr("Error opening link: %1").arg(model.link))
                                     }
-                                    //else infoBanner.showText(qsTr("Streaming link is not available"))
+                                    else infoBanner.showText(qsTr("Streaming link is not available"))
                                 }
                             }
                         }

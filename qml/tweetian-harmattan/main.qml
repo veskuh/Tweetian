@@ -16,7 +16,7 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 2.0
+import QtQuick 2.1
 import Sailfish.Silica 1.0
 import QtFeedback 5.0
 
@@ -34,20 +34,48 @@ ApplicationWindow {
 
     ThemeEffect { id: basicHapticEffect; effect: ThemeEffect.Appear }
 
-    QtObject {
+    Rectangle {
         id: infoBanner
-        //topMargin: showStatusBar ? 40 : 8
+
+        width: parent.width
+        height: infoText.height + 2 * Theme.paddingMedium
+
+        color: Theme.highlightBackgroundColor
+        opacity: 0.0
+        // On top of everything
+        z: 1
 
         function showText(text) {
-          //  infoBanner.text = text
-          //  infoBanner.show()
+            infoText.text = text
+            opacity = 0.9
             console.log("INFO: " + text)
+            closeTimer.restart()
         }
 
         function showHttpError(errorCode, errorMessage) {
             if (errorCode === 0) showText(qsTr("Server or connection error"))
             else if (errorCode === 429) showText(qsTr("Rate limit reached, please try again later"))
             else showText(qsTr("Error: %1").arg(errorMessage + " (" + errorCode + ")"))
+        }
+
+        Label {
+            id: infoText
+            anchors.top: parent.top
+            anchors.topMargin: Theme.paddingMedium
+            x: Theme.paddingMedium
+            width: parent.width - 2 * Theme.paddingMedium
+            color: Theme.highlightColor
+            maximumLineCount: 2
+            horizontalAlignment: Text.AlignHCenter
+            wrapMode: Text.Wrap
+        }
+
+        Behavior on opacity { FadeAnimation {} }
+
+        Timer {
+            id: closeTimer
+            interval: 2000
+            onTriggered: infoBanner.opacity = 0.0
         }
     }
 
@@ -109,9 +137,6 @@ ApplicationWindow {
     }
 
     Component.onCompleted: {
-
-        console.log("Theme:" + Theme.highlightColor)
-        //globalHighlight = Theme.highlightColor.name()
         settings.loadSettings()
     }
 }
