@@ -115,7 +115,7 @@ function storeDMs(model) {
 function getDMs() {
     var dms = []
     db.readTransaction(function(tx) {
-        var rs = tx.executeSql('SELECT * FROM DM ORDER BY id DESC;')
+        var rs = tx.executeSql('SELECT CAST(id as TEXT) AS id, richText, name, screenName, profileImageUrl, createdAt, isReceiveDM FROM DM ORDER BY id DESC;')
         for (var i=0; i<rs.rows.length; i++) {
             dms.push(rs.rows.item(i));
         }
@@ -178,7 +178,12 @@ function __storeTweetsShared(tableName, model) {
 function __getTweetsShared(tableName) {
     var tweets = []
     db.readTransaction(function(tx) {
-        var rs = tx.executeSql('SELECT * FROM ' + tableName + ' ORDER BY id DESC;')
+        // We convert id, latitude, and longitude to string here since that is how incoming JSON is handled
+        // id we have to convert otherwise we lose digits, for lat/lng this is just the way its done
+        var rs = tx.executeSql('SELECT cast(id as TEXT) as id, plainText, richText, ' +
+                               'name, screenName, profileImageUrl, inReplyToScreenName, ' +
+                               'inReplyToStatusId, cast (latitude as TEXT) as latitude, cast (longitude as TEXT) as longitude, mediaUrl, source, ' +
+                               'createdAt, isFavourited, isRetweet, retweetScreenName FROM ' + tableName + ' ORDER BY id DESC;')
         for (var i=0; i<rs.rows.length; i++) {
             tweets.push(rs.rows.item(i));
         }
