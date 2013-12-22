@@ -58,7 +58,7 @@ Page {
         onPulledDown: if (!userStream.connected) mainPage.directMsg.refresh("newer")
     }
 
-    //ScrollDecorator { flickableItem: dMConversationView }
+    ScrollDecorator { flickable: dMConversationView }
 
     PageHeader {
         id: header

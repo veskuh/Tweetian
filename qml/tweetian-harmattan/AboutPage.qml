@@ -142,7 +142,7 @@ smartphone. Tweetian is open source and licensed under GPL v3.")
         }
     }
 
-   // ScrollDecorator { flickableItem: aboutPageFlickable }
+    ScrollDecorator { flickable: aboutPageFlickable }
 
     PageHeader {
         id: header
