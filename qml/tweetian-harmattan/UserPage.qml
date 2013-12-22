@@ -285,9 +285,11 @@ Page {
                 }
             }
         }
+
+
     }
 
-    // ScrollDecorator { flickableItem: userFlickable }
+    ScrollDecorator { flickable: userFlickable }
 
     QtObject {
         id: internal
