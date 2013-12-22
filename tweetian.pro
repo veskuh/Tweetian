@@ -1,5 +1,5 @@
 TEMPLATE = app
-TARGET = tweetian
+TARGET = harbour-tweetian
 
 # Application version
 VERSION = 1.8.3
@@ -81,7 +81,7 @@ symbian{
 
 OTHER_FILES += qtc_packaging/debian_harmattan/* \
     i18n/tweetian_*.ts \
-    tweetian_harmattan.desktop \
+    harbour-tweetian.desktop \
     README.md \
     qml/tweetian-harmattan/*.qml \
     qml/tweetian-harmattan/*.js \
@@ -98,14 +98,14 @@ message("sailfishapp")
 
     include(notifications/notifications.pri)
 
-    desktopfile.files = $${TARGET}_harmattan.desktop
+    desktopfile.files = $${TARGET}.desktop
     desktopfile.path = /usr/share/applications
 
     export (desktopfile)
 
     target.path = /usr/bin
 
-    sailfish_icon.files = tweetian86.png
+    sailfish_icon.files = harbour-tweetian.png
     sailfish_icon.path = /usr/share/icons/hicolor/86x86/apps
 
     INCLUDEPATH += /usr/include/sailfishapp
