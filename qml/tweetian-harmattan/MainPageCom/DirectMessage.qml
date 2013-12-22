@@ -118,6 +118,8 @@ Item {
         Component { id: streamingHeader; StreamingHeader {} }
     }
 
+    ScrollDecorator { flickable: directMsgView }
+
     Text {
         anchors.centerIn: parent
         visible: directMsgView.count == 0 && !busy
@@ -125,8 +127,6 @@ Item {
         color: constant.colorMid
         text: qsTr("No message")
     }
-
-    //ScrollDecorator { flickableItem: directMsgView }
 
     Timer {
         id: refreshTimeStampTimer
