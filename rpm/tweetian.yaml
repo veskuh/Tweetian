@@ -29,6 +29,9 @@ Requires:
 - sailfishsilica-qt5
 PkgBR: []
 Files:
+- /usr/share/applications
+- /usr/share/icons/hicolor/86x86/apps
+- /usr/bin
 - '%{_datadir}/applications/%{name}.desktop'
 - '%{_bindir}/%{name}'
 - '%{_datadir}/icons/hicolor/86x86/apps/%{name}.png'
