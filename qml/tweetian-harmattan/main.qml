@@ -24,6 +24,16 @@ ApplicationWindow {
     id: window
     initialPage: MainPage { id: mainPage }
     cover: CoverBackground {
+        Label {
+            anchors {
+                right: parent.right; rightMargin: constant.paddingMedium
+            }
+             visible: true
+             font.pixelSize: Theme.fontSizeMedium
+             color: Theme.highlightColor
+
+             text: mainPage.getTotalUnreadCount()
+         }
 
         CoverActionList {
             CoverAction {
