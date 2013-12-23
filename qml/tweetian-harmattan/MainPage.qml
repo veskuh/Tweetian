@@ -183,4 +183,8 @@ Page {
             }
         }
     }
+
+    function refreshAll() {
+        StreamScript.refreshAll();
+    }
 }
