@@ -129,6 +129,7 @@ Page {
         placeholderText: qsTr("Tap to write...")
         focus: true
         color: constant.colorLight
+        cursorPosition: placedText.length
         text: placedText
         states: [
             State {
