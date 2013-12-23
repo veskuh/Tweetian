@@ -32,38 +32,32 @@ Page {
 
     Component.onCompleted: internal.insertDMs(mainPage.directMsg.fullModel.count)
 
-    /*tools: ToolBarLayout {
-        ToolIcon {
-            platformIconId: "toolbar-back" + (enabled ? "" : "-dimmed")
-            enabled: !internal.workerScriptRunning
-            onClicked: pageStack.pop()
-        }
-        ToolIcon {
-            platformIconId: "toolbar-edit"
-            onClicked: pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"), {type: "DM", screenName: screenName})
-        }
-        ToolIcon {
-            platformIconId: "toolbar-refresh" + (enabled ? "" : "-dimmed")
-            enabled: !userStream.connected
-            onClicked: mainPage.directMsg.refresh("newer")
-        }
-    }*/
-
     PullDownListView {
         id: dMConversationView
-        anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
+        anchors.fill: parent
         model: ListModel {}
-        header: PullToRefreshHeader { visible: !userStream.connected }
         delegate: DirectMsgDelegate {}
-        onPulledDown: if (!userStream.connected) mainPage.directMsg.refresh("newer")
+
+        header: PageHeader {
+            id: header
+            title: qsTr("DM: %1").arg("@" + screenName)
+         }
+
+
+        PullDownMenu {
+            MenuItem {
+                text: qsTr("Reply")
+                onClicked: pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"), {type: "DM", screenName: screenName})
+            }
+
+            MenuItem {
+                text: qsTr("Refresh")
+                onClicked: mainPage.directMsg.refresh("newer")
+            }
+        }
     }
 
     ScrollDecorator { flickable: dMConversationView }
-
-    PageHeader {
-        id: header
-        title: qsTr("DM: %1").arg("@" + screenName)
-     }
 
     WorkerScript {
         id: dmConversationParser
