@@ -28,7 +28,7 @@ ApplicationWindow {
             anchors {
                 right: parent.right; rightMargin: constant.paddingMedium
             }
-             visible: true
+             visible: mainPage.getTotalUnreadCount() > 0
              font.pixelSize: Theme.fontSizeMedium
              color: Theme.highlightColor
 
