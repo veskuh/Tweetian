@@ -23,7 +23,23 @@ import QtFeedback 5.0
 ApplicationWindow {
     id: window
     initialPage: MainPage { id: mainPage }
-    cover:undefined
+    cover: CoverBackground {
+
+        CoverActionList {
+            CoverAction {
+                iconSource: "image://theme/icon-cover-refresh"
+                /* Refresh timeline, mentions and DMs */
+                onTriggered: { mainPage.refreshAll(); }
+            }
+
+            CoverAction {
+                iconSource: "image://theme/icon-cover-message"
+                /*Push the new tweet page on top of stack and activate window */
+                onTriggered: { pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), {type: "New"}); window.activate(); }
+            }
+        }
+    }
+
 
     //showStatusBar: inPortrait
     //showToolBar: true
