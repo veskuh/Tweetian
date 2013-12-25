@@ -16,6 +16,8 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+.import "../Utils/Database.js" as Database
+
 function pocketSuccessCallback(username, password) {
     settings.pocketUsername = username
     settings.pocketPassword = password
@@ -61,20 +63,19 @@ function createInstapaperSignInDialog() {
     })
 }
 
-function createTwitterSignOutDialog() {
-    var message = qsTr("Do you want to sign out from your Twitter account? All other accounts will also automatically sign out. All settings will be reset.")
-    dialog.createQueryDialog(qsTr("Twitter Sign Out"), "", message, function() {
-        Database.clearTable("Timeline")
-        mainPage.timeline.removeAllTweet();
-        Database.clearTable("Mentions")
-        mainPage.mentions.removeAllTweet();
-        Database.clearTable("DM")
-        mainPage.directMsg.removeAllDM()
-        Database.clearTable("ScreenNames")
-        settings.resetAll()
-        cache.clearAll()
-        window.pageStack.push(Qt.resolvedUrl("../SignInPage.qml"))
-    })
+function twitterSignOut() {
+    window.pageStack.clear();
+    Database.clearTable("Timeline")
+    mainPage.timeline.removeAllTweet();
+    Database.clearTable("Mentions")
+    mainPage.mentions.removeAllTweet();
+    Database.clearTable("DM")
+    mainPage.directMsg.removeAllDM()
+    Database.clearTable("ScreenNames")
+    settings.resetAll()
+    cache.clearAll()
+    window.pageStack.push(Qt.resolvedUrl("../MainPage.qml"))
+    window.pageStack.push(Qt.resolvedUrl("../SignInPage.qml"))
 }
 
 function createPocketSignOutDialog() {
