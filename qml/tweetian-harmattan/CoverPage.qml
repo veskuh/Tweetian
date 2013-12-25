@@ -35,7 +35,7 @@ CoverBackground {
         }
 
         /* TODO: It won't show new tweets on cover, we need to store tweets in database after fetching */
-        onUnreadCountChanged: refresh()
+        //onUnreadCountChanged: refresh()
 
         Component.onCompleted: {
             refresh();
