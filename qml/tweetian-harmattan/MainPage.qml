@@ -192,7 +192,6 @@ Page {
         var count = 0;
         for (var i in mainView.model.children){
             count += mainView.model.children[i].unreadCount;
-            console.log(count);
         }
 
         return count;

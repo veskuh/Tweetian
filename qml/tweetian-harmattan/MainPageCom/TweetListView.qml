@@ -240,6 +240,15 @@ Item {
         function __createNotification(newTweetCount) {
             if (newTweetCount <= 0) return;
 
+            if (type === "Timeline") {
+                Database.setSetting({"timelineLastUpdate": tweetView.lastUpdate})
+                Database.storeTimeline(tweetView.model);
+            }
+            else {
+                Database.setSetting({"mentionsLastUpdate": tweetView.lastUpdate})
+                Database.storeMentions(tweetView.model);
+            }
+
             if (tweetView.stayAtCurrentPosition || tweetView.indexAt(0, tweetView.contentY) > 0)
                 unreadCount += newTweetCount;
 
