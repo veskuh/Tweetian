@@ -51,9 +51,17 @@ CoverBackground {
                 anchors { left: parent.left; right: parent.right; margins: constant.paddingSmall }
                 height: appCover.height/3
 
+                Image {
+                   id: profileImage
+                   width: 20; height: 20
+                   anchors { left: parent.left; bottom: msgText.top; }
+                   source: profileImageUrl
+
+                }
+
                 Text {
                    id: usernameText
-                   anchors { left: parent.left; right: parent.right }
+                   anchors { left: profileImage.right; right: parent.right; leftMargin: constant.paddingSmall }
 
                    text: "@" + screenName
                    font { pixelSize: Theme.fontSizeTiny; family: Theme.fontFamily; bold: true }
