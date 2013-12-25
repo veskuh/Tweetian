@@ -7,6 +7,11 @@ CoverBackground {
         id: appCover
         property variant unreadCount: mainPage.getTotalUnreadCount()
 
+        WorkerScript {
+            id: tweetParser
+            source: "WorkerScript/TweetsParser.js"
+        }
+
         Label {
             id: unreadLabel
             anchors {
@@ -17,9 +22,10 @@ CoverBackground {
             color: Theme.highlightColor
 
             text: appCover.unreadCount
-         }
+        }
 
         function refresh() {
+            coverTweetList.model.clear();
             var timeline = Database.getTimeline();
             if (timeline.length > 2) {
                 timeline = timeline.slice(0, 2);
@@ -34,8 +40,10 @@ CoverBackground {
             tweetParser.sendMessage(msg);
         }
 
-        /* TODO: It won't show new tweets on cover, we need to store tweets in database after fetching */
-        //onUnreadCountChanged: refresh()
+        /* TODO: Update cover with new tweets. Strangely uncommenting following
+           line doesn't show new tweets, this will just clear the tweet list
+        */
+        // onUnreadCountChanged: refresh();
 
         Component.onCompleted: {
             refresh();
@@ -45,7 +53,8 @@ CoverBackground {
             id: coverTweetList
             width: parent.width; height: parent.height
             anchors.top: unreadLabel.bottom
-            model: ListModel{ }
+            model: ListModel { }
+
             delegate: Item {
                 id: item
                 anchors { left: parent.left; right: parent.right; margins: constant.paddingSmall }
@@ -85,11 +94,6 @@ CoverBackground {
                     }
                  }
             }
-        }
-
-        WorkerScript {
-            id: tweetParser
-            source: "WorkerScript/TweetsParser.js"
         }
 
         CoverActionList {
