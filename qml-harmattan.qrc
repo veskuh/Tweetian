@@ -156,5 +156,6 @@
         <file>i18n/tweetian_tr.qm</file>
         <file>i18n/tweetian_vi.qm</file>
         <file>i18n/tweetian_zh.qm</file>
+        <file>qml/tweetian-harmattan/SignOutPage.qml</file>
     </qresource>
 </RCC>

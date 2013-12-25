@@ -40,6 +40,12 @@ Page {
                 text: "Muting"
                 onClicked: pageStack.push(Qt.resolvedUrl("SettingsPageCom/MuteTab.qml"))
             }
+            Button {
+                text: qsTr("Sign Out")
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("SignOutPage.qml"));
+                }
+            }
         }
 
     }
