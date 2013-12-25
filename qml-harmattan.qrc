@@ -132,6 +132,7 @@
         <file>qml/tweetian-harmattan/WorkerScript/SearchParser.js</file>
         <file>qml/tweetian-harmattan/WorkerScript/TweetsParser.js</file>
         <file>qml/tweetian-harmattan/WorkerScript/UserParser.js</file>
+        <file>qml/tweetian-harmattan/CoverPage.qml</file>
         <file>i18n/tweetian_ar.qm</file>
         <file>i18n/tweetian_ca.qm</file>
         <file>i18n/tweetian_de.qm</file>
