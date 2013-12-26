@@ -23,25 +23,12 @@ import QtFeedback 5.0
 ApplicationWindow {
     id: window
     initialPage: MainPage { id: mainPage }
-    cover: undefined
+    cover: (settings.oauthToken != "" && settings.oauthTokenSecret != "") ? Qt.resolvedUrl("CoverPage.qml") : undefined;
 
     //showStatusBar: inPortrait
     //showToolBar: true
 
-    Settings {
-        id: settings
-        /* Change cover when we have token secret */
-        onOauthTokenSecretChanged: changeCover()
-
-        function changeCover() {
-            if (oauthToken != "" && oauthTokenSecret != "") {
-                window.cover = Qt.resolvedUrl("CoverPage.qml")
-            }
-            else {
-                window.cover = undefined;
-            }
-        }
-    }
+    Settings { id: settings }
 
     Cache { id: cache }
     Constant { id: constant }
