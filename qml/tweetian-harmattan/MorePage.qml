@@ -1,6 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
+import "SettingsPageCom/AccountTabScript.js" as AccountScript
+
 Page {
     SilicaFlickable {
         anchors.fill: parent
@@ -9,6 +11,8 @@ Page {
             id: title
             title: "More options"
         }
+
+        RemorsePopup { id: remorse }
 
         Column {
             anchors.top: title.bottom
@@ -40,7 +44,12 @@ Page {
                 text: "Muting"
                 onClicked: pageStack.push(Qt.resolvedUrl("SettingsPageCom/MuteTab.qml"))
             }
+            Button {
+                text: qsTr("Sign Out")
+                onClicked: {
+                    remorse.execute(qsTr("Signing out from Twitter"), function() { AccountScript.twitterSignOut(); } )
+                }
+            }
         }
-
     }
 }
