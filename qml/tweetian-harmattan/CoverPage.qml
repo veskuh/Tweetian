@@ -5,7 +5,6 @@ import "Utils/Database.js" as Database
 
 CoverBackground {
         id: appCover
-        property variant unreadCount: mainPage.getTotalUnreadCount()
 
         WorkerScript {
             id: tweetParser
@@ -17,11 +16,10 @@ CoverBackground {
             anchors {
                 right: parent.right; rightMargin: constant.paddingMedium
             }
-            visible: appCover.unreadCount > 0
+            visible: mainPage.totalUnreadCount > 0
             font.pixelSize: Theme.fontSizeMedium
             color: Theme.highlightColor
-
-            text: appCover.unreadCount
+            text: mainPage.totalUnreadCount
         }
 
         function refresh() {
