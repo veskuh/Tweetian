@@ -1,15 +1,8 @@
 import QtQuick 2.1
 import Sailfish.Silica 1.0
 
-import "Utils/Database.js" as Database
-
 CoverBackground {
         id: appCover
-
-        WorkerScript {
-            id: tweetParser
-            source: "WorkerScript/TweetsParser.js"
-        }
 
         Label {
             id: unreadLabel
@@ -22,36 +15,11 @@ CoverBackground {
             text: mainPage.totalUnreadCount
         }
 
-        function refresh() {
-            coverTweetList.model.clear();
-            var timeline = Database.getTimeline();
-            if (timeline.length > 2) {
-                timeline = timeline.slice(0, 2);
-            }
-
-            var msg = {
-                type: "database",
-                data: timeline,
-                model: coverTweetList.model
-            }
-
-            tweetParser.sendMessage(msg);
-        }
-
-        /* TODO: Update cover with new tweets. Strangely uncommenting following
-           line doesn't show new tweets, this will just clear the tweet list
-        */
-        // onUnreadCountChanged: refresh();
-
-        Component.onCompleted: {
-            refresh();
-        }
-
         ListView {
             id: coverTweetList
-            width: parent.width; height: parent.height
+            width: parent.width; height: parent.height/2
             anchors.top: unreadLabel.bottom
-            model: ListModel { }
+            model: mainPage.timeline.model
 
             delegate: Item {
                 id: item
@@ -74,23 +42,23 @@ CoverBackground {
                    font { pixelSize: Theme.fontSizeTiny; family: Theme.fontFamily; bold: true }
                    wrapMode: Text.Wrap
                    color: constant.colorLight
-               }
+                }
 
-                 Text {
-                    id: msgText
-                    anchors { left: parent.left; right: parent.right; top: usernameText.bottom }
-                    text: getDisplayText(plainText, item)
-                    font { pixelSize: Theme.fontSizeTiny; family: Theme.fontFamily }
-                    wrapMode: Text.Wrap
-                    color: constant.colorLight
+                Text {
+                id: msgText
+                anchors { left: parent.left; right: parent.right; top: usernameText.bottom }
+                text: getDisplayText(plainText, item)
+                font { pixelSize: Theme.fontSizeTiny; family: Theme.fontFamily }
+                wrapMode: Text.Wrap
+                color: constant.colorLight
 
-                    function getDisplayText(text, item) {
-                        var maxLength = Math.floor((item.height*3)/4);
-                        if (text.length > maxLength)
-                            return text.substring(0, maxLength) + "...";
-                        return text;
+                function getDisplayText(text, item) {
+                    var maxLength = Math.floor((item.height*3)/4);
+                    if (text.length > maxLength)
+                        return text.substring(0, maxLength) + "...";
+                    return text;
                     }
-                 }
+                }
             }
         }
 
