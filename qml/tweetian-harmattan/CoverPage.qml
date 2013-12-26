@@ -45,18 +45,18 @@ CoverBackground {
                 }
 
                 Text {
-                id: msgText
-                anchors { left: parent.left; right: parent.right; top: usernameText.bottom }
-                text: getDisplayText(plainText, item)
-                font { pixelSize: Theme.fontSizeTiny; family: Theme.fontFamily }
-                wrapMode: Text.Wrap
-                color: constant.colorLight
+                    id: msgText
+                    anchors { left: parent.left; right: parent.right; top: usernameText.bottom }
+                    text: getDisplayText(plainText, item)
+                    font { pixelSize: Theme.fontSizeTiny; family: Theme.fontFamily }
+                    wrapMode: Text.Wrap
+                    color: constant.colorLight
 
-                function getDisplayText(text, item) {
-                    var maxLength = Math.floor((item.height*3)/4);
-                    if (text.length > maxLength)
-                        return text.substring(0, maxLength) + "...";
-                    return text;
+                    function getDisplayText(text, item) {
+                        var maxLength = Math.floor((item.height*3)/4);
+                        if (text.length > maxLength)
+                            return text.substring(0, maxLength) + "...";
+                        return text;
                     }
                 }
             }
