@@ -26,7 +26,7 @@ import "Services/TwitLonger.js" as TwitLonger
 import "Component"
 import harbour.tweetian.Uploader 1.0
 
-Page {
+Dialog {
     id: newTweetPage
 
     property string type: "New" //"New","Reply", "RT" or "DM"
@@ -40,6 +40,30 @@ Page {
     property string imagePath: ""
 
     onStatusChanged: if (status === PageStatus.Activating) preventTouch.enabled = false
+
+    onAccepted: {
+        if (type == "New" || type == "Reply") {
+            //if (addImageButton.checked) imageUploader.run()
+            //else {
+            if (tweetTextArea.errorHighlight) internal.createUseTwitLongerDialog()
+            else {
+                Twitter.postStatus(tweetTextArea.text, tweetId ,latitude, longitude,
+                                   internal.postStatusOnSuccess, internal.commonOnFailure)
+                // header.busy = true
+            }
+            //}
+        }
+        else if (type == "RT") {
+            console.log("id" + tweetId)
+            Twitter.postRetweet(tweetId, internal.postStatusOnSuccess, internal.commonOnFailure)
+            // header.busy = true
+        }
+        else if (type == "DM") {
+            Twitter.postDirectMsg(tweetTextArea.text, screenName,
+                                  internal.postStatusOnSuccess, internal.commonOnFailure)
+            // header.busy = true
+        }
+    }
 
     /* tools: ToolBarLayout {
         parent: newTweetPage
@@ -230,44 +254,6 @@ Page {
             spacing: constant.paddingSmall
         }
 
-        Button {
-            id: tweetButton
-            text: {
-                switch (type) {
-                case "New": return qsTr("Tweet")
-                case "Reply": return qsTr("Reply")
-                case "RT": return qsTr("Retweet")
-                case "DM": return qsTr("DM")
-                }
-            }
-            anchors.horizontalCenter: parent.horizontalCenter
-            enabled: (tweetTextArea.text.length != 0 ) // || addImageButton.checked)
-                     && ((settings.enableTwitLonger /* && !addImageButton.checked */)  || !tweetTextArea.errorHighlight)
-
-            onClicked: {
-                if (type == "New" || type == "Reply") {
-                    //if (addImageButton.checked) imageUploader.run()
-                    //else {
-                    if (tweetTextArea.errorHighlight) internal.createUseTwitLongerDialog()
-                    else {
-                        Twitter.postStatus(tweetTextArea.text, tweetId ,latitude, longitude,
-                                           internal.postStatusOnSuccess, internal.commonOnFailure)
-                        // header.busy = true
-                    }
-                    //}
-                }
-                else if (type == "RT") {
-                    console.log("id" + tweetId)
-                    Twitter.postRetweet(tweetId, internal.postStatusOnSuccess, internal.commonOnFailure)
-                    // header.busy = true
-                }
-                else if (type == "DM") {
-                    Twitter.postDirectMsg(tweetTextArea.text, screenName,
-                                          internal.postStatusOnSuccess, internal.commonOnFailure)
-                    // header.busy = true
-                }
-            }
-        }
 
         /*
         Row {
@@ -509,7 +495,6 @@ PositionSource {
             case "DM":infoBanner.showText(qsTr("Direct message sent successfully")); break;
             case "RT": infoBanner.showText(qsTr("Retweet sent successfully")); break;
             }
-            pageStack.pop()
         }
 
         function twitLongerOnSuccess(twitLongerId, shortenTweet) {
