@@ -31,6 +31,7 @@ Page {
     property Item timeline: timeline
     property Item mentions: mentions
     property Item directMsg: directMsg
+    property int totalUnreadCount: timeline.unreadCount + mentions.unreadCount + directMsg.unreadCount;
 
     onStatusChanged: if (status == PageStatus.Activating) loadingRect.visible = false
 
@@ -182,5 +183,9 @@ Page {
                 }
             }
         }
+    }
+
+    function refreshAll() {
+        StreamScript.refreshAll();
     }
 }
