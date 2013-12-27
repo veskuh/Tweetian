@@ -28,6 +28,7 @@ CoverBackground {
                 right: parent.right; rightMargin: constant.paddingMedium
             }
             visible: mainPage.totalUnreadCount > 0
+            height: visible ? implicitHeight : 0
             font.pixelSize: Theme.fontSizeMedium
             color: Theme.highlightColor
             text: mainPage.totalUnreadCount
@@ -35,14 +36,16 @@ CoverBackground {
 
         ListView {
             id: coverTweetList
-            width: parent.width; height: parent.height/2
+            width: parent.width;
             anchors.top: unreadLabel.bottom
+            anchors.bottom: parent.bottom
             model: mainPage.timeline.model
 
             delegate: Item {
                 id: item
                 anchors { left: parent.left; right: parent.right; margins: constant.paddingSmall }
                 height: usernameText.height + msgText.height + constant.paddingSmall
+                opacity: index < 4 ? 1.0 - index * 0.25 : 0.0
 
                 Image {
                    id: profileImage
