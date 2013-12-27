@@ -16,8 +16,8 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 1.1
-import com.nokia.meego 1.0
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 import "../Utils/Calculations.js" as Calculate
 import "../Utils/Database.js" as Database
 import "../Component"
@@ -36,7 +36,7 @@ Item {
     property int unreadCount: 0
 
     property string reloadType: "all" //"older", "newer" or "all"
-    property bool active: platformWindow.active && mainPage.status === PageStatus.Active &&
+    property bool active: Qt.application.active && mainPage.status === PageStatus.Active &&
                           mainView.currentIndex === (type === "Timeline" ? 0 : 1)
 
     function initialize() {
@@ -113,8 +113,30 @@ Item {
         if (unreadCount === 0 && type === "Mentions") harmattanUtils.clearNotification("tweetian.mention")
     }
 
-    PullDownListView {
+    SilicaListView {
         id: tweetView
+        property string lastUpdate: ""
+        PullDownMenu {
+            MenuItem {
+                text: qsTr("More..")
+                onClicked: pageStack.push(Qt.resolvedUrl("../MorePage.qml"))
+            }
+
+            MenuItem {
+                onClicked: pageStack.push(Qt.resolvedUrl("../TrendsPage.qml"))
+                text: qsTr("Trends & Search")
+            }
+
+            MenuItem {
+               onClicked: pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"), {type: "New"})
+               text: qsTr("New Tweet")
+            }
+            MenuItem {
+               onClicked: if (!userStream.connected) refresh("newer")
+               text: qsTr("Refresh")
+            }
+        }
+
 
         property bool stayAtCurrentPosition: (userStream.connected && !active) ||
                                              (!userStream.connected && reloadType === "newer")
@@ -123,13 +145,12 @@ Item {
         model: ListModel {}
         section.property: "timeDiff" // for FastScroll
         delegate: TweetDelegate {}
-        header: settings.enableStreaming ? streamingHeader : pullToRefreshHeader
         footer: LoadMoreButton {
             visible: tweetView.count > 0
             enabled: !busy
             onClicked: refresh("older")
         }
-        onPulledDown: if (!userStream.connected) refresh("newer")
+       // onPulledDown: if (userStream.status === 0) refresh("newer")
         onAtYBeginningChanged: if (atYBeginning) unreadCount = 0
         onContentYChanged: refreshUnreadCountTimer.running = true
 
@@ -144,14 +165,16 @@ Item {
         Component { id: streamingHeader; StreamingHeader {} }
     }
 
-    FastScroll { listView: tweetView }
+    ScrollDecorator { flickable: tweetView }
+
+   // FastScroll { listView: tweetView }
 
     // Timer used for refresh the timestamp of every tweet every minute. triggeredOnStart is set to true
     // so that the timestamp is refreshed when the app is switch from background to foreground.
     Timer {
         interval: 60000 // 1 minute
         repeat: true
-        running: platformWindow.active
+        running: window.applicationActive
         triggeredOnStart: true
         onTriggered: internal.refreshTimeDiff()
     }
@@ -223,7 +246,7 @@ Item {
             if (type !== "Mentions") return;
 
             var body = qsTr("%n new mention(s)", "", unreadCount)
-            if (platformWindow.active) {
+            if (Qt.application.active) {
                 if (mainPage.status !== PageStatus.Active)
                     infoBanner.showText(body);
             }

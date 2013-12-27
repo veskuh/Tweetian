@@ -16,8 +16,8 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 1.1
-import com.nokia.meego 1.0
+import QtQuick 2.1
+import Sailfish.Silica 1.0
 import "Services/Twitter.js" as Twitter
 import "Component"
 
@@ -27,14 +27,13 @@ Page {
     property string tokenTempo: ""
     property string tokenSecretTempo: ""
 
-    tools: ToolBarLayout {
-        ToolIcon {
-            platformIconId: "toolbar-back-dimmed"
-            enabled: false
-        }
+    TextField {
+        id:test
+        height:0
+        width:0
     }
 
-    Flickable {
+    SilicaFlickable {
         id: flickable
         anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
         contentHeight: mainColumn.height + 2 * mainColumn.anchors.topMargin
@@ -110,6 +109,10 @@ below and click done.")
                         width: pinCodeTextFieldWrapper.width * 0.7
                         enabled: !header.busy
                         inputMethodHints: Qt.ImhDigitsOnly
+
+                        EnterKey.enabled: text.length > 0
+                        EnterKey.iconSource: "image://theme/icon-m-enter-accept"
+                        EnterKey.onClicked: internal.doneButtonClicked()
                     }
                 }
             }
@@ -123,12 +126,12 @@ below and click done.")
         }
     }
 
-    ScrollDecorator { flickableItem: flickable }
+    ScrollDecorator { flickable: flickable }
 
     PageHeader {
         id: header
-        headerText: qsTr("Sign In to Twitter")
-        headerIcon: "Image/sign_in.svg"
+        title: qsTr("Sign In to Twitter")
+        property bool busy: false
     }
 
     QtObject {
@@ -145,13 +148,13 @@ below and click done.")
                 console.log("Launching web browser with url:", signInUrl);
              }, function(status, statusText) {
                  if (status === 401)
-                     infoBanner.showText(qsTr("Error: Unable to authorize with Twitter. \
+                     console.log(qsTr("Error: Unable to authorize with Twitter. \
 Make sure the time/date of your phone is set correctly."))
                  else
                      infoBanner.showHttpError(status, statusText);
-                 header.busy = false;
+                 //header.busy = false;
              });
-            header.busy = true;
+            // header.busy = true;
         }
 
         function doneButtonClicked() {

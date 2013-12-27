@@ -20,7 +20,7 @@
 #define USERSTREAM_H
 
 #include <QtCore/QObject>
-#include <QtDeclarative/QDeclarativeListProperty>
+#include <QQmlListProperty>
 
 class QNetworkAccessManager;
 class QNetworkReply;
@@ -31,7 +31,7 @@ class UserStream : public QObject
 
     Q_PROPERTY(bool connected READ isConnected NOTIFY connectedChanged)
     Q_PROPERTY(QObject* networkAccessManager READ networkAccessManager WRITE setNetworkAccessManager)
-    Q_PROPERTY(QDeclarativeListProperty<QObject> resources READ resources DESIGNABLE false)
+    Q_PROPERTY(QQmlListProperty<QObject> resources READ resources DESIGNABLE false)
     Q_CLASSINFO("DefaultProperty", "resources")
 public:
     explicit UserStream(QObject *parent = 0);
@@ -46,7 +46,7 @@ public:
     QObject *networkAccessManager() const;
     void setNetworkAccessManager(QObject *manager);
 
-    QDeclarativeListProperty<QObject> resources();
+    QQmlListProperty<QObject> resources();
 
 signals:
     void connectedChanged();

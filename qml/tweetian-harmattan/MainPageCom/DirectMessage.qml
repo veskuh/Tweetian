@@ -16,8 +16,8 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 1.1
-import com.nokia.meego 1.0
+import QtQuick 2.1
+import Sailfish.Silica 1.0
 import "../Component"
 import "../Delegate"
 import "../Utils/Database.js" as Database
@@ -118,6 +118,8 @@ Item {
         Component { id: streamingHeader; StreamingHeader {} }
     }
 
+    ScrollDecorator { flickable: directMsgView }
+
     Text {
         anchors.centerIn: parent
         visible: directMsgView.count == 0 && !busy
@@ -126,13 +128,11 @@ Item {
         text: qsTr("No message")
     }
 
-    ScrollDecorator { flickableItem: directMsgView }
-
     Timer {
         id: refreshTimeStampTimer
         interval: 1 * 60 * 1000 // 1 minute
         repeat: true
-        running: platformWindow.active
+        running: window.applicationActive
         triggeredOnStart: true
         onTriggered: if (directMsgView.count > 0) internal.refreshDMTime()
     }
@@ -197,7 +197,7 @@ Item {
             if (newDMCount <= 0) return;
             unreadCount += newDMCount;
             var body = qsTr("%n new message(s)", "", unreadCount);
-            if (platformWindow.active) {
+            if (Qt.application.active) {
                 if (mainPage.status !== PageStatus.Active)
                     infoBanner.showText(body)
             }

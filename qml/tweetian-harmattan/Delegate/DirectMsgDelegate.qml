@@ -16,8 +16,8 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 1.1
-import com.nokia.meego 1.0
+import QtQuick 2.1
+import Sailfish.Silica 1.0
 
 AbstractDelegate {
     id: root
@@ -65,5 +65,5 @@ AbstractDelegate {
         text: timeDiff
     }
 
-    onClicked: internal.createDMDialog(model)
+    // onClicked: internal.createDMDialog(model)
 }

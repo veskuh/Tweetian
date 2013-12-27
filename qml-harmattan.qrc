@@ -8,6 +8,7 @@
         <file>qml/tweetian-harmattan/main.qml</file>
         <file>qml/tweetian-harmattan/MainPage.qml</file>
         <file>qml/tweetian-harmattan/MapPage.qml</file>
+        <file>qml/tweetian-harmattan/MorePage.qml</file>
         <file>qml/tweetian-harmattan/NearbyTweetsPage.qml</file>
         <file>qml/tweetian-harmattan/NewTweetPage.qml</file>
         <file>qml/tweetian-harmattan/SearchPage.qml</file>
@@ -30,11 +31,12 @@
         <file>qml/tweetian-harmattan/Component/LargePageHeader.qml</file>
         <file>qml/tweetian-harmattan/Component/ListItem.qml</file>
         <file>qml/tweetian-harmattan/Component/LoadMoreButton.qml</file>
-        <file>qml/tweetian-harmattan/Component/PageHeader.qml</file>
+        <file>qml/tweetian-harmattan/Component/TwPageHeader.qml</file>
         <file>qml/tweetian-harmattan/Component/PaneIndicator.qml</file>
         <file>qml/tweetian-harmattan/Component/PullDownListView.qml</file>
         <file>qml/tweetian-harmattan/Component/PullToRefreshHeader.qml</file>
         <file>qml/tweetian-harmattan/Component/SectionHeader.qml</file>
+        <file>qml/tweetian-harmattan/Component/SelectionDialog.qml</file>
         <file>qml/tweetian-harmattan/Component/TabPageHeader.qml</file>
         <file>qml/tweetian-harmattan/Component/ThumbnailItem.qml</file>
         <file>qml/tweetian-harmattan/Delegate/AbstractDelegate.qml</file>
@@ -130,6 +132,7 @@
         <file>qml/tweetian-harmattan/WorkerScript/SearchParser.js</file>
         <file>qml/tweetian-harmattan/WorkerScript/TweetsParser.js</file>
         <file>qml/tweetian-harmattan/WorkerScript/UserParser.js</file>
+        <file>qml/tweetian-harmattan/CoverPage.qml</file>
         <file>i18n/tweetian_ar.qm</file>
         <file>i18n/tweetian_ca.qm</file>
         <file>i18n/tweetian_de.qm</file>

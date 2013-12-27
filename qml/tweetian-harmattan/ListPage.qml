@@ -16,8 +16,8 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 1.1
-import com.nokia.meego 1.0
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 import "Services/Twitter.js" as Twitter
 import "Component"
 import "ListPageCom"
@@ -37,7 +37,7 @@ Page {
 
     onOwnerProfileImageUrlChanged: listInfo.initialize()
 
-    tools: ToolBarLayout {
+    /* tools: ToolBarLayout {
         ToolIcon {
             platformIconId: "toolbar-back"
             onClicked: pageStack.pop()
@@ -49,7 +49,7 @@ Page {
                                                                    : internal.createSubscribeDialog()
         }
         Item { width: 80; height: 64 }
-    }
+    } */
 
     ListView {
         id: listPageListView

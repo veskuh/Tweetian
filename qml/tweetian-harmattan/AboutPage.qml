@@ -16,21 +16,15 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 1.1
-import com.nokia.meego 1.0
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 import "Component"
 import "Services/Twitter.js" as Twitter
 
 Page {
     id: aboutPage
-    tools: ToolBarLayout {
-        ToolIcon {
-            platformIconId: "toolbar-back"
-            onClicked: pageStack.pop()
-        }
-    }
 
-    Flickable {
+    SilicaFlickable {
         id: aboutPageFlickable
         anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
         contentHeight: aboutColumn.height
@@ -90,18 +84,32 @@ smartphone. Tweetian is open source and licensed under GPL v3.")
                 onClicked: pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: "DicksonBeta"})
             }
 
+            SectionHeader { text: qsTr("About Sailfish OS port") }
+
+            Item {
+                anchors { left: parent.left; right: parent.right }
+                height: sailfishText.height + 2 * sailfishText.anchors.margins
+
+                Text {
+                    id: sailfishText
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                        left: parent.left; right: parent.right
+                        margins: constant.paddingMedium
+                    }
+                    font.pixelSize: constant.fontSizeMedium
+                    color: constant.colorLight
+                    wrapMode: Text.Wrap
+                    text: "This is a preview of Sailfish OS port maintained by @veskuh. Porting from Qt4 to Qt5 by @siteshwarv"
+                }
+            }
+
             SectionHeader { text: qsTr("Powered By") }
 
             AboutPageItem {
                 imageSource: "Image/twitter-bird-white-on-blue.png"
                 text: "Twitter"
                 onClicked: pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: "twitter"})
-            }
-
-            AboutPageItem {
-                imageSource: "Image/nokia_icon.png"
-                text: "Nokia"
-                onClicked: pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: "nokia"})
             }
 
             AboutPageItem {
@@ -134,13 +142,12 @@ smartphone. Tweetian is open source and licensed under GPL v3.")
         }
     }
 
-    ScrollDecorator { flickableItem: aboutPageFlickable }
+    ScrollDecorator { flickable: aboutPageFlickable }
 
     PageHeader {
         id: header
-        headerIcon: "Image/information_userguide.svg"
-        headerText: qsTr("About Tweetian")
-        onClicked: aboutPageFlickable.contentY = 0
+        title: qsTr("About Tweetian")
+
     }
 
     QtObject {

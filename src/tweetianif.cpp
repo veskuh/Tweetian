@@ -18,27 +18,30 @@
 
 #include "tweetianif.h"
 
-#include <QtGui/QApplication>
-#include <QtDeclarative/QDeclarativeView>
-#include <QtDeclarative/QDeclarativeItem>
+#include <QGuiApplication>
+#include <QQuickView>
+#include <QQuickItem>
+#include <QtGlobal>
 
-TweetianIf::TweetianIf(QApplication *parent, QDeclarativeView *view) :
+TweetianIf::TweetianIf(QGuiApplication *parent, QQuickView *view) :
     QDBusAbstractAdaptor(parent), m_view(view)
 {
 }
 
 void TweetianIf::mention()
 {
-    m_view->activateWindow();
+    Q_ASSERT(false);
+    //m_view->activateWindow();
     if (!qmlMainView)
-        qmlMainView = m_view->rootObject()->findChild<QDeclarativeItem*>("mainView");
+        qmlMainView = m_view->rootObject()->findChild<QQuickItem*>("mainView");
     QMetaObject::invokeMethod(qmlMainView, "moveToColumn", Q_ARG(QVariant, 1));
 }
 
 void TweetianIf::message()
 {
-    m_view->activateWindow();
+    Q_ASSERT(false);
+    //m_view->activateWindow();
     if (!qmlMainView)
-        qmlMainView = m_view->rootObject()->findChild<QDeclarativeItem*>("mainView");
+        qmlMainView = m_view->rootObject()->findChild<QQuickItem*>("mainView");
     QMetaObject::invokeMethod(qmlMainView, "moveToColumn", Q_ARG(QVariant, 2));
 }

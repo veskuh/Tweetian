@@ -16,12 +16,12 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 1.1
-import com.nokia.meego 1.0
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 import "Services/Twitter.js" as Twitter
 import "Component"
 import "MainPageCom"
-import UserStream 1.0
+import harbour.tweetian.UserStream 1.0
 import "MainPageCom/UserStream.js" as StreamScript
 import "Utils/Parser.js" as Parser
 
@@ -31,39 +31,15 @@ Page {
     property Item timeline: timeline
     property Item mentions: mentions
     property Item directMsg: directMsg
+    property int totalUnreadCount: timeline.unreadCount + mentions.unreadCount + directMsg.unreadCount;
 
     onStatusChanged: if (status == PageStatus.Activating) loadingRect.visible = false
 
-    tools: ToolBarLayout {
-        ToolIcon {
-            platformIconId: "toolbar-back-dimmed"
-            enabled: false
-        }
-        ToolIcon {
-            id: newTweetButton
-            platformIconId: "toolbar-edit"
-            onClicked: pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), {type: "New"})
-        }
-        ToolIcon {
-            id: messageButton
-            platformIconId: "toolbar-search"
-            onClicked: pageStack.push(Qt.resolvedUrl("TrendsPage.qml"))
-        }
-        ToolIcon {
-            platformIconId: "toolbar-contact"
-            onClicked: pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: settings.userScreenName})
-        }
-        ToolIcon {
-            id: optionsButton
-            platformIconId: "toolbar-view-menu"
-            onClicked: mainMenu.open()
-        }
-    }
+    SilicaListView {
+        id: mainView
+        objectName: "mainView"
 
-    Menu {
-        id: mainMenu
-
-        MenuLayout {
+/*        PullDownMenu {
             MenuItem {
                 text: qsTr("Refresh cache")
                 enabled: !mainView.currentItem.busy
@@ -77,12 +53,7 @@ Page {
                 text: qsTr("About")
                 onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
             }
-        }
-    }
-
-    ListView {
-        id: mainView
-        objectName: "mainView"
+        }*/
 
         property int __contentXOffset: 0
 
@@ -91,11 +62,12 @@ Page {
             columnMovingAnimation.restart()
         }
 
-        anchors { top: mainPageHeader.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
+        clip:true
+        anchors { top: parent.top; bottom: mainPageHeader.top; left: parent.left; right: parent.right }
         highlightRangeMode: ListView.StrictlyEnforceRange
         snapMode: ListView.SnapOneItem
         orientation: ListView.Horizontal
-        boundsBehavior: Flickable.StopAtBounds
+        //boundsBehavior: Flickable.StopAtBounds
         model: VisualItemModel {
             TweetListView { id: timeline; type: "Timeline" }
             TweetListView { id: mentions; type: "Mentions" }
@@ -107,7 +79,7 @@ Page {
             id: columnMovingAnimation
             target: mainView
             property: "contentX"
-            duration: 500
+            duration: 300
             easing.type: Easing.InOutExpo
         }
     }
@@ -211,5 +183,9 @@ Page {
                 }
             }
         }
+    }
+
+    function refreshAll() {
+        StreamScript.refreshAll();
     }
 }

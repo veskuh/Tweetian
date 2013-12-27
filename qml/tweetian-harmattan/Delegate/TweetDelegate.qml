@@ -16,8 +16,8 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 1.1
-import com.nokia.meego 1.0
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 
 AbstractDelegate {
     id: root
@@ -40,8 +40,10 @@ AbstractDelegate {
             id: userNameText
             anchors.left: parent.left
             width: Math.min(parent.width, implicitWidth)
-            font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
+            font.pixelSize: constant.fontSizeMedium
             font.bold: true
+            font.family: Theme.fontFamily
+
             color: highlighted ? constant.colorHighlighted : constant.colorLight
             elide: Text.ElideRight
             text: model.name
@@ -49,7 +51,9 @@ AbstractDelegate {
 
         Text {
             anchors { left: userNameText.right; right: favouriteIconLoader.left; margins: constant.paddingSmall }
-            font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
+            font.pixelSize: constant.fontSizeMedium
+
+            font.family: Theme.fontFamily
             color: highlighted ? constant.colorHighlighted : constant.colorMid
             elide: Text.ElideRight
             text: "@" + model.screenName
@@ -75,10 +79,11 @@ AbstractDelegate {
 
     Text {
         anchors { left: parent.left; right: parent.right }
-        font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
+        textFormat: Text.RichText
+        font.pixelSize: constant.fontSizeMedium
+        font.family: Theme.fontFamily
         wrapMode: Text.Wrap
         color: highlighted ? constant.colorHighlighted : constant.colorLight
-        textFormat: Text.RichText
         text: model.richText
     }
 
@@ -91,7 +96,9 @@ AbstractDelegate {
             id: retweetText
 
             Text {
-                font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
+                font.pixelSize: constant.fontSizeMedium
+
+                font.family: Theme.fontFamily
                 wrapMode: Text.Wrap
                 color: highlighted ? constant.colorHighlighted : constant.colorMid
                 text: qsTr("Retweeted by %1").arg("@" + model.retweetScreenName)
@@ -102,7 +109,9 @@ AbstractDelegate {
     Text {
         anchors { left: parent.left; right: parent.right }
         horizontalAlignment: Text.AlignRight
-        font.pixelSize: settings.largeFontSize ? constant.fontSizeSmall : constant.fontSizeXSmall
+        font.pixelSize: constant.fontSizeSmall
+
+        font.family: Theme.fontFamily
         color: highlighted ? constant.colorHighlighted : constant.colorMid
         elide: Text.ElideRight
         text: model.source + " | " + model.timeDiff

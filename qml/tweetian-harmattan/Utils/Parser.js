@@ -22,8 +22,8 @@ Qt.include("Calculations.js")
 
 function linkText(text, href, italic) {
     var html = "";
-    if (italic) html = "<i><a style=\"color: LightSeaGreen; text-decoration: none\" href=\"%1\">%2</a></i>";
-    else html = "<a style=\"color: LightSeaGreen; text-decoration: none\" href=\"%1\">%2</a>";
+    if (italic) html = "<i><a style=\"color: white; text-decoration: none\" href=\"%1\">%2</a></i>";
+    else html = "<a style=\"color: DarkGray; text-decoration: none\" href=\"%1\">%2</a>";
 
     return html.arg(href).arg(text);
 }
@@ -36,7 +36,9 @@ function parseTweet(tweetJson) {
         isFavourited: tweetJson.favorited,
         isRetweet: false,
         retweetScreenName: tweetJson.user.screen_name,
-        timeDiff: timeDiff(tweetJson.created_at)
+        timeDiff: timeDiff(tweetJson.created_at),
+        favorite_count: tweetJson.favorite_count,
+        retweet_count: tweetJson.retweet_count
     }
 
     var originalTweetJson = {};
@@ -50,7 +52,7 @@ function parseTweet(tweetJson) {
     tweet.richText = __toRichText(originalTweetJson.text, originalTweetJson.entities);
     tweet.name = originalTweetJson.user.name;
     tweet.screenName = originalTweetJson.user.screen_name;
-    tweet.profileImageUrl = originalTweetJson.user.profile_image_url;
+    tweet.profileImageUrl = originalTweetJson.user.profile_image_url.replace("_normal","_bigger");
     tweet.inReplyToScreenName = originalTweetJson.in_reply_to_screen_name;
     tweet.inReplyToStatusId = originalTweetJson.in_reply_to_status_id_str;
     tweet.latitude = "";
@@ -58,8 +60,8 @@ function parseTweet(tweetJson) {
     tweet.mediaUrl = "";
 
     if (originalTweetJson.geo) {
-        tweet.latitude = originalTweetJson.geo.coordinates[0];
-        tweet.longitude = originalTweetJson.geo.coordinates[1];
+        tweet.latitude = originalTweetJson.geo.coordinates[0].toString();
+        tweet.longitude = originalTweetJson.geo.coordinates[1].toString();
     }
 
     if (Array.isArray(originalTweetJson.entities.media) && originalTweetJson.entities.media.length > 0) {
@@ -76,7 +78,7 @@ function parseDM(dmJson, isReceiveDM) {
         name: (isReceiveDM ? dmJson.sender.name : dmJson.recipient.name),
         screenName: (isReceiveDM ? dmJson.sender_screen_name : dmJson.recipient_screen_name),
         profileImageUrl: (isReceiveDM ? dmJson.sender.profile_image_url : dmJson.recipient.profile_image_url),
-        createdAt: dmJson.created_at,
+        createdAt: new Date(dmJson.created_at),
         isReceiveDM: isReceiveDM
     }
     return dm;

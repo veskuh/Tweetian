@@ -16,22 +16,23 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 1.1
-import com.nokia.meego 1.0
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 
-ListView {
+SilicaListView {
     id: root
 
     property string lastUpdate: ""
     signal pulledDown()
 
     // Private
-    property bool __wasAtYBeginning: false
+    // On Silica We use pulldown menu for refresh instead
+    /*property bool __wasAtYBeginning: false
     property int __initialContentY: 0
     property bool __toBeRefresh: false
 
     flickableDirection: Flickable.VerticalFlick
-    header: PullToRefreshHeader {}
+    //header: PullToRefreshHeader {}
     onMovementStarted: {
         __wasAtYBeginning = atYBeginning
         __initialContentY = contentY
@@ -48,5 +49,5 @@ ListView {
         id: detectPullDownTimer
         interval: 250
         onTriggered: if (__wasAtYBeginning && __initialContentY - contentY > 100) __toBeRefresh = true
-    }
+    }*/
 }

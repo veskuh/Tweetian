@@ -16,10 +16,10 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 1.1
-import com.nokia.meego 1.0 // for Style
+import QtQuick 2.0
+import Sailfish.Silica 1.0 // for Style
 
-Style {
+Item {
 
     // Font
     property int fontPixelSize: 68

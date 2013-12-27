@@ -16,8 +16,8 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 1.1
-import com.nokia.meego 1.0
+import QtQuick 2.1
+import Sailfish.Silica 1.0
 import "Services/Twitter.js" as Twitter
 import "Component"
 import "Delegate"
@@ -34,6 +34,7 @@ Page {
     id: tweetPage
 
     property variant tweet
+
     property bool favouritedTweet: false
 
     property ListModel ancestorModel: ListModel {}
@@ -41,55 +42,31 @@ Page {
 
     Component.onCompleted: {
         favouritedTweet = tweet.isFavourited
+        //TODO: Use plain QML instead of JS to show RT and Fav count
         JS.createPicThumb()
         JS.createMapThumb()
         if (networkMonitor.online) {
             JS.createYoutubeThumb()
             JS.expandTwitLonger()
+
         }
         JS.getConversationFromTimelineAndMentions()
     }
 
-    tools: ToolBarLayout {
-        ToolIcon {
-            id: backButton
-            platformIconId: "toolbar-back" + (enabled ? "" : "-dimmed")
-            onClicked: pageStack.pop()
-        }
-        ToolIcon {
-            id: replyButton
-            platformIconId: "toolbar-reply"
-            onClicked: {
-                var prop = { type: "Reply", placedText: JS.contructReplyText(), tweetId: tweet.id }
-                pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), prop)
-            }
-        }
-        ToolIcon {
-            iconSource: settings.invertedTheme ? "Image/retweet_inverse.png" : "Image/retweet.png"
-            onClicked: {
-                var prop = { type: "RT", placedText: JS.contructRetweetText(), tweetId: tweet.id }
-                pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), prop)
-            }
-        }
-        ToolIcon {
-            platformIconId: favouritedTweet ? "toolbar-favorite-unmark" : "toolbar-favorite-mark"
-            onClicked: {
-                if (favouritedTweet)
-                    Twitter.postUnfavourite(tweet.id, JS.favouriteOnSuccess, JS.commonOnFailure)
-                else Twitter.postFavourite(tweet.id, JS.favouriteOnSuccess, JS.commonOnFailure)
-                header.busy = true
-            }
-        }
-        ToolIcon {
-            platformIconId: "toolbar-view-menu"
-            onClicked: tweetMenu.open()
-        }
-    }
 
-    Menu {
-        id: tweetMenu
+    SilicaFlickable {
+        id: tweetPageFlickable
 
-        MenuLayout {
+        PageHeader {
+            id: header
+            title: qsTr("Tweet")
+            property bool busy: false
+        }
+
+        PullDownMenu {
+
+            id: tweetMenu 
+
             MenuItem {
                 text: qsTr("Copy tweet")
                 onClicked: {
@@ -97,6 +74,17 @@ Page {
                     infoBanner.showText(qsTr("Tweet copied to clipboard"))
                 }
             }
+
+           /* MenuItem {
+                text: qsTr("Tweet permalink")
+                onClicked: {
+                    var permalink = "http://twitter.com/" + tweet.screenName + "/status/" + tweet.id
+                    dialog.createOpenLinkDialog(permalink)
+                }
+                //platformStyle: MenuItemStyle { position: deleteTweetButton.visible ? "vertical-center" : "vertical-bottom" }
+            }*/
+
+            /*
             MenuItem {
                 text: translatedTweetLoader.sourceComponent ? qsTr("Hide translated tweet") : qsTr("Translate tweet")
                 onClicked: {
@@ -111,32 +99,61 @@ Page {
                         header.busy = true
                     }
                 }
-            }
-            MenuItem {
-                text: qsTr("Tweet permalink")
-                onClicked: {
-                    var permalink = "http://twitter.com/" + tweet.retweetScreenName + "/status/" + tweet.id
-                    dialog.createOpenLinkDialog(permalink)
-                }
-                platformStyle: MenuItemStyle { position: deleteTweetButton.visible ? "vertical-center" : "vertical-bottom" }
-            }
+            }*/
+
             MenuItem {
                 id: deleteTweetButton
                 text: qsTr("Delete tweet")
                 visible: tweet.retweetScreenName === settings.userScreenName
                 onClicked: JS.createDeleteTweetDialog()
             }
-        }
-    }
 
-    Flickable {
-        id: tweetPageFlickable
-        anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
+
+
+            MenuItem {
+                text: qsTr("Favourite")
+                onClicked: {
+                    Twitter.postFavourite(tweet.id, JS.favouriteOnSuccess, JS.commonOnFailure)
+                    header.busy = true
+                }
+                visible: !favouritedTweet
+            }
+
+            MenuItem {
+                text: qsTr("Remove favourite")
+                onClicked: {
+                    Twitter.postUnfavourite(tweet.id, JS.favouriteOnSuccess, JS.commonOnFailure)
+                    header.busy = true
+                }
+                visible: favouritedTweet
+            }
+
+
+            MenuItem {
+                text: qsTr("Reply")
+                onClicked: {
+                    var prop = { type: "Reply", placedText: JS.contructReplyText(), tweetId: tweet.id }
+                    pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), prop)
+                }
+            }
+
+            MenuItem {
+                text: qsTr("Retweet")
+                onClicked: {
+                    var prop = { type: "RT", placedText: JS.contructRetweetText(), tweetId: ""+ tweet.id }
+                    pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), prop)
+                }
+            }
+
+        }
+
+
+        anchors.fill: parent
         contentHeight: mainColumn.height
 
         Column {
             id: mainColumn
-            anchors { left: parent.left; right: parent.right }
+            anchors { top: header.bottom; left: parent.left; right: parent.right }
             height: childrenRect.height
 
             Column {
@@ -173,6 +190,7 @@ Page {
 
                         Text {
                             font.pixelSize: constant.fontSizeMedium
+                            font.family: Theme.fontFamily
                             color: constant.colorLight
                             font.bold: true
                             text: tweet.name
@@ -180,6 +198,7 @@ Page {
 
                         Text {
                             font.pixelSize: constant.fontSizeSmall
+                            font.family: Theme.fontFamily
                             color: userItem.highlighted ? constant.colorHighlighted : constant.colorMid
                             text: "@" + tweet.screenName
                         }
@@ -188,8 +207,9 @@ Page {
 
                 Text {
                     id: tweetTextText
-                    anchors { left: parent.left; right: parent.right }
-                    font.pixelSize: settings.largeFontSize ? constant.fontSizeXLarge : constant.fontSizeLarge
+                    anchors { left: parent.left; right: parent.right; leftMargin: constant.paddingMedium; rightMargin: constant.paddingMedium  }
+                    font.pixelSize: constant.fontSizeMedium
+                    font.family: Theme.fontFamily
                     color: constant.colorLight
                     textFormat: Text.RichText
                     wrapMode: Text.Wrap
@@ -206,15 +226,16 @@ Page {
                 }
 
                 Text {
-                    anchors { left: parent.left; right: parent.right }
+                    anchors { left: parent.left; right: parent.right; leftMargin: constant.paddingMedium; rightMargin: constant.paddingMedium  }
                     visible: tweet.isRetweet
-                    font.pixelSize: settings.largeFontSize ? constant.fontSizeLarge : constant.fontSizeMedium
+                    font.pixelSize: constant.fontSizeMedium
+                    font.family: Theme.fontFamily
                     color: constant.colorMid
                     text: qsTr("Retweeted by %1").arg("@" + tweet.retweetScreenName)
                 }
 
                 Item {
-                    anchors { left: parent.left; right: parent.right }
+                    anchors { left: parent.left; right: parent.right; leftMargin: constant.paddingMedium; rightMargin: constant.paddingMedium  }
                     height: timeAndSourceText.height
 
                     Loader {
@@ -236,8 +257,9 @@ Page {
 
                     Text {
                         id: timeAndSourceText
-                        anchors { left: iconLoader.right; leftMargin: constant.paddingSmall; right: parent.right }
-                        font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
+                        anchors { left: iconLoader.right; leftMargin: constant.paddingSmall; right: parent.right;  }
+                        font.pixelSize: constant.fontSizeSmall
+                        font.family: Theme.fontFamily
                         horizontalAlignment: Text.AlignRight
                         color: constant.colorMid
                         text: tweet.source + " | " + Qt.formatDateTime(tweet.createdAt, "h:mm AP d MMM yy")
@@ -298,21 +320,16 @@ Page {
         }
     }
 
-    ScrollDecorator { flickableItem: tweetPageFlickable }
+    //ScrollDecorator { flickableItem: tweetPageFlickable }
 
-    PageHeader {
-        id: header
-        headerIcon: "Image/chat.png"
-        headerText: qsTr("Tweet")
-        onClicked: tweetPageFlickable.contentY = 0
-    }
+
 
     WorkerScript {
         id: conversationParser
         source: "WorkerScript/ConversationParser.js"
         onMessage: {
-            backButton.enabled = true
-            header.busy = false
+            // backButton.enabled = true
+            // header.busy = false
             ancestorRepeater.model = ancestorModel
             descendantRepeater.model = descendantModel
         }

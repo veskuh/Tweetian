@@ -16,16 +16,17 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 1.1
-import com.nokia.meego 1.0
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 
 Page {
     id: tweetImagePage
 
     property string imageLink: ""
     property url imageUrl: ""
+    allowedOrientations: Orientation.All
 
-    tools: ToolBarLayout {
+    /*tools: ToolBarLayout {
         ToolIcon {
             platformIconId: "toolbar-back"
             onClicked: pageStack.pop()
@@ -54,9 +55,9 @@ Page {
                 else infoBanner.showText(qsTr("Failed to save image"))
             }
         }
-    }
+    }*/
 
-    Flickable {
+    SilicaFlickable {
         id: imageFlickable
         anchors.fill: parent
         contentWidth: imageContainer.width; contentHeight: imageContainer.height
@@ -175,7 +176,6 @@ Page {
                     id: imageLoadingIndicator
                     anchors.horizontalCenter: parent.horizontalCenter
                     running: true
-                    platformStyle: BusyIndicatorStyle { size: "large" }
                 }
 
                 Text {
@@ -201,5 +201,5 @@ Page {
         }
     }
 
-    ScrollDecorator { flickableItem: imageFlickable }
+    //ScrollDecorator { flickableItem: imageFlickable }
 }

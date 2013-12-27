@@ -16,36 +16,67 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 1.1
-import com.nokia.meego 1.0
-import com.nokia.extras 1.1
-import QtMobility.feedback 1.1
+import QtQuick 2.1
+import Sailfish.Silica 1.0
+import QtFeedback 5.0
 
-PageStackWindow {
+ApplicationWindow {
     id: window
     initialPage: MainPage { id: mainPage }
-    showStatusBar: inPortrait
-    showToolBar: true
+    cover: (settings.oauthToken != "" && settings.oauthTokenSecret != "") ? Qt.resolvedUrl("CoverPage.qml") : undefined;
+
+    //showStatusBar: inPortrait
+    //showToolBar: true
 
     Settings { id: settings }
+
     Cache { id: cache }
     Constant { id: constant }
 
-    ThemeEffect { id: basicHapticEffect; effect: ThemeEffect.Basic }
+    ThemeEffect { id: basicHapticEffect; effect: ThemeEffect.Appear }
 
-    InfoBanner {
+    Rectangle {
         id: infoBanner
-        topMargin: showStatusBar ? 40 : 8
+
+        width: parent.width
+        height: infoText.height + 2 * Theme.paddingMedium
+
+        color: Theme.highlightBackgroundColor
+        opacity: 0.0
+        // On top of everything
+        z: 1
 
         function showText(text) {
-            infoBanner.text = text
-            infoBanner.show()
+            infoText.text = text
+            opacity = 0.9
+            console.log("INFO: " + text)
+            closeTimer.restart()
         }
 
         function showHttpError(errorCode, errorMessage) {
             if (errorCode === 0) showText(qsTr("Server or connection error"))
             else if (errorCode === 429) showText(qsTr("Rate limit reached, please try again later"))
             else showText(qsTr("Error: %1").arg(errorMessage + " (" + errorCode + ")"))
+        }
+
+        Label {
+            id: infoText
+            anchors.top: parent.top
+            anchors.topMargin: Theme.paddingMedium
+            x: Theme.paddingMedium
+            width: parent.width - 2 * Theme.paddingMedium
+            color: Theme.highlightColor
+            maximumLineCount: 2
+            horizontalAlignment: Text.AlignHCenter
+            wrapMode: Text.Wrap
+        }
+
+        Behavior on opacity { FadeAnimation {} }
+
+        Timer {
+            id: closeTimer
+            interval: 2000
+            onTriggered: infoBanner.opacity = 0.0
         }
     }
 
@@ -65,7 +96,6 @@ PageStackWindow {
             visible: loadingRect.visible
             running: visible
             anchors.centerIn: parent
-            platformStyle: BusyIndicatorStyle { size: "large" }
         }
     }
 
@@ -78,14 +108,15 @@ PageStackWindow {
         property Component __tweetLongPressMenu: null
 
         function createOpenLinkDialog(link, pocketCallback, instapaperCallback) {
-            if (!__openLinkDialog) __openLinkDialog = Qt.createComponent("Dialog/OpenLinkDialog.qml")
+            /*if (!__openLinkDialog) __openLinkDialog = Qt.createComponent("Dialog/OpenLinkDialog.qml")
             var showAddPageServices = pocketCallback && instapaperCallback ? true : false
             var prop = { link: link, showAddPageServices: showAddPageServices }
             var dialog = __openLinkDialog.createObject(pageStack.currentPage, prop)
             if (showAddPageServices) {
                 dialog.addToPocketClicked.connect(pocketCallback)
                 dialog.addToInstapaperClicked.connect(instapaperCallback)
-            }
+            }*/
+            Qt.openUrlExternally(link)
         }
 
         function createQueryDialog(titleText, titleIcon, message, acceptCallback) {
@@ -106,5 +137,7 @@ PageStackWindow {
         }
     }
 
-    Component.onCompleted: settings.loadSettings()
+    Component.onCompleted: {
+        settings.loadSettings()
+    }
 }

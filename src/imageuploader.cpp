@@ -110,7 +110,7 @@ void ImageUploader::send()
     }
 
     request.setRawHeader("Content-Type", "multipart/form-data; boundary=" + BOUNDARY);
-    request.setRawHeader("User-Agent", QMLUtils::userAgent().toAscii());
+    request.setRawHeader("User-Agent", QMLUtils::userAgent().toLatin1());
 
     m_reply = m_networkAccessManager->post(request, bodyData);
 

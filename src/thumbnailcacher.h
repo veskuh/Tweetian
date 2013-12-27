@@ -21,7 +21,7 @@
 
 #include <QtCore/QObject>
 
-class QDeclarativeItem;
+class QQuickItem;
 
 class ThumbnailCacher : public QObject
 {
@@ -35,7 +35,7 @@ public:
     Q_INVOKABLE QString get(const QString &id);
 
     // Store a image from imageObj to the thumbnails cache based on id
-    Q_INVOKABLE void store(const QString &id, QDeclarativeItem *imageObj);
+    Q_INVOKABLE void store(const QString &id, QQuickItem *imageObj);
 
     // Clear all thumbnails from the thuubmails cache
     Q_INVOKABLE int clearAll();

@@ -418,8 +418,10 @@ function postDeleteDirectMsg(statusId, onSuccess, onFailure) {
 }
 
 function postRetweet(statusId, onSuccess, onFailure) {
-    var retweetRequest = new OAuthRequest("POST", POST_RETWEET_URL.arg(statusId + ""))
+    console.log("twitter RT" + statusId)
+    var retweetRequest = new OAuthRequest("POST", POST_RETWEET_URL.arg(""+statusId))
     retweetRequest.sendRequest(onSuccess, onFailure)
+    console.log("Retweetrequest.url "+retweetRequest.message.action)
 }
 
 function postFavourite(statusId, onSuccess, onFailure) {

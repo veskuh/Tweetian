@@ -16,8 +16,8 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 1.1
-import com.nokia.meego 1.0
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 import "../Services/Twitter.js" as Twitter
 import "../Utils/Calculations.js" as Calculate
 import "../Component"
@@ -85,13 +85,13 @@ Item {
         visible: tweetSearchListView.count == 0 && !busy
     }
 
-    ScrollDecorator { flickableItem: tweetSearchListView }
+    ScrollDecorator { flickable: tweetSearchListView }
 
     WorkerScript {
         id: searchParser
         source: "../WorkerScript/SearchParser.js"
         onMessage: {
-            backButton.enabled = true
+            // backButton.enabled = true
             if (internal.reloadType === "newer") unreadCount = messageObject.newTweetCount
             else unreadCount = 0
             busy = false
@@ -105,7 +105,7 @@ Item {
 
         function searchOnSuccess(data) {
             if (reloadType != "older") tweetSearchListView.lastUpdate = new Date().toString()
-            backButton.enabled = false
+           // backButton.enabled = false
             searchParser.sendMessage({ type: reloadType, model: tweetSearchListView.model, data: data })
         }
 

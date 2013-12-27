@@ -16,8 +16,8 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 1.1
-import com.nokia.meego 1.0
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 import QtMobility.location 1.2
 import "Services/Twitter.js" as Twitter
 import "Utils/Calculations.js" as Calculate
@@ -32,7 +32,7 @@ Page {
 
     Component.onCompleted: positionSource.start()
 
-    tools: ToolBarLayout {
+   /* tools: ToolBarLayout {
         ToolIcon {
             id: backButton
             platformIconId: "toolbar-back" + (enabled ? "" : "-dimmed")
@@ -54,7 +54,7 @@ Page {
                 onClicked: positionSource.start()
             }
         }
-    }
+    } */
 
     PullDownListView {
         id: searchListView
@@ -89,13 +89,11 @@ Page {
         visible: searchListView.count == 0 && !header.busy
     }
 
-    ScrollDecorator { flickableItem: searchListView }
+   // ScrollDecorator { flickableItem: searchListView }
 
     PageHeader {
         id: header
-        headerIcon: "image://theme/icon-s-location-picker-inverse"
-        headerText: positionSource.active ? qsTr("Getting location...") : qsTr("Nearby Tweets")
-        onClicked: searchListView.positionViewAtBeginning()
+        title: positionSource.active ? qsTr("Getting location...") : qsTr("Nearby Tweets")
     }
 
     WorkerScript {

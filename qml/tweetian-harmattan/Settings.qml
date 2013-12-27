@@ -16,7 +16,7 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 1.1
+import QtQuick 2.0
 import "Utils/Database.js" as Database
 
 QtObject {
@@ -32,7 +32,7 @@ QtObject {
                 settings[s] = results[s]
             }
         }
-        theme.inverted = !invertedTheme
+        //Theme.inverted = !invertedTheme
         settingsLoaded()
     }
 
@@ -78,7 +78,7 @@ QtObject {
 
     property bool invertedTheme: false
     onInvertedThemeChanged: {
-        theme.inverted = !invertedTheme
+        Theme.inverted = !invertedTheme
         Database.setSetting({"invertedTheme": invertedTheme.toString()})
     }
     property bool enableTwitLonger: false

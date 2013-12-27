@@ -19,18 +19,17 @@
 #include "qmlutils.h"
 
 #include <QtCore/QDateTime>
-#include <QtGui/QApplication>
 #include <QtGui/QClipboard>
 #include <QtGui/QImage>
-#include <QtGui/QStyleOptionGraphicsItem>
 #include <QtGui/QPainter>
 #include <QtGui/QDesktopServices>
-#include <QtDeclarative/QDeclarativeItem>
-#include <QtDeclarative/QDeclarativeView>
-#include <QtDeclarative/QDeclarativeEngine>
+#include <QQuickPaintedItem>
+#include <QQuickView>
+#include <QGuiApplication>
+#include <QQmlEngine>
 #include <QtNetwork/QNetworkAccessManager>
 
-static const QString IMAGE_SAVING_PATH = QDesktopServices::storageLocation(QDesktopServices::PicturesLocation);
+static const QString IMAGE_SAVING_PATH = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
 #if defined(Q_OS_HARMATTAN)
 static const QString USER_AGENT = "Tweetian/" + QLatin1String(APP_VERSION) + " (Nokia; Qt; MeeGo/1.2; Harmattan)";
 #elif defined(Q_OS_SYMBIAN)
@@ -41,8 +40,8 @@ static const QString USER_AGENT = "Tweetian/" + QLatin1String(APP_VERSION) + " (
 static const QString USER_AGENT = "Tweetian/" + QLatin1String(APP_VERSION) + " (Qt; Unknown)";
 #endif
 
-QMLUtils::QMLUtils(QDeclarativeView *view, QObject *parent) :
-    QObject(parent), m_view(view), clipboard(QApplication::clipboard())
+QMLUtils::QMLUtils(QQuickView *view, QObject *parent) :
+    QObject(parent), m_view(view), clipboard(QGuiApplication::clipboard())
 {
 }
 
@@ -55,7 +54,7 @@ void QMLUtils::copyToClipboard(const QString &text)
     clipboard->setText(text, QClipboard::Selection);
 }
 
-QString QMLUtils::saveImage(QDeclarativeItem *imageObject) const
+QString QMLUtils::saveImage(QQuickPaintedItem *imageObject) const
 {
     QString fileName = "tweetian_" + QDateTime::currentDateTime().toString("d-M-yy_h-m-s") + ".png";
     QString filePath = IMAGE_SAVING_PATH + "/" + fileName;
@@ -63,8 +62,9 @@ QString QMLUtils::saveImage(QDeclarativeItem *imageObject) const
     QImage img(imageObject->boundingRect().size().toSize(), QImage::Format_ARGB32);
     img.fill(QColor(0,0,0,0).rgba());
     QPainter painter(&img);
-    QStyleOptionGraphicsItem styleOption;
-    imageObject->paint(&painter, &styleOption, 0);
+    //TODO: Find a way to paint the image
+    //imageObject->paint(&painter, &styleOption, 0);
+    Q_ASSERT(false);
     bool saved = img.save(filePath, "PNG");
 
     if (!saved) {
@@ -79,7 +79,7 @@ QObject *QMLUtils::networkAccessManager() const
 {
     QNetworkAccessManager *manager = m_view->engine()->networkAccessManager();
     // Not sure if this is necessary...
-    QDeclarativeEngine::setObjectOwnership(manager, QDeclarativeEngine::CppOwnership);
+    QQmlEngine::setObjectOwnership(manager, QQmlEngine::CppOwnership);
     return manager;
 }
 

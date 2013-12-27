@@ -16,9 +16,8 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 1.1
-import com.nokia.meego 1.0
-import com.nokia.extras 1.1
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 
 Item {
     id: tabPageHeader
@@ -32,13 +31,13 @@ Item {
     property ListView listView: null
     property variant iconArray: []
 
-    anchors { top: parent.top; left: parent.left; right: parent.right }
+    anchors { bottom: parent.bottom; left: parent.left; right: parent.right }
     height: constant.headerHeight
 
     Image {
         id: background
         anchors.fill: parent
-        source: "image://theme/color6-meegotouch-view-header-fixed"
+        source: "image://theme/graphic-header"
     }
 
     Row {
@@ -47,7 +46,8 @@ Item {
         Repeater {
             id: sectionRepeater
             model: iconArray
-            delegate: Item {
+            delegate: BackgroundItem {
+
                 width: tabPageHeader.width / sectionRepeater.count
                 height: tabPageHeader.height
 
@@ -58,20 +58,22 @@ Item {
                     source: modelData
                 }
 
-                CountBubble {
+               Label {
                     anchors {
                         top: parent.top; topMargin: constant.paddingSmall
                         left: icon.right; leftMargin: -constant.paddingMedium
                     }
-                    visible: value > 0
-                    largeSized: true
-                    value: listView.model.children[index].unreadCount
+                    visible: listView.model.children[index].unreadCount > 0
+                    font.pixelSize: Theme.fontSizeSmall
+                    color: Theme.highlightColor
+
+                    text: listView.model.children[index].unreadCount
                 }
 
                 Loader {
                     anchors.fill: parent
                     sourceComponent: listView.model.children[index].busy
-                                     ? busyIndicator : (sectionMouseArea.pressed ? pressingIndicator : undefined)
+                                     ? busyIndicator : undefined
                     Component {
                         id: busyIndicator
 
@@ -86,38 +88,25 @@ Item {
                                 opacity: 1
                                 anchors.centerIn: parent
                                 running: true
-                                platformStyle: BusyIndicatorStyle { inverted: true }
                             }
 
                             Component.onCompleted: opacity = 0.75
                         }
                     }
 
-                    Component {
-                        id: pressingIndicator
-
-                        Rectangle {
-                            anchors.fill: parent
-                            color: "black"
-                            opacity: 0.5
-                        }
-                    }
                 }
 
-                MouseArea {
-                    id: sectionMouseArea
-                    anchors.fill: parent
-                    onClicked: listView.currentIndex === index ? listView.currentItem.positionAtTop()
+                onClicked: listView.currentIndex === index ? listView.currentItem.positionAtTop()
                                                                : listView.moveToColumn(index)
-                }
+
             }
         }
     }
 
     Rectangle {
         id: currentSectionIndicator
-        anchors.bottom: parent.bottom
-        color: "white"
+        anchors.top: parent.top
+        color: Theme.highlightColor
         height: constant.paddingSmall
         width: listView.visibleArea.widthRatio * parent.width
         x: listView.visibleArea.xPosition * parent.width

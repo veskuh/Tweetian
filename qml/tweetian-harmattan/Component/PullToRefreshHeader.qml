@@ -16,13 +16,13 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 1.1
+import QtQuick 2.0
 import "../Utils/Calculations.js" as Calculate
 
 Item {
     id: root
     height: 0
-    width: ListView.view.width
+    /*width: ListView.view.width
 
     Item {
         id: container
@@ -64,5 +64,5 @@ Item {
                 }
             }
         }
-    }
+    }*/
 }

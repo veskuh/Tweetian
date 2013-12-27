@@ -16,8 +16,9 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 1.1
-import com.nokia.meego 1.0
+import QtQuick 2.0
+import Sailfish.Silica 1.0
+
 
 CommonDialog {
     id: root
@@ -43,11 +44,11 @@ CommonDialog {
                 anchors { left: parent.left; right: parent.right }
                 placeholderText: qsTr("Username")
                 inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
-                platformSipAttributes: SipAttributes {
+              /*  platformSipAttributes: SipAttributes {
                     actionKeyEnabled: usernameTextField.text.length > 0
                     actionKeyHighlighted: true
                     actionKeyLabel: qsTr("Next")
-                }
+                }*/
                 Keys.onReturnPressed: passwordTextField.forceActiveFocus()
             }
 
@@ -57,11 +58,11 @@ CommonDialog {
                 placeholderText: qsTr("Password")
                 inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
                 echoMode: TextInput.Password
-                platformSipAttributes: SipAttributes {
+              /*  platformSipAttributes: SipAttributes {
                     actionKeyEnabled: passwordTextField.text.length > 0
                     actionKeyHighlighted: true
                     actionKeyLabel: qsTr("Sign In")
-                }
+                }*/
                 Keys.onReturnPressed: {
                     passwordTextField.platformCloseSoftwareInputPanel()
                     root.accept()

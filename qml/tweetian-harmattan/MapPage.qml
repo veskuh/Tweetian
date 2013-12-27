@@ -16,9 +16,9 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 1.1
-import com.nokia.meego 1.0
-import QtMobility.location 1.2
+import QtQuick 2.0
+import Sailfish.Silica 1.0
+import QtLocation 5.0
 import "Dialog"
 import "Utils/Calculations.js" as Calculate
 
@@ -28,7 +28,7 @@ Page {
     property double latitude: 0
     property double longitude: 0
 
-    tools: ToolBarLayout {
+  /*  tools: ToolBarLayout {
         ToolIcon {
             platformIconId: "toolbar-back"
             onClicked: pageStack.pop()
@@ -52,7 +52,7 @@ Page {
                 onClicked: Qt.openUrlExternally("geo:" + latitude + "," + longitude)
             }
         }
-    }
+    } */
 
     Coordinate {
         id: tweetCoordinates
@@ -160,9 +160,9 @@ Page {
         height: parent.height / 2
         maximumValue: map.maximumZoomLevel
         minimumValue: map.minimumZoomLevel
-        stepSize: 1
+    /*    stepSize: 1
         orientation: Qt.Vertical
-        valueIndicatorVisible: true
+        valueIndicatorVisible: true */
         onValueChanged: if (pressed) map.zoomLevel = value
 
         // Create binding of slider value to zoomLevel when not sliding
@@ -181,9 +181,9 @@ Page {
             id: coordinateDialog
             property bool __isClosing: false
             titleText: qsTr("Location Coordinates")
-            titleIcon: "image://theme/icon-l-location-test"
+            //titleIcon: "image://theme/icon-l-location-test"
             buttonTexts: [qsTr("Copy"), qsTr("Close")]
-            content: Column {
+            sourceComponent: Column {
                 anchors {
                     top: parent.top; topMargin: coordinateDialog.platformStyle.contentMargin
                     left: parent.left
@@ -193,7 +193,7 @@ Page {
                 height: childrenRect.height + 2 * anchors.topMargin
                 spacing: constant.paddingMedium
 
-                ButtonRow {
+             /*   ButtonRow {
                     anchors { left: parent.left; right: parent.right }
                     Button {
                         id: degree
@@ -203,7 +203,7 @@ Page {
                         id: decimal
                         text: qsTr("Decimal")
                     }
-                }
+                } */
                 TextField {
                     id: coordinateTextField
                     anchors { left: parent.left; right: parent.right }

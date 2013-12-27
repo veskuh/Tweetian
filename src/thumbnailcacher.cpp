@@ -21,10 +21,9 @@
 #include <QtCore/QCryptographicHash>
 #include <QtCore/QFile>
 #include <QtCore/QDir>
-#include <QtDeclarative/QDeclarativeItem>
+#include <QQuickItem>
 #include <QtGui/QImage>
 #include <QtGui/QPainter>
-#include <QtGui/QStyleOptionGraphicsItem>
 #include <QtGui/QDesktopServices>
 
 ThumbnailCacher::ThumbnailCacher(QObject *parent) :
@@ -70,22 +69,25 @@ QString ThumbnailCacher::get(const QString &id)
         return "";
 }
 
-void ThumbnailCacher::store(const QString &id, QDeclarativeItem *imageObj)
+void ThumbnailCacher::store(const QString &id, QQuickItem *imageObj)
 {
     QString thumbFile = getThumbFilePath(id);
 
     if (QFile::exists(thumbFile))
         return;
-
+/*
+    //TODO: Find the right way to cache an image
     QImage thumb(imageObj->boundingRect().size().toSize(), QImage::Format_ARGB32);
     thumb.fill(QColor(0,0,0,0).rgba());
     QPainter painter(&thumb);
     QStyleOptionGraphicsItem style;
-    imageObj->paint(&painter, &style, 0);
+    //imageObj->paint(&painter, &style, 0);
+    Q_ASSERT(false);
     bool saved = thumb.save(thumbFile, "PNG");
 
     if (!saved)
         qWarning("ThumbnailCacher::cache: Failed to save thumbnails to %s", qPrintable(thumbFile));
+*/
 }
 
 int ThumbnailCacher::clearAll()

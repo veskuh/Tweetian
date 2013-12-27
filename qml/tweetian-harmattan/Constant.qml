@@ -16,32 +16,32 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 1.1
-import com.nokia.meego 1.0
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 
 QtObject {
     id: constant
 
     // color
-    property color colorHighlighted: colorLight
-    property color colorLight: settings.invertedTheme ? "#191919" : "#ffffff"
-    property color colorMid: settings.invertedTheme ? "#666666" : "#8c8c8c"
-    property color colorTextSelection: "#4591ff"
-    property color colorDisabled: settings.invertedTheme ? "#b2b2b4" : "#444444"
+    property color colorHighlighted: Theme.highlightColor
+    property color colorLight: Theme.primaryColor
+    property color colorMid: Theme.secondaryColor
+    property color colorTextSelection: Theme.secondaryHighlightColor
+    property color colorDisabled: Theme.secondaryColor
 
     // padding size
-    property int paddingSmall: 4
-    property int paddingMedium: 8
-    property int paddingLarge: 12
-    property int paddingXLarge: 16
+    property int paddingSmall: Theme.paddingSmall
+    property int paddingMedium: Theme.paddingMedium
+    property int paddingLarge: Theme.paddingLarge
+    property int paddingXLarge: Theme.paddingLarge
 
     // font size
-    property int fontSizeXSmall: 20
-    property int fontSizeSmall: 22
-    property int fontSizeMedium: 24
-    property int fontSizeLarge: 26
-    property int fontSizeXLarge: 28
-    property int fontSizeXXLarge: 32
+    property int fontSizeXSmall: Theme.fontSizeTiny
+    property int fontSizeSmall: Theme.fontSizeExtraSmall
+    property int fontSizeMedium: Theme.fontSizeSmall
+    property int fontSizeLarge: Theme.fontSizeMedium
+    property int fontSizeXLarge: Theme.fontSizeLarge
+    property int fontSizeXXLarge: Theme.fontSizeExtraLarge
 
     // graphic size
     property int graphicSizeTiny: 24
@@ -49,10 +49,11 @@ QtObject {
     property int graphicSizeMedium: 48
     property int graphicSizeLarge: 72
 
-    property int thumbnailSize: 150
+    property int thumbnailSize: 200
 
     // other
-    property int headerHeight: inPortrait ? 65 : 55
+   // property int headerHeight: inPortrait ? 65 : 55
+property int headerHeight: 65
 
     property int charReservedPerMedia: 23
     property url twitterBirdIcon: settings.invertedTheme ? "Image/twitter-bird-light.png" : "Image/twitter-bird-dark.png"

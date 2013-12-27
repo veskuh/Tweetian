@@ -22,21 +22,21 @@
 #include <QtCore/QObject>
 
 class QClipboard;
-class QDeclarativeItem;
-class QDeclarativeView;
+class QQuickPaintedItem;
+class QQuickView;
 
 class QMLUtils : public QObject
 {
     Q_OBJECT
 public:
-    explicit QMLUtils(QDeclarativeView *view, QObject *parent = 0);
+    explicit QMLUtils(QQuickView *view, QObject *parent = 0);
 
     // Copy text to system clipboard
     Q_INVOKABLE void copyToClipboard(const QString &text);
 
     // Save image from QML Image element as local file
     // Return the image path if save successfully or empty string if failed
-    Q_INVOKABLE QString saveImage(QDeclarativeItem *imageObject) const;
+    Q_INVOKABLE QString saveImage(QQuickPaintedItem *imageObject) const;
 
     // Get network access manager from QDeclarativeEngine
     Q_INVOKABLE QObject *networkAccessManager() const;
@@ -47,7 +47,7 @@ public:
 private:
     Q_DISABLE_COPY(QMLUtils)
 
-    QDeclarativeView *m_view;
+    QQuickView *m_view;
     QClipboard *clipboard;
 };
 

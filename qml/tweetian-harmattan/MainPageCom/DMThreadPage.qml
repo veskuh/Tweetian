@@ -16,8 +16,8 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 1.1
-import com.nokia.meego 1.0
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 import "../Component"
 import "../Delegate"
 import "../Dialog"
@@ -32,41 +32,32 @@ Page {
 
     Component.onCompleted: internal.insertDMs(mainPage.directMsg.fullModel.count)
 
-    tools: ToolBarLayout {
-        ToolIcon {
-            platformIconId: "toolbar-back" + (enabled ? "" : "-dimmed")
-            enabled: !internal.workerScriptRunning
-            onClicked: pageStack.pop()
-        }
-        ToolIcon {
-            platformIconId: "toolbar-edit"
-            onClicked: pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"), {type: "DM", screenName: screenName})
-        }
-        ToolIcon {
-            platformIconId: "toolbar-refresh" + (enabled ? "" : "-dimmed")
-            enabled: !userStream.connected
-            onClicked: mainPage.directMsg.refresh("newer")
-        }
-    }
-
     PullDownListView {
         id: dMConversationView
-        anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
+        anchors.fill: parent
         model: ListModel {}
-        header: PullToRefreshHeader { visible: !userStream.connected }
         delegate: DirectMsgDelegate {}
-        onPulledDown: if (!userStream.connected) mainPage.directMsg.refresh("newer")
+
+        header: PageHeader {
+            id: header
+            title: qsTr("DM: %1").arg("@" + screenName)
+         }
+
+
+        PullDownMenu {
+            MenuItem {
+                text: qsTr("Reply")
+                onClicked: pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"), {type: "DM", screenName: screenName})
+            }
+
+            MenuItem {
+                text: qsTr("Refresh")
+                onClicked: mainPage.directMsg.refresh("newer")
+            }
+        }
     }
 
-    ScrollDecorator { flickableItem: dMConversationView }
-
-    PageHeader {
-        id: header
-        headerText: qsTr("DM: %1").arg("@" + screenName)
-        headerIcon: "../Image/inbox.svg"
-        busy: internal.workerScriptRunning || mainPage.directMsg.busy
-        onClicked: dMConversationView.positionViewAtBeginning()
-    }
+    ScrollDecorator { flickable: dMConversationView }
 
     WorkerScript {
         id: dmConversationParser

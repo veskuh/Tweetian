@@ -16,16 +16,17 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 1.1
-import com.nokia.meego 1.0
-import com.nokia.extras 1.1
-import QtMobility.location 1.2
+import QtQuick 2.1
+import Sailfish.Silica 1.0
+import QtLocation 5.0
+import QtPositioning 5.0
+
 import "Services/Twitter.js" as Twitter
 import "Services/TwitLonger.js" as TwitLonger
 import "Component"
-import Uploader 1.0
+import harbour.tweetian.Uploader 1.0
 
-Page {
+Dialog {
     id: newTweetPage
 
     property string type: "New" //"New","Reply", "RT" or "DM"
@@ -40,7 +41,31 @@ Page {
 
     onStatusChanged: if (status === PageStatus.Activating) preventTouch.enabled = false
 
-    tools: ToolBarLayout {
+    onAccepted: {
+        if (type == "New" || type == "Reply") {
+            //if (addImageButton.checked) imageUploader.run()
+            //else {
+            if (tweetTextArea.errorHighlight) internal.createUseTwitLongerDialog()
+            else {
+                Twitter.postStatus(tweetTextArea.text, tweetId ,latitude, longitude,
+                                   internal.postStatusOnSuccess, internal.commonOnFailure)
+                // header.busy = true
+            }
+            //}
+        }
+        else if (type == "RT") {
+            console.log("id" + tweetId)
+            Twitter.postRetweet(tweetId, internal.postStatusOnSuccess, internal.commonOnFailure)
+            // header.busy = true
+        }
+        else if (type == "DM") {
+            Twitter.postDirectMsg(tweetTextArea.text, screenName,
+                                  internal.postStatusOnSuccess, internal.commonOnFailure)
+            // header.busy = true
+        }
+    }
+
+    /* tools: ToolBarLayout {
         parent: newTweetPage
         anchors { left: parent.left; right: parent.right; margins: constant.graphicSizeLarge }
         enabled: !preventTouch.enabled
@@ -92,6 +117,26 @@ Page {
                 onClicked: pageStack.pop()
             }
         }
+    }*/
+
+    PageHeader {
+        id: header
+        //headerIcon: type == "DM" ? "Image/create_message.svg" : "image://theme/icon-m-toolbar-edit-white-selected"
+        title: updateTitle()
+
+
+        function updateTitle() {
+            if (imageUploader.progress > 0) return qsTr("Uploading...") + Math.round(imageUploader.progress * 100) + "%"
+
+            switch (type) {
+            case "New": return qsTr("New Tweet")
+            case "Reply": return qsTr("Reply to %1").arg(placedText.substring(0, placedText.indexOf(" ")))
+            case "RT": return qsTr("Retweet")
+            case "DM": return qsTr("DM to %1").arg("@" + screenName)
+            }
+        }
+        //visible: inPortrait || !inputContext.softwareInputPanelVisible
+        //height: visible ? undefined : 0
     }
 
     TextArea {
@@ -101,11 +146,14 @@ Page {
             margins: constant.paddingMedium
             bottomMargin: autoCompleter.height + 2 * buttonColumn.anchors.margins
         }
-        readOnly: header.busy
-        textFormat: TextEdit.PlainText
+        //readOnly: header.busy
+        //textFormat: TextEdit.PlainText
         errorHighlight: charLeftText.text < 0 && type != "RT"
-        font.pixelSize: constant.fontSizeXXLarge
+        font.pixelSize: constant.fontSizeMedium
         placeholderText: qsTr("Tap to write...")
+        focus: true
+        color: constant.colorLight
+        cursorPosition: placedText.length
         text: placedText
         states: [
             State {
@@ -130,9 +178,9 @@ Page {
             }
 
             anchors { right: parent.right; bottom: parent.bottom; margins: constant.paddingMedium }
-            font.pixelSize: constant.fontSizeLarge
+            font.pixelSize: constant.fontSizeSmall
             color: constant.colorMid
-            text: 140 - shortenText.length - (addImageButton.checked ? constant.charReservedPerMedia : 0)
+            text: 140 - shortenText.length // - (addImageButton.checked ? constant.charReservedPerMedia : 0)
         }
     }
 
@@ -157,14 +205,14 @@ Page {
 
                 MouseArea {
                     anchors.fill: parent
-                    enabled: !header.busy
+                    //enabled: !header.busy
                     onClicked: {
                         tweetTextArea.forceActiveFocus()
                         type = "New"
                     }
                 }
             }
-       }
+        }
     }
 
     Column {
@@ -178,30 +226,36 @@ Page {
             anchors { left: parent.left; right: parent.right }
             height: constant.graphicSizeMedium
             model: ListModel {}
-            visible: inputContext.softwareInputPanelVisible || screen.keyboardOpen
-            delegate: ListButton {
+            // visible: inputContext.softwareInputPanelVisible || screen.keyboardOpen
+            delegate: Label {
                 height: ListView.view.height
                 text: model.completeWord
-                onClicked: {
-                    var word = model.completeWord
-                    var leftIndex = tweetTextArea.text.slice(0, tweetTextArea.cursorPosition).search(/\S+$/)
-                    if (leftIndex < 0) leftIndex = tweetTextArea.cursorPosition
-                    var rightIndex = tweetTextArea.text.slice(tweetTextArea.cursorPosition).search(/\s/)
-                    if (rightIndex < 0) {
-                        rightIndex = 0
-                        word += " "
+                MouseArea {
+                    anchors.fill: parent
+
+                    onClicked: {
+                        var word = model.completeWord
+                        var leftIndex = tweetTextArea.text.slice(0, tweetTextArea.cursorPosition).search(/\S+$/)
+                        if (leftIndex < 0) leftIndex = tweetTextArea.cursorPosition
+                        var rightIndex = tweetTextArea.text.slice(tweetTextArea.cursorPosition).search(/\s/)
+                        if (rightIndex < 0) {
+                            rightIndex = 0
+                            word += " "
+                        }
+                        tweetTextArea.text = tweetTextArea.text.slice(0, leftIndex) + word
+                                + tweetTextArea.text.slice(rightIndex + tweetTextArea.cursorPosition)
+                        tweetTextArea.cursorPosition = leftIndex + word.length
+                        tweetTextArea.forceActiveFocus()
+                        autoCompleter.model.clear()
                     }
-                    tweetTextArea.text = tweetTextArea.text.slice(0, leftIndex) + word
-                            + tweetTextArea.text.slice(rightIndex + tweetTextArea.cursorPosition)
-                    tweetTextArea.cursorPosition = leftIndex + word.length
-                    tweetTextArea.forceActiveFocus()
-                    autoCompleter.model.clear()
                 }
             }
             orientation: ListView.Horizontal
             spacing: constant.paddingSmall
         }
 
+
+        /*
         Row {
             id: newTweetButtonRow
             anchors { left: parent.left; right: parent.right }
@@ -211,7 +265,7 @@ Page {
 
             Button {
                 id: locationButton
-                iconSource: settings.invertedTheme ? "Image/add_my_location_inverse.svg" : "Image/add_my_location.svg"
+                //iconSource: settings.invertedTheme ? "Image/add_my_location_inverse.svg" : "Image/add_my_location.svg"
                 width: (parent.width - constant.paddingMedium) / 2
                 text: qsTr("Add")
                 enabled: !header.busy
@@ -221,7 +275,7 @@ Page {
                         PropertyChanges {
                             target: locationButton
                             text: qsTr("Updating...")
-                            checked: false
+                        //    checked: false
                         }
                     },
                     State {
@@ -229,9 +283,9 @@ Page {
                         PropertyChanges {
                             target: locationButton
                             text: qsTr("View/Remove")
-                            iconSource: settings.invertedTheme ? "Image/location_mark_inverse.svg"
-                                                               : "Image/location_mark.svg"
-                            checked: true
+                  //          iconSource: settings.invertedTheme ? "Image/location_mark_inverse.svg"
+                    //                                           : "Image/location_mark.svg"
+                      //      checked: true
                         }
                     }
                 ]
@@ -246,11 +300,11 @@ Page {
 
             Button {
                 id: addImageButton
-                iconSource: settings.invertedTheme ? "Image/photos_inverse.svg" : "Image/photos.svg"
+             //   iconSource: settings.invertedTheme ? "Image/photos_inverse.svg" : "Image/photos.svg"
                 width: (parent.width - constant.paddingMedium) / 2
                 text: checked ? qsTr("View/Remove") : qsTr("Add")
                 enabled: !header.busy
-                checked: imagePath != ""
+               // checked: imagePath != ""
                 onClicked: {
                     if (checked) imageDialogComponent.createObject(newTweetPage)
                     else pageStack.push(Qt.resolvedUrl("SelectImagePage.qml"), {newTweetPage: newTweetPage})
@@ -258,36 +312,21 @@ Page {
             }
         }
 
-        SectionHeader { text: qsTr("Quick Tweet"); visible: newTweetButtonRow.visible }
+       // SectionHeader { text: qsTr("Quick Tweet"); visible: newTweetButtonRow.visible }
 
-        Button {
+        /*Button {
             anchors { left: parent.left; right: parent.right }
             visible: newTweetButtonRow.visible
             enabled: !header.busy
             text: qsTr("Music Player: Now Playing")
             onClicked: harmattanUtils.getNowPlayingMedia()
         }
-    }
+    }*/
 
-    PageHeader {
-        id: header
-        headerIcon: type == "DM" ? "Image/create_message.svg" : "image://theme/icon-m-toolbar-edit-white-selected"
-        headerText: {
-            if (imageUploader.progress > 0) return qsTr("Uploading...") + Math.round(imageUploader.progress * 100) + "%"
 
-            switch (type) {
-            case "New": return qsTr("New Tweet")
-            case "Reply": return qsTr("Reply to %1").arg(placedText.substring(0, placedText.indexOf(" ")))
-            case "RT": return qsTr("Retweet")
-            case "DM": return qsTr("DM to %1").arg("@" + screenName)
-            }
-        }
-        visible: inPortrait || !inputContext.softwareInputPanelVisible
-        height: visible ? undefined : 0
-    }
 
-    // This menu can't be dynamically load as it will cause "Segmentation fault" when loading MapPage
-    ContextMenu {
+        // This menu can't be dynamically load as it will cause "Segmentation fault" when loading MapPage
+        /*ContextMenu {
         id: locationDialog
 
         MenuLayout {
@@ -307,9 +346,9 @@ Page {
                 }
             }
         }
-    }
+    }*/
 
-    Component {
+        /*Component {
         id: imageDialogComponent
 
         Menu {
@@ -333,7 +372,7 @@ Page {
                 if (status === DialogStatus.Closing) __isClosing = true
                 else if (status === DialogStatus.Closed && __isClosing) imageDialog.destroy(250)
             }
-        }
+        }*/
     }
 
     // this is to prevent any interaction in this page when loading the MapPage
@@ -354,7 +393,8 @@ Page {
 
     WorkerScript { id: autoCompleterWorkerScript; source: "WorkerScript/AutoCompleter.js" }
 
-    PositionSource {
+    /* TODO enable position source for tweet location
+PositionSource {
         id: positionSource
         updateInterval: 1000
 
@@ -364,9 +404,7 @@ Page {
             positionSource.stop()
             locationButton.state = "done"
         }
-
-        Component.onDestruction: stop()
-    }
+    } */
 
     ImageUploader {
         id: imageUploader
@@ -402,7 +440,7 @@ Page {
                 imageUploader.setParameter("message", tweetTextArea.text)
                 imageUploader.setAuthorizationHeader(Twitter.getOAuthEchoAuthHeader())
             }
-            header.busy = true
+            // header.busy = true
             imageUploader.send()
         }
     }
@@ -457,7 +495,6 @@ Page {
             case "DM":infoBanner.showText(qsTr("Direct message sent successfully")); break;
             case "RT": infoBanner.showText(qsTr("Retweet sent successfully")); break;
             }
-            pageStack.pop()
         }
 
         function twitLongerOnSuccess(twitLongerId, shortenTweet) {
@@ -477,7 +514,8 @@ Page {
 
         function commonOnFailure(status, statusText) {
             infoBanner.showHttpError(status, statusText)
-            header.busy = false
+            //header.busy = false
+            console.log("error" + statusText)
         }
 
         function createUseTwitLongerDialog() {
@@ -488,7 +526,7 @@ Note: The tweet content will be publicly visible even if your tweet is private."
                 var replyScreenName = placedText ? placedText.substring(1, placedText.indexOf(" ")) : ""
                 TwitLonger.postTweet(constant, settings.userScreenName, tweetTextArea.text, tweetId, replyScreenName,
                                      twitLongerOnSuccess, commonOnFailure)
-                header.busy = true
+                // header.busy = true
             })
         }
     }

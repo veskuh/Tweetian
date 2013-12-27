@@ -16,25 +16,21 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 1.1
-import com.nokia.meego 1.0
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 
 Dialog {
     id: root
     objectName: "commonDialog"
 
     property string titleText: ""
-    property alias titleIcon: iconImage.source
+
     property variant buttonTexts: []
 
     signal buttonClicked(int index)
 
-    platformStyle: DialogStyle {
-        property int contentMargin: 21
-        leftMargin: constant.paddingLarge
-        rightMargin: constant.paddingLarge
-    }
-    title: Item {
+
+    sourceComponent: Item {
         id: titleField
         width: parent.width
         height: titleText == "" ? titleBarIconField.height :
@@ -76,39 +72,5 @@ Dialog {
         }
     }
 
-    buttons: Item {
-        anchors { left: parent.left; right: parent.right }
-        height: buttonCol.height + buttonCol.anchors.topMargin
 
-        Column {
-            id: buttonCol
-            anchors {
-                top: parent.top
-                topMargin: root.platformStyle.buttonsTopMargin
-                horizontalCenter: parent.horizontalCenter
-            }
-            spacing: root.platformStyle.buttonsColumnSpacing
-            height: childrenRect.height
-
-            Repeater {
-                model: buttonTexts
-
-                Button {
-                    text: modelData
-                    onClicked: {
-                        buttonClicked(index)
-                        if (index === 0) accept()
-                        else reject()
-                    }
-                    platformStyle: ButtonStyle {
-                        inverted: true
-                        background: index === 0 ? "image://theme/meegotouch-dialog-button-positive"
-                                                : "image://theme/meegotouch-dialog-button-negative"
-                        pressedBackground: index === 0 ? "image://theme/meegotouch-dialog-button-positive-pressed"
-                                                       : "image://theme/meegotouch-dialog-button-negative-pressed"
-                    }
-                }
-            }
-        }
-    }
 }

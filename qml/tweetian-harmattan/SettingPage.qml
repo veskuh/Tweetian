@@ -16,24 +16,15 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 1.1
-import com.nokia.meego 1.0
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 import "SettingsPageCom"
 import "Utils/Database.js" as Database
 
 Page {
     id: settingPage
 
-    tools: ToolBarLayout {
-        ToolIcon {
-            platformIconId: "toolbar-back"
-            onClicked: pageStack.pop()
-        }
-        ToolIcon {
-            platformIconId: "toolbar-view-menu"
-            onClicked: settingPageMenu.open()
-        }
-    }
+   /*
 
     Menu {
         id: settingPageMenu
@@ -69,7 +60,7 @@ Page {
         TabButton { tab: refreshTab; text: qsTr("Update") }
         TabButton { tab: accountTab; text: qsTr("Account") }
         TabButton { tab: muteTab; text: qsTr("Mute") }
-    }
+    }*/
 
     QtObject {
         id: infoText

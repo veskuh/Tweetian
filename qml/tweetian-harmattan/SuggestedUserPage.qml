@@ -16,8 +16,8 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 1.1
-import com.nokia.meego 1.0
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 import "Component"
 import "Delegate"
 import "Services/Twitter.js" as Twitter
@@ -29,13 +29,14 @@ Page {
 
     Component.onCompleted: script.refresh()
 
+    /*
     tools: ToolBarLayout {
         ToolIcon {
             id: backButton
             platformIconId: "toolbar-back" + (enabled ? "" : "-dimmed")
             onClicked: pageStack.pop()
         }
-    }
+    }*/
 
     ListView {
         id: suggestedUserView
@@ -44,23 +45,18 @@ Page {
         model: ListModel {}
     }
 
-    ScrollDecorator { flickableItem: suggestedUserView }
+//    ScrollDecorator { flickableItem: suggestedUserView }
 
     PageHeader {
         id: header
-        headerIcon: "image://theme/icon-m-toolbar-people-white-selected"
-        headerText: qsTr("Suggested Users")
-        countBubbleValue: suggestedUserView.count
-        countBubbleVisible: countBubbleValue != 0
-        onClicked: suggestedUserView.positionViewAtBeginning()
+        title: qsTr("Suggested Users")
+
     }
 
     WorkerScript {
         id: userParser
         source: "WorkerScript/UserParser.js"
         onMessage: {
-            backButton.enabled = true
-            header.busy = false
         }
     }
 
@@ -69,12 +65,10 @@ Page {
 
         function refresh() {
             Twitter.getSuggestedUser(slug, onSuccess, onFailure)
-            header.busy = true
         }
 
         function onSuccess(data) {
-            backButton.enabled = false
-            header.headerText += ": " + data.name
+            header.title += ": " + data.name
             var msg = {
                 type: "all",
                 data: data.users,
@@ -85,7 +79,6 @@ Page {
 
         function onFailure(status, statusText) {
             infoBanner.showHttpError(status, statusText)
-            header.busy = false
         }
     }
 }

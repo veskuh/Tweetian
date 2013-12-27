@@ -16,9 +16,8 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 1.1
-import com.nokia.meego 1.0
-import com.nokia.extras 1.1
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 import "Component"
 import "Services/Twitter.js" as Twitter
 
@@ -27,13 +26,6 @@ Page {
 
     Component.onCompleted: script.refresh()
 
-    tools: ToolBarLayout {
-        ToolIcon {
-            platformIconId: "toolbar-back"
-            onClicked: pageStack.pop()
-        }
-    }
-
     ListView {
         id: userCategoryView
         anchors { top: header.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
@@ -41,13 +33,11 @@ Page {
         model: ListModel {}
     }
 
-    ScrollDecorator { flickableItem: userCategoryView }
+    //ScrollDecorator { flickableItem: userCategoryView }
 
     PageHeader {
         id: header
-        headerText: qsTr("Suggested User Categories")
-        headerIcon: "image://theme/icon-m-toolbar-people-white-selected"
-        onClicked: userCategoryView.positionViewAtBeginning()
+        title: qsTr("Suggested User Categories")
     }
 
     QtObject {
@@ -57,18 +47,15 @@ Page {
             for (var i=0; i<data.length; i++) {
                 userCategoryView.model.append(data[i])
             }
-            header.busy = false
         }
 
         function onFailure(status, statusText) {
             infoBanner.showHttpError(status, statusText)
-            header.busy = false
         }
 
         function refresh() {
             userCategoryView.model.clear()
             Twitter.getSuggestedUserCategories(onSuccess, onFailure)
-            header.busy = true
         }
     }
 
@@ -86,23 +73,23 @@ Page {
                 id: categoryText
                 anchors {
                     verticalCenter: parent.verticalCenter
-                    left: userCategoryItem.left; leftMargin: constant.paddingLarge
+                    left: parent.left; leftMargin: constant.paddingLarge
                     right: countBubble.left; rightMargin: constant.paddingMedium
                 }
                 elide: Text.ElideRight
                 text: model.name
                 font.pixelSize: constant.fontSizeLarge
+                font.family: Theme.fontFamily
                 color: constant.colorLight
             }
 
-            CountBubble {
+            Label {
                 id: countBubble
                 anchors {
                     right: parent.right; rightMargin: constant.paddingMedium + listItemRightMargin
                     verticalCenter: parent.verticalCenter
                 }
-                largeSized: true
-                value: model.size
+                text: model.size
             }
 
             onClicked: pageStack.push(Qt.resolvedUrl("SuggestedUserPage.qml"), {slug: model.slug})

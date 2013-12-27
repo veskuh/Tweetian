@@ -16,12 +16,13 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 1.1
-import com.nokia.meego 1.0
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 import "../Component"
 import "../Services/Translation.js" as Translation
 
 Page {
+    id: settingGeneralPage
 
     Flickable {
         anchors.fill: parent
@@ -33,6 +34,7 @@ Page {
             height: childrenRect.height
             spacing: constant.paddingLarge
 
+            /*
             Text {
                 anchors { left: parent.left; right: parent.right; margins: constant.paddingMedium }
                 font.pixelSize: constant.fontSizeLarge
@@ -83,7 +85,7 @@ Page {
                     text: qsTr("Large")
                     onClicked: settings.largeFontSize = true
                 }
-            }
+            } */
 
             SettingSwitch {
                 id: enableTwitLongerSwitch
@@ -119,7 +121,7 @@ Page {
                     }
                     width: parent.width * 0.4
                     text: imageUploadServiceModel.get(settings.imageUploadService).name
-                    onClicked: chooseServiceDialogComponent.createObject(settingPage)
+                    onClicked: chooseServiceDialogComponent.createObject(settingGeneralPage)
                 }
             }
 
@@ -202,7 +204,7 @@ Page {
             for (var i=0; i<langNamesArray.length; i++) {
                 languageNamesModel.append({ name: langNamesArray[i] })
             }
-            translationLangDialog.createObject(settingPage)
+            translationLangDialog.createObject(settingGeneralPage)
             loadingRect.visible = false
         }
 
@@ -249,7 +251,7 @@ Page {
             titleText: qsTr("Image Upload Service")
             model: imageUploadServiceModel
             selectedIndex: settings.imageUploadService
-            onSelectedIndexChanged: settings.imageUploadService = selectedIndex
+            onAccepted: settings.imageUploadService = selectedIndex
             Component.onCompleted: open()
             onStatusChanged: {
                 if (status === DialogStatus.Closing) __isClosing = true
