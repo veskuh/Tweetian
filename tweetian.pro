@@ -89,8 +89,7 @@ OTHER_FILES += qtc_packaging/debian_harmattan/* \
     qml/tweetian-harmattan/Component/*.qml \
     qml/tweetian-harmattan/Delegate/*.qml \
     qml/tweetian-harmattan/Dialog/*.qml \
-    qml/tweetian-harmattan/Utils/*js \
-    qml/tweetian-harmattan/CoverPage.qml
+    qml/tweetian-harmattan/Utils/*js
 
 CONFIG += link_pkgconfig
 packagesExist(sailfishapp) {

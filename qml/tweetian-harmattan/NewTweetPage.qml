@@ -39,26 +39,35 @@ Dialog {
     property string imageUrl: ""
     property string imagePath: ""
 
+    acceptDestination: Qt.resolvedUrl("SendTweetPage.qml")
+    acceptDestinationProperties: {"busy": true}
+    canAccept: tweetTextArea.text.length != 0
+               && (settings.enableTwitLonger || !tweetTextArea.errorHighlight)
+               && !header.busy
+
     onStatusChanged: if (status === PageStatus.Activating) preventTouch.enabled = false
 
     onAccepted: {
+        acceptDestinationInstance.busy = true
         if (type == "New" || type == "Reply") {
             //if (addImageButton.checked) imageUploader.run()
             //else {
             if (tweetTextArea.errorHighlight) internal.createUseTwitLongerDialog()
             else {
+                internal.exit = true
                 Twitter.postStatus(tweetTextArea.text, tweetId ,latitude, longitude,
                                    internal.postStatusOnSuccess, internal.commonOnFailure)
-                // header.busy = true
+
             }
             //}
         }
         else if (type == "RT") {
-            console.log("id" + tweetId)
+            internal.exit = true
             Twitter.postRetweet(tweetId, internal.postStatusOnSuccess, internal.commonOnFailure)
             // header.busy = true
         }
         else if (type == "DM") {
+            internal.exit = true
             Twitter.postDirectMsg(tweetTextArea.text, screenName,
                                   internal.postStatusOnSuccess, internal.commonOnFailure)
             // header.busy = true
@@ -119,11 +128,18 @@ Dialog {
         }
     }*/
 
-    PageHeader {
+    DialogHeader {
         id: header
         //headerIcon: type == "DM" ? "Image/create_message.svg" : "image://theme/icon-m-toolbar-edit-white-selected"
         title: updateTitle()
-
+        acceptText:  {
+            switch (type) {
+            case "New": return qsTr("Tweet")
+            case "Reply": return qsTr("Reply")
+            case "RT": return qsTr("Retweet")
+            case "DM": return qsTr("DM")
+            }
+        }
 
         function updateTitle() {
             if (imageUploader.progress > 0) return qsTr("Uploading...") + Math.round(imageUploader.progress * 100) + "%"
@@ -449,6 +465,8 @@ PositionSource {
         id: internal
 
         property string twitLongerId: ""
+        property bool exit
+        property string tweetType: type
 
         function updateAutoCompleter() {
             if (newTweetPage.status !== PageStatus.Active || !tweetTextArea.activeFocus) return
@@ -489,11 +507,15 @@ PositionSource {
         }
 
         function postStatusOnSuccess(data) {
-            switch (type) {
+            switch (tweetType) {
             case "New": infoBanner.showText(qsTr("Tweet sent successfully")); break;
             case "Reply": infoBanner.showText(qsTr("Reply sent successfully")); break;
             case "DM":infoBanner.showText(qsTr("Direct message sent successfully")); break;
             case "RT": infoBanner.showText(qsTr("Retweet sent successfully")); break;
+            }
+            if (exit) {
+                acceptDestinationInstance.backDestination = pageStack.previousPage(newTweetPage)
+                acceptDestinationInstance.busy = false
             }
         }
 
@@ -515,7 +537,12 @@ PositionSource {
         function commonOnFailure(status, statusText) {
             infoBanner.showHttpError(status, statusText)
             //header.busy = false
-            console.log("error" + statusText)
+
+            if (exit) {
+                exit = false
+                acceptDestinationInstance.backDestination = newTweetPage
+                acceptDestinationInstance.busy = false
+            }
         }
 
         function createUseTwitLongerDialog() {
