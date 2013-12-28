@@ -61,7 +61,7 @@ void ImageUploader::send()
         m_reply = 0;
     }
 
-    QFileInfo fileInfo(m_fileName);
+    QFileInfo fileInfo(QUrl(m_fileName).toLocalFile());
 
     if (!fileInfo.exists()) {
         emit failure(-1, tr("The file %1 does not exists").arg(m_fileName));

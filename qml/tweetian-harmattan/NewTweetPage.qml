@@ -26,6 +26,7 @@ import "Services/TwitLonger.js" as TwitLonger
 import "Component"
 import harbour.tweetian.Uploader 1.0
 
+
 Page {
     id: newTweetPage
 
@@ -95,306 +96,339 @@ Page {
         }
     }*/
 
-    PageHeader {
-        id: header
-        //headerIcon: type == "DM" ? "Image/create_message.svg" : "image://theme/icon-m-toolbar-edit-white-selected"
-        title: updateTitle()
+    SilicaFlickable {
+        anchors.fill: parent
 
-
-        function updateTitle() {
-            if (imageUploader.progress > 0) return qsTr("Uploading...") + Math.round(imageUploader.progress * 100) + "%"
-
-            switch (type) {
-            case "New": return qsTr("New Tweet")
-            case "Reply": return qsTr("Reply to %1").arg(placedText.substring(0, placedText.indexOf(" ")))
-            case "RT": return qsTr("Retweet")
-            case "DM": return qsTr("DM to %1").arg("@" + screenName)
-            }
-        }
-        //visible: inPortrait || !inputContext.softwareInputPanelVisible
-        //height: visible ? undefined : 0
-    }
-
-    TextArea {
-        id: tweetTextArea
-        anchors {
-            top: header.bottom; left: parent.left; right: parent.right
-            margins: constant.paddingMedium
-            bottomMargin: autoCompleter.height + 2 * buttonColumn.anchors.margins
-        }
-        //readOnly: header.busy
-        //textFormat: TextEdit.PlainText
-        errorHighlight: charLeftText.text < 0 && type != "RT"
-        font.pixelSize: constant.fontSizeMedium
-        placeholderText: qsTr("Tap to write...")
-        focus: true
-        color: constant.colorLight
-        cursorPosition: placedText.length
-        text: placedText
-        states: [
-            State {
-                when: inputContext.softwareInputPanelVisible
-                AnchorChanges { target: tweetTextArea; anchors.bottom: parent.bottom }
-            },
-            State {
-                when: !inputContext.softwareInputPanelVisible
-                PropertyChanges { target: tweetTextArea; height: Math.max(implicitHeight, 120) }
-            }
-        ]
-        onTextChanged: internal.updateAutoCompleter()
-
-        Text {
-            id: charLeftText
-            property string shortenText: tweetTextArea.text.replace(/https?:\/\/\S+/g, __replaceLink)
-
-            function __replaceLink(w) {
-                if (w.indexOf("https://") === 0)
-                    return "https://t.co/xxxxxxxxxx" // Length: 23
-                else return "http://t.co/xxxxxxxxxx" // Length: 22
+        PullDownMenu {
+            MenuItem {
+                visible: imagePath != ''
+                text: qsTr("Remove Image")
+                onClicked: imagePath = ''
             }
 
-            anchors { right: parent.right; bottom: parent.bottom; margins: constant.paddingMedium }
-            font.pixelSize: constant.fontSizeSmall
-            color: constant.colorMid
-            text: 140 - shortenText.length // - (addImageButton.checked ? constant.charReservedPerMedia : 0)
-        }
-    }
-
-    Loader {
-        anchors.fill: tweetTextArea
-        sourceComponent: type == "RT" ? rtCoverComponent : undefined
-
-        Component {
-            id: rtCoverComponent
-
-            Rectangle {
-                color: "white"
-                opacity: 0.9
-                radius: constant.paddingMedium
-
-                Text {
-                    color: "black"
-                    anchors.centerIn: parent
-                    font.pixelSize: tweetTextArea.font.pixelSize * 1.25
-                    text: qsTr("Tap to Edit")
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    //enabled: !header.busy
-                    onClicked: {
-                        tweetTextArea.forceActiveFocus()
-                        type = "New"
-                    }
+            MenuItem {
+                visible: imagePath == ''
+                text: qsTr("Attach Image")
+                onClicked: {
+                    var imagePicker = pageStack.push("Sailfish.Pickers.ImagePickerPage");
+                    imagePicker.selectedContentChanged.connect(function() {
+                        newTweetPage.imagePath = imagePicker.selectedContent;
+                     });
                 }
             }
         }
-    }
 
-    Column {
-        id: buttonColumn
-        anchors { left: parent.left; right: parent.right; top: tweetTextArea.bottom; margins: constant.paddingMedium }
-        height: childrenRect.height
-        spacing: constant.paddingMedium
+        PageHeader {
+            id: header
+            //headerIcon: type == "DM" ? "Image/create_message.svg" : "image://theme/icon-m-toolbar-edit-white-selected"
+            title: updateTitle()
 
-        ListView {
-            id: autoCompleter
-            anchors { left: parent.left; right: parent.right }
-            height: constant.graphicSizeMedium
-            model: ListModel {}
-            // visible: inputContext.softwareInputPanelVisible || screen.keyboardOpen
-            delegate: Label {
-                height: ListView.view.height
-                text: model.completeWord
-                MouseArea {
-                    anchors.fill: parent
 
-                    onClicked: {
-                        var word = model.completeWord
-                        var leftIndex = tweetTextArea.text.slice(0, tweetTextArea.cursorPosition).search(/\S+$/)
-                        if (leftIndex < 0) leftIndex = tweetTextArea.cursorPosition
-                        var rightIndex = tweetTextArea.text.slice(tweetTextArea.cursorPosition).search(/\s/)
-                        if (rightIndex < 0) {
-                            rightIndex = 0
-                            word += " "
-                        }
-                        tweetTextArea.text = tweetTextArea.text.slice(0, leftIndex) + word
-                                + tweetTextArea.text.slice(rightIndex + tweetTextArea.cursorPosition)
-                        tweetTextArea.cursorPosition = leftIndex + word.length
-                        tweetTextArea.forceActiveFocus()
-                        autoCompleter.model.clear()
-                    }
-                }
-            }
-            orientation: ListView.Horizontal
-            spacing: constant.paddingSmall
-        }
+            function updateTitle() {
+                if (imageUploader.progress > 0) return qsTr("Uploading...") + Math.round(imageUploader.progress * 100) + "%"
 
-        Button {
-            id: tweetButton
-            text: {
                 switch (type) {
-                case "New": return qsTr("Tweet")
-                case "Reply": return qsTr("Reply")
+                case "New": return qsTr("New Tweet")
+                case "Reply": return qsTr("Reply to %1").arg(placedText.substring(0, placedText.indexOf(" ")))
                 case "RT": return qsTr("Retweet")
-                case "DM": return qsTr("DM")
+                case "DM": return qsTr("DM to %1").arg("@" + screenName)
                 }
             }
-            anchors.horizontalCenter: parent.horizontalCenter
-            enabled: (tweetTextArea.text.length != 0 ) // || addImageButton.checked)
-                     && ((settings.enableTwitLonger /* && !addImageButton.checked */)  || !tweetTextArea.errorHighlight)
+            //visible: inPortrait || !inputContext.softwareInputPanelVisible
+            //height: visible ? undefined : 0
+        }
 
-            onClicked: {
-                if (type == "New" || type == "Reply") {
-                    //if (addImageButton.checked) imageUploader.run()
-                    //else {
-                    if (tweetTextArea.errorHighlight) internal.createUseTwitLongerDialog()
-                    else {
-                        Twitter.postStatus(tweetTextArea.text, tweetId ,latitude, longitude,
-                                           internal.postStatusOnSuccess, internal.commonOnFailure)
-                        // header.busy = true
+        TextArea {
+            id: tweetTextArea
+            anchors {
+                top: header.bottom; left: parent.left; right: parent.right
+                margins: constant.paddingMedium
+                bottomMargin: autoCompleter.height + 2 * buttonColumn.anchors.margins
+            }
+            //readOnly: header.busy
+            //textFormat: TextEdit.PlainText
+            errorHighlight: charLeftText.text < 0 && type != "RT"
+            font.pixelSize: constant.fontSizeMedium
+            placeholderText: qsTr("Tap to write...")
+            focus: true
+            color: constant.colorLight
+            cursorPosition: placedText.length
+            text: placedText
+            states: [
+                State {
+                    when: inputContext.softwareInputPanelVisible
+                    AnchorChanges { target: tweetTextArea; anchors.bottom: parent.bottom }
+                },
+                State {
+                    when: !inputContext.softwareInputPanelVisible
+                    PropertyChanges { target: tweetTextArea; height: Math.max(implicitHeight, 120) }
+                }
+            ]
+            onTextChanged: internal.updateAutoCompleter()
+
+            Text {
+                id: charLeftText
+                property string shortenText: tweetTextArea.text.replace(/https?:\/\/\S+/g, __replaceLink)
+
+                function __replaceLink(w) {
+                    if (w.indexOf("https://") === 0)
+                        return "https://t.co/xxxxxxxxxx" // Length: 23
+                    else return "http://t.co/xxxxxxxxxx" // Length: 22
+                }
+
+                anchors { right: parent.right; bottom: parent.bottom; margins: constant.paddingMedium }
+                font.pixelSize: constant.fontSizeSmall
+                color: constant.colorMid
+                text: 140 - shortenText.length // - (addImageButton.checked ? constant.charReservedPerMedia : 0)
+            }
+        }
+
+        Loader {
+            anchors.fill: tweetTextArea
+            sourceComponent: type == "RT" ? rtCoverComponent : undefined
+
+            Component {
+                id: rtCoverComponent
+
+                Rectangle {
+                    color: "white"
+                    opacity: 0.9
+                    radius: constant.paddingMedium
+
+                    Text {
+                        color: "black"
+                        anchors.centerIn: parent
+                        font.pixelSize: tweetTextArea.font.pixelSize * 1.25
+                        text: qsTr("Tap to Edit")
                     }
-                    //}
-                }
-                else if (type == "RT") {
-                    console.log("id" + tweetId)
-                    Twitter.postRetweet(tweetId, internal.postStatusOnSuccess, internal.commonOnFailure)
-                    // header.busy = true
-                }
-                else if (type == "DM") {
-                    Twitter.postDirectMsg(tweetTextArea.text, screenName,
-                                          internal.postStatusOnSuccess, internal.commonOnFailure)
-                    // header.busy = true
+
+                    MouseArea {
+                        anchors.fill: parent
+                        //enabled: !header.busy
+                        onClicked: {
+                            tweetTextArea.forceActiveFocus()
+                            type = "New"
+                        }
+                    }
                 }
             }
         }
 
-        /*
-        Row {
-            id: newTweetButtonRow
-            anchors { left: parent.left; right: parent.right }
+        Column {
+            id: buttonColumn
+            anchors { left: parent.left; right: parent.right; top: tweetTextArea.bottom; margins: constant.paddingMedium }
             height: childrenRect.height
             spacing: constant.paddingMedium
-            visible: type == "New" || type == "Reply"
 
-            Button {
-                id: locationButton
-                //iconSource: settings.invertedTheme ? "Image/add_my_location_inverse.svg" : "Image/add_my_location.svg"
-                width: (parent.width - constant.paddingMedium) / 2
-                text: qsTr("Add")
-                enabled: !header.busy
-                states: [
-                    State {
-                        name: "loading"
-                        PropertyChanges {
-                            target: locationButton
-                            text: qsTr("Updating...")
-                        //    checked: false
-                        }
-                    },
-                    State {
-                        name: "done"
-                        PropertyChanges {
-                            target: locationButton
-                            text: qsTr("View/Remove")
-                  //          iconSource: settings.invertedTheme ? "Image/location_mark_inverse.svg"
-                    //                                           : "Image/location_mark.svg"
-                      //      checked: true
+            ListView {
+                id: autoCompleter
+                anchors { left: parent.left; right: parent.right }
+                height: constant.graphicSizeMedium
+                model: ListModel {}
+                // visible: inputContext.softwareInputPanelVisible || screen.keyboardOpen
+                delegate: Label {
+                    height: ListView.view.height
+                    text: model.completeWord
+                    MouseArea {
+                        anchors.fill: parent
+
+                        onClicked: {
+                            var word = model.completeWord
+                            var leftIndex = tweetTextArea.text.slice(0, tweetTextArea.cursorPosition).search(/\S+$/)
+                            if (leftIndex < 0) leftIndex = tweetTextArea.cursorPosition
+                            var rightIndex = tweetTextArea.text.slice(tweetTextArea.cursorPosition).search(/\s/)
+                            if (rightIndex < 0) {
+                                rightIndex = 0
+                                word += " "
+                            }
+                            tweetTextArea.text = tweetTextArea.text.slice(0, leftIndex) + word
+                                    + tweetTextArea.text.slice(rightIndex + tweetTextArea.cursorPosition)
+                            tweetTextArea.cursorPosition = leftIndex + word.length
+                            tweetTextArea.forceActiveFocus()
+                            autoCompleter.model.clear()
                         }
                     }
-                ]
+                }
+                orientation: ListView.Horizontal
+                spacing: constant.paddingSmall
+            }
+
+            Image {
+                width: 200; height: 200
+                visible: source != ''
+                fillMode: Image.PreserveAspectFit
+                anchors.horizontalCenter: parent.horizontalCenter
+                source: newTweetPage.imagePath
+            }
+
+            Button {
+                id: tweetButton
+                text: {
+                    switch (type) {
+                    case "New": return qsTr("Tweet")
+                    case "Reply": return qsTr("Reply")
+                    case "RT": return qsTr("Retweet")
+                    case "DM": return qsTr("DM")
+                    }
+                }
+                anchors.horizontalCenter: parent.horizontalCenter
+                enabled: (tweetTextArea.text.length != 0 ) // || addImageButton.checked)
+                         && ((settings.enableTwitLonger /* && !addImageButton.checked */)  || !tweetTextArea.errorHighlight)
+
                 onClicked: {
-                    if (state == "done") locationDialog.open()
-                    else {
-                        positionSource.start()
-                        state = "loading"
+                    if (type == "New" || type == "Reply") {
+                        if (imagePath != '') {
+                            imageUploader.run();
+                        }
+                        else {
+                            if (tweetTextArea.errorHighlight) internal.createUseTwitLongerDialog()
+                            else {
+                                Twitter.postStatus(tweetTextArea.text, tweetId ,latitude, longitude,
+                                                   internal.postStatusOnSuccess, internal.commonOnFailure)
+                                // header.busy = true
+                            }
+                        }
+                    }
+                    else if (type == "RT") {
+                        console.log("id" + tweetId)
+                        Twitter.postRetweet(tweetId, internal.postStatusOnSuccess, internal.commonOnFailure)
+                        // header.busy = true
+                    }
+                    else if (type == "DM") {
+                        Twitter.postDirectMsg(tweetTextArea.text, screenName,
+                                              internal.postStatusOnSuccess, internal.commonOnFailure)
+                        // header.busy = true
                     }
                 }
             }
 
-            Button {
-                id: addImageButton
-             //   iconSource: settings.invertedTheme ? "Image/photos_inverse.svg" : "Image/photos.svg"
-                width: (parent.width - constant.paddingMedium) / 2
-                text: checked ? qsTr("View/Remove") : qsTr("Add")
-                enabled: !header.busy
-               // checked: imagePath != ""
-                onClicked: {
-                    if (checked) imageDialogComponent.createObject(newTweetPage)
-                    else pageStack.push(Qt.resolvedUrl("SelectImagePage.qml"), {newTweetPage: newTweetPage})
-                }
-            }
-        }
+            /*
+            Row {
+                id: newTweetButtonRow
+                anchors { left: parent.left; right: parent.right }
+                height: childrenRect.height
+                spacing: constant.paddingMedium
+                visible: type == "New" || type == "Reply"
 
-       // SectionHeader { text: qsTr("Quick Tweet"); visible: newTweetButtonRow.visible }
-
-        /*Button {
-            anchors { left: parent.left; right: parent.right }
-            visible: newTweetButtonRow.visible
-            enabled: !header.busy
-            text: qsTr("Music Player: Now Playing")
-            onClicked: harmattanUtils.getNowPlayingMedia()
-        }
-    }*/
-
-
-
-        // This menu can't be dynamically load as it will cause "Segmentation fault" when loading MapPage
-        /*ContextMenu {
-        id: locationDialog
-
-        MenuLayout {
-            MenuItem {
-                text: qsTr("View location")
-                onClicked: {
-                    preventTouch.enabled = true
-                    pageStack.push(Qt.resolvedUrl("MapPage.qml"), {"latitude": latitude, "longitude": longitude})
-                }
-            }
-            MenuItem {
-                text: qsTr("Remove location")
-                onClicked: {
-                    latitude = 0
-                    longitude = 0
-                    locationButton.state = ""
-                }
-            }
-        }
-    }*/
-
-        /*Component {
-        id: imageDialogComponent
-
-        Menu {
-            id: imageDialog
-            property bool __isClosing: false
-            MenuLayout {
-                MenuItem {
-                    text: qsTr("View image")
-                    onClicked: Qt.openUrlExternally(imageUrl)
-                }
-                MenuItem {
-                    text: qsTr("Remove image")
+                Button {
+                    id: locationButton
+                    //iconSource: settings.invertedTheme ? "Image/add_my_location_inverse.svg" : "Image/add_my_location.svg"
+                    width: (parent.width - constant.paddingMedium) / 2
+                    text: qsTr("Add")
+                    enabled: !header.busy
+                    states: [
+                        State {
+                            name: "loading"
+                            PropertyChanges {
+                                target: locationButton
+                                text: qsTr("Updating...")
+                            //    checked: false
+                            }
+                        },
+                        State {
+                            name: "done"
+                            PropertyChanges {
+                                target: locationButton
+                                text: qsTr("View/Remove")
+                      //          iconSource: settings.invertedTheme ? "Image/location_mark_inverse.svg"
+                        //                                           : "Image/location_mark.svg"
+                          //      checked: true
+                            }
+                        }
+                    ]
                     onClicked: {
-                        imageUrl = ""
-                        imagePath = ""
+                        if (state == "done") locationDialog.open()
+                        else {
+                            positionSource.start()
+                            state = "loading"
+                        }
+                    }
+                }
+
+                Button {
+                    id: addImageButton
+                 //   iconSource: settings.invertedTheme ? "Image/photos_inverse.svg" : "Image/photos.svg"
+                    width: (parent.width - constant.paddingMedium) / 2
+                    text: checked ? qsTr("View/Remove") : qsTr("Add")
+                    enabled: !header.busy
+                   // checked: imagePath != ""
+                    onClicked: {
+                        if (checked) imageDialogComponent.createObject(newTweetPage)
+                        else pageStack.push(Qt.resolvedUrl("SelectImagePage.qml"), {newTweetPage: newTweetPage})
                     }
                 }
             }
-            Component.onCompleted: open()
-            onStatusChanged: {
-                if (status === DialogStatus.Closing) __isClosing = true
-                else if (status === DialogStatus.Closed && __isClosing) imageDialog.destroy(250)
+
+           // SectionHeader { text: qsTr("Quick Tweet"); visible: newTweetButtonRow.visible }
+
+            /*Button {
+                anchors { left: parent.left; right: parent.right }
+                visible: newTweetButtonRow.visible
+                enabled: !header.busy
+                text: qsTr("Music Player: Now Playing")
+                onClicked: harmattanUtils.getNowPlayingMedia()
             }
         }*/
-    }
 
-    // this is to prevent any interaction in this page when loading the MapPage
-    MouseArea {
-        id: preventTouch
-        anchors.fill: parent
-        z: 1
-        enabled: false
+
+
+            // This menu can't be dynamically load as it will cause "Segmentation fault" when loading MapPage
+            /*ContextMenu {
+            id: locationDialog
+
+            MenuLayout {
+                MenuItem {
+                    text: qsTr("View location")
+                    onClicked: {
+                        preventTouch.enabled = true
+                        pageStack.push(Qt.resolvedUrl("MapPage.qml"), {"latitude": latitude, "longitude": longitude})
+                    }
+                }
+                MenuItem {
+                    text: qsTr("Remove location")
+                    onClicked: {
+                        latitude = 0
+                        longitude = 0
+                        locationButton.state = ""
+                    }
+                }
+            }
+        }*/
+
+            /*Component {
+            id: imageDialogComponent
+
+            Menu {
+                id: imageDialog
+                property bool __isClosing: false
+                MenuLayout {
+                    MenuItem {
+                        text: qsTr("View image")
+                        onClicked: Qt.openUrlExternally(imageUrl)
+                    }
+                    MenuItem {
+                        text: qsTr("Remove image")
+                        onClicked: {
+                            imageUrl = ""
+                            imagePath = ""
+                        }
+                    }
+                }
+                Component.onCompleted: open()
+                onStatusChanged: {
+                    if (status === DialogStatus.Closing) __isClosing = true
+                    else if (status === DialogStatus.Closed && __isClosing) imageDialog.destroy(250)
+                }
+            }*/
+        }
+
+        // this is to prevent any interaction in this page when loading the MapPage
+        MouseArea {
+            id: preventTouch
+            anchors.fill: parent
+            z: 1
+            enabled: false
+        }
     }
 
     Connections {
