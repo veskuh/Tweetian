@@ -86,6 +86,7 @@ OTHER_FILES += qtc_packaging/debian_harmattan/* \
     qml/tweetian-harmattan/*.qml \
     qml/tweetian-harmattan/*.js \
     qml/tweetian-harmattan/MainPageCom/*.qml \
+    qml/tweetian-harmattan/UserPageCom/*.qml \
     qml/tweetian-harmattan/Component/*.qml \
     qml/tweetian-harmattan/Delegate/*.qml \
     qml/tweetian-harmattan/Dialog/*.qml \
