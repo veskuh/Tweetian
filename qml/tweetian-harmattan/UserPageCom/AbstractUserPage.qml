@@ -50,8 +50,12 @@ Page {
 
     PullDownListView {
         id: listView
-        anchors { top: header.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
+        anchors { top: parent.top; bottom: parent.bottom; left: parent.left; right: parent.right }
         model: ListModel {}
+        header: PageHeader {
+            title: "@" + user.screenName + "\n" + root.headerText
+        }
+
         footer: LoadMoreButton {
             visible: loadMoreButtonVisible
             enabled: !loadingRect.visible
@@ -74,10 +78,5 @@ Page {
         font.pixelSize: constant.fontSizeXXLarge
         color: constant.colorMid
         text: root.emptyText
-    }
-
-    PageHeader {
-        id: header
-        title: "@" + user.screenName + ": " + root.headerText
     }
 }
