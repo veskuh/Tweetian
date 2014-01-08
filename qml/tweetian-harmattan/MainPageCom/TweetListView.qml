@@ -132,8 +132,9 @@ Item {
                text: qsTr("New Tweet")
             }
             MenuItem {
+               enabled: !userStream.connected
                onClicked: if (!userStream.connected) refresh("newer")
-               text: qsTr("Refresh")
+               text: userStream.connected ? qsTr("Streaming...") : qsTr("Refresh")
             }
         }
 
@@ -160,9 +161,6 @@ Item {
             repeat: false
             onTriggered: root.unreadCount = Math.min(tweetView.indexAt(0, tweetView.contentY + 5) + 1, root.unreadCount)
         }
-
-        Component { id: pullToRefreshHeader; PullToRefreshHeader {} }
-        Component { id: streamingHeader; StreamingHeader {} }
     }
 
     ScrollDecorator { flickable: tweetView }
