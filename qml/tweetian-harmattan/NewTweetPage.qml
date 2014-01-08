@@ -40,40 +40,7 @@ Page {
     property string imageUrl: ""
     property string imagePath: ""
 
-    acceptDestination: Qt.resolvedUrl("SendTweetPage.qml")
-    acceptDestinationProperties: {"busy": true}
-    canAccept: tweetTextArea.text.length != 0
-               && (settings.enableTwitLonger || !tweetTextArea.errorHighlight)
-               && !header.busy
-
     onStatusChanged: if (status === PageStatus.Activating) preventTouch.enabled = false
-
-    onAccepted: {
-        acceptDestinationInstance.busy = true
-        if (type == "New" || type == "Reply") {
-            //if (addImageButton.checked) imageUploader.run()
-            //else {
-            if (tweetTextArea.errorHighlight) internal.createUseTwitLongerDialog()
-            else {
-                internal.exit = true
-                Twitter.postStatus(tweetTextArea.text, tweetId ,latitude, longitude,
-                                   internal.postStatusOnSuccess, internal.commonOnFailure)
-
-            }
-            //}
-        }
-        else if (type == "RT") {
-            internal.exit = true
-            Twitter.postRetweet(tweetId, internal.postStatusOnSuccess, internal.commonOnFailure)
-            // header.busy = true
-        }
-        else if (type == "DM") {
-            internal.exit = true
-            Twitter.postDirectMsg(tweetTextArea.text, screenName,
-                                  internal.postStatusOnSuccess, internal.commonOnFailure)
-            // header.busy = true
-        }
-    }
 
     /* tools: ToolBarLayout {
         parent: newTweetPage
