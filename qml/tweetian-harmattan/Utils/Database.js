@@ -79,6 +79,7 @@ function getAllSettings() {
         for (var i=0; i<rs.rows.length; i++) {
             res[rs.rows.item(i).setting] = rs.rows.item(i).value
         }
+        res["enableStreaming"] = res["enableStreaming"] == "true" ? true : false;
     })
     return res
 }
