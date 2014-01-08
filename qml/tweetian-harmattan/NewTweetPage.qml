@@ -40,61 +40,8 @@ Page {
     property string imageUrl: ""
     property string imagePath: ""
 
+    backNavigation: !header.busy
     onStatusChanged: if (status === PageStatus.Activating) preventTouch.enabled = false
-
-    /* tools: ToolBarLayout {
-        parent: newTweetPage
-        anchors { left: parent.left; right: parent.right; margins: constant.graphicSizeLarge }
-        enabled: !preventTouch.enabled
-        ButtonRow {
-            exclusive: false
-            spacing: constant.paddingMedium
-
-            ToolButton {
-                id: tweetButton
-                text: {
-                    switch (type) {
-                    case "New": return qsTr("Tweet")
-                    case "Reply": return qsTr("Reply")
-                    case "RT": return qsTr("Retweet")
-                    case "DM": return qsTr("DM")
-                    }
-                }
-                enabled: (tweetTextArea.text.length != 0 || addImageButton.checked)
-                         && ((settings.enableTwitLonger && !addImageButton.checked) || !tweetTextArea.errorHighlight)
-                         && !header.busy
-                onClicked: {
-                    // remove focus on text field for force commit pre-edit text
-                    tweetTextArea.parent.focus = true;
-                    if (type == "New" || type == "Reply") {
-                        if (addImageButton.checked) imageUploader.run()
-                        else {
-                            if (tweetTextArea.errorHighlight) internal.createUseTwitLongerDialog()
-                            else {
-                                Twitter.postStatus(tweetTextArea.text, tweetId ,latitude, longitude,
-                                                   internal.postStatusOnSuccess, internal.commonOnFailure)
-                                header.busy = true
-                            }
-                        }
-                    }
-                    else if (type == "RT") {
-                        Twitter.postRetweet(tweetId, internal.postStatusOnSuccess, internal.commonOnFailure)
-                        header.busy = true
-                    }
-                    else if (type == "DM") {
-                        Twitter.postDirectMsg(tweetTextArea.text, screenName,
-                                              internal.postStatusOnSuccess, internal.commonOnFailure)
-                        header.busy = true
-                    }
-                }
-            }
-            ToolButton {
-                id: cancelButton
-                text: qsTr("Cancel")
-                onClicked: pageStack.pop()
-            }
-        }
-    }*/
 
     SilicaFlickable {
         anchors.fill: parent
@@ -122,7 +69,7 @@ Page {
             id: header
             //headerIcon: type == "DM" ? "Image/create_message.svg" : "image://theme/icon-m-toolbar-edit-white-selected"
             title: updateTitle()
-
+            property bool busy: false
 
             function updateTitle() {
                 if (imageUploader.progress > 0) return qsTr("Uploading...") + Math.round(imageUploader.progress * 100) + "%"
@@ -284,19 +231,19 @@ Page {
                             else {
                                 Twitter.postStatus(tweetTextArea.text, tweetId ,latitude, longitude,
                                                    internal.postStatusOnSuccess, internal.commonOnFailure)
-                                // header.busy = true
+                                header.busy = true
                             }
                         }
                     }
                     else if (type == "RT") {
                         console.log("id" + tweetId)
                         Twitter.postRetweet(tweetId, internal.postStatusOnSuccess, internal.commonOnFailure)
-                        // header.busy = true
+                        header.busy = true
                     }
                     else if (type == "DM") {
                         Twitter.postDirectMsg(tweetTextArea.text, screenName,
                                               internal.postStatusOnSuccess, internal.commonOnFailure)
-                        // header.busy = true
+                        header.busy = true
                     }
                 }
             }
@@ -487,7 +434,7 @@ PositionSource {
                 imageUploader.setParameter("message", tweetTextArea.text)
                 imageUploader.setAuthorizationHeader(Twitter.getOAuthEchoAuthHeader())
             }
-            // header.busy = true
+            header.busy = true
             imageUploader.send()
         }
     }
@@ -544,10 +491,7 @@ PositionSource {
             case "DM":infoBanner.showText(qsTr("Direct message sent successfully")); break;
             case "RT": infoBanner.showText(qsTr("Retweet sent successfully")); break;
             }
-            if (exit) {
-                acceptDestinationInstance.backDestination = pageStack.previousPage(newTweetPage)
-                acceptDestinationInstance.busy = false
-            }
+            pageStack.pop()
         }
 
         function twitLongerOnSuccess(twitLongerId, shortenTweet) {
@@ -567,13 +511,7 @@ PositionSource {
 
         function commonOnFailure(status, statusText) {
             infoBanner.showHttpError(status, statusText)
-            //header.busy = false
-
-            if (exit) {
-                exit = false
-                acceptDestinationInstance.backDestination = newTweetPage
-                acceptDestinationInstance.busy = false
-            }
+            header.busy = false
         }
 
         function createUseTwitLongerDialog() {
