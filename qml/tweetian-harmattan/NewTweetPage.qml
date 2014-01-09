@@ -63,6 +63,18 @@ Page {
                      });
                 }
             }
+
+            MenuItem {
+                text: qsTr("Remove Location")
+                onClicked: { latitude = 0; longitude = 0; }
+                visible: latitude && longitude
+            }
+
+            MenuItem {
+                text: qsTr("Attach Location")
+                onClicked: positionSource.update()
+                visible: !latitude && !longitude
+            }
         }
 
         PageHeader {
@@ -201,11 +213,19 @@ Page {
             }
 
             Image {
+                id: imagePreview
                 width: 200; height: 200
                 visible: source != ''
                 fillMode: Image.PreserveAspectFit
-                anchors.horizontalCenter: parent.horizontalCenter
+                anchors { horizontalCenter: parent.horizontalCenter }
                 source: newTweetPage.imagePath
+            }
+
+            Image {
+                id: locationIcon
+                anchors { horizontalCenter: parent.horizontalCenter }
+                source: "Image/location_mark.svg"
+                visible: latitude && longitude
             }
 
             Button {
@@ -387,18 +407,14 @@ Page {
 
     WorkerScript { id: autoCompleterWorkerScript; source: "WorkerScript/AutoCompleter.js" }
 
-    /* TODO enable position source for tweet location
-PositionSource {
+    PositionSource {
         id: positionSource
-        updateInterval: 1000
 
         onPositionChanged: {
             latitude = position.coordinate.latitude
             longitude = position.coordinate.longitude
-            positionSource.stop()
-            locationButton.state = "done"
         }
-    } */
+    }
 
     ImageUploader {
         id: imageUploader
