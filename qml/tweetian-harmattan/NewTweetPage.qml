@@ -140,6 +140,14 @@ Page {
                 color: constant.colorMid
                 text: 140 - shortenText.length // - (addImageButton.checked ? constant.charReservedPerMedia : 0)
             }
+
+            Image {
+                id: locationIcon
+                anchors { left: parent.right; top: parent.top; topMargin: constant.paddingMedium }
+                source: "Image/location_mark.svg"
+                visible: latitude && longitude
+            }
+
         }
 
         Loader {
@@ -217,15 +225,8 @@ Page {
                 width: 200; height: 200
                 visible: source != ''
                 fillMode: Image.PreserveAspectFit
-                anchors { horizontalCenter: parent.horizontalCenter }
+                anchors.horizontalCenter: parent.horizontalCenter
                 source: newTweetPage.imagePath
-            }
-
-            Image {
-                id: locationIcon
-                anchors { horizontalCenter: parent.horizontalCenter }
-                source: "Image/location_mark.svg"
-                visible: latitude && longitude
             }
 
             Button {
@@ -409,6 +410,7 @@ Page {
 
     PositionSource {
         id: positionSource
+        active: false
 
         onPositionChanged: {
             latitude = position.coordinate.latitude
