@@ -12,7 +12,7 @@ Name:       harbour-tweetian
 %{!?qtc_qmake5:%define qtc_qmake5 %qmake5}
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
-Summary:    Tweetian is a feature-rich Twitter app for Symbian and Harmattan, powered by Qt/QML. It comes with a simple, native and amazing UI that will surely make you enjoy the Twitter experience on your smartphone.
+Summary:    Tweetian is a feature-rich Twitter app for Symbian, Harmattan and Sailfish OS.
 Version:    1.8.2
 Release:    1
 Group:      Applications/Communications
