@@ -33,7 +33,7 @@ BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  pkgconfig(sailfishapp)
 BuildRequires:  pkgconfig(Qt5Location)
 BuildRequires:  pkgconfig(Qt5Positioning)
-BuildRequires:  mlite-qt5
+BuildRequires:  pkgconfig(mlite5)
 BuildRequires:  desktop-file-utils
 
 %description
