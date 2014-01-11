@@ -40,6 +40,8 @@ Page {
     property string imageUrl: ""
     property string imagePath: ""
 
+    property bool positionRequested
+
     backNavigation: !header.busy
     onStatusChanged: if (status === PageStatus.Activating) preventTouch.enabled = false
 
@@ -72,7 +74,7 @@ Page {
 
             MenuItem {
                 text: qsTr("Attach Location")
-                onClicked: positionSource.update()
+                onClicked: { positionRequested = true; positionSource.update() }
                 visible: !latitude && !longitude
             }
         }
@@ -413,8 +415,11 @@ Page {
         active: false
 
         onPositionChanged: {
-            latitude = position.coordinate.latitude
-            longitude = position.coordinate.longitude
+            if (positionRequested) {
+                latitude = position.coordinate.latitude
+                longitude = position.coordinate.longitude
+                positionRequested = false
+            }
         }
     }
 
