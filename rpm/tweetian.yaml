@@ -28,7 +28,8 @@ Requires:
 - qt5-qtsvg
 - qt5-plugin-imageformat-gif
 - qt5-qtsvg-plugin-imageformat-svg
-PkgBR: []
+PkgBR:
+- mlite-qt5
 Files:
 - /usr/share/applications
 - /usr/share/icons/hicolor/86x86/apps

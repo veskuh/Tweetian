@@ -33,6 +33,7 @@ BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  pkgconfig(sailfishapp)
 BuildRequires:  pkgconfig(Qt5Location)
 BuildRequires:  pkgconfig(Qt5Positioning)
+BuildRequires:  mlite-qt5
 BuildRequires:  desktop-file-utils
 
 %description
@@ -72,9 +73,10 @@ desktop-file-install --delete-original       \
 %files
 %defattr(-,root,root,-)
 /usr/share/applications
+/usr/share/icons/hicolor/86x86/apps
 /usr/bin
 %{_datadir}/applications/%{name}.desktop
-%{_bindir}
-/usr/share/icons/hicolor/86x86/apps
+%{_bindir}/%{name}
+%{_datadir}/icons/hicolor/86x86/apps/%{name}.png
 # >> files
 # << files
