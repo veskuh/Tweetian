@@ -116,6 +116,8 @@ Item {
     SilicaListView {
         id: tweetView
         property string lastUpdate: ""
+        property int lastCount: 0
+
         PullDownMenu {
             MenuItem {
                 text: qsTr("More..")
@@ -154,6 +156,14 @@ Item {
        // onPulledDown: if (userStream.status === 0) refresh("newer")
         onAtYBeginningChanged: if (atYBeginning) unreadCount = 0
         onContentYChanged: refreshUnreadCountTimer.running = true
+        onCountChanged: {
+            if (lastCount && settings.keepPosition) {
+                /* Move to the most recent item before refreshing */
+                positionViewAtIndex(count - lastCount, ListView.Center);
+            }
+
+            lastCount = count;
+        }
 
         Timer {
             id: refreshUnreadCountTimer
