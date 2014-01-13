@@ -158,7 +158,7 @@ Item {
         onContentYChanged: refreshUnreadCountTimer.running = true
         onCountChanged: {
             if (lastCount && settings.keepPosition) {
-                /* Move to the most recent item before refreshing */
+                /* Move to one item before newer items */
                 positionViewAtIndex(count - lastCount, ListView.Center);
             }
 
