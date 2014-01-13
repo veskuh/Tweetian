@@ -149,7 +149,7 @@ Page {
 
 
         anchors.fill: parent
-        contentHeight: mainColumn.height
+        contentHeight: mainColumn.height + header.height
 
         Column {
             id: mainColumn
