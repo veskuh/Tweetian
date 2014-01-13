@@ -57,6 +57,12 @@ Page {
                 checked: settings.enableNotification
                 onCheckedChanged: settings.enableNotification = checked
             }
+
+            SettingSwitch {
+                text: qsTr("Keep position after refreshing")
+                checked: settings.keepPosition
+                onCheckedChanged: settings.keepPosition = checked
+            }
         }
     }
 }

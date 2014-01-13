@@ -52,6 +52,7 @@ QtObject {
         enableStreaming = false
         autoRefreshInterval = 0
         enableNotification = true
+        keepPosition = false
         pocketUsername = ""
         pocketPassword = ""
         instapaperToken = ""
@@ -97,6 +98,8 @@ QtObject {
     onAutoRefreshIntervalChanged: Database.setSetting({"autoRefreshInterval": autoRefreshInterval.toString()})
     property bool enableNotification: true
     onEnableNotificationChanged: Database.setSetting({"enableNotification": enableNotification.toString()})
+    property bool keepPosition: false
+    onKeepPositionChanged: Database.setSetting({"keepPosition": keepPosition.toString()})
 
     property string pocketUsername: ""
     onPocketUsernameChanged: Database.setSetting({"pocketUsername": pocketUsername})
