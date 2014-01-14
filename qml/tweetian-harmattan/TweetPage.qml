@@ -262,7 +262,7 @@ Page {
                         font.family: Theme.fontFamily
                         horizontalAlignment: Text.AlignRight
                         color: constant.colorMid
-                        text: tweet.source + " | " + Qt.formatDateTime(tweet.createdAt, "h:mm AP d MMM yy")
+                        text: tweet.source + " | " + Qt.formatDateTime(tweet.createdAt, Qt.DefaultLocaleShortDate)
                         elide: Text.ElideRight
                     }
                 }
