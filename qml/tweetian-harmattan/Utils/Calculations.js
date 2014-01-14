@@ -51,8 +51,7 @@ function timeDiff(tweetTimeStr) {
 
     diff = Math.round(diff / 24) // days
 
-    if (diff === 1) return qsTr("Yesterday %1").arg(Qt.formatTime(tweetTime, "h:mm AP").toString())
-    if (diff < 7 ) return Qt.formatDate(tweetTime, "ddd d MMM").toString()
+    if (diff === 1) return qsTr("Yesterday %1").arg(Qt.formatTime(tweetTime, Qt.LocalTime).toString())
 
     return Qt.formatDate(tweetTime, Qt.SystemLocaleShortDate).toString()
 }
