@@ -125,7 +125,7 @@ Page {
                     PropertyChanges { target: tweetTextArea; height: Math.max(implicitHeight, 120) }
                 }
             ]
-            onTextChanged: internal.updateAutoCompleter()
+            onTextChanged: updateAutoCompleter()
 
             Text {
                 id: charLeftText
@@ -150,6 +150,21 @@ Page {
                 visible: latitude && longitude
             }
 
+            function updateAutoCompleter() {
+                if (newTweetPage.status !== PageStatus.Active || !tweetTextArea.activeFocus) return
+                autoCompleter.model.clear()
+                var fullText = tweetTextArea.text.substring(0, tweetTextArea.cursorPosition)
+                        + tweetTextArea.text.substring(tweetTextArea.cursorPosition)
+                var currentWord = internal.getWordAt(fullText, tweetTextArea.cursorPosition)
+                if (!/^(@|#)\w*$/.test(currentWord)) return
+                var msg = {
+                    word: currentWord,
+                    model: autoCompleter.model,
+                    screenNames: cache.screenNames,
+                    hashtags: cache.hashtags
+                }
+                autoCompleterWorkerScript.sendMessage(msg)
+            }
         }
 
         Loader {
@@ -468,22 +483,6 @@ Page {
         property string twitLongerId: ""
         property bool exit
         property string tweetType: type
-
-        function updateAutoCompleter() {
-            if (newTweetPage.status !== PageStatus.Active || !tweetTextArea.activeFocus) return
-            autoCompleter.model.clear()
-            var fullText = tweetTextArea.text.substring(0, tweetTextArea.cursorPosition)
-                    + tweetTextArea.platformPreedit + tweetTextArea.text.substring(tweetTextArea.cursorPosition)
-            var currentWord = getWordAt(fullText, tweetTextArea.cursorPosition)
-            if (!/^(@|#)\w*$/.test(currentWord)) return
-            var msg = {
-                word: currentWord,
-                model: autoCompleter.model,
-                screenNames: cache.screenNames,
-                hashtags: cache.hashtags
-            }
-            autoCompleterWorkerScript.sendMessage(msg)
-        }
 
         /**
           Extract a word from str at the specificed pos.
