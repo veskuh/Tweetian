@@ -115,16 +115,7 @@ Page {
             color: constant.colorLight
             cursorPosition: placedText.length
             text: placedText
-            states: [
-                State {
-                    when: inputContext.softwareInputPanelVisible
-                    AnchorChanges { target: tweetTextArea; anchors.bottom: parent.bottom }
-                },
-                State {
-                    when: !inputContext.softwareInputPanelVisible
-                    PropertyChanges { target: tweetTextArea; height: Math.max(implicitHeight, 120) }
-                }
-            ]
+            height: Math.max(implicitHeight, 120)
             onTextChanged: updateAutoCompleter()
 
             Text {
@@ -209,7 +200,7 @@ Page {
                 anchors { left: parent.left; right: parent.right }
                 height: constant.graphicSizeMedium
                 model: ListModel {}
-                // visible: inputContext.softwareInputPanelVisible || screen.keyboardOpen
+                visible: Qt.inputMethod.visible && model.count > 0
                 delegate: Label {
                     height: ListView.view.height
                     text: model.completeWord
@@ -217,24 +208,49 @@ Page {
                         anchors.fill: parent
 
                         onClicked: {
+                            var text = tweetTextArea.text
                             var word = model.completeWord
                             var leftIndex = tweetTextArea.text.slice(0, tweetTextArea.cursorPosition).search(/\S+$/)
                             if (leftIndex < 0) leftIndex = tweetTextArea.cursorPosition
-                            var rightIndex = tweetTextArea.text.slice(tweetTextArea.cursorPosition).search(/\s/)
+
+                            var rest = text.slice(leftIndex+1)
+                            var rightIndex = rest.search(/\s/)
                             if (rightIndex < 0) {
-                                rightIndex = 0
+                                rightIndex = rest.length
                                 word += " "
                             }
-                            tweetTextArea.text = tweetTextArea.text.slice(0, leftIndex) + word
-                                    + tweetTextArea.text.slice(rightIndex + tweetTextArea.cursorPosition)
+
+                            var left = text.slice(0, leftIndex)
+                            var right = text.slice(rightIndex + leftIndex +1)
+
+                            tweetTextArea.text = left + word + right
                             tweetTextArea.cursorPosition = leftIndex + word.length
-                            tweetTextArea.forceActiveFocus()
                             autoCompleter.model.clear()
+
+                            // This should clear preedit, but for
+                            // some reason we still get garbage from vkb so clear it in timer
+                            // in addition to resetting focus
+                            Qt.inputMethod.reset()
+                            focusTimer.editText = tweetTextArea.text
+                            focusTimer.cursorPosition = tweetTextArea.cursorPosition
+                            focusTimer.restart()
                         }
                     }
                 }
                 orientation: ListView.Horizontal
                 spacing: constant.paddingSmall
+
+                Timer {
+                    id: focusTimer
+                    interval: 100
+                    property string editText
+                    property int cursorPosition
+                    onTriggered: {
+                        tweetTextArea.text = editText
+                        tweetTextArea.cursorPosition = cursorPosition
+                        tweetTextArea.forceActiveFocus()
+                    }
+                }
             }
 
             Image {
