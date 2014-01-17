@@ -99,10 +99,16 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: user.following ? qsTr("Unfollow %1").arg("@" + screenName)
+                text: user.isFollowing ? qsTr("Unfollow %1").arg("@" + screenName)
                                              : qsTr("Follow %1").arg("@" + screenName)
                 enabled: screenName !== settings.userScreenName
                 onClicked: internal.createFollowUserDialog()
+            }
+
+            MenuItem {
+                text: qsTr("Send Direct Message")
+                onClicked: pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), {type: "DM", screenName: screenName})
+                visible: screenName !== settings.userScreenName
             }
         }
 
