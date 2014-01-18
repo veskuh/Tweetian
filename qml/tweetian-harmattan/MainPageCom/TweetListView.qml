@@ -154,7 +154,6 @@ Item {
             onClicked: refresh("older")
         }
        // onPulledDown: if (userStream.status === 0) refresh("newer")
-        onAtYBeginningChanged: if (atYBeginning) unreadCount = 0
         onContentYChanged: refreshUnreadCountTimer.running = true
         onCountChanged: {
             if (lastCount && settings.keepPosition) {
