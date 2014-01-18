@@ -120,7 +120,7 @@ Page {
             Item {
                 id: headerItem
                 anchors { left: parent.left; right: parent.right }
-                height: window.orientation === Orientation.Portrait ? width / 2 : width / 4
+                height: userPage.isPortrait ? width / 2 : width / 4
 
                 Image {
                     id: headerImage
@@ -129,8 +129,8 @@ Page {
                     fillMode: Image.PreserveAspectCrop
                     clip: true
                     source: {
-                        if (user.bannerImageUrl)
-                            return user.bannerImageUrl.concat(window.orientation === Orientation.Portrait ? "/web" : "/mobile_retina")
+                        if (user.profileBannerUrl)
+                            return user.profileBannerUrl.concat(userPage.isPortrait ? "/web" : "/mobile_retina")
                         else
                             return "Image/banner_empty.jpg"
                     }
@@ -214,7 +214,7 @@ Page {
                     }
                     wrapMode: Text.Wrap
                     elide: Text.ElideRight
-                    maximumLineCount: window.orientation === Orientation.Portrait ? 5 : 4 // TODO: remove hardcoded value
+                    maximumLineCount: userPage.isPortrait ? 5 : 4 // TODO: remove hardcoded value
                     font.pixelSize: constant.fontSizeSmall
                     font.family: Theme.fontFamily
                     verticalAlignment: Text.AlignBottom
