@@ -92,30 +92,9 @@ Page {
         flickableDirection: Flickable.VerticalFlick
         contentHeight: userColumn.height
 
-        PageHeader {
-            id:header
-            title: "@" + screenName
-        }
-
-        PullDownMenu {
-            MenuItem {
-                text: user.isFollowing ? qsTr("Unfollow %1").arg("@" + screenName)
-                                             : qsTr("Follow %1").arg("@" + screenName)
-                enabled: screenName !== settings.userScreenName
-                onClicked: internal.createFollowUserDialog()
-            }
-
-            MenuItem {
-                text: qsTr("Send Direct Message")
-                onClicked: pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), {type: "DM", screenName: screenName})
-                visible: screenName !== settings.userScreenName
-            }
-        }
-
-
         Column {
             id: userColumn
-            anchors { top: header.bottom; left: parent.left; right: parent.right }
+            anchors { top: parent.top; left: parent.left; right: parent.right }
 
             Item {
                 id: headerItem
@@ -134,7 +113,7 @@ Page {
                         else
                             return "Image/banner_empty.jpg"
                     }
-
+                    opacity: 0.9
                     onStatusChanged: if (status === Image.Error) source = "Image/banner_empty.jpg"
                 }
 
@@ -145,7 +124,7 @@ Page {
 
                     Rectangle {
                         id: profileImageContainer
-                        anchors { left: parent.left; top: parent.top; margins: constant.paddingMedium }
+                        anchors { right: parent.right; top: parent.top; margins: constant.paddingMedium }
                         width: profileImage.width + (border.width / 2); height: width
                         color: "black"
                         border.width: 2
@@ -174,32 +153,35 @@ Page {
                         id: userNameText
                         anchors {
                             top: parent.top
-                            left: profileImageContainer.right
-                            right: parent.right
+                            left: parent.left
+                            right: profileImageContainer.left
                             margins: constant.paddingMedium
                         }
                         font.bold: true
                         font.pixelSize: constant.fontSizeMedium
                         font.family: Theme.fontFamily
                         color: "white"
-                        style: Text.Outline
+                        style: Text.Raised
                         styleColor: "black"
                         text: user.name || ""
+                        horizontalAlignment: Text.AlignRight
                     }
 
                     Text {
                         id: screenNameText
                         anchors {
                             top: userNameText.bottom
-                            left: profileImageContainer.right; leftMargin: constant.paddingMedium
-                            right: parent.right; rightMargin: constant.paddingMedium
+                            right: profileImageContainer.left; rightMargin: constant.paddingMedium
+                            left: parent.left; leftMargin: constant.paddingMedium
                         }
                         font.pixelSize: constant.fontSizeMedium
                         font.family: Theme.fontFamily
                         color: "white"
-                        style: Text.Outline
+                        style: Text.Raised
                         styleColor: "black"
                         text: user.screenName ? "@" + user.screenName : ""
+                        horizontalAlignment: Text.AlignRight
+
                     }
                 }
 
@@ -219,7 +201,7 @@ Page {
                     font.family: Theme.fontFamily
                     verticalAlignment: Text.AlignBottom
                     color: "white"
-                    style: Text.Outline
+                    style: Text.Raised
                     styleColor: "black"
                     text: user.description || ""
                 }
@@ -292,7 +274,20 @@ Page {
             }
         }
 
+        PullDownMenu {
+            MenuItem {
+                text: user.isFollowing ? qsTr("Unfollow %1").arg("@" + screenName)
+                                             : qsTr("Follow %1").arg("@" + screenName)
+                enabled: screenName !== settings.userScreenName
+                onClicked: internal.createFollowUserDialog()
+            }
 
+            MenuItem {
+                text: qsTr("Send Direct Message")
+                onClicked: pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), {type: "DM", screenName: screenName})
+                visible: screenName !== settings.userScreenName
+            }
+        }
     }
 
     ScrollDecorator { flickable: userFlickable }
