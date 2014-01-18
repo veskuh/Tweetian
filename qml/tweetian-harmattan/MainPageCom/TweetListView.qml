@@ -68,7 +68,8 @@ Item {
     }
 
     function positionAtTop() {
-        tweetView.positionViewAtBeginning()
+        tweetView.positionViewAtBeginning();
+        root.unreadCount = 0;
     }
 
     function prependNewTweets(tweetsJson) {
