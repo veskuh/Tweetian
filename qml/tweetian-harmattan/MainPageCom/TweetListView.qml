@@ -68,7 +68,8 @@ Item {
     }
 
     function positionAtTop() {
-        tweetView.positionViewAtBeginning()
+        tweetView.positionViewAtBeginning();
+        root.unreadCount = 0;
     }
 
     function prependNewTweets(tweetsJson) {
@@ -154,7 +155,6 @@ Item {
             onClicked: refresh("older")
         }
        // onPulledDown: if (userStream.status === 0) refresh("newer")
-        onAtYBeginningChanged: if (atYBeginning) unreadCount = 0
         onContentYChanged: refreshUnreadCountTimer.running = true
         onCountChanged: {
             if (lastCount && settings.keepPosition) {
@@ -169,7 +169,7 @@ Item {
             id: refreshUnreadCountTimer
             interval: 250
             repeat: false
-            onTriggered: root.unreadCount = Math.min(tweetView.indexAt(0, tweetView.contentY + 5) + 1, root.unreadCount)
+            onTriggered: root.unreadCount = Math.min(tweetView.indexAt(0, tweetView.contentY + 5), root.unreadCount)
         }
     }
 
