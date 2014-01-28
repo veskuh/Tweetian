@@ -72,7 +72,6 @@ Page {
         }
         clip: true
         onCurrentIndexChanged: if (!currentItem.firstTimeLoaded) currentItem.refresh("all")
-        onWidthChanged: __contentXOffset = contentX - (currentIndex * width)
 
         NumberAnimation {
             id: columnMovingAnimation
