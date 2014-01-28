@@ -39,22 +39,6 @@ Page {
         id: mainView
         objectName: "mainView"
 
-/*        PullDownMenu {
-            MenuItem {
-                text: qsTr("Refresh cache")
-                enabled: !mainView.currentItem.busy
-                onClicked: mainView.currentItem.refresh("all")
-            }
-            MenuItem {
-                text: qsTr("Settings")
-                onClicked: pageStack.push(Qt.resolvedUrl("SettingPage.qml"))
-            }
-            MenuItem {
-                text: qsTr("About")
-                onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
-            }
-        }*/
-
         property int __contentXOffset: 0
 
         function moveToColumn(index) {
@@ -67,13 +51,11 @@ Page {
         highlightRangeMode: ListView.StrictlyEnforceRange
         snapMode: ListView.SnapOneItem
         orientation: ListView.Horizontal
-        //boundsBehavior: Flickable.StopAtBounds
         model: VisualItemModel {
             TweetListView { id: timeline; type: "Timeline" }
             TweetListView { id: mentions; type: "Mentions" }
             DirectMessage { id: directMsg }
         }
-        onWidthChanged: __contentXOffset = contentX - (currentIndex * width)
 
         NumberAnimation {
             id: columnMovingAnimation
