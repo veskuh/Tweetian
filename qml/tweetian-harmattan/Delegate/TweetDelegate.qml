@@ -70,8 +70,7 @@ AbstractDelegate {
 
                 Image {
                     sourceSize { height: titleContainer.height; width: titleContainer.height }
-                    source: settings.invertedTheme ? "image://theme/icon-m-common-favorite-mark"
-                                                   : "image://theme/icon-m-common-favorite-mark-inverse"
+                    source: "image://theme/icon-m-favorite-selected"
                 }
             }
         }

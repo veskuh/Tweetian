@@ -35,7 +35,7 @@ Page {
         if (!searchColumn.firstTimeLoaded) searchColumn.refresh("all")
     }
     // TODO add and delete saved search
-/*
+    /*
         ToolIcon {
             platformIconId: isSavedSearch ? "toolbar-delete" : "toolbar-add"
             onClicked: isSavedSearch ? internal.createRemoveSavedSearchDialog() : internal.createSaveSearchDialog()
@@ -46,7 +46,7 @@ Page {
 
     // TODO add user search
     /*SlideshowView {
-        id: searchListView
+        id: View
 
         anchors {
             top: searchTextFieldContainer.bottom; bottom: searchPageHeader.top
@@ -62,40 +62,39 @@ Page {
 
     TweetSearchColumn {
         id: searchColumn
-        anchors {
-            top: searchTextFieldContainer.bottom; bottom: parent.bottom
-            left: parent.left; right: parent.right
-        }
-        clip: true
-    }
+        anchors.fill: parent
 
-    PageHeader {
-        id: titleHeader
-        title: qsTr("Search")
-    }
-
-    Item {
-        id: searchTextFieldContainer
-        anchors { top: titleHeader.bottom; left: parent.left; right: parent.right }
-        height: searchTextField.height + 2 * searchTextField.anchors.margins
-
-        TextField {
-            id: searchTextField
-            anchors { top: parent.top; left: parent.left; right: parent.right; margins: 0 }
-            placeholderText: qsTr("Search for tweets or users")
-            text: searchString
-            EnterKey.text: qsTr("Search")
-            EnterKey.onClicked: {
-                parent.focus = true // remove activeFocus on searchTextField
-                internal.changeSearch()
+        header: Column {
+            PageHeader {
+                id: titleHeader
+                title: qsTr("Search")
             }
-            onActiveFocusChanged: if (!activeFocus) resetSearchTextTimer.start()
-        }
 
-        Timer {
-            id: resetSearchTextTimer
-            interval: 100
-            onTriggered: searchTextField.text = searchString
+            Item {
+                id: searchTextFieldContainer
+                width: searchColumn.width
+                height: searchTextField.height + 2 * searchTextField.anchors.margins
+
+                TextField {
+                    id: searchTextField
+                    anchors { top: parent.top; left: parent.left; right: parent.right; margins: 0 }
+                    placeholderText: qsTr("Search for tweets or users")
+                    text: searchString
+                    EnterKey.text: qsTr("Search")
+                    EnterKey.onClicked: {
+                        searchString = searchTextField.text
+                        parent.focus = true // remove activeFocus on searchTextField
+                        internal.changeSearch()
+                    }
+                    onActiveFocusChanged: if (!activeFocus) resetSearchTextTimer.start()
+                }
+
+                Timer {
+                    id: resetSearchTextTimer
+                    interval: 100
+                    onTriggered: searchTextField.text = searchString
+                }
+            }
         }
     }
 
@@ -103,11 +102,8 @@ Page {
         id: internal
 
         function changeSearch() {
-            searchString = searchTextField.text
-            for (var i=0; i<searchListView.model.children.length; i++) {
-                searchListView.model.children[i].firstTimeLoaded = false
-            }
-            searchListView.currentItem.refresh("all")
+            searchColumn.firstTimeLoaded = false
+            searchColumn.refresh("all")
             isSavedSearch = false
             savedSearchId = ""
             checkIsSavedSearch()

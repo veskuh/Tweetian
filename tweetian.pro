@@ -2,7 +2,7 @@ TEMPLATE = app
 TARGET = harbour-tweetian
 
 # Application version
-VERSION = 1.8.3
+VERSION = 1.8.3-2
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 # Qt Library
