@@ -23,12 +23,13 @@ import "../Utils/Calculations.js" as Calculate
 import "../Component"
 import "../Delegate"
 
-Item {
-    id: tweetSearchColumn
+SilicaListView {
+    id: tweetSearchListView
 
     property bool busy: false
     property int unreadCount: 0
     property bool firstTimeLoaded: false
+    property string lastUpdate: ""
 
     function refresh(type) {
         firstTimeLoaded = true;
@@ -51,28 +52,24 @@ Item {
         tweetSearchListView.positionViewAtBeginning()
     }
 
-    PullDownListView {
-        id: tweetSearchListView
-        property bool stayAtCurrentPosition: internal.reloadType === "newer"
-        anchors.fill: parent
-        footer: LoadMoreButton {
-            visible: tweetSearchListView.count > 0
-            enabled: !busy
-            onClicked: refresh("older")
-        }
-        delegate: TweetDelegate {}
-        model: ListModel {}
-        onPulledDown: refresh("newer")
-        onAtYBeginningChanged: if (atYBeginning) unreadCount = 0
-        onContentYChanged: refreshUnreadCountTimer.running = true
+    property bool stayAtCurrentPosition: internal.reloadType === "newer"
+    footer: LoadMoreButton {
+        visible: tweetSearchListView.count > 0
+        enabled: !busy
+        onClicked: refresh("older")
+    }
+    delegate: TweetDelegate {}
+    model: ListModel {}
 
-        Timer {
-            id: refreshUnreadCountTimer
-            interval: 250
-            repeat: false
-            onTriggered: unreadCount = Math.min(tweetSearchListView.indexAt(0, tweetSearchListView.contentY + 5) + 1,
-                                                            unreadCount)
-        }
+    onAtYBeginningChanged: if (atYBeginning) unreadCount = 0
+    onContentYChanged: refreshUnreadCountTimer.running = true
+
+    Timer {
+        id: refreshUnreadCountTimer
+        interval: 250
+        repeat: false
+        onTriggered: unreadCount = Math.min(tweetSearchListView.indexAt(0, tweetSearchListView.contentY + 5) + 1,
+                                            unreadCount)
     }
 
     Text {
@@ -89,7 +86,6 @@ Item {
         id: searchParser
         source: "../WorkerScript/SearchParser.js"
         onMessage: {
-            // backButton.enabled = true
             if (internal.reloadType === "newer") unreadCount = messageObject.newTweetCount
             else unreadCount = 0
             busy = false
@@ -103,7 +99,6 @@ Item {
 
         function searchOnSuccess(data) {
             if (reloadType != "older") tweetSearchListView.lastUpdate = new Date().toString()
-           // backButton.enabled = false
             searchParser.sendMessage({ type: reloadType, model: tweetSearchListView.model, data: data })
         }
 
