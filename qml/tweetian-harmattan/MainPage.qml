@@ -35,34 +35,16 @@ Page {
 
     onStatusChanged: if (status == PageStatus.Activating) loadingRect.visible = false
 
-    SilicaListView {
+    SlideshowView {
         id: mainView
         objectName: "mainView"
 
-        property int __contentXOffset: 0
-
-        function moveToColumn(index) {
-            columnMovingAnimation.to = (index * width) + __contentXOffset
-            columnMovingAnimation.restart()
-        }
-
         clip:true
         anchors { top: parent.top; bottom: mainPageHeader.top; left: parent.left; right: parent.right }
-        highlightRangeMode: ListView.StrictlyEnforceRange
-        snapMode: ListView.SnapOneItem
-        orientation: ListView.Horizontal
         model: VisualItemModel {
             TweetListView { id: timeline; type: "Timeline" }
             TweetListView { id: mentions; type: "Mentions" }
             DirectMessage { id: directMsg }
-        }
-
-        NumberAnimation {
-            id: columnMovingAnimation
-            target: mainView
-            property: "contentX"
-            duration: 300
-            easing.type: Easing.InOutExpo
         }
     }
 
