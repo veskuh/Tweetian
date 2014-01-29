@@ -32,15 +32,10 @@ Page {
 
     Component.onCompleted: {
         if (!isSavedSearch || !savedSearchId) internal.checkIsSavedSearch()
-        if (!searchListView.currentItem.firstTimeLoaded) searchListView.currentItem.refresh("all")
+        if (!searchColumn.firstTimeLoaded) searchColumn.refresh("all")
     }
+    // TODO add and delete saved search
 /*
-    tools: ToolBarLayout {
-        ToolIcon {
-            id: backButton
-            platformIconId: "toolbar-back" + (enabled ? "" : "-dimmed")
-            onClicked: pageStack.pop()
-        }
         ToolIcon {
             platformIconId: isSavedSearch ? "toolbar-delete" : "toolbar-add"
             onClicked: isSavedSearch ? internal.createRemoveSavedSearchDialog() : internal.createSaveSearchDialog()
@@ -48,38 +43,30 @@ Page {
         Item { width: 80; height: 64 }
     } */
 
-    ListView {
+
+    // TODO add user search
+    /*SlideshowView {
         id: searchListView
-
-        property int __contentXOffset: 0
-
-        function moveToColumn(index) {
-            columnMovingAnimation.to = (index * width) + __contentXOffset
-            columnMovingAnimation.restart()
-        }
 
         anchors {
             top: searchTextFieldContainer.bottom; bottom: searchPageHeader.top
             left: parent.left; right: parent.right
         }
-        highlightRangeMode: ListView.StrictlyEnforceRange
-        snapMode: ListView.SnapOneItem
-        orientation: ListView.Horizontal
-        boundsBehavior: Flickable.StopAtBounds
         model: VisualItemModel {
             TweetSearchColumn {}
             UserSearchColumn {}
         }
         clip: true
         onCurrentIndexChanged: if (!currentItem.firstTimeLoaded) currentItem.refresh("all")
+    }*/
 
-        NumberAnimation {
-            id: columnMovingAnimation
-            target: searchListView
-            property: "contentX"
-            duration: 500
-            easing.type: Easing.InOutExpo
+    TweetSearchColumn {
+        id: searchColumn
+        anchors {
+            top: searchTextFieldContainer.bottom; bottom: parent.bottom
+            left: parent.left; right: parent.right
         }
+        clip: true
     }
 
     PageHeader {
@@ -110,12 +97,6 @@ Page {
             interval: 100
             onTriggered: searchTextField.text = searchString
         }
-    }
-
-    TabPageHeader {
-        id: searchPageHeader
-        listView: searchListView
-        iconArray: [Qt.resolvedUrl("Image/chat.png"), "image://theme/icon-m-people"]
     }
 
     QtObject {

@@ -51,8 +51,6 @@ Item {
         tweetSearchListView.positionViewAtBeginning()
     }
 
-    width: searchListView.width; height: searchListView.height
-
     PullDownListView {
         id: tweetSearchListView
         property bool stayAtCurrentPosition: internal.reloadType === "newer"

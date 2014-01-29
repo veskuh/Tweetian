@@ -22,13 +22,13 @@ import Sailfish.Silica 1.0
 Item {
     id: tabPageHeader
 
-    // listView must have:
+    // listView must be Silica SlideshowView and have:
     // VisualItemModel as model
     // function - moveToColumn(index)
     // Each children of VisualItemModel must have:
     // properties - busy (bool) and unreadCount (int)
     // method - positionAtTop()
-    property ListView listView: null
+    property SlideshowView listView: null
     property variant iconArray: []
 
     anchors { bottom: parent.bottom; left: parent.left; right: parent.right }
@@ -97,7 +97,7 @@ Item {
                 }
 
                 onClicked: listView.currentIndex === index ? listView.currentItem.positionAtTop()
-                                                               : listView.moveToColumn(index)
+                                                               : listView.currentIndex = index
 
             }
         }
@@ -108,7 +108,13 @@ Item {
         anchors.top: parent.top
         color: Theme.highlightColor
         height: constant.paddingSmall
-        width: listView.visibleArea.widthRatio * parent.width
-        x: listView.visibleArea.xPosition * parent.width
+        width: tabPageHeader.width / sectionRepeater.count
+        x: listView.currentIndex * width
+
+        Behavior on x {
+            NumberAnimation {
+                duration: 200
+            }
+        }
     }
 }
