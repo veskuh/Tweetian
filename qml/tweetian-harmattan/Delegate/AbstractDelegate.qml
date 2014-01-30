@@ -29,9 +29,6 @@ BackgroundItem {
 
     property bool highlighted: pressed // read-only
 
-    //signal clicked
-    signal pressAndHold
-
     property int __originalHeight: height // private
 
     implicitWidth: ListView.view ? ListView.view.width : 0

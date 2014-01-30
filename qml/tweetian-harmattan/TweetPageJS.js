@@ -190,7 +190,7 @@ function getConversationFromTimelineAndMentions() {
   //  header.busy = true
 }
 
-function contructReplyText() {
+function constructReplyText(tweet) {
     var replyText = "@" + tweet.retweetScreenName + " "
 
     // if this is a retweet, include the original author screen name
@@ -208,7 +208,7 @@ function contructReplyText() {
     return replyText
 }
 
-function contructRetweetText() {
+function constructRetweetText(tweet) {
     var retweetText = "RT @" + tweet.retweetScreenName + ": "
 
     // if it is a retweet, include the original author screen name
