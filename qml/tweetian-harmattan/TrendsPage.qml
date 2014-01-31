@@ -237,7 +237,7 @@ Page {
             var hashtagsArray = []
             for (var i=0; i<data[0].trends.length; i++) {
                 var obj = {
-                    "id": "",
+                    "id": i,
                     "title": data[0].trends[i].name,
                     "type": qsTr("Trends (%1)").arg(data[0].locations[0].name)
                 }
