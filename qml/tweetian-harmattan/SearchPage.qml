@@ -60,9 +60,25 @@ Page {
         onCurrentIndexChanged: if (!currentItem.firstTimeLoaded) currentItem.refresh("all")
     }*/
 
+    RemorsePopup { id: remorse }
+
     TweetSearchColumn {
         id: searchColumn
         anchors.fill: parent
+
+        PullDownMenu {
+            MenuItem {
+                text: qsTr("Save Search")
+                onClicked: internal.saveSearch()
+                visible: !isSavedSearch
+            }
+
+            MenuItem {
+                text: qsTr("Remove Saved Search")
+                onClicked: remorse.execute(qsTr("Removing saved search "), function() { internal.removeSavedSearch(); } )
+                visible: isSavedSearch
+            }
+        }
 
         header: Column {
             PageHeader {
@@ -153,20 +169,14 @@ Page {
             }
         }
 
-        function createSaveSearchDialog() {
-            var message = qsTr("Do you want to save the search %1?").arg("\""+searchString+"\"")
-            dialog.createQueryDialog(qsTr("Save Search"), "", message, function() {
-                Twitter.postSavedSearches(searchString, savedSearchOnSuccess, savedSearchOnFailure)
-                loadingRect.visible = true
-            })
+        function saveSearch() {
+            Twitter.postSavedSearches(searchString, savedSearchOnSuccess, savedSearchOnFailure)
+            loadingRect.visible = true
         }
 
-        function createRemoveSavedSearchDialog() {
-            var message = qsTr("Do you want to remove the saved search %1?").arg("\""+searchString+"\"")
-            dialog.createQueryDialog(qsTr("Remove Saved Search"), "", message, function() {
-                Twitter.postRemoveSavedSearch(searchPage.savedSearchId, removeSearchOnSuccess, removeSearchOnFailure)
-                loadingRect.visible = true
-            })
+        function removeSavedSearch() {
+            Twitter.postRemoveSavedSearch(searchPage.savedSearchId, removeSearchOnSuccess, removeSearchOnFailure)
+            loadingRect.visible = true
         }
     }
 }
