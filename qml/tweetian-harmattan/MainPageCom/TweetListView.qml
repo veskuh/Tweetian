@@ -26,7 +26,7 @@ import "../Services/Twitter.js" as Twitter
 
 Item {
     id: root
-    implicitHeight: mainView.height; implicitWidth: mainView.width
+    height: mainView.height; width: mainView.width
 
     property string type //"Timeline" or "Mentions"
 

@@ -39,6 +39,9 @@ Page {
         id: mainView
         objectName: "mainView"
 
+        itemWidth: width
+        itemHeight: height
+
         clip:true
         anchors { top: parent.top; bottom: mainPageHeader.top; left: parent.left; right: parent.right }
         model: VisualItemModel {
