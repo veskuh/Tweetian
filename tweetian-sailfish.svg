@@ -16,7 +16,7 @@
    version="1.1"
    inkscape:version="0.48.2 r9819"
    sodipodi:docname="tweetian-sailfish.svg"
-   inkscape:export-filename="C:\Users\Stephan\Desktop\double-shape.png"
+   inkscape:export-filename="C:\Users\Stephan\Desktop\Tweetian.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -28,21 +28,20 @@
          offset="0"
          id="stop3791-0" />
       <stop
-         style="stop-color:#60a8c0;stop-opacity:0.92941177;"
+         style="stop-color:#60a8c0;stop-opacity:1;"
          offset="1"
          id="stop3793-4" />
     </linearGradient>
     <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient3789-6"
-       id="linearGradient3922"
+       y2="0"
+       x2="86"
+       y1="74"
+       x1="12"
+       gradientTransform="matrix(-1,0,0,-1,86,90)"
        gradientUnits="userSpaceOnUse"
-       spreadMethod="pad"
-       x1="45"
-       y1="10"
-       x2="45"
-       y2="80"
-       gradientTransform="matrix(0.95555556,0,0,0.95555556,0,4)" />
+       id="linearGradient3003"
+       xlink:href="#linearGradient3789-6"
+       inkscape:collect="always" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -51,14 +50,14 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.99999999"
-     inkscape:cx="-315.0394"
-     inkscape:cy="148.5037"
+     inkscape:zoom="5.656854"
+     inkscape:cx="25.229098"
+     inkscape:cy="78.044335"
      inkscape:document-units="px"
      inkscape:current-layer="layer2"
      showgrid="true"
-     inkscape:window-width="1920"
-     inkscape:window-height="1148"
+     inkscape:window-width="2560"
+     inkscape:window-height="1388"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -91,10 +90,10 @@
      style="display:inline"
      transform="translate(0,-4)">
     <path
-       style="fill:url(#linearGradient3922);fill-opacity:1.0;stroke:none;display:inline"
-       d="M 43,4 C 19.251756,4 0,23.251756 0,47 L 0,87.790278 C 0,89.01865 0.98134982,90 2.2097222,90 L 43,90 C 66.748244,90 86,70.748244 86,47 86,23.251756 66.748244,4 43,4 z"
-       id="rect3059"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       style="fill:url(#linearGradient3003);fill-opacity:1;display:inline"
+       id="path13"
+       d="m 0.301,88.277 c 0,0.786 0.637,1.423 1.423,1.423 0,0 40.641,0 41.276,0 C 66.583,89.7 85.7,70.583 85.7,47 85.7,23.418 66.583,4.3 43,4.3 19.417,4.3 0.3,23.418 0.3,47 c 0,0.636 0.001,41.277 0.001,41.277 z" />
     <g
        transform="matrix(1.0256575,0,0,1.0256575,-6.2310472,-2.2315484)"
        id="g19">
