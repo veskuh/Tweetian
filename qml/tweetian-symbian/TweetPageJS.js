@@ -43,8 +43,9 @@ var PIC_SERVICES = [
         }
     },
     {
-        regexp: /http:\/\/instagram.com\/p\/[^\/]+\//ig,
+        regexp: /http:\/\/instagram\.com\/p\/[^"]+/ig,
         getPicUrl: function(link) {
+            link = link.replace(/\/?$/, '/') // ensure a trailing slash
             var url = {
                 full: link + "media/?size=l",
                 thumb: link + "media/?size=t"
@@ -92,6 +93,25 @@ var PIC_SERVICES = [
         }
     },
     {
+        regexp: /http:\/\/(m\.)?imgur.com(?!\/a\/)\/((gallery\/)?(r\/[\w\.]+\/)?)\w+/ig,
+        // "http://" (optionally "m.") then "imgur.com" then not "/a/" but either:
+        // "gallery/" or "r/lettersordots/", then some letters.
+        // eg http://imgur.com/gallery/iU1SwYe or http://imgur.com/iU1SwYe
+        // or http://m.imgur.com/gallery/iU1SwYe or http://m.imgur.com/iU1SwYe
+        // or Reddit http://imgur.com/r/funny/V1Xp2rQ or http://m.imgur.com/r/reddit.com/V1Xp2rQ
+        // but not albums: http://imgur.com/a/Jexvo or http://m.imgur.com/a/Jexvo
+        getPicUrl: function(link) {
+            link = link.replace(/\/+$/, '') // remove trailing slashes
+             // Grab the ID after last slash:
+            var imgurId = link.substring(link.lastIndexOf("/") + 1)
+            var url = {
+                full: "http://i.imgur.com/" + imgurId + ".jpg",
+                thumb: "http://i.imgur.com/" + imgurId + "s.jpg"
+            }
+            return url
+        }
+    },
+    {
         regexp: /http:\/\/twitgoo.com\/\w+/ig,
         getPicUrl: function(link) {
             var url = { full: link + "/img", thumb: link + "/thumb" }
@@ -105,6 +125,16 @@ var PIC_SERVICES = [
                 full: "https://apis.live.net/v5.0/skydrive/get_item_preview?type=normal&url=" + link,
                 thumb: "https://apis.live.net/v5.0/skydrive/get_item_preview?type=album&url=" + link
             }
+            return url
+        }
+    },
+    {
+        regexp: /http:\/\/glui\.me\/\?i=\w+\/[^"/]+\//ig,
+        getPicUrl: function(link) {
+            link = link.replace(/\/+$/, '') // remove trailing slashes
+            link = link.replace(/_/g, "%20") // replace all _ with %20
+            link = link.replace("://glui.me/?i=", "://dl.dropboxusercontent.com/s/")
+            var url = { full: link, thumb: link }
             return url
         }
     },
