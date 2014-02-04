@@ -19,10 +19,11 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
+import "../Component"
+
 AbstractDelegate {
     id: root
-    height: menuOpen ? root.implicitHeight + tweetView.contextMenu.height : root.implicitHeight
-    property bool menuOpen: tweetView.contextMenu && tweetView.contextMenu.parent == root
+    height: contextMenu.visible ? root.implicitHeight + contextMenu.height : root.implicitHeight
 
     sideRectColor: {
         switch (settings.userScreenName) {
@@ -30,6 +31,11 @@ AbstractDelegate {
         case model.screenName: return constant.colorLight
         default: return "transparent"
         }
+    }
+
+    LongPressMenu {
+        id: contextMenu
+        tweet: model
     }
 
     Item {
@@ -122,9 +128,6 @@ AbstractDelegate {
     onClicked: pageStack.push(Qt.resolvedUrl("../TweetPage.qml"), { tweet: model })
 
     onPressAndHold: {
-        if (!tweetView.contextMenu)
-            tweetView.contextMenu = contextMenuComponent.createObject(tweetView)
-        tweetView.contextMenu.tweet = model
-        tweetView.contextMenu.show(root)
+        contextMenu.show(root);
     }
 }

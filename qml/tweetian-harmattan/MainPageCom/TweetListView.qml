@@ -173,34 +173,6 @@ Item {
             repeat: false
             onTriggered: root.unreadCount = Math.min(tweetView.indexAt(0, tweetView.contentY + 5), root.unreadCount)
         }
-
-        Component {
-            id: contextMenuComponent
-
-            ContextMenu {
-                id: contextMenu
-                property variant tweet
-
-                MenuItem {
-                    text: "Retweet"
-
-                    onClicked: {
-                        var props = { type: "RT", placedText: JS.constructRetweetText(tweet), tweetId: tweet.id };
-                        pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"), props)
-                    }
-                }
-
-                MenuItem {
-                    text: "Reply"
-
-                    onClicked:{
-                        var props = { type: "Reply", placedText: JS.constructReplyText(tweet), tweetId: tweet.id };
-                        pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"), props);
-                    }
-                }
-            }
-        }
-
     }
 
     ScrollDecorator { flickable: tweetView }

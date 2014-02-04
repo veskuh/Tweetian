@@ -48,7 +48,6 @@
         <file>qml/tweetian-harmattan/Delegate/UserDelegate.qml</file>
         <file>qml/tweetian-harmattan/Dialog/CommonDialog.qml</file>
         <file>qml/tweetian-harmattan/Dialog/DynamicQueryDialog.qml</file>
-        <file>qml/tweetian-harmattan/Dialog/LongPressMenu.qml</file>
         <file>qml/tweetian-harmattan/Dialog/MessageDialog.qml</file>
         <file>qml/tweetian-harmattan/Dialog/OpenLinkDialog.qml</file>
         <file>qml/tweetian-harmattan/Dialog/SignInDialog.qml</file>
@@ -157,5 +156,6 @@
         <file>i18n/tweetian_tr.qm</file>
         <file>i18n/tweetian_vi.qm</file>
         <file>i18n/tweetian_zh.qm</file>
+        <file>qml/tweetian-harmattan/Component/LongPressMenu.qml</file>
     </qresource>
 </RCC>
