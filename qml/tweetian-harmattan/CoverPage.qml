@@ -22,6 +22,14 @@ import Sailfish.Silica 1.0
 CoverBackground {
         id: appCover
 
+        Image {
+               source: "Image/cover.png"
+               opacity: 0.1
+               anchors.horizontalCenter: parent.horizontalCenter
+               width: parent.width
+               height: sourceSize.height * width / sourceSize.width
+           }
+
         Label {
             id: unreadLabel
             anchors {
