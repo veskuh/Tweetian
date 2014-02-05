@@ -23,7 +23,7 @@ import "../Component"
 
 AbstractDelegate {
     id: root
-    height: contextMenu.visible ? root.implicitHeight + contextMenu.height : root.implicitHeight
+    height: contextMenu.visible ? root.contentHeight + contextMenu.height : root.contentHeight
 
     sideRectColor: {
         switch (settings.userScreenName) {
