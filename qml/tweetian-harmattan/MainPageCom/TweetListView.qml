@@ -23,6 +23,7 @@ import "../Utils/Database.js" as Database
 import "../Component"
 import "../Delegate"
 import "../Services/Twitter.js" as Twitter
+import "../TweetPageJS.js" as JS
 
 Item {
     id: root
@@ -118,6 +119,7 @@ Item {
         id: tweetView
         property string lastUpdate: ""
         property int lastCount: 0
+        property Item contextMenu
 
         PullDownMenu {
             MenuItem {
