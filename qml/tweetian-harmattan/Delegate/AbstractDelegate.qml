@@ -29,10 +29,10 @@ BackgroundItem {
 
     property bool highlighted: pressed // read-only
 
-    property int __originalHeight: height // private
+    property int __originalHeight: contentHeight // private
 
     implicitWidth: ListView.view ? ListView.view.width : 0
-    implicitHeight: Math.max(contentColumn.height, profileImage.height) + 2 * constant.paddingMedium
+    contentHeight: Math.max(contentColumn.height, profileImage.height) + 2 * constant.paddingMedium
 
    /* Image {
         id: highlight
@@ -126,7 +126,7 @@ BackgroundItem {
     Timer {
         id: pause
         interval: 250
-        onTriggered: height = __originalHeight
+        onTriggered: contentHeight = __originalHeight
     }
 
     NumberAnimation {
@@ -141,8 +141,8 @@ BackgroundItem {
     ListView.onAdd: {
         if (root.ListView.view.stayAtCurrentPosition) {
             if (root.ListView.view.atYBeginning) root.ListView.view.contentY += 1
-            __originalHeight = height
-            height = 0
+            __originalHeight = contentHeight
+            contentHeight = 0
             pause.start()
         }
         else onAddAnimation.start()
