@@ -123,7 +123,7 @@ Item {
 
         PullDownMenu {
             MenuItem {
-                text: qsTr("More..")
+                text: qsTr("More...")
                 onClicked: pageStack.push(Qt.resolvedUrl("../MorePage.qml"))
             }
 
