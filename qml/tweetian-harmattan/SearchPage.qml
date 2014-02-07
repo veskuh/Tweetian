@@ -78,6 +78,11 @@ Page {
                 onClicked: remorse.execute(qsTr("Removing saved search "), function() { internal.removeSavedSearch(); } )
                 visible: isSavedSearch
             }
+
+            MenuItem {
+                text: qsTr("Refresh")
+                onClicked: searchColumn.refresh("newer")
+            }
         }
 
         header: Column {
