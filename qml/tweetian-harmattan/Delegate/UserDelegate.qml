@@ -22,8 +22,10 @@ import Sailfish.Silica 1.0
 AbstractDelegate {
     id: root
     sideRectColor: followersCount == 0 ? "red" : "transparent"
+    height: userNameItem.height + descriptionText.height + followText.height + Theme.paddingMedium
 
     Item {
+        id: userNameItem
         anchors { left: parent.left; right: parent.right }
         height: userNameText.height
 
@@ -64,6 +66,7 @@ AbstractDelegate {
     }
 
     Text {
+        id: descriptionText
         anchors { left: parent.left; right: parent.right }
         font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
         visible: text != ""
@@ -73,6 +76,7 @@ AbstractDelegate {
     }
 
     Text {
+        id: followText
         anchors { left: parent.left; right: parent.right }
         font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
         color: highlighted ? constant.colorHighlighted : constant.colorMid
