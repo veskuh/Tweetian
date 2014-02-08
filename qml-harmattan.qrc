@@ -158,5 +158,6 @@
         <file>i18n/tweetian_vi.qm</file>
         <file>i18n/tweetian_zh.qm</file>
         <file>qml/tweetian-harmattan/Component/LongPressMenu.qml</file>
+        <file>qml/tweetian-harmattan/Image/me.svg</file>
     </qresource>
 </RCC>

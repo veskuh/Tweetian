@@ -54,7 +54,6 @@ Item {
                 Image {
                     id: icon
                     anchors.centerIn: parent
-                    sourceSize { height: constant.graphicSizeSmall; width: constant.graphicSizeSmall }
                     source: modelData
                 }
 
