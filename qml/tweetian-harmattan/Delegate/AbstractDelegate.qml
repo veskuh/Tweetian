@@ -33,6 +33,7 @@ BackgroundItem {
 
     implicitWidth: ListView.view ? ListView.view.width : 0
     contentHeight: Math.max(contentColumn.height, profileImage.height) + 2 * constant.paddingMedium
+    height: contentHeight // For contextMenu override in child
 
    /* Image {
         id: highlight
