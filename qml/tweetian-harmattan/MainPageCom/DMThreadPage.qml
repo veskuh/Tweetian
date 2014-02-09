@@ -46,6 +46,12 @@ Page {
 
         PullDownMenu {
             MenuItem {
+                text: qsTr("Profile")
+                visible: screenName != ""
+                onClicked: pageStack.push(Qt.resolvedUrl("../UserPage.qml"), {screenName: screenName})
+            }
+
+            MenuItem {
                 text: qsTr("Reply")
                 onClicked: pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"), {type: "DM", screenName: screenName})
             }
