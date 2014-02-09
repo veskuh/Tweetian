@@ -33,7 +33,7 @@ Item {
     Image {
         id: background
         anchors.fill: parent
-        source: "image://theme/color6-meegotouch-view-header-fixed" + (mouseArea.pressed ? "-pressed" : "")
+        source: "image://theme/graphic-header"
     }
 
     Text {
