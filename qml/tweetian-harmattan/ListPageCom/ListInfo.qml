@@ -28,7 +28,7 @@ Item {
     function initialize() {
 
         function addToListInfo(title, subtitle, clickedString) {
-            var item = { title: title, subtitle: subtitle, clickedString: clickedString || "" }
+            var item = { title: title, subtitle: subtitle.toString(), clickedString: clickedString || "" }
             listInfoListView.model.append(item)
         }
 
