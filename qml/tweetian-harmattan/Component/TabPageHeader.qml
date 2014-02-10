@@ -54,7 +54,6 @@ Item {
                 Image {
                     id: icon
                     anchors.centerIn: parent
-                    sourceSize { height: constant.graphicSizeSmall; width: constant.graphicSizeSmall }
                     source: modelData
                 }
 
@@ -88,6 +87,8 @@ Item {
                                 opacity: 1
                                 anchors.centerIn: parent
                                 running: true
+                                height: tabPageHeader.height - Theme.paddingLarge
+                                width: height
                             }
 
                             Component.onCompleted: opacity = 0.75
