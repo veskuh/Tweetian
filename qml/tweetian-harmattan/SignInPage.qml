@@ -122,7 +122,7 @@ below and click done.")
             }
         }
 
-        ScrollDecorator { flickable: flickable }
+        VerticalScrollDecorator { flickable: flickable }
     }
 
     QtObject {
