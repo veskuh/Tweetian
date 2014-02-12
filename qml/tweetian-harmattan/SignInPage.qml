@@ -40,8 +40,12 @@ Page {
 
         Column {
             id: mainColumn
-            anchors { left: parent.left; right: parent.right; top: parent.top; topMargin: constant.paddingMedium }
-            height: childrenRect.height
+            anchors {
+                left: parent.left; right: parent.right; top: parent.top
+                topMargin: constant.paddingMedium
+                leftMargin: Theme.paddingLarge
+                rightMargin: Theme.paddingLarge
+            }
             spacing: constant.paddingMedium
 
             Text {
