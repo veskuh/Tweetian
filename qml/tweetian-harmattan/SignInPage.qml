@@ -35,7 +35,7 @@ Page {
 
     SilicaFlickable {
         id: flickable
-        anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
+        anchors.fill: parent
         contentHeight: mainColumn.height + 2 * mainColumn.anchors.topMargin
 
         Column {
@@ -47,6 +47,12 @@ Page {
                 rightMargin: Theme.paddingLarge
             }
             spacing: constant.paddingMedium
+
+            PageHeader {
+                id: header
+                title: qsTr("Sign In to Twitter")
+                property bool busy: false
+            }
 
             Text {
                 anchors { left: parent.left; right: parent.right }
@@ -115,14 +121,8 @@ below and click done.")
                 onClicked: internal.doneButtonClicked()
             }
         }
-    }
 
-    ScrollDecorator { flickable: flickable }
-
-    PageHeader {
-        id: header
-        title: qsTr("Sign In to Twitter")
-        property bool busy: false
+        ScrollDecorator { flickable: flickable }
     }
 
     QtObject {
