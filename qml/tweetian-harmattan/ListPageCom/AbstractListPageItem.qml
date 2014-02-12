@@ -65,16 +65,12 @@ Item {
         id: tweetView
         anchors.fill: parent
         model: ListModel {}
-        header: PullToRefreshHeader {
-            height: sectionHeader.height
-            SectionHeader { id: sectionHeader; text: root.headerText }
-        }
+        header: SectionHeader { id: sectionHeader; text: root.headerText }
         footer: LoadMoreButton {
             visible: tweetView.count > 0 && showLoadMoreButton
             enabled: !loadingRect.visible
             onClicked: refresh("older")
         }
-        onPulledDown: refresh("newer")
     }
 
     Text {
