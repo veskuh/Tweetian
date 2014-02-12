@@ -35,14 +35,24 @@ Page {
 
     SilicaFlickable {
         id: flickable
-        anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
+        anchors.fill: parent
         contentHeight: mainColumn.height + 2 * mainColumn.anchors.topMargin
 
         Column {
             id: mainColumn
-            anchors { left: parent.left; right: parent.right; top: parent.top; topMargin: constant.paddingMedium }
-            height: childrenRect.height
+            anchors {
+                left: parent.left; right: parent.right; top: parent.top
+                topMargin: constant.paddingMedium
+                leftMargin: Theme.paddingLarge
+                rightMargin: Theme.paddingLarge
+            }
             spacing: constant.paddingMedium
+
+            PageHeader {
+                id: header
+                title: qsTr("Sign In to Twitter")
+                property bool busy: false
+            }
 
             Text {
                 anchors { left: parent.left; right: parent.right }
@@ -86,35 +96,22 @@ Click the button below will launch an external web browser for you to sign in to
 below and click done.")
             }
 
-            Item {
-                id: pinCodeTextFieldWrapper
-                anchors { left: parent.left; right: parent.right }
-                height: pinCodeTextFieldRow.height + 2 * constant.paddingXLarge
-
-                Row {
-                    id: pinCodeTextFieldRow
-                    anchors.centerIn: parent
-                    width: childrenRect.width; height: pinCodeTextField.height
-                    spacing: constant.paddingLarge
-
-                    Text {
-                        anchors.verticalCenter: parent.verticalCenter
-                        font.pixelSize: constant.fontSizeMedium
-                        color: constant.colorLight
-                        text: "PIN:"
-                    }
-
-                    TextField {
-                        id: pinCodeTextField
-                        width: pinCodeTextFieldWrapper.width * 0.7
-                        enabled: !header.busy
-                        inputMethodHints: Qt.ImhDigitsOnly
-
-                        EnterKey.enabled: text.length > 0
-                        EnterKey.iconSource: "image://theme/icon-m-enter-accept"
-                        EnterKey.onClicked: internal.doneButtonClicked()
-                    }
+            TextField {
+                id: pinCodeTextField
+                anchors {
+                    left: parent.left; right: parent.right
+                    // TextField has implicit large paddings
+                    leftMargin: -Theme.paddingLarge
+                    rightMargin: -Theme.paddingLarge
                 }
+
+                enabled: !header.busy
+                inputMethodHints: Qt.ImhDigitsOnly
+                placeholderText: "Enter PIN code"
+                label: "PIN"
+                EnterKey.enabled: text.length > 0
+                EnterKey.iconSource: "image://theme/icon-m-enter-accept"
+                EnterKey.onClicked: internal.doneButtonClicked()
             }
 
             Button {
@@ -124,14 +121,8 @@ below and click done.")
                 onClicked: internal.doneButtonClicked()
             }
         }
-    }
 
-    ScrollDecorator { flickable: flickable }
-
-    PageHeader {
-        id: header
-        title: qsTr("Sign In to Twitter")
-        property bool busy: false
+        VerticalScrollDecorator { flickable: flickable }
     }
 
     QtObject {

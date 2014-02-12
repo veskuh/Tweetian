@@ -175,7 +175,7 @@ Item {
         }
     }
 
-    ScrollDecorator { flickable: tweetView }
+    VerticalScrollDecorator { flickable: tweetView }
 
    // FastScroll { listView: tweetView }
 

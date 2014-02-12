@@ -116,7 +116,7 @@ Item {
 
     }
 
-    ScrollDecorator { flickable: directMsgView }
+    VerticalScrollDecorator { flickable: directMsgView }
 
     Text {
         anchors.centerIn: parent
