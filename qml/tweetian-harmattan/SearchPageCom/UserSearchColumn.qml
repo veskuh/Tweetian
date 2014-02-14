@@ -20,7 +20,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "../Services/Twitter.js" as Twitter
-import "../Utils/Calculations.js" as Calculate
 import "../Component"
 import "../Delegate"
 
@@ -28,9 +27,7 @@ AbstractSearch {
     id: userSearchListView
 
     property bool busy: false
-    property int unreadCount: 0
     property bool firstTimeLoaded: false
-    property string lastUpdate: ""
 
     property string mode: "User"
 
@@ -52,7 +49,6 @@ AbstractSearch {
         userSearchListView.positionViewAtBeginning()
     }
 
-    property bool stayAtCurrentPosition: internal.reloadType === "newer"
     footer: LoadMoreButton {
         visible: userSearchListView.count > 0
         enabled: !busy
@@ -60,17 +56,6 @@ AbstractSearch {
     }
     delegate: UserDelegate {}
     model: ListModel {}
-
-    onAtYBeginningChanged: if (atYBeginning) unreadCount = 0
-    onContentYChanged: refreshUnreadCountTimer.running = true
-
-    Timer {
-        id: refreshUnreadCountTimer
-        interval: 250
-        repeat: false
-        onTriggered: unreadCount = Math.min(userSearchListView.indexAt(0, userSearchListView.contentY + 5) + 1,
-                                            unreadCount)
-    }
 
     Text {
         anchors.centerIn: parent
