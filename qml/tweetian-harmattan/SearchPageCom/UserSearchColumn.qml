@@ -1,5 +1,6 @@
 /*
     Copyright (C) 2012 Dickson Leong
+    Copyright (C) 2014 Siteshwar Vashisht
     This file is part of Tweetian.
 
     This program is free software: you can redistribute it and/or modify
@@ -22,12 +23,13 @@ import "../Services/Twitter.js" as Twitter
 import "../Component"
 import "../Delegate"
 
-Item {
-    id: userSearchColumn
+AbstractSearch {
+    id: userSearchListView
 
     property bool busy: false
-    property int unreadCount: 0
     property bool firstTimeLoaded: false
+
+    property string mode: "User"
 
     function refresh(type) {
         firstTimeLoaded = true;
@@ -36,7 +38,7 @@ Item {
         switch (type) {
         case "all": internal.page = 1; userSearchListView.model.clear(); break;
         case "older": ++internal.page; break;
-        default: throw new Error("Invalid type");
+        default: throw new Error("Invalid type: " + type);
         }
         internal.reloadType = type
         Twitter.getUserSearch(searchString, internal.page, internal.userSearchOnSuccess, internal.userSearchOnFailure)
@@ -47,29 +49,23 @@ Item {
         userSearchListView.positionViewAtBeginning()
     }
 
-    width: searchListView.width; height: searchListView.height
-
-    ListView {
-        id: userSearchListView
-        anchors.fill: parent
-        footer: LoadMoreButton {
-            visible: userSearchListView.count > 0 && userSearchListView.count % 20 == 0
-            enabled: !busy
-            onClicked: refresh("older")
-        }
-        delegate: UserDelegate {}
-        model: ListModel {}
+    footer: LoadMoreButton {
+        visible: userSearchListView.count > 0
+        enabled: !busy
+        onClicked: refresh("older")
     }
+    delegate: UserDelegate {}
+    model: ListModel {}
 
     Text {
         anchors.centerIn: parent
-        visible: userSearchListView.count == 0 && !busy
         font.pixelSize: constant.fontSizeXXLarge
         color: constant.colorMid
         text: qsTr("No search result")
+        visible: userSearchListView.count == 0 && !busy
     }
 
-    //ScrollDecorator { flickableItem: userSearchListView }
+    ScrollDecorator { flickable: userSearchListView }
 
     WorkerScript {
         id: userSearchParser

@@ -23,13 +23,15 @@ import "../Utils/Calculations.js" as Calculate
 import "../Component"
 import "../Delegate"
 
-SilicaListView {
+AbstractSearch {
     id: tweetSearchListView
 
     property bool busy: false
     property int unreadCount: 0
     property bool firstTimeLoaded: false
     property string lastUpdate: ""
+
+    property string mode: "Tweet"
 
     function refresh(type) {
         firstTimeLoaded = true;

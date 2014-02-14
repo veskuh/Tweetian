@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2012 Dickson Leong
+    Copyright (C) 2014 Siteshwar Vashisht
     This file is part of Tweetian.
 
     This program is free software: you can redistribute it and/or modify
@@ -18,103 +18,78 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import "Services/Twitter.js" as Twitter
-import "Component"
-import "SearchPageCom"
 
-Page {
-    id: searchPage
-
-    property string searchString
-
-    property bool isSavedSearch: false
-    property string savedSearchId: ""
+SilicaListView {
+    id: searchColumn
+    anchors.fill: parent
 
     Component.onCompleted: {
         if (!isSavedSearch || !savedSearchId) internal.checkIsSavedSearch()
         if (!searchColumn.firstTimeLoaded) searchColumn.refresh("all")
     }
-    // TODO add and delete saved search
-    /*
-        ToolIcon {
-            platformIconId: isSavedSearch ? "toolbar-delete" : "toolbar-add"
-            onClicked: isSavedSearch ? internal.createRemoveSavedSearchDialog() : internal.createSaveSearchDialog()
-        }
-        Item { width: 80; height: 64 }
-    } */
-
-
-    // TODO add user search
-    /*SlideshowView {
-        id: View
-
-        anchors {
-            top: searchTextFieldContainer.bottom; bottom: searchPageHeader.top
-            left: parent.left; right: parent.right
-        }
-        model: VisualItemModel {
-            TweetSearchColumn {}
-            UserSearchColumn {}
-        }
-        clip: true
-        onCurrentIndexChanged: if (!currentItem.firstTimeLoaded) currentItem.refresh("all")
-    }*/
 
     RemorsePopup { id: remorse }
 
-    TweetSearchColumn {
-        id: searchColumn
-        anchors.fill: parent
-
-        PullDownMenu {
-            MenuItem {
-                text: qsTr("Save Search")
-                onClicked: internal.saveSearch()
-                visible: !isSavedSearch
-            }
-
-            MenuItem {
-                text: qsTr("Remove Saved Search")
-                onClicked: remorse.execute(qsTr("Removing saved search "), function() { internal.removeSavedSearch(); } )
-                visible: isSavedSearch
-            }
-
-            MenuItem {
-                text: qsTr("Refresh")
-                onClicked: searchColumn.refresh("newer")
-            }
+    PullDownMenu {
+        MenuItem {
+            text: qsTr("Save Search")
+            onClicked: internal.saveSearch()
+            visible: !isSavedSearch
         }
 
-        header: Column {
-            PageHeader {
-                id: titleHeader
-                title: qsTr("Search")
+        MenuItem {
+            text: qsTr("Remove Saved Search")
+            onClicked: remorse.execute(qsTr("Removing saved search "), function() { internal.removeSavedSearch(); } )
+            visible: isSavedSearch
+        }
+
+        MenuItem {
+            text: qsTr("Refresh")
+            onClicked: mode == "Tweet" ? searchColumn.refresh("newer") : searchColumn.refresh("all")
+        }
+
+        MenuItem {
+            text: qsTr("User Search")
+            onClicked: pageStack.replace(Qt.resolvedUrl("UserSearchPage.qml"), { searchString: searchString })
+            visible: mode == "Tweet"
+        }
+
+        MenuItem {
+            text: qsTr("Tweet Search")
+            onClicked: pageStack.replace(Qt.resolvedUrl("TweetSearchPage.qml"), { searchString: searchString })
+            visible: mode == "User"
+        }
+    }
+
+    header: Column {
+        PageHeader {
+            id: titleHeader
+            title: qsTr(mode + " Search")
+        }
+
+        Item {
+            id: searchTextFieldContainer
+            width: searchColumn.width
+            height: searchTextField.height + 2 * searchTextField.anchors.margins
+
+            TextField {
+                id: searchTextField
+                anchors { top: parent.top; left: parent.left; right: parent.right; margins: 0 }
+                placeholderText: qsTr("Search for tweets or users")
+                text: searchString
+                EnterKey.text: qsTr("Search")
+                EnterKey.onClicked: {
+                    searchString = searchTextField.text
+                    parent.focus = true // remove activeFocus on searchTextField
+                    internal.changeSearch()
+                }
+                onActiveFocusChanged: if (!activeFocus) resetSearchTextTimer.start()
             }
 
-            Item {
-                id: searchTextFieldContainer
-                width: searchColumn.width
-                height: searchTextField.height + 2 * searchTextField.anchors.margins
-
-                TextField {
-                    id: searchTextField
-                    anchors { top: parent.top; left: parent.left; right: parent.right; margins: 0 }
-                    placeholderText: qsTr("Search for tweets or users")
-                    text: searchString
-                    EnterKey.text: qsTr("Search")
-                    EnterKey.onClicked: {
-                        searchString = searchTextField.text
-                        parent.focus = true // remove activeFocus on searchTextField
-                        internal.changeSearch()
-                    }
-                    onActiveFocusChanged: if (!activeFocus) resetSearchTextTimer.start()
-                }
-
-                Timer {
-                    id: resetSearchTextTimer
-                    interval: 100
-                    onTriggered: searchTextField.text = searchString
-                }
+            Timer {
+                id: resetSearchTextTimer
+                interval: 100
+                onTriggered: searchTextField.text = searchString
             }
         }
     }

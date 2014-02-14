@@ -11,7 +11,6 @@
         <file>qml/tweetian-harmattan/MorePage.qml</file>
         <file>qml/tweetian-harmattan/NearbyTweetsPage.qml</file>
         <file>qml/tweetian-harmattan/NewTweetPage.qml</file>
-        <file>qml/tweetian-harmattan/SearchPage.qml</file>
         <file>qml/tweetian-harmattan/SelectImagePage.qml</file>
         <file>qml/tweetian-harmattan/SendTweetPage.qml</file>
         <file>qml/tweetian-harmattan/SettingPage.qml</file>
@@ -159,5 +158,8 @@
         <file>i18n/tweetian_zh.qm</file>
         <file>qml/tweetian-harmattan/Component/LongPressMenu.qml</file>
         <file>qml/tweetian-harmattan/Image/me.svg</file>
+        <file>qml/tweetian-harmattan/SearchPageCom/AbstractSearch.qml</file>
+        <file>qml/tweetian-harmattan/SearchPageCom/TweetSearchPage.qml</file>
+        <file>qml/tweetian-harmattan/SearchPageCom/UserSearchPage.qml</file>
     </qresource>
 </RCC>
