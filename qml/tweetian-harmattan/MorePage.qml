@@ -16,32 +16,15 @@ Page {
         VerticalScrollDecorator {}
 
         PullDownMenu {
-
-            RemorsePopup { id: remorse }
-
-            MenuItem {
-                text: qsTr("Sign Out")
-                onClicked: {
-                    remorse.execute(qsTr("Signing out from Twitter"), function() { AccountScript.twitterSignOut(); } )
-                }
-            }
-            MenuItem {
-                text: "About Tweetian"
-                onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
-            }
             MenuItem {
                 text: "Muting"
                 onClicked: pageStack.push(Qt.resolvedUrl("SettingsPageCom/MuteTab.qml"))
-            }
-            MenuItem {
-                text: "User information"
-                onClicked: pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: settings.userScreenName})
             }
         }
 
         PageHeader {
             id: title
-            title: "More options"
+            title: qsTr("Settings")
         }
         Column {
             id: switchColumn

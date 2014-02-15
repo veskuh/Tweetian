@@ -8,6 +8,7 @@
         <file>qml/tweetian-harmattan/main.qml</file>
         <file>qml/tweetian-harmattan/MainPage.qml</file>
         <file>qml/tweetian-harmattan/MapPage.qml</file>
+        <file>qml/tweetian-harmattan/MeTab.qml</file>
         <file>qml/tweetian-harmattan/MorePage.qml</file>
         <file>qml/tweetian-harmattan/NearbyTweetsPage.qml</file>
         <file>qml/tweetian-harmattan/NewTweetPage.qml</file>

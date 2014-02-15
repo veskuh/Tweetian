@@ -21,8 +21,9 @@ import Sailfish.Silica 1.0
 import "Services/Twitter.js" as Twitter
 import "Component"
 
-Page {
+Item {
     id: trendsPage
+    implicitHeight: mainView.height; implicitWidth: mainView.width
 
     property bool savedSearchLoading: false
     property bool trendingLoading: false
@@ -30,48 +31,11 @@ Page {
     property ListModel trendsLocationModel: ListModel {}
     property ListModel autoCompleterModel: ListModel {}
 
-    Component.onCompleted: if (cache.trendsModel.count === 0) internal.refresh()
+    function initialize() { if (cache.trendsModel.count === 0) internal.refresh() }
 
-    /*
-    tools: ToolBarLayout {
-        ToolIcon {
-            platformIconId: "toolbar-back"
-            onClicked: pageStack.pop()
-        }
-        ToolIcon {
-            iconSource: "image://theme/icon-s-location-picker" + (settings.invertedTheme ? "" : "-inverse")
-            onClicked: pageStack.push(Qt.resolvedUrl("NearbyTweetsPage.qml"))
-        }
-        ToolIcon {
-            iconSource: "image://theme/icon-m-toolbar-people" + (settings.invertedTheme ? "-dimmed" : "") + "-white"
-            onClicked: pageStack.push(Qt.resolvedUrl("UserCategoryPage.qml"))
-        }
-        ToolIcon {
-            platformIconId: "toolbar-view-menu"
-            onClicked: menu.open()
-        }
+    function positionAtTop() {
+        trendsPageListView.positionViewAtBeginning();
     }
-
-    Menu {
-        id: menu
-
-        MenuLayout {
-            MenuItem {
-                text: qsTr("Advanced search")
-                onClicked: pageStack.push(Qt.resolvedUrl("AdvSearchPage.qml"))
-            }
-            MenuItem {
-                text: qsTr("Change trends location")
-                onClicked: {
-                    if (trendsLocationModel.count === 0) {
-                        Twitter.getTrendsAvailable(internal.trendsLocationOnSuccess, internal.trendsLocationOnFailure)
-                        loadingRect.visible = true
-                    }
-                    else internal.createTrendsLocationDialog()
-                }
-            }
-        }
-    } */
 
     PullDownListView {
         id: trendsPageListView
@@ -197,7 +161,7 @@ Page {
         }
     }
 
-    ScrollDecorator { flickable: trendsPageListView }
+    VerticalScrollDecorator { flickable: trendsPageListView }
 
     QtObject {
         id: internal
