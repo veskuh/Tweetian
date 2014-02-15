@@ -23,6 +23,7 @@ import "Services/Twitter.js" as Twitter
 import "Component"
 import "Utils/Calculations.js" as Calculate
 import "Utils/Parser.js" as Parser
+import "SettingsPageCom/AccountTabScript.js" as AccountScript
 
 Item {
     id: userPage
