@@ -80,7 +80,7 @@ smartphone. Tweetian is open source and licensed under GPL v3.")
                 }
             }
 
-            SectionHeader { text: qsTr("Developed By") }
+            SectionHeader { text: qsTr("Original Author") }
 
             AboutPageItem {
                 imageSource: "Image/DicksonBetaDP.png"
@@ -104,8 +104,24 @@ smartphone. Tweetian is open source and licensed under GPL v3.")
                     font.pixelSize: constant.fontSizeMedium
                     color: constant.colorLight
                     wrapMode: Text.Wrap
-                    text: "This is a preview of Sailfish OS port maintained by @veskuh. Porting from Qt4 to Qt5 by @siteshwarv"
+                    text: "Sailfish-port is maintained by Vesa-Matti Hartikainen (@veskuh) and Siteshwar Vashisht (@SiteshwarV), with icons and code from Stephan Beyerle (@Morpog)."
                 }
+
+            }
+            AboutPageItem {
+                imageSource: "Image/avatar_placeholder.png"
+                text: "@veskuh"
+                onClicked: pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: "veskuh"})
+            }
+            AboutPageItem {
+                imageSource: "Image/avatar_placeholder.png"
+                text: "@siteshwarv"
+                onClicked: pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: "siteshwarv"})
+            }
+            AboutPageItem {
+                imageSource: "Image/avatar_placeholder.png"
+                text: "@Morpog"
+                onClicked: pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: "Morpog"})
             }
 
             SectionHeader { text: qsTr("Powered By") }
