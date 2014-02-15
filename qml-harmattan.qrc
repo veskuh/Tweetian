@@ -54,7 +54,6 @@
         <file>qml/tweetian-harmattan/Dialog/TrendsLocationDialog.qml</file>
         <file>qml/tweetian-harmattan/Image/add_my_location.svg</file>
         <file>qml/tweetian-harmattan/Image/add_my_location_inverse.svg</file>
-        <file>qml/tweetian-harmattan/Image/banner_empty.jpg</file>
         <file>qml/tweetian-harmattan/Image/chat.png</file>
         <file>qml/tweetian-harmattan/Image/cover.png</file>
         <file>qml/tweetian-harmattan/Image/choice_list_indicator.svg</file>
@@ -111,8 +110,6 @@
         <file>qml/tweetian-harmattan/SettingsPageCom/AccountTab.qml</file>
         <file>qml/tweetian-harmattan/SettingsPageCom/AccountTabScript.js</file>
         <file>qml/tweetian-harmattan/SettingsPageCom/MuteTab.qml</file>
-        <file>qml/tweetian-harmattan/SettingsPageCom/SettingGeneralTab.qml</file>
-        <file>qml/tweetian-harmattan/SettingsPageCom/SettingRefreshTab.qml</file>
         <file>qml/tweetian-harmattan/SettingsPageCom/SettingSlider.qml</file>
         <file>qml/tweetian-harmattan/SettingsPageCom/SettingSwitch.qml</file>
         <file>qml/tweetian-harmattan/SettingsPageCom/SettingTextField.qml</file>
@@ -162,5 +159,7 @@
         <file>qml/tweetian-harmattan/SearchPageCom/AbstractSearch.qml</file>
         <file>qml/tweetian-harmattan/SearchPageCom/TweetSearchPage.qml</file>
         <file>qml/tweetian-harmattan/SearchPageCom/UserSearchPage.qml</file>
+        <file>qml/tweetian-harmattan/Image/banner_empty.png</file>
+        <file>qml/tweetian-harmattan/Image/search.svg</file>
     </qresource>
 </RCC>

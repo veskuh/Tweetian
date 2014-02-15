@@ -76,7 +76,7 @@ Page {
         id: mainPageHeader
         listView: mainView
         iconArray: [Qt.resolvedUrl("Image/home.svg"), Qt.resolvedUrl("Image/mail.svg"),
-            Qt.resolvedUrl("Image/inbox.svg"),  "image://theme/icon-m-search", Qt.resolvedUrl("Image/me.svg") ]
+            Qt.resolvedUrl("Image/inbox.svg"), Qt.resolvedUrl("Image/search.svg"), Qt.resolvedUrl("Image/me.svg") ]
     }
 
     UserStream {
