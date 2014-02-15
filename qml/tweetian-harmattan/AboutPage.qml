@@ -26,10 +26,14 @@ Page {
 
     SilicaFlickable {
         id: aboutPageFlickable
-        anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
+        anchors.fill: parent
         contentHeight: aboutColumn.height
 
         Column {
+            PageHeader {
+                title: qsTr("About Tweetian")
+            }
+
             id: aboutColumn
             anchors { left: parent.left; right: parent.right }
             height: childrenRect.height
@@ -142,13 +146,7 @@ smartphone. Tweetian is open source and licensed under GPL v3.")
         }
     }
 
-    ScrollDecorator { flickable: aboutPageFlickable }
-
-    PageHeader {
-        id: header
-        title: qsTr("About Tweetian")
-
-    }
+    VerticalScrollDecorator { flickable: aboutPageFlickable }
 
     QtObject {
         id: callback
