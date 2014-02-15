@@ -60,7 +60,7 @@ Item {
                     EnterKey.text: qsTr("Search")
                     EnterKey.onClicked:{
                         parent.focus = true // remove activeFocus on searchTextField
-                        pageStack.push(Qt.resolvedUrl("SearchPage.qml"), { searchString: searchTextField.text })
+                        pageStack.push(Qt.resolvedUrl("SearchPageCom/TweetSearchPage.qml"), { searchString: searchTextField.text })
                     }
                     /*
                     onActiveFocusChanged: {
@@ -93,7 +93,7 @@ Item {
                     //enabled: searchTextField.text || searchTextField.platformPreedit
                     //opacity: enabled ? 1 : 0.25
                     icon.source: "image://theme/icon-m-search"
-                    onClicked: pageStack.push(Qt.resolvedUrl("SearchPage.qml"), { searchString: searchTextField.text })
+                    onClicked: pageStack.push(Qt.resolvedUrl("SearchPageCom/TweetSearchPage.qml"), { searchString: searchTextField.text })
                 }
             }
         }
@@ -128,12 +128,12 @@ Item {
                         isSavedSearch: type === qsTr("Saved Searches"),
                         savedSearchId: model.id
                     }
-                    pageStack.push(Qt.resolvedUrl("SearchPage.qml"), prop)
+                    pageStack.push(Qt.resolvedUrl("SearchPageCom/TweetSearchPage.qml"), prop)
                 }
                 else {
                     if (model.completeWord.charAt(0) === "@")
                         pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: model.completeWord.slice(1)})
-                    else pageStack.push(Qt.resolvedUrl("SearchPage.qml"), {searchString: model.completeWord})
+                    else pageStack.push(Qt.resolvedUrl("SearchPageCom/TweetSearchPage.qml"), {searchString: model.completeWord})
                 }
             }
         }
