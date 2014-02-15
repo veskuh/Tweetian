@@ -48,6 +48,8 @@ Page {
             TweetListView { id: timeline; type: "Timeline" }
             TweetListView { id: mentions; type: "Mentions" }
             DirectMessage { id: directMsg }
+            TrendsPage { id: trendsPage }
+            MeTab { id: meTab; screenName: settings.userScreenName }
         }
     }
 
@@ -62,6 +64,8 @@ Page {
                 timeline.initialize()
                 mentions.initialize()
                 directMsg.initialize()
+                meTab.initialize()
+                trendsPage.initialize()
                 StreamScript.initialize()
                 StreamScript.saveUserInfo()
             }
@@ -72,7 +76,7 @@ Page {
         id: mainPageHeader
         listView: mainView
         iconArray: [Qt.resolvedUrl("Image/home.svg"), Qt.resolvedUrl("Image/mail.svg"),
-            Qt.resolvedUrl("Image/inbox.svg")]
+            Qt.resolvedUrl("Image/inbox.svg"),  "image://theme/icon-m-search", Qt.resolvedUrl("Image/me.svg") ]
     }
 
     UserStream {

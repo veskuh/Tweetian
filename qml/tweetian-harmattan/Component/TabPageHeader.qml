@@ -53,6 +53,8 @@ Item {
 
                 Image {
                     id: icon
+                    height: 36
+                    width: 36
                     anchors.centerIn: parent
                     source: modelData
                 }
@@ -66,7 +68,7 @@ Item {
                     font.pixelSize: Theme.fontSizeSmall
                     color: Theme.highlightColor
 
-                    text: listView.model.children[index].unreadCount
+                    text: listView.model.children[index].unreadCount ? listView.model.children[index].unreadCount : ""
                 }
 
                 Loader {

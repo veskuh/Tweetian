@@ -123,16 +123,6 @@ Item {
 
         PullDownMenu {
             MenuItem {
-                text: qsTr("More...")
-                onClicked: pageStack.push(Qt.resolvedUrl("../MorePage.qml"))
-            }
-
-            MenuItem {
-                onClicked: pageStack.push(Qt.resolvedUrl("../TrendsPage.qml"))
-                text: qsTr("Trends & Search")
-            }
-
-            MenuItem {
                onClicked: pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"), {type: "New"})
                text: qsTr("New Tweet")
             }
@@ -142,7 +132,6 @@ Item {
                text: userStream.connected ? qsTr("Streaming...") : qsTr("Refresh")
             }
         }
-
 
         property bool stayAtCurrentPosition: (userStream.connected && !active) ||
                                              (!userStream.connected && reloadType === "newer")
