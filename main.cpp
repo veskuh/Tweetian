@@ -62,7 +62,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     app->installTranslator(&translator);
 
     app->setApplicationName("Tweetian");
-    app->setOrganizationName("Tweetian");
+    app->setOrganizationName("harbour-tweetian");
     app->setApplicationVersion(APP_VERSION);
     QScopedPointer<QQuickView> view(SailfishApp::createView());
     new TweetianIf(app.data(), view.data());
@@ -83,8 +83,6 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     qmlRegisterType<ImageUploader>("harbour.tweetian.Uploader", 1, 0, "ImageUploader");
     qmlRegisterType<UserStream>("harbour.tweetian.UserStream", 1, 0, "UserStream");
-    //view.rootContext()->setContextProperty("ImageUploader", new ImageUploader());
-    //view.rootContext()->setContextProperty("UserStream", new UserStream());
 
     view->setSource(QUrl("qrc:/qml/tweetian-harmattan/main.qml"));
     view->showFullScreen();

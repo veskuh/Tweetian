@@ -43,7 +43,7 @@ ContextMenu {
             onClicked: internal.createDeleteDMDialog(id)
         }
         MenuItem {
-            text: qsTr("%1 Profile").arg("<font color=\"LightSeaGreen\">@" + screenName + "</font>")
+            text: qsTr("%1 Profile").arg("<font color=\"DarkGray\">@" + screenName + "</font>")
             visible: screenName != ""
             onClicked: pageStack.push(Qt.resolvedUrl("../UserPage.qml"), {screenName: screenName})
             platformStyle: MenuItemStyle { position: linksRepeater.count > 0 ? "vertical-center" : "vertical-bottom" }

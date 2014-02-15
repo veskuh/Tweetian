@@ -39,7 +39,7 @@ ContextMenu {
         text: link
         font.italic: true
         font.pixelSize: constant.fontSizeMedium
-        color: "LightSeaGreen"
+        color: "DarkGray"
         elide: Text.ElideRight
         maximumLineCount: 3
         wrapMode: Text.WrapAnywhere

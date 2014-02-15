@@ -49,13 +49,13 @@ ContextMenu {
     }
 
     MenuItem {
-        text: qsTr("%1 Profile").arg("<font color=\"LightSeaGreen\">@" + tweet.retweetScreenName + "</font>")
+        text: qsTr("%1 Profile").arg("<font color=\"DarkGray\">@" + tweet.retweetScreenName + "</font>")
         onClicked: pageStack.push(Qt.resolvedUrl("../UserPage.qml"), { screenName: tweet.retweetScreenName })
     }
 
     MenuItem {
         id: rtScreenName
-        text: qsTr("%1 Profile").arg("<font color=\"LightSeaGreen\">@" + tweet.screenName + "</font>")
+        text: qsTr("%1 Profile").arg("<font color=\"DarkGray\">@" + tweet.screenName + "</font>")
         visible: tweet.isRetweet
         onClicked: pageStack.push(Qt.resolvedUrl("../UserPage.qml"), { screenName: tweet.screenName })
     }
