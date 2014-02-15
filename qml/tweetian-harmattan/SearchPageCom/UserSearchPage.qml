@@ -19,9 +19,6 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import "../Services/Twitter.js" as Twitter
-import "../Component"
-
 
 Page {
     id: searchPage

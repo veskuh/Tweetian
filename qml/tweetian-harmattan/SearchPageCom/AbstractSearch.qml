@@ -19,8 +19,12 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
+import "../Services/Twitter.js" as Twitter
+
 SilicaListView {
     id: searchColumn
+    property string mode: ""
+
     anchors.fill: parent
 
     Component.onCompleted: {

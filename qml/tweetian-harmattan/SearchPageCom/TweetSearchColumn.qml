@@ -31,7 +31,7 @@ AbstractSearch {
     property bool firstTimeLoaded: false
     property string lastUpdate: ""
 
-    property string mode: "Tweet"
+    mode: "Tweet"
 
     function refresh(type) {
         firstTimeLoaded = true;
