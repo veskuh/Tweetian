@@ -2,7 +2,12 @@ TEMPLATE = app
 TARGET = harbour-tweetian
 
 # Application version
-VERSION = 1.8.3-3
+
+# Since harbour does not distinguish build numbers
+# we cannot just differentiate from upstream by build number
+# thus using 2.x.x from now on for sailfish port
+# based on upstream 1.8.3
+VERSION = 2.0.0
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 # Qt Library
