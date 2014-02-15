@@ -29,7 +29,7 @@ AbstractSearch {
     property bool busy: false
     property bool firstTimeLoaded: false
 
-    property string mode: "User"
+    mode: "User"
 
     function refresh(type) {
         firstTimeLoaded = true;
