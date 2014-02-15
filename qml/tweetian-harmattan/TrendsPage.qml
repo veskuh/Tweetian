@@ -20,6 +20,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "Services/Twitter.js" as Twitter
 import "Component"
+import "Dialog"
 
 Page {
     id: trendsPage
@@ -174,6 +175,17 @@ Page {
             }
         }
         PullDownMenu {
+            MenuItem {
+                text: qsTr("Change trends location")
+                onClicked: {
+                    if (trendsLocationModel.count === 0) {
+                        Twitter.getTrendsAvailable(internal.trendsLocationOnSuccess, internal.trendsLocationOnFailure)
+                        loadingRect.visible = true
+                    }
+                    else internal.createTrendsLocationDialog()
+                }
+            }
+
             MenuItem {
                 text: "Advanced search"
                 onClicked: pageStack.push(Qt.resolvedUrl("AdvSearchPage.qml"))
