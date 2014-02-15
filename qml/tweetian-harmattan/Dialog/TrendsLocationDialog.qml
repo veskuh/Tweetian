@@ -19,20 +19,35 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
+import ".."
 
 Dialog {
     id: root
 
     property bool __isClosing: false
 
-    titleText: qsTr("Trends Location")
-    model: trendsLocationModel
-    onSelectedIndexChanged: settings.trendsLocationWoeid = trendsLocationModel.get(selectedIndex).woeid
+    property alias selectedIndex: trendsLocationList.currentIndex
+
+    Constant { id: constant }
+
+    SilicaListView {
+        id: trendsLocationList
+        anchors { fill: parent; leftMargin: constant.paddingMedium; }
+        model: trendsLocationModel
+        header: PageHeader { title: qsTr("Trends Location"); }
+        delegate: BackgroundItem {
+            Text {
+                text: name
+                font.family: Theme.fontFamily
+                color: highlighted ? constant.colorHighlighted : constant.colorLight
+            }
+
+            onClicked: {
+                trendsLocationList.currentIndex = index;
+                root.accept();
+            }
+        }
+    }
 
     Component.onCompleted:open()
-
-    onStatusChanged: {
-        if (status === DialogStatus.Closing) __isClosing = true
-        else if (status === DialogStatus.Closed && __isClosing) root.destroy(250)
-    }
 }
