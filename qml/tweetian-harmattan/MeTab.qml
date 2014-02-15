@@ -60,7 +60,7 @@ Item {
             Item {
                 id: headerItem
                 anchors { left: parent.left; right: parent.right }
-                height: userPage.isPortrait ? width / 2 : width / 4
+                height: userPage.isPortrait ? mainView.height / 3.25 : mainView.height / 3.25
 
                 Image {
                     id: headerImage
@@ -72,10 +72,10 @@ Item {
                         if (user.profileBannerUrl)
                             return user.profileBannerUrl.concat(userPage.isPortrait ? "/web" : "/mobile_retina")
                         else
-                            return "Image/banner_empty.jpg"
+                            return "Image/banner_empty.png"
                     }
-                    opacity: 0.9
-                    onStatusChanged: if (status === Image.Error) source = "Image/banner_empty.jpg"
+                    opacity: 1.0
+                    onStatusChanged: if (status === Image.Error) source = "Image/banner_empty.png"
                 }
 
                 Item {
