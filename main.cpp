@@ -65,7 +65,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     app->setOrganizationName("harbour-tweetian");
     app->setApplicationVersion(APP_VERSION);
     QScopedPointer<QQuickView> view(SailfishApp::createView());
-    new TweetianIf(app.data(), view.data());
+    TweetianIf* tweetianIf = new TweetianIf(app.data(), view.data());
     QDBusConnection bus = QDBusConnection::sessionBus();
     bus.registerService("com.tweetian");
     bus.registerObject("/com/tweetian", app.data());
@@ -80,6 +80,8 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     HarmattanUtils harmattanUtils;
     view->rootContext()->setContextProperty("harmattanUtils", &harmattanUtils);
+
+    QObject::connect(&harmattanUtils, SIGNAL(newNotification()), tweetianIf, SLOT(sNewNotification()));
 
     qmlRegisterType<ImageUploader>("harbour.tweetian.Uploader", 1, 0, "ImageUploader");
     qmlRegisterType<UserStream>("harbour.tweetian.UserStream", 1, 0, "UserStream");

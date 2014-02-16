@@ -82,8 +82,11 @@ void HarmattanUtils::shareLink(const QString &url, const QString &title)
 void HarmattanUtils::publishNotification(const QString &eventType, const QString &summary, const QString &body,
                                          const int count)
 {
+    emit newNotification();
+
     if (eventType == "tweetian.mention" ? mentionColddown->isActive() : messageColddown->isActive())
         return;
+
 
 #ifdef Q_OS_HARMATTAN
     QString identifier = eventType.mid(9);
