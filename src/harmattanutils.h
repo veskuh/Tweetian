@@ -44,6 +44,7 @@ public:
 
 signals:
     void mediaReceived(const QString &mediaName);
+    void newNotification();
 
 private slots:
     void processMediaName(const QStringList &media);
