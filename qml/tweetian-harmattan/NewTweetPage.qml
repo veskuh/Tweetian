@@ -131,7 +131,7 @@ Page {
                 anchors { right: parent.right; bottom: parent.bottom; margins: constant.paddingMedium }
                 font.pixelSize: constant.fontSizeSmall
                 color: constant.colorMid
-                text: 140 - shortenText.length // - (addImageButton.checked ? constant.charReservedPerMedia : 0)
+                text: 140 - shortenText.length - (imagePath != '' ? constant.charReservedPerMedia : 0)
             }
 
             Image {
