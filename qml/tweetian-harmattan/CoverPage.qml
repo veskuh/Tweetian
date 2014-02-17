@@ -24,7 +24,6 @@ CoverBackground {
 
         Image {
                source: "Image/cover.png"
-               opacity: 0.1
                anchors.horizontalCenter: parent.horizontalCenter
                width: parent.width
                height: sourceSize.height * width / sourceSize.width
@@ -33,19 +32,19 @@ CoverBackground {
         Label {
             id: unreadLabel
             anchors {
-                right: parent.right; rightMargin: constant.paddingMedium
+                horizontalCenter: parent.horizontalCenter; bottom: parent.bottom
             }
-            visible: mainPage.totalUnreadCount > 0
+            opacity: mainPage.totalUnreadCount > 0 ? 1.0 : 0.0
             height: visible ? implicitHeight : 0
-            font.pixelSize: Theme.fontSizeMedium
+            font.pixelSize: Theme.fontSizeSmall
             color: Theme.highlightColor
-            text: mainPage.totalUnreadCount
+            text: mainPage.totalUnreadCount > 1 ? mainPage.totalUnreadCount + " new tweets" : mainPage.totalUnreadCount + " new tweet"
         }
 
         ListView {
             id: coverTweetList
             width: parent.width;
-            anchors.top: unreadLabel.bottom
+            anchors.top: parent.top
             anchors.bottom: parent.bottom
             model: mainPage.timeline.model
 
@@ -53,7 +52,7 @@ CoverBackground {
                 id: item
                 anchors { left: parent.left; right: parent.right; margins: constant.paddingSmall }
                 height: usernameText.height + msgText.height + constant.paddingSmall
-                opacity: index < 4 ? 1.0 - index * 0.25 : 0.0
+                opacity: index < 5 ? 1.0 - index * 0.23 : 0.0
 
                 Image {
                    id: profileImage
@@ -68,7 +67,7 @@ CoverBackground {
                    anchors { left: profileImage.right; right: parent.right; leftMargin: constant.paddingSmall }
 
                    text: "@" + screenName
-                   font { pixelSize: Theme.fontSizeTiny; family: Theme.fontFamily; bold: true }
+                   font { pixelSize: Theme.fontSizeTiny; family: Theme.fontFamily; weight: Font.Bold}
                    wrapMode: Text.Wrap
                    color: constant.colorLight
                 }
@@ -78,7 +77,7 @@ CoverBackground {
                     anchors { left: parent.left; right: parent.right; top: usernameText.bottom }
                     text: plainText
                     maximumLineCount: 2
-                    truncationMode: TruncationMode.Fade
+                    elide: Text.ElideRight
                     font { pixelSize: Theme.fontSizeTiny; family: Theme.fontFamily }
                     wrapMode: Text.Wrap
                     color: constant.colorLight
