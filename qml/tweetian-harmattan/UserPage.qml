@@ -113,7 +113,7 @@ Page {
                         else
                             return "Image/banner_empty.png"
                     }
-                    opacity: 1.0
+                    opacity: 0.9
                     onStatusChanged: if (status === Image.Error) source = "Image/banner_empty.png"
                 }
 
