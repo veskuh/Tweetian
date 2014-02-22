@@ -35,6 +35,10 @@ public:
 public slots:
     void mention();
     void message();
+    void sNewNotification() { emit newNotification(); } // relaying signal
+
+signals:
+    void newNotification();
 
 private:
     QQuickView *m_view;
