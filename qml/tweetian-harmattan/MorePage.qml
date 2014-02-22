@@ -3,7 +3,6 @@ import Sailfish.Silica 1.0
 
 import "Component"
 import "Services/Translation.js" as Translation
-import "SettingsPageCom/AccountTabScript.js" as AccountScript
 import "SettingsPageCom"
 
 Page {

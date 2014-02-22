@@ -111,10 +111,10 @@ Page {
                         if (user.profileBannerUrl)
                             return user.profileBannerUrl.concat(userPage.isPortrait ? "/web" : "/mobile_retina")
                         else
-                            return "Image/banner_empty.jpg"
+                            return "Image/banner_empty.png"
                     }
                     opacity: 0.9
-                    onStatusChanged: if (status === Image.Error) source = "Image/banner_empty.jpg"
+                    onStatusChanged: if (status === Image.Error) source = "Image/banner_empty.png"
                 }
 
                 Item {
