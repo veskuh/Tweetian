@@ -61,7 +61,7 @@ Item {
             Item {
                 id: headerItem
                 anchors { left: parent.left; right: parent.right }
-                height: userPage.isPortrait ? mainView.height / 3.25 : mainView.height / 3.25
+                height: mainView.height / 3.25
 
                 Image {
                     id: headerImage
@@ -75,7 +75,7 @@ Item {
                         else
                             return "Image/banner_empty.png"
                     }
-                    opacity: 1.0
+                    opacity: 0.9
                     onStatusChanged: if (status === Image.Error) source = "Image/banner_empty.png"
                 }
 
