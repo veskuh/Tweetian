@@ -45,6 +45,7 @@ Page {
     backNavigation: !header.busy
     onStatusChanged: if (status === PageStatus.Activating) preventTouch.enabled = false
 
+    // the post stuff should be moved to sendtweetpage in future
     SilicaFlickable {
         anchors.fill: parent
 
@@ -256,10 +257,20 @@ Page {
             Image {
                 id: imagePreview
                 width: 200; height: 200
-                visible: source != ''
+                visible: source != '' && (!switchLong.visible || switchLong.checked)
                 fillMode: Image.PreserveAspectFit
                 anchors.horizontalCenter: parent.horizontalCenter
                 source: newTweetPage.imagePath
+            }
+            TextSwitch {
+                id: switchLong
+                visible: tweetTextArea.errorHighlight && settings.enableTwitLonger
+                width: parent.width
+                height: checked ? Theme.itemSizeMedium : Theme.itemSizeLarge * 3
+                text: qsTr("TwitLonger")
+                description: checked ? qsTr("Note: The tweet content will be publicly visible even if your tweet is private.") : qsTr("Your tweet is more than 140 characters. \
+    Do you want to use TwitLonger to post your tweet?\n\
+    Note: The tweet content will be publicly visible even if your tweet is private.")
             }
 
             Button {
@@ -274,32 +285,8 @@ Page {
                 }
                 anchors.horizontalCenter: parent.horizontalCenter
                 enabled: (tweetTextArea.text.length != 0 ) // || addImageButton.checked)
-                         && ((settings.enableTwitLonger /* && !addImageButton.checked */)  || !tweetTextArea.errorHighlight)
-                onClicked: {
-                    if (type == "New" || type == "Reply") {
-                        if (imagePath != '') {
-                            imageUploader.run();
-                        }
-                        else {
-                            if (tweetTextArea.errorHighlight) internal.createUseTwitLongerDialog()
-                            else {
-                                Twitter.postStatus(tweetTextArea.text, tweetId ,latitude, longitude,
-                                                   internal.postStatusOnSuccess, internal.commonOnFailure)
-                                header.busy = true
-                            }
-                        }
-                    }
-                    else if (type == "RT") {
-                        console.log("id" + tweetId)
-                        Twitter.postRetweet(tweetId, internal.postStatusOnSuccess, internal.commonOnFailure)
-                        header.busy = true
-                    }
-                    else if (type == "DM") {
-                        Twitter.postDirectMsg(tweetTextArea.text, screenName,
-                                              internal.postStatusOnSuccess, internal.commonOnFailure)
-                        header.busy = true
-                    }
-                }
+                         && ((switchLong.checked/* && !addImageButton.checked */)  || !tweetTextArea.errorHighlight)
+                onClicked: internal.postTweet()
             }
 
             /*
@@ -550,6 +537,42 @@ Page {
         function commonOnFailure(status, statusText) {
             infoBanner.showHttpError(status, statusText)
             header.busy = false
+        }
+
+        function postTweetLonger()
+        {
+            var replyScreenName = placedText ? placedText.substring(1, placedText.indexOf(" ")) : ""
+            TwitLonger.postTweet(constant, settings.userScreenName, tweetTextArea.text, tweetId, replyScreenName,
+                                 twitLongerOnSuccess, commonOnFailure)
+        }
+
+        function postTweet()
+        {
+            if (type == "New" || type == "Reply") {
+                if (imagePath != '') {
+                    imageUploader.run();
+                }
+                else {
+                    if (tweetTextArea.errorHighlight && switchLong.checked) { // actually checked is pointless to check since we dont come here if not checked and message is to long
+                        internal.postTweetLonger()
+                    }
+                    else {
+                        Twitter.postStatus(tweetTextArea.text, tweetId ,latitude, longitude,
+                                           internal.postStatusOnSuccess, internal.commonOnFailure)
+                        header.busy = true
+                    }
+                }
+            }
+            else if (type == "RT") {
+                console.log("id" + tweetId)
+                Twitter.postRetweet(tweetId, internal.postStatusOnSuccess, internal.commonOnFailure)
+                header.busy = true
+            }
+            else if (type == "DM") {
+                Twitter.postDirectMsg(tweetTextArea.text, screenName,
+                                      internal.postStatusOnSuccess, internal.commonOnFailure)
+                header.busy = true
+            }
         }
 
         function createUseTwitLongerDialog() {
