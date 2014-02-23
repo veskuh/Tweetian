@@ -45,7 +45,6 @@ Page {
     backNavigation: !header.busy
     onStatusChanged: if (status === PageStatus.Activating) preventTouch.enabled = false
 
-    // the post stuff should be moved to sendtweetpage in future
     SilicaFlickable {
         anchors.fill: parent
 
@@ -482,7 +481,6 @@ Page {
 
     QtObject {
         id: internal
-
         property string twitLongerId: ""
         property bool exit
         property string tweetType: type
