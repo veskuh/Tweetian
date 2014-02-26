@@ -82,7 +82,7 @@ AbstractSearch {
         visible: tweetSearchListView.count == 0 && !busy
     }
 
-    ScrollDecorator { flickable: tweetSearchListView }
+    VerticalScrollDecorator { flickable: tweetSearchListView }
 
     WorkerScript {
         id: searchParser

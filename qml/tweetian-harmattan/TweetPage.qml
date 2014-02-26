@@ -221,7 +221,7 @@ Page {
                         else if (link.indexOf("http") === 0)
                             dialog.createOpenLinkDialog(link, JS.addToPocket, JS.addToInstapaper)
                         else
-                            pageStack.push(Qt.resolvedUrl("SearchPage.qml"), {searchString: link})
+                            pageStack.push(Qt.resolvedUrl("SearchPageCom/TweetSearchPage.qml"), {searchString: link})
                     }
                 }
 

@@ -68,7 +68,7 @@ Page {
         anchors.bottom: advSearchPage.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         text: qsTr("Search")
-        onClicked: pageStack.push(Qt.resolvedUrl("SearchPage.qml"), {searchString: __contructQuery()})
+        onClicked: pageStack.push(Qt.resolvedUrl("SearchPageCom/TweetSearchPage.qml"), {searchString: __contructQuery()})
     }
 
     SilicaFlickable {
