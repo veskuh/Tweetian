@@ -41,7 +41,7 @@ BackgroundItem {
         anchors {
             verticalCenter: parent.verticalCenter
             left: parent.left
-            margins: constant.paddingLarge
+            margins: constant.paddingMedium
         }
         sourceComponent: imageSource ? imageComponent : undefined
     }
