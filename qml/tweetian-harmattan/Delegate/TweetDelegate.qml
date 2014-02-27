@@ -49,7 +49,7 @@ AbstractDelegate {
             id: userNameText
             anchors.left: parent.left
             width: Math.min(parent.width, implicitWidth)
-            font.pixelSize: constant.fontSizeSmall
+            font.pixelSize: constant.fontSizeMedium
             font.bold: true
             font.family: Theme.fontFamily
 
@@ -60,7 +60,7 @@ AbstractDelegate {
 
         Text {
             anchors { left: userNameText.right; right: favouriteIconLoader.left; margins: constant.paddingSmall }
-            font.pixelSize: constant.fontSizeSmall
+            font.pixelSize: constant.fontSizeMedium
 
             font.family: Theme.fontFamily
             color: highlighted ? constant.colorHighlighted : constant.colorMid
@@ -88,7 +88,7 @@ AbstractDelegate {
     Text {
         anchors { left: parent.left; right: parent.right }
         textFormat: Text.RichText
-        font.pixelSize: constant.fontSizeSmall
+        font.pixelSize: constant.fontSizeMedium
         font.family: Theme.fontFamily
         wrapMode: Text.Wrap
         color: highlighted ? constant.colorHighlighted : constant.colorLight
@@ -104,7 +104,7 @@ AbstractDelegate {
             id: retweetText
 
             Text {
-                font.pixelSize: constant.fontSizeSmall
+                font.pixelSize: constant.fontSizeMedium
 
                 font.family: Theme.fontFamily
                 wrapMode: Text.Wrap
@@ -117,7 +117,7 @@ AbstractDelegate {
     Text {
         anchors { left: parent.left; right: parent.right }
         horizontalAlignment: Text.AlignRight
-        font.pixelSize: constant.fontSizeXSmall
+        font.pixelSize: constant.fontSizeSmall
 
         font.family: Theme.fontFamily
         color: highlighted ? constant.colorHighlighted : constant.colorMid

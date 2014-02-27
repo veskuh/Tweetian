@@ -189,7 +189,7 @@ Page {
                         height: childrenRect.height
 
                         Text {
-                            font.pixelSize: constant.fontSizeSmall
+                            font.pixelSize: constant.fontSizeMedium
                             font.family: Theme.fontFamily
                             color: constant.colorLight
                             font.bold: true
@@ -197,7 +197,7 @@ Page {
                         }
 
                         Text {
-                            font.pixelSize: constant.fontSizeXSmall
+                            font.pixelSize: constant.fontSizeSmall
                             font.family: Theme.fontFamily
                             color: userItem.highlighted ? constant.colorHighlighted : constant.colorMid
                             text: "@" + tweet.screenName
@@ -208,7 +208,7 @@ Page {
                 Text {
                     id: tweetTextText
                     anchors { left: parent.left; right: parent.right; leftMargin: constant.paddingMedium; rightMargin: constant.paddingMedium  }
-                    font.pixelSize: constant.fontSizeSmall
+                    font.pixelSize: constant.fontSizeMedium
                     font.family: Theme.fontFamily
                     color: constant.colorLight
                     textFormat: Text.RichText
@@ -228,7 +228,7 @@ Page {
                 Text {
                     anchors { left: parent.left; right: parent.right; leftMargin: constant.paddingMedium; rightMargin: constant.paddingMedium  }
                     visible: tweet.isRetweet
-                    font.pixelSize: constant.fontSizeSmall
+                    font.pixelSize: constant.fontSizeMedium
                     font.family: Theme.fontFamily
                     color: constant.colorMid
                     text: qsTr("Retweeted by %1").arg("@" + tweet.retweetScreenName)
@@ -258,7 +258,7 @@ Page {
                     Text {
                         id: timeAndSourceText
                         anchors { left: iconLoader.right; leftMargin: constant.paddingSmall; right: parent.right;  }
-                        font.pixelSize: constant.fontSizeXSmall
+                        font.pixelSize: constant.fontSizeSmall
                         font.family: Theme.fontFamily
                         horizontalAlignment: Text.AlignRight
                         color: constant.colorMid
