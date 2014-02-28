@@ -11,11 +11,9 @@
 #ifndef QMLAPPLICATIONVIEWER_H
 #define QMLAPPLICATIONVIEWER_H
 
-#include <QQuickView>
+#include <QDeclarativeView>
 
-class QGuiApplication;
-
-class QmlApplicationViewer : public QQuickView
+class QmlApplicationViewer : public QDeclarativeView
 {
     Q_OBJECT
 
@@ -43,6 +41,6 @@ private:
     class QmlApplicationViewerPrivate *d;
 };
 
-QGuiApplication *createApplication(int &argc, char **argv);
+QApplication *createApplication(int &argc, char **argv);
 
 #endif // QMLAPPLICATIONVIEWER_H
