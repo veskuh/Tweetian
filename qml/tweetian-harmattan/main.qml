@@ -264,7 +264,7 @@ ApplicationWindow {
             tweetId = tweetid
             tweetImage = tweetimage
             pendingTweet = true
-            if (tweetType == "New" || tweeType == "Reply") {
+            if (tweetType == "New" || tweetType == "Reply") {
                 if (tweetImage != '') {
                     imageUploader.run();
                 }
