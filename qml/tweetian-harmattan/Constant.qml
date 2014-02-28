@@ -56,7 +56,7 @@ QtObject {
 property int headerHeight: 65
 
     property int charReservedPerMedia: 23
-    property url twitterBirdIcon: settings.invertedTheme ? "Image/twitter-bird-light.png" : "Image/twitter-bird-dark.png"
+    property url twitterBirdIcon: "Image/avatar_placeholder.png"
 
     property string userAgent: QMLUtils.userAgent()
 
