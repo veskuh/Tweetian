@@ -204,6 +204,7 @@ ApplicationWindow {
 //        property string twitLongerId: ""
         property bool exit: false
         property string tweetType: "New"
+        property string screenName: ""
         property string tweetText: ""
         property string tweetImage: ""
         property string tweetId: ""
@@ -241,10 +242,11 @@ ApplicationWindow {
 
             tweetId = ""
             tweetType = ""
-            tweetImage = ""
+            screenName = ""
             tweetText = ""
-            longitude = 0.0
+            tweetImage = ""
             latitude = 0.0
+            longitude = 0.0
             pendingTweet = false
         }
         /*
@@ -276,15 +278,15 @@ ApplicationWindow {
         }
 
 
-        function postTweet(tweetid, tweettype, tweettext, tweetimage, lon, lat)
+        function postTweet(tweetid, tweettype, screenname, tweettext, tweetimage, lat, lon)
         {
-            latitude = lat
-            longitude = lon
+            tweetId = tweetid
+            tweetType = tweettype
+            screenName = screenname
             tweetText = tweettext
             tweetImage = tweetimage
-            tweetType = tweettype
-            tweetId = tweetid
-            tweetImage = tweetimage
+            latitude = lat
+            longitude = lon
             pendingTweet = true
             if (tweetType == "New" || tweetType == "Reply") {
                 if (tweetImage != '') {
