@@ -95,6 +95,10 @@ AbstractDelegate {
         text: model.richText
     }
 
+    RemorseItem {
+        id: remorse
+    }
+
     Loader {
         id: retweetLoader
         anchors { left: parent.left; right: parent.right }

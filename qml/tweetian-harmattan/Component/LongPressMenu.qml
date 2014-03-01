@@ -18,14 +18,13 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-
+import "../Services/Twitter.js" as Twitter
 import "../Component"
 
 ContextMenu {
     id: root
 
     property variant tweet
-
     MenuItem {
         text: qsTr("Reply")
         onClicked: {
@@ -46,6 +45,13 @@ ContextMenu {
             text += tweet.plainText;
             pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"), {type: "RT", placedText: text, tweetId: tweet.id})
         }
+    }
+
+    MenuItem {
+        id: deleteTweetButton
+        text: qsTr("Delete tweet")
+        visible: tweet.retweetScreenName === settings.userScreenName
+        onClicked: remorse.execute(titleContainer, qsTr("Delete tweet"), function() {  Twitter.postDeleteStatus(tweet.id, tweetPageHelper.deleteTweetOnSuccess, tweetPageHelper.commonOnFailure) })
     }
 
     MenuItem {
