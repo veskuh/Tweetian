@@ -43,7 +43,6 @@ Dialog {
     property bool positionRequested
     canAccept: (tweetTextArea.text.length != 0 )
     onAccepted: internalTweet.postTweet(tweetId, type, tweetTextArea.text, imagePath, longitude, latitude)
-//    backNavigation: !header.busy
     onStatusChanged: if (status === PageStatus.Activating) preventTouch.enabled = false
 
     SilicaFlickable {
@@ -80,24 +79,17 @@ Dialog {
             }
         }
 
-        PageHeader {
+        DialogHeader {
             id: header
-            //headerIcon: type == "DM" ? "Image/create_message.svg" : "image://theme/icon-m-toolbar-edit-white-selected"
-            title: updateTitle()
-            property bool busy: false
-
+            acceptText: updateTitle()
             function updateTitle() {
-                if (imageUploader.progress > 0) return qsTr("Uploading...") + Math.round(imageUploader.progress * 100) + "%"
-
                 switch (type) {
-                case "New": return qsTr("New Tweet")
-                case "Reply": return qsTr("Reply to %1").arg(placedText.substring(0, placedText.indexOf(" ")))
-                case "RT": return qsTr("Retweet")
-                case "DM": return qsTr("DM to %1").arg("@" + screenName)
+                    case "New": return qsTr("Tweet")
+                    case "Reply": return qsTr("Reply")
+                    case "RT": return qsTr("Retweet")
+                    case "DM": return qsTr("DM")
                 }
             }
-            //visible: inPortrait || !inputContext.softwareInputPanelVisible
-            //height: visible ? undefined : 0
         }
 
         TextArea {
@@ -107,7 +99,6 @@ Dialog {
                 margins: constant.paddingMedium
                 bottomMargin: autoCompleter.height + 2 * buttonColumn.anchors.margins
             }
-            //readOnly: header.busy
             //textFormat: TextEdit.PlainText
             errorHighlight: charLeftText.text < 0 && type != "RT"
             font.pixelSize: constant.fontSizeMedium
@@ -262,46 +253,6 @@ Dialog {
                 anchors.horizontalCenter: parent.horizontalCenter
                 source: newTweetPage.imagePath
             }
-            /*
-            Button {
-                id: tweetButton
-                text: {
-                    switch (type) {
-                    case "New": return qsTr("Tweet")
-                    case "Reply": return qsTr("Reply")
-                    case "RT": return qsTr("Retweet")
-                    case "DM": return qsTr("DM")
-                    }
-                }
-                anchors.horizontalCenter: parent.horizontalCenter
-                enabled: (tweetTextArea.text.length != 0 )
-                onClicked: internalTweet.postTweet(tweetId, type, tweetTextArea.text, imagePath, longitude, latitude)
-                    if (type == "New" || type == "Reply") {
-                        if (imagePath != '') {
-                            imageUploader.run();
-                        }
-                        else {
-                            if (tweetTextArea.errorHighlight) internal.createUseTwitLongerDialog()
-                            else {
-                                Twitter.postStatus(tweetTextArea.text, tweetId ,latitude, longitude,
-                                                   internal.postStatusOnSuccess, internal.commonOnFailure)
-                                header.busy = true
-                            }
-                        }
-                    }
-                    else if (type == "RT") {
-                        console.log("id" + tweetId)
-                        Twitter.postRetweet(tweetId, internal.postStatusOnSuccess, internal.commonOnFailure)
-                        header.busy = true
-                    }
-                    else if (type == "DM") {
-                        Twitter.postDirectMsg(tweetTextArea.text, screenName,
-                                              internal.postStatusOnSuccess, internal.commonOnFailure)
-                        header.busy = true
-                    }
-                }
-            }
-*/
             /*
             Row {
                 id: newTweetButtonRow
