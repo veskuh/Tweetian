@@ -53,7 +53,7 @@ QtObject {
 
     // other
    // property int headerHeight: inPortrait ? 65 : 55
-property int headerHeight: 65
+property int headerHeight: 80
 
     property int charReservedPerMedia: 23
     property url twitterBirdIcon: settings.invertedTheme ? "Image/twitter-bird-light.png" : "Image/twitter-bird-dark.png"
