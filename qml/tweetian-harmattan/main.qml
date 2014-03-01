@@ -307,7 +307,7 @@ ApplicationWindow {
                 pendingTweet = true
             }
             else if (tweetType == "DM") {
-                Twitter.postDirectMsg(tweetTextArea.text, screenName,
+                Twitter.postDirectMsg(tweetText, screenName,
                                       postStatusOnSuccess, commonOnFailure)
                 pendingTweet = true
             }
