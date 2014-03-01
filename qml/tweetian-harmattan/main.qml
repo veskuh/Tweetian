@@ -165,33 +165,33 @@ ApplicationWindow {
         service: settings.imageUploadService
         networkAccessManager: QMLUtils.networkAccessManager()
         onSuccess: {
-            if (service == ImageUploader.Twitter) tweet_internal.postStatusOnSuccess(JSON.parse(replyData))
+            if (service == ImageUploader.Twitter) internalTweet.postStatusOnSuccess(JSON.parse(replyData))
             else {
                 var imageLink = ""
                 if (service == ImageUploader.TwitPic) imageLink = JSON.parse(replyData).url
                 else if (service == ImageUploader.MobyPicture) imageLink = JSON.parse(replyData).media.mediaurl
                 else if (service == ImageUploader.Imgly) imageLink = JSON.parse(replyData).url
-                Twitter.postStatus(tweet_internal.tweetText+" "+imageLink, tweet_internal.tweetId, tweet_internal.latitude, tweet_internal.longitude,
-                                   tweet_internal.postStatusOnSuccess, tweet_internal.commonOnFailure)
+                Twitter.postStatus(internalTweet.tweetText+" "+imageLink, internalTweet.tweetId, internalTweet.latitude, internalTweet.longitude,
+                                   internalTweet.postStatusOnSuccess, internalTweet.commonOnFailure)
             }
         }
-        onFailure: tweet_internal.commonOnFailure(status, statusText)
+        onFailure: internalTweet.commonOnFailure(status, statusText)
 
         function run() {
-            imageUploader.setFile(tweet_internal.tweetImage)
+            imageUploader.setFile(internalTweet.tweetImage)
             if (service == ImageUploader.Twitter) {
-                imageUploader.setParameter("status", tweet_internal.text)
-                if (tweet_internal.tweetId) imageUploader.setParameter("in_reply_to_status_id", tweet_internal.tweetId)
-                if (tweet_internal.latitude != 0.0 && tweet_internal.longitude != 0.0) {
-                    imageUploader.setParameter("lat", tweet_internal.latitude.toString())
-                    imageUploader.setParameter("long", tweet_internal.longitude.toString())
+                imageUploader.setParameter("status", internalTweet.text)
+                if (internalTweet.tweetId) imageUploader.setParameter("in_reply_to_status_id", internalTweet.tweetId)
+                if (internalTweet.latitude != 0.0 && internalTweet.longitude != 0.0) {
+                    imageUploader.setParameter("lat", internalTweet.latitude.toString())
+                    imageUploader.setParameter("long", internalTweet.longitude.toString())
                 }
                 imageUploader.setAuthorizationHeader(Twitter.getTwitterImageUploadAuthHeader())
             }
             else {
                 if (service == ImageUploader.TwitPic) imageUploader.setParameter("key", constant.twitpicAPIKey)
                 else if (service == ImageUploader.MobyPicture) imageUploader.setParameter("key", constant.mobypictureAPIKey)
-                imageUploader.setParameter("message", tweetTextArea.text)
+                imageUploader.setParameter("message", internalTweet.tweetText)
                 imageUploader.setAuthorizationHeader(Twitter.getOAuthEchoAuthHeader())
             }
 
@@ -200,7 +200,7 @@ ApplicationWindow {
     }
 
     QtObject {
-        id: tweet_internal
+        id: internalTweet
 //        property string twitLongerId: ""
         property bool exit: false
         property string tweetType: "New"
