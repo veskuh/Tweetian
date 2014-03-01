@@ -54,6 +54,7 @@ Page {
         JS.getConversationFromTimelineAndMentions()
     }
 
+    RemorsePopup {id: remorse}
 
     SilicaFlickable {
         id: tweetPageFlickable
@@ -106,7 +107,7 @@ Page {
                 id: deleteTweetButton
                 text: qsTr("Delete tweet")
                 visible: tweet.retweetScreenName === settings.userScreenName
-                onClicked: remorse.execute(mainColumn, qsTr("Delete tweet"), function() {  Twitter.postDeleteStatus(tweet.id, tweetPageHelper.deleteTweetOnSuccess, tweetPageHelper.commonOnFailure) })
+                onClicked: remorse.execute(qsTr("Delete tweet"), function() {  Twitter.postDeleteStatus(tweet.id, tweetPageHelper.deleteTweetOnSuccess, tweetPageHelper.commonOnFailure) })
             }
 
 
@@ -166,7 +167,6 @@ Page {
             }
 
             Loader { sourceComponent: ancestorRepeater.count > 0 ? inReplyToHeading : undefined }
-            RemorseItem {id: remorse}
 
             Column {
                 id: mainTweetColumn

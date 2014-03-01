@@ -13,26 +13,26 @@ Description: |
 Configure: none
 Builder: qtc5
 PkgConfigBR:
-- Qt5Positioning
-- Qt5Location
-- sailfishapp
-- Qt5Quick
-- Qt5Qml
-- Qt5Core
 - Qt5Svg
+- Qt5Core
+- Qt5Qml
+- Qt5Quick
+- sailfishapp
+- Qt5Location
+- Qt5Positioning
 Requires:
-- qt5-qtsvg-plugin-imageformat-svg
-- qt5-plugin-imageformat-gif
-- qt5-qtsvg
-- qt5-qtdeclarative-import-positioning
-- qt5-qtdeclarative-import-location
-- sailfishsilica-qt5
 - qt5-qtlocation
+- sailfishsilica-qt5
+- qt5-qtdeclarative-import-location
+- qt5-qtdeclarative-import-positioning
+- qt5-qtsvg
+- qt5-plugin-imageformat-gif
+- qt5-qtsvg-plugin-imageformat-svg
 PkgBR: []
 Files:
-- '%{_datadir}/icons/hicolor/86x86/apps/%{name}.png'
-- '%{_bindir}/%{name}'
-- '%{_datadir}/applications/%{name}.desktop'
-- /usr/bin
-- /usr/share/icons/hicolor/86x86/apps
 - /usr/share/applications
+- /usr/share/icons/hicolor/86x86/apps
+- /usr/bin
+- '%{_datadir}/applications/%{name}.desktop'
+- '%{_bindir}/%{name}'
+- '%{_datadir}/icons/hicolor/86x86/apps/%{name}.png'
