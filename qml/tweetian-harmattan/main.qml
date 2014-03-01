@@ -137,6 +137,27 @@ ApplicationWindow {
         }
     }
 
+    QtObject {
+        id: tweetPageHelper
+        function deleteTweetOnSuccess(data) {
+            if (pageStack.currentPage.objectName == "tweetPage")
+            {
+                pageStack.pop()
+            }
+
+            infoBanner.showText(qsTr("Tweet deleted successfully"))
+            mainPage.timeline.removeTweet(data.id_str)
+        }
+
+        function commonOnFailure(status, statusText) {
+            infoBanner.showHttpError(status, statusText)
+            if (pageStack.currentPage.objectName == "tweetPage")
+            {
+                pageStack.pop()
+            }
+        }
+    }
+
     Component.onCompleted: {
         settings.loadSettings()
     }
