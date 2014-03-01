@@ -224,6 +224,7 @@ ApplicationWindow {
             tweetText = ""
             longitude = 0.0
             latitude = 0.0
+            pendingTweet = false
         }
         /*
         function twitLongerOnSuccess(twitLongerId, shortenTweet) {
