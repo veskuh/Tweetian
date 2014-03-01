@@ -34,89 +34,102 @@ Item {
     anchors { bottom: parent.bottom; left: parent.left; right: parent.right }
     height: constant.headerHeight
 
-    Image {
-        id: background
+    SilicaFlickable {
         anchors.fill: parent
-        source: "image://theme/graphic-header"
-    }
+        contentHeight: parent.height
 
-    Row {
-        anchors.fill: parent
+        PushUpMenu {
 
-        Repeater {
-            id: sectionRepeater
-            model: iconArray
-            delegate: BackgroundItem {
-
-                width: tabPageHeader.width / sectionRepeater.count
-                height: tabPageHeader.height
-
-                Image {
-                    id: icon
-                    height: 36
-                    width: 36
-                    anchors.centerIn: parent
-                    source: modelData
-                }
-
-               Label {
-                    anchors {
-                        top: parent.top; topMargin: constant.paddingSmall
-                        left: icon.right; leftMargin: -constant.paddingMedium
-                    }
-                    visible: listView.model.children[index].unreadCount > 0
-                    font.pixelSize: Theme.fontSizeSmall
-                    color: Theme.highlightColor
-
-                    text: listView.model.children[index].unreadCount ? listView.model.children[index].unreadCount : ""
-                }
-
-                Loader {
-                    anchors.fill: parent
-                    sourceComponent: listView.model.children[index].busy
-                                     ? busyIndicator : undefined
-                    Component {
-                        id: busyIndicator
-
-                        Rectangle {
-                            anchors.fill: parent
-                            color: "black"
-                            opacity: 0
-
-                            Behavior on opacity { NumberAnimation { duration: 250 } }
-
-                            BusyIndicator {
-                                opacity: 1
-                                anchors.centerIn: parent
-                                running: true
-                                height: tabPageHeader.height - Theme.paddingLarge
-                                width: height
-                            }
-
-                            Component.onCompleted: opacity = 0.75
-                        }
-                    }
-
-                }
-
-                onClicked: listView.currentIndex === index ? listView.currentItem.positionAtTop()
-                                                               : listView.currentIndex = index
-
+            MenuItem {
+               onClicked: pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"), {type: "New"})
+               text: qsTr("New Tweet")
             }
         }
-    }
 
-    Rectangle {
-        id: currentSectionIndicator
-        anchors.top: parent.top
-        color: Theme.highlightColor
-        height: constant.paddingSmall
-        width: tabPageHeader.width / sectionRepeater.count
-        x: listView.currentIndex * width
+        Image {
+            id: background
+            anchors.fill: parent
+            source: "image://theme/graphic-header"
+        }
 
-        Behavior on x {
-            NumberAnimation {
-                duration: 200
+        Row {
+            anchors.fill: parent
+
+            Repeater {
+                id: sectionRepeater
+                model: iconArray
+                delegate: BackgroundItem {
+
+                    width: tabPageHeader.width / sectionRepeater.count
+                    height: tabPageHeader.height
+
+                    Image {
+                        id: icon
+                        height: 36
+                        width: 36
+                        anchors.centerIn: parent
+                        source: modelData
+                    }
+
+                   Label {
+                        anchors {
+                            top: parent.top; topMargin: constant.paddingSmall
+                            left: icon.right; leftMargin: -constant.paddingMedium
+                        }
+                        visible: listView.model.children[index].unreadCount > 0
+                        font.pixelSize: Theme.fontSizeSmall
+                        color: Theme.highlightColor
+
+                        text: listView.model.children[index].unreadCount ? listView.model.children[index].unreadCount : ""
+                    }
+
+                    Loader {
+                        anchors.fill: parent
+                        sourceComponent: listView.model.children[index].busy
+                                         ? busyIndicator : undefined
+                        Component {
+                            id: busyIndicator
+
+                            Rectangle {
+                                anchors.fill: parent
+                                color: "black"
+                                opacity: 0
+
+                                Behavior on opacity { NumberAnimation { duration: 250 } }
+
+                                BusyIndicator {
+                                    opacity: 1
+                                    anchors.centerIn: parent
+                                    running: true
+                                    height: tabPageHeader.height - Theme.paddingLarge
+                                    width: height
+                                }
+
+                                Component.onCompleted: opacity = 0.75
+                            }
+                        }
+
+                    }
+
+                    onClicked: listView.currentIndex === index ? listView.currentItem.positionAtTop()
+                                                                   : listView.currentIndex = index
+
+                }
+            }
+        }
+
+        Rectangle {
+            id: currentSectionIndicator
+            anchors.top: parent.top
+            color: Theme.highlightColor
+            height: constant.paddingSmall
+            width: tabPageHeader.width / sectionRepeater.count
+            x: listView.currentIndex * width
+
+            Behavior on x {
+                NumberAnimation {
+                    duration: 200
+                }
             }
         }
     }
