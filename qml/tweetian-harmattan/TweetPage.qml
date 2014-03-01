@@ -33,6 +33,7 @@ import "TweetPageJS.js" as JS
 Page {
     id: tweetPage
 
+    objectName: "tweetPage"
     property variant tweet
 
     property bool favouritedTweet: false
@@ -53,6 +54,7 @@ Page {
         JS.getConversationFromTimelineAndMentions()
     }
 
+    RemorsePopup {id: remorse}
 
     SilicaFlickable {
         id: tweetPageFlickable
@@ -105,7 +107,7 @@ Page {
                 id: deleteTweetButton
                 text: qsTr("Delete tweet")
                 visible: tweet.retweetScreenName === settings.userScreenName
-                onClicked: JS.createDeleteTweetDialog()
+                onClicked: remorse.execute(qsTr("Delete tweet"), function() {  Twitter.postDeleteStatus(tweet.id, tweetPageHelper.deleteTweetOnSuccess, tweetPageHelper.commonOnFailure) })
             }
 
 
@@ -151,11 +153,11 @@ Page {
         anchors.fill: parent
         contentHeight: mainColumn.height + header.height
 
+
         Column {
             id: mainColumn
             anchors { top: header.bottom; left: parent.left; right: parent.right }
             height: childrenRect.height
-
             Column {
                 id: ancestorColumn
                 anchors { left: parent.left; right: parent.right }
