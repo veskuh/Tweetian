@@ -27,22 +27,22 @@ import "Component"
 import harbour.tweetian.Uploader 1.0
 
 
-Page {
+Dialog {
     id: newTweetPage
 
-    property string type: "New" //"New","Reply", "RT" or "DM"
-    property string tweetId //for "Reply", "RT"
+    property string type: internalTweet.tweetType //"New","Reply", "RT" or "DM"
+    property string tweetId: internalTweet.tweetId //for "Reply", "RT"
     property string screenName //for "DM"
-    property string placedText: ""
-    property double latitude: 0
-    property double longitude: 0
+    property string placedText: internalTweet.tweetText
+    property double latitude: internalTweet.latitude
+    property double longitude: internalTweet.longitude
 
     property string imageUrl: ""
     property string imagePath: ""
 
     property bool positionRequested
-
-    backNavigation: !header.busy
+    canAccept: (tweetTextArea.text.length != 0 )
+    onAccepted: internalTweet.postTweet(tweetId, type, tweetTextArea.text, imagePath, longitude, latitude)
     onStatusChanged: if (status === PageStatus.Activating) preventTouch.enabled = false
 
     SilicaFlickable {
@@ -79,24 +79,17 @@ Page {
             }
         }
 
-        PageHeader {
+        DialogHeader {
             id: header
-            //headerIcon: type == "DM" ? "Image/create_message.svg" : "image://theme/icon-m-toolbar-edit-white-selected"
-            title: updateTitle()
-            property bool busy: false
-
+            acceptText: updateTitle()
             function updateTitle() {
-                if (imageUploader.progress > 0) return qsTr("Uploading...") + Math.round(imageUploader.progress * 100) + "%"
-
                 switch (type) {
-                case "New": return qsTr("New Tweet")
-                case "Reply": return qsTr("Reply to %1").arg(placedText.substring(0, placedText.indexOf(" ")))
-                case "RT": return qsTr("Retweet")
-                case "DM": return qsTr("DM to %1").arg("@" + screenName)
+                    case "New": return qsTr("Tweet")
+                    case "Reply": return qsTr("Reply")
+                    case "RT": return qsTr("Retweet")
+                    case "DM": return qsTr("DM")
                 }
             }
-            //visible: inPortrait || !inputContext.softwareInputPanelVisible
-            //height: visible ? undefined : 0
         }
 
         TextArea {
@@ -106,7 +99,6 @@ Page {
                 margins: constant.paddingMedium
                 bottomMargin: autoCompleter.height + 2 * buttonColumn.anchors.margins
             }
-            //readOnly: header.busy
             //textFormat: TextEdit.PlainText
             errorHighlight: charLeftText.text < 0 && type != "RT"
             font.pixelSize: constant.fontSizeMedium
@@ -146,7 +138,7 @@ Page {
                 autoCompleter.model.clear()
                 var fullText = tweetTextArea.text.substring(0, tweetTextArea.cursorPosition)
                         + tweetTextArea.text.substring(tweetTextArea.cursorPosition)
-                var currentWord = internal.getWordAt(fullText, tweetTextArea.cursorPosition)
+                var currentWord = internalTweet.getWordAt(fullText, tweetTextArea.cursorPosition)
                 if (!/^(@|#)\w*$/.test(currentWord)) return
                 var msg = {
                     word: currentWord,
@@ -261,47 +253,6 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 source: newTweetPage.imagePath
             }
-
-            Button {
-                id: tweetButton
-                text: {
-                    switch (type) {
-                    case "New": return qsTr("Tweet")
-                    case "Reply": return qsTr("Reply")
-                    case "RT": return qsTr("Retweet")
-                    case "DM": return qsTr("DM")
-                    }
-                }
-                anchors.horizontalCenter: parent.horizontalCenter
-                enabled: (tweetTextArea.text.length != 0 ) // || addImageButton.checked)
-                         && ((settings.enableTwitLonger /* && !addImageButton.checked */)  || !tweetTextArea.errorHighlight)
-                onClicked: {
-                    if (type == "New" || type == "Reply") {
-                        if (imagePath != '') {
-                            imageUploader.run();
-                        }
-                        else {
-                            if (tweetTextArea.errorHighlight) internal.createUseTwitLongerDialog()
-                            else {
-                                Twitter.postStatus(tweetTextArea.text, tweetId ,latitude, longitude,
-                                                   internal.postStatusOnSuccess, internal.commonOnFailure)
-                                header.busy = true
-                            }
-                        }
-                    }
-                    else if (type == "RT") {
-                        console.log("id" + tweetId)
-                        Twitter.postRetweet(tweetId, internal.postStatusOnSuccess, internal.commonOnFailure)
-                        header.busy = true
-                    }
-                    else if (type == "DM") {
-                        Twitter.postDirectMsg(tweetTextArea.text, screenName,
-                                              internal.postStatusOnSuccess, internal.commonOnFailure)
-                        header.busy = true
-                    }
-                }
-            }
-
             /*
             Row {
                 id: newTweetButtonRow
@@ -454,114 +405,4 @@ Page {
         }
     }
 
-    ImageUploader {
-        id: imageUploader
-        service: settings.imageUploadService
-        networkAccessManager: QMLUtils.networkAccessManager()
-        onSuccess: {
-            if (service == ImageUploader.Twitter) internal.postStatusOnSuccess(JSON.parse(replyData))
-            else {
-                var imageLink = ""
-                if (service == ImageUploader.TwitPic) imageLink = JSON.parse(replyData).url
-                else if (service == ImageUploader.MobyPicture) imageLink = JSON.parse(replyData).media.mediaurl
-                else if (service == ImageUploader.Imgly) imageLink = JSON.parse(replyData).url
-                Twitter.postStatus(tweetTextArea.text+" "+imageLink, tweetId, latitude, longitude,
-                                   internal.postStatusOnSuccess, internal.commonOnFailure)
-            }
-        }
-        onFailure: internal.commonOnFailure(status, statusText)
-
-        function run() {
-            imageUploader.setFile(imagePath)
-            if (service == ImageUploader.Twitter) {
-                imageUploader.setParameter("status", tweetTextArea.text)
-                if (tweetId) imageUploader.setParameter("in_reply_to_status_id", tweetId)
-                if (latitude != 0 && longitude != 0) {
-                    imageUploader.setParameter("lat", latitude.toString())
-                    imageUploader.setParameter("long", longitude.toString())
-                }
-                imageUploader.setAuthorizationHeader(Twitter.getTwitterImageUploadAuthHeader())
-            }
-            else {
-                if (service == ImageUploader.TwitPic) imageUploader.setParameter("key", constant.twitpicAPIKey)
-                else if (service == ImageUploader.MobyPicture) imageUploader.setParameter("key", constant.mobypictureAPIKey)
-                imageUploader.setParameter("message", tweetTextArea.text)
-                imageUploader.setAuthorizationHeader(Twitter.getOAuthEchoAuthHeader())
-            }
-            header.busy = true
-            imageUploader.send()
-        }
-    }
-
-    QtObject {
-        id: internal
-
-        property string twitLongerId: ""
-        property bool exit
-        property string tweetType: type
-
-        /**
-          Extract a word from str at the specificed pos.
-          Example:
-          var text = "Hello world"
-          var word = getWordAt(text, n)
-
-          n = 0; word = ""
-          n = 1/2/3/4/5; word = "Hello"
-          n = 6; word = ""
-          n = 7/8/9/10/11; word = "world"
-          n > text.length; unexpected behaviour
-        */
-        function getWordAt(str, pos) {
-            var left = str.slice(0, pos).search(/\S+$/)
-            if (left < 0) return ""
-
-            var right = str.slice(pos).search(/\s/)
-            if (right < 0) return str.slice(left)
-
-            return str.slice(left, right + pos)
-        }
-
-        function postStatusOnSuccess(data) {
-            switch (tweetType) {
-            case "New": infoBanner.showText(qsTr("Tweet sent successfully")); break;
-            case "Reply": infoBanner.showText(qsTr("Reply sent successfully")); break;
-            case "DM":infoBanner.showText(qsTr("Direct message sent successfully")); break;
-            case "RT": infoBanner.showText(qsTr("Retweet sent successfully")); break;
-            }
-            pageStack.pop()
-        }
-
-        function twitLongerOnSuccess(twitLongerId, shortenTweet) {
-            internal.twitLongerId = twitLongerId
-            Twitter.postStatus(shortenTweet, tweetId ,latitude, longitude,
-                               postTwitLongerStatusOnSuccess, commonOnFailure)
-        }
-
-        function postTwitLongerStatusOnSuccess(data) {
-            TwitLonger.postIDCallback(constant, twitLongerId, data.id_str)
-            switch (type) {
-            case "New": infoBanner.showText(qsTr("Tweet sent successfully")); break;
-            case "Reply": infoBanner.showText(qsTr("Reply sent successfully")); break;
-            }
-            pageStack.pop()
-        }
-
-        function commonOnFailure(status, statusText) {
-            infoBanner.showHttpError(status, statusText)
-            header.busy = false
-        }
-
-        function createUseTwitLongerDialog() {
-            var message = qsTr("Your tweet is more than 140 characters. \
-Do you want to use TwitLonger to post your tweet?\n\
-Note: The tweet content will be publicly visible even if your tweet is private.")
-            dialog.createQueryDialog(qsTr("Use TwitLonger?"), "", message, function() {
-                var replyScreenName = placedText ? placedText.substring(1, placedText.indexOf(" ")) : ""
-                TwitLonger.postTweet(constant, settings.userScreenName, tweetTextArea.text, tweetId, replyScreenName,
-                                     twitLongerOnSuccess, commonOnFailure)
-                // header.busy = true
-            })
-        }
-    }
 }

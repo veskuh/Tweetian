@@ -13,10 +13,10 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QApplication>
-#include <QQmlComponent>
-#include <QQmlEngine>
-#include <QQmlContext>
-#include <QQuickView>
+#include <QDeclarativeComponent>
+#include <QDeclarativeEngine>
+#include <QDeclarativeContext>
+
 #include <qplatformdefs.h> // MEEGO_EDITION_HARMATTAN
 
 #ifdef HARMATTAN_BOOSTER
@@ -31,10 +31,10 @@
 #include <jsdebuggeragent.h>
 #endif
 #if !defined(NO_QMLOBSERVER)
-#include <QQuickViewobserver.h>
+#include <qdeclarativeviewobserver.h>
 #endif
 
-// Enable debugging before any QQmlEngine is created
+// Enable debugging before any QDeclarativeEngine is created
 struct QmlJsDebuggingEnabler
 {
     QmlJsDebuggingEnabler()
@@ -43,7 +43,7 @@ struct QmlJsDebuggingEnabler
     }
 };
 
-// Execute code in constructor before first QQmlEngine is instantiated
+// Execute code in constructor before first QDeclarativeEngine is instantiated
 static QmlJsDebuggingEnabler enableDebuggingHelper;
 
 #endif // QMLJSDEBUGGER
@@ -78,12 +78,11 @@ QString QmlApplicationViewerPrivate::adjustPath(const QString &path)
 }
 
 QmlApplicationViewer::QmlApplicationViewer(QWidget *parent)
-    //: QQuickView(parent)
-    : QQuickView()
+    : QDeclarativeView(parent)
     , d(new QmlApplicationViewerPrivate())
 {
     connect(engine(), SIGNAL(quit()), SLOT(close()));
-    setResizeMode(QQuickView::SizeRootObjectToView);
+    setResizeMode(QDeclarativeView::SizeRootObjectToView);
 
     // Qt versions prior to 4.8.0 don't have QML/JS debugging services built in
 #if defined(QMLJSDEBUGGER) && QT_VERSION < 0x040800
@@ -91,7 +90,7 @@ QmlApplicationViewer::QmlApplicationViewer(QWidget *parent)
     new QmlJSDebugger::JSDebuggerAgent(engine());
 #endif
 #if !defined(NO_QMLOBSERVER)
-    new QmlJSDebugger::QQuickViewObserver(this, this);
+    new QmlJSDebugger::QDeclarativeViewObserver(this, this);
 #endif
 #endif
 }
@@ -168,12 +167,11 @@ void QmlApplicationViewer::showExpanded()
 #endif
 }
 
-QGuiApplication *createApplication(int &argc, char **argv)
+QApplication *createApplication(int &argc, char **argv)
 {
 #ifdef HARMATTAN_BOOSTER
-    //return MDeclarativeCache::qApplication(argc, argv);
-    return new QGuiApplication(argc, argv);
+    return MDeclarativeCache::qApplication(argc, argv);
 #else
-    return new QGuiApplication(argc, argv);
+    return new QApplication(argc, argv);
 #endif
 }

@@ -19,12 +19,14 @@
 import QtQuick 2.1
 import Sailfish.Silica 1.0
 import QtFeedback 5.0
+import harbour.tweetian.Uploader 1.0
+import "Services/Twitter.js" as Twitter
 
 ApplicationWindow {
     id: window
     initialPage: MainPage { id: mainPage }
     cover: (settings.oauthToken != "" && settings.oauthTokenSecret != "") ? Qt.resolvedUrl("CoverPage.qml") : undefined;
-
+    property bool pendingTweet: false
     //showStatusBar: inPortrait
     //showToolBar: true
 
@@ -134,6 +136,160 @@ ApplicationWindow {
         function createTweetLongPressMenu(model) {
             if (!__tweetLongPressMenu) __tweetLongPressMenu = Qt.createComponent("Dialog/LongPressMenu.qml")
             __tweetLongPressMenu.createObject(pageStack.currentPage, { model: model })
+        }
+    }
+
+    ImageUploader {
+        id: imageUploader
+        service: settings.imageUploadService
+        networkAccessManager: QMLUtils.networkAccessManager()
+        onSuccess: {
+            if (service == ImageUploader.Twitter) internalTweet.postStatusOnSuccess(JSON.parse(replyData))
+            else {
+                var imageLink = ""
+                if (service == ImageUploader.TwitPic) imageLink = JSON.parse(replyData).url
+                else if (service == ImageUploader.MobyPicture) imageLink = JSON.parse(replyData).media.mediaurl
+                else if (service == ImageUploader.Imgly) imageLink = JSON.parse(replyData).url
+                Twitter.postStatus(internalTweet.tweetText+" "+imageLink, internalTweet.tweetId, internalTweet.latitude, internalTweet.longitude,
+                                   internalTweet.postStatusOnSuccess, internalTweet.commonOnFailure)
+            }
+        }
+        onFailure: internalTweet.commonOnFailure(status, statusText)
+
+        function run() {
+            imageUploader.setFile(internalTweet.tweetImage)
+            if (service == ImageUploader.Twitter) {
+                imageUploader.setParameter("status", internalTweet.text)
+                if (internalTweet.tweetId) imageUploader.setParameter("in_reply_to_status_id", internalTweet.tweetId)
+                if (internalTweet.latitude != 0.0 && internalTweet.longitude != 0.0) {
+                    imageUploader.setParameter("lat", internalTweet.latitude.toString())
+                    imageUploader.setParameter("long", internalTweet.longitude.toString())
+                }
+                imageUploader.setAuthorizationHeader(Twitter.getTwitterImageUploadAuthHeader())
+            }
+            else {
+                if (service == ImageUploader.TwitPic) imageUploader.setParameter("key", constant.twitpicAPIKey)
+                else if (service == ImageUploader.MobyPicture) imageUploader.setParameter("key", constant.mobypictureAPIKey)
+                imageUploader.setParameter("message", internalTweet.tweetText)
+                imageUploader.setAuthorizationHeader(Twitter.getOAuthEchoAuthHeader())
+            }
+
+            imageUploader.send()
+        }
+    }
+
+    QtObject {
+        id: internalTweet
+//        property string twitLongerId: ""
+        property bool exit: false
+        property string tweetType: "New"
+        property string tweetText: ""
+        property string tweetImage: ""
+        property string tweetId: ""
+        property double latitude: 0.0
+        property double longitude: 0.0
+        /**
+          Extract a word from str at the specificed pos.
+          Example:
+          var text = "Hello world"
+          var word = getWordAt(text, n)
+
+          n = 0; word = ""
+          n = 1/2/3/4/5; word = "Hello"
+          n = 6; word = ""
+          n = 7/8/9/10/11; word = "world"
+          n > text.length; unexpected behaviour
+        */
+        function getWordAt(str, pos) {
+            var left = str.slice(0, pos).search(/\S+$/)
+            if (left < 0) return ""
+
+            var right = str.slice(pos).search(/\s/)
+            if (right < 0) return str.slice(left)
+
+            return str.slice(left, right + pos)
+        }
+
+        function postStatusOnSuccess(data) {
+            switch (tweetType) {
+            case "New": infoBanner.showText(qsTr("Tweet sent successfully")); break;
+            case "Reply": infoBanner.showText(qsTr("Reply sent successfully")); break;
+            case "DM":infoBanner.showText(qsTr("Direct message sent successfully")); break;
+            case "RT": infoBanner.showText(qsTr("Retweet sent successfully")); break;
+            }
+
+            tweetId = ""
+            tweetType = ""
+            tweetImage = ""
+            tweetText = ""
+            longitude = 0.0
+            latitude = 0.0
+            pendingTweet = false
+        }
+        /*
+        function twitLongerOnSuccess(twitLongerId, shortenTweet) {
+            internal.twitLongerId = twitLongerId
+            Twitter.postStatus(shortenTweet, tweetId ,latitude, longitude,
+                               postTwitLongerStatusOnSuccess, commonOnFailure)
+        }
+
+        function postTwitLongerStatusOnSuccess(data) {
+            TwitLonger.postIDCallback(constant, twitLongerId, data.id_str)
+            switch (tweetType) {
+            case "New": infoBanner.showText(qsTr("Tweet sent successfully")); break;
+            case "Reply": infoBanner.showText(qsTr("Reply sent successfully")); break;
+            }
+            pendingTweet = false
+        }
+        function postTweetLonger()
+        {
+            var replyScreenName = placedText ? placedText.substring(1, placedText.indexOf(" ")) : ""
+            TwitLonger.postTweet(constant, settings.userScreenName, tweetTextArea.text, tweetId, replyScreenName,
+                                 twitLongerOnSuccess, commonOnFailure)
+        }
+*/
+        function commonOnFailure(status, statusText) {
+            infoBanner.showHttpError(status, statusText)
+            pendingTweet = false
+            pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"))
+        }
+
+
+        function postTweet(tweetid, tweettype, tweettext, tweetimage, lon, lat)
+        {
+            latitude = lat
+            longitude = lon
+            tweetText = tweettext
+            tweetImage = tweetimage
+            tweetType = tweettype
+            tweetId = tweetid
+            tweetImage = tweetimage
+            pendingTweet = true
+            if (tweetType == "New" || tweetType == "Reply") {
+                if (tweetImage != '') {
+                    imageUploader.run();
+                }
+                else /* if (tweettext.length()) */{
+                        Twitter.postStatus(tweetText, tweetId ,latitude, longitude,
+                                           postStatusOnSuccess, commonOnFailure)
+                        pendingTweet = true
+                }
+/* FIXME
+                else if (tweetTextArea.errorHighlight && switchLong.checked) { // actually checked is pointless to check since we dont come here if not checked and message is to long
+                    internal.postTweetLonger()
+                }
+                */
+            }
+            else if (tweetType == "RT") {
+                console.log("id" + tweetId)
+                Twitter.postRetweet(tweetId, postStatusOnSuccess, commonOnFailure)
+                pendingTweet = true
+            }
+            else if (tweetType == "DM") {
+                Twitter.postDirectMsg(tweetText, screenName,
+                                      postStatusOnSuccess, commonOnFailure)
+                pendingTweet = true
+            }
         }
     }
 
