@@ -30,19 +30,19 @@ import harbour.tweetian.Uploader 1.0
 Dialog {
     id: newTweetPage
 
-    property string type: tweet_internal.tweetType //"New","Reply", "RT" or "DM"
-    property string tweetId: tweet_internal.tweetId //for "Reply", "RT"
+    property string type: internalTweet.tweetType //"New","Reply", "RT" or "DM"
+    property string tweetId: internalTweet.tweetId //for "Reply", "RT"
     property string screenName //for "DM"
-    property string placedText: tweet_internal.tweetText
-    property double latitude: tweet_internal.latitude
-    property double longitude: tweet_internal.longitude
+    property string placedText: internalTweet.tweetText
+    property double latitude: internalTweet.latitude
+    property double longitude: internalTweet.longitude
 
     property string imageUrl: ""
     property string imagePath: ""
 
     property bool positionRequested
     canAccept: (tweetTextArea.text.length != 0 )
-    onAccepted: tweet_internal.postTweet(tweetId, type, tweetTextArea.text, imagePath, longitude, latitude)
+    onAccepted: internalTweet.postTweet(tweetId, type, tweetTextArea.text, imagePath, longitude, latitude)
 //    backNavigation: !header.busy
     onStatusChanged: if (status === PageStatus.Activating) preventTouch.enabled = false
 
@@ -147,7 +147,7 @@ Dialog {
                 autoCompleter.model.clear()
                 var fullText = tweetTextArea.text.substring(0, tweetTextArea.cursorPosition)
                         + tweetTextArea.text.substring(tweetTextArea.cursorPosition)
-                var currentWord = tweet_internal.getWordAt(fullText, tweetTextArea.cursorPosition)
+                var currentWord = internalTweet.getWordAt(fullText, tweetTextArea.cursorPosition)
                 if (!/^(@|#)\w*$/.test(currentWord)) return
                 var msg = {
                     word: currentWord,
@@ -275,7 +275,7 @@ Dialog {
                 }
                 anchors.horizontalCenter: parent.horizontalCenter
                 enabled: (tweetTextArea.text.length != 0 )
-                onClicked: tweet_internal.postTweet(tweetId, type, tweetTextArea.text, imagePath, longitude, latitude)
+                onClicked: internalTweet.postTweet(tweetId, type, tweetTextArea.text, imagePath, longitude, latitude)
                     if (type == "New" || type == "Reply") {
                         if (imagePath != '') {
                             imageUploader.run();
