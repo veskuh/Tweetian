@@ -32,7 +32,7 @@ Dialog {
 
     property string type: internalTweet.tweetType //"New","Reply", "RT" or "DM"
     property string tweetId: internalTweet.tweetId //for "Reply", "RT"
-    property string screenName //for "DM"
+    property string screenName: internalTweet.screenName //for "DM"
     property string placedText: internalTweet.tweetText
     property double latitude: internalTweet.latitude
     property double longitude: internalTweet.longitude
@@ -42,7 +42,7 @@ Dialog {
 
     property bool positionRequested
     canAccept: (tweetTextArea.text.length != 0 )
-    onAccepted: internalTweet.postTweet(tweetId, type, tweetTextArea.text, imagePath, longitude, latitude)
+    onAccepted: internalTweet.postTweet(tweetId, type, screenName, tweetTextArea.text, imagePath, latitude, longitude)
     onStatusChanged: if (status === PageStatus.Activating) preventTouch.enabled = false
 
     SilicaFlickable {
