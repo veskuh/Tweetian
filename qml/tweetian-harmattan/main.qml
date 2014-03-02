@@ -180,7 +180,7 @@ ApplicationWindow {
         function run() {
             imageUploader.setFile(internalTweet.tweetImage)
             if (service == ImageUploader.Twitter) {
-                imageUploader.setParameter("status", internalTweet.text)
+                imageUploader.setParameter("status", internalTweet.tweetText)
                 if (internalTweet.tweetId) imageUploader.setParameter("in_reply_to_status_id", internalTweet.tweetId)
                 if (internalTweet.latitude != 0.0 && internalTweet.longitude != 0.0) {
                     imageUploader.setParameter("lat", internalTweet.latitude.toString())
