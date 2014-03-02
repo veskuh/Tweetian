@@ -31,7 +31,7 @@ AbstractDelegate {
             id: userNameText
             anchors.left: parent.left
             width: Math.min(implicitWidth, parent.width)
-            font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
+            font.pixelSize: constant.fontSizeMedium
             font.bold: true
             color: highlighted ? constant.colorHighlighted : constant.colorLight
             elide: Text.ElideRight
@@ -40,7 +40,7 @@ AbstractDelegate {
 
         Text {
             anchors { left: userNameText.right; leftMargin: constant.paddingSmall; right: parent.right }
-            font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
+            font.pixelSize: constant.fontSizeMedium
             color: highlighted ? constant.colorHighlighted : constant.colorMid
             elide: Text.ElideRight
             text: "@" + (model.isReceiveDM ? model.screenName : settings.userScreenName)
@@ -49,7 +49,7 @@ AbstractDelegate {
 
     Text {
         anchors { left: parent.left; right: parent.right }
-        font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
+        font.pixelSize: constant.fontSizeMedium
         wrapMode: Text.Wrap
         color: highlighted ? constant.colorHighlighted : constant.colorLight
         textFormat: Text.RichText
@@ -59,7 +59,7 @@ AbstractDelegate {
     Text {
         anchors { left: parent.left; right: parent.right }
         horizontalAlignment: Text.AlignRight
-        font.pixelSize: settings.largeFontSize ? constant.fontSizeSmall : constant.fontSizeXSmall
+        font.pixelSize: constant.fontSizeSmall
         color: highlighted ? constant.colorHighlighted : constant.colorMid
         elide: Text.ElideRight
         text: timeDiff
