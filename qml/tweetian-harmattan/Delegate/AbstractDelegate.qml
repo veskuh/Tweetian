@@ -35,15 +35,6 @@ BackgroundItem {
     contentHeight: Math.max(contentColumn.height, profileImage.height) + 2 * constant.paddingMedium
     height: contentHeight // For contextMenu override in child
 
-   /* Image {
-        id: highlight
-        anchors.fill: parent
-        visible: mouseArea.pressed
-        source: settings.invertedTheme ? "image://theme/meegotouch-panel-background-pressed"
-                                       : "image://theme/meegotouch-panel-inverted-background-pressed"
-    } */
-
-
     Loader {
         id: sideRectLoader
         anchors { right: parent.right; top: parent.top }
@@ -64,7 +55,6 @@ BackgroundItem {
         id: profileImageMaskedItem
         anchors { top: parent.top; left: parent.left; topMargin: constant.paddingMedium; rightMargin: constant.paddingLarge; bottomMargin: constant.paddingMedium }
         width: constant.graphicSizeLarge; height: constant.graphicSizeLarge
-    //    mask: Image { source: "../Image/pic_mask.png"}
 
         Image {
             id: profileImage

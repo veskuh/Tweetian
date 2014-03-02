@@ -38,14 +38,6 @@ Item {
         anchors.fill: parent
         contentHeight: parent.height
 
-        PushUpMenu {
-
-            MenuItem {
-               onClicked: pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"), {type: "New"})
-               text: qsTr("New Tweet")
-            }
-        }
-
         Image {
             id: background
             anchors.fill: parent
@@ -130,6 +122,16 @@ Item {
                 NumberAnimation {
                     duration: 200
                 }
+            }
+        }
+        PushUpMenu {
+            MenuItem {
+               onClicked: pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"), {type: "New"})
+               text: qsTr("New Tweet")
+            }
+            MenuItem {
+               onClicked: mainPage.refreshAll()
+               text: qsTr("Refresh")
             }
         }
     }

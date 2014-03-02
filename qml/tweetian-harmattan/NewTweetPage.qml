@@ -99,7 +99,6 @@ Dialog {
                 margins: constant.paddingMedium
                 bottomMargin: autoCompleter.height + 2 * buttonColumn.anchors.margins
             }
-            //textFormat: TextEdit.PlainText
             errorHighlight: charLeftText.text < 0 && type != "RT"
             font.pixelSize: constant.fontSizeMedium
             placeholderText: qsTr("Tap to write...")
