@@ -270,7 +270,7 @@ Page {
                 }
 
                 Flow {
-                    anchors { left: parent.left; right: parent.right }
+                    anchors { left: parent.left; leftMargin: constant.paddingMedium; right: parent.right }
                     spacing: constant.paddingMedium
 
                     Repeater {
