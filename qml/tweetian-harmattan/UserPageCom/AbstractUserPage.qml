@@ -16,7 +16,7 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 2.0
+import QtQuick 2.1
 import Sailfish.Silica 1.0
 import "../Component"
 
@@ -39,14 +39,6 @@ Page {
 
     onStatusChanged: if (status === PageStatus.Deactivating) loadingRect.visible = false
     Component.onCompleted: reload()
-
-   /* tools: ToolBarLayout {
-        ToolIcon {
-            platformIconId: "toolbar-back" + (enabled ? "" : "-dimmed")
-            enabled: backButtonEnabled
-            onClicked: pageStack.pop()
-        }
-    }*/
 
     PullDownListView {
         id: listView

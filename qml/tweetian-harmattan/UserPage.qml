@@ -16,7 +16,7 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 2.0
+import QtQuick 2.1
 import Sailfish.Silica 1.0
 import "Services/Twitter.js" as Twitter
 import "Component"
@@ -40,45 +40,8 @@ Page {
         else internal.refresh();
     }
 
-    /*tools: ToolBarLayout {
-        ToolIcon {
-            platformIconId: "toolbar-back"
-            onClicked: pageStack.pop()
-        }
-        ToolIcon {
-            platformIconId: "toolbar-send-email"
-            enabled: screenName !== settings.userScreenName
-            opacity: enabled ? 1 : 0.25
-            onClicked: pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), {type: "New", placedText: "@"+screenName+" "})
-        }
-        ToolIcon {
-            platformIconId: "toolbar-send-sms"
-            enabled: screenName !== settings.userScreenName
-            opacity: enabled ? 1 : 0.25
-            onClicked: pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), {type: "DM", screenName: screenName})
-        }
-        ToolIcon {
-            platformIconId: "toolbar-refresh" + (enabled ? "" : "-dimmed")
-            enabled: !loadingRect.visible
-            onClicked: internal.refresh()
-        }
-        ToolIcon {
-            platformIconId: "toolbar-view-menu"
-            onClicked: userPageMenu.open()
-        }
-    }
-
-    Menu {
-        id: userPageMenu
-
-        MenuLayout {
-            MenuItem {
-                text: isFollowing ? qsTr("Unfollow %1").arg("@" + screenName)
-                                  : qsTr("Follow %1").arg("@" + screenName)
-                enabled: screenName !== settings.userScreenName
-                onClicked: internal.createFollowUserDialog()
-            }
-            MenuItem {
+    /* TODO
+      MenuItem {
                 text: qsTr("Report user as spammer")
                 enabled: screenName !== settings.userScreenName
                 onClicked: internal.createReportSpamDialog()

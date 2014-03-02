@@ -16,7 +16,7 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 2.0
+import QtQuick 2.1
 import Sailfish.Silica 1.0
 
 SilicaListView {
@@ -24,30 +24,4 @@ SilicaListView {
 
     property string lastUpdate: ""
     signal pulledDown()
-
-    // Private
-    // On Silica We use pulldown menu for refresh instead
-    /*property bool __wasAtYBeginning: false
-    property int __initialContentY: 0
-    property bool __toBeRefresh: false
-
-    flickableDirection: Flickable.VerticalFlick
-    //header: PullToRefreshHeader {}
-    onMovementStarted: {
-        __wasAtYBeginning = atYBeginning
-        __initialContentY = contentY
-    }
-    onMovementEnded: {
-        if (__toBeRefresh) {
-            pulledDown()
-            __toBeRefresh = false
-        }
-    }
-    onContentYChanged: detectPullDownTimer.running = true
-
-    Timer {
-        id: detectPullDownTimer
-        interval: 250
-        onTriggered: if (__wasAtYBeginning && __initialContentY - contentY > 100) __toBeRefresh = true
-    }*/
 }

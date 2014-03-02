@@ -16,7 +16,7 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 2.0
+import QtQuick 2.1
 import Sailfish.Silica 1.0
 
 BackgroundItem {
@@ -29,7 +29,6 @@ BackgroundItem {
     // READ-ONLY
     property Item imageItem: imageLoader
     property int listItemRightMargin: 0
-
 
     signal pressAndHold
 
@@ -52,7 +51,6 @@ BackgroundItem {
         Item {
             id: pic
             width: constant.graphicSizeLarge; height: constant.graphicSizeLarge
-        //    mask: Image { source: "../Image/pic_mask.png"}
 
             Image {
                 id: profileImage

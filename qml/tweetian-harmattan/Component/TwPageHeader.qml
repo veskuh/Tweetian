@@ -16,7 +16,7 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 2.0
+import QtQuick 2.1
 import Sailfish.Silica 1.0
 
 PageHeader {
@@ -33,12 +33,6 @@ PageHeader {
 
     anchors { top: parent.top; left: parent.left; right: parent.right }
     implicitHeight: constant.headerHeight
-
-    Image {
-        id: background
-        anchors.fill: parent
-        source: "image://theme/color6-meegotouch-view-header-fixed" + (mouseArea.pressed ? "-pressed" : "")
-    }
 
     Image {
         id: icon
