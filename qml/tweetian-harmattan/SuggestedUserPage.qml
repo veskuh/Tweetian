@@ -16,7 +16,7 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 2.0
+import QtQuick 2.1
 import Sailfish.Silica 1.0
 import "Component"
 import "Delegate"
@@ -29,29 +29,19 @@ Page {
 
     Component.onCompleted: script.refresh()
 
-    /*
-    tools: ToolBarLayout {
-        ToolIcon {
-            id: backButton
-            platformIconId: "toolbar-back" + (enabled ? "" : "-dimmed")
-            onClicked: pageStack.pop()
-        }
-    }*/
-
-    ListView {
+    SilicaListView {
         id: suggestedUserView
-        anchors { top: header.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
+
+        header: PageHeader {
+            title: qsTr("Suggested Users")
+        }
+
+        anchors.fill: parent
         delegate: UserDelegate {}
         model: ListModel {}
     }
 
-//    ScrollDecorator { flickableItem: suggestedUserView }
-
-    PageHeader {
-        id: header
-        title: qsTr("Suggested Users")
-
-    }
+    VerticalScrollDecorator { flickable: suggestedUserView }
 
     WorkerScript {
         id: userParser
@@ -68,7 +58,6 @@ Page {
         }
 
         function onSuccess(data) {
-            header.title += ": " + data.name
             var msg = {
                 type: "all",
                 data: data.users,

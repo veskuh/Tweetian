@@ -16,7 +16,7 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 2.0
+import QtQuick 2.1
 import Sailfish.Silica 1.0
 import "Component"
 import "Services/Twitter.js" as Twitter
@@ -26,19 +26,20 @@ Page {
 
     Component.onCompleted: script.refresh()
 
-    ListView {
+    SilicaListView {
         id: userCategoryView
-        anchors { top: header.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
+
+        header: PageHeader {
+            id: header
+            title: qsTr("Suggested User Categories")
+        }
+
+        anchors.fill: parent
         delegate: userCategoryDelegate
         model: ListModel {}
     }
 
-    //ScrollDecorator { flickableItem: userCategoryView }
-
-    PageHeader {
-        id: header
-        title: qsTr("Suggested User Categories")
-    }
+    VerticalScrollDecorator { flickable: userCategoryView }
 
     QtObject {
         id: script
