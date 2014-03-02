@@ -22,8 +22,8 @@ import Sailfish.Silica 1.0
 import "../Component"
 
 AbstractDelegate {
-    id: root
-    height: contextMenu.visible ? root.contentHeight + contextMenu.height : root.contentHeight
+    id: rootTweet
+    height: contextMenu.visible ? rootTweet.contentHeight + contextMenu.height : rootTweet.contentHeight
 
     sideRectColor: {
         switch (settings.userScreenName) {
@@ -95,10 +95,6 @@ AbstractDelegate {
         text: model.richText
     }
 
-    RemorseItem {
-        id: remorse
-    }
-
     Loader {
         id: retweetLoader
         anchors { left: parent.left; right: parent.right }
@@ -129,9 +125,13 @@ AbstractDelegate {
         text: model.source + " | " + model.timeDiff
     }
 
+    RemorseItem {
+        id: remorse
+    }
+
     onClicked: pageStack.push(Qt.resolvedUrl("../TweetPage.qml"), { tweet: model })
 
     onPressAndHold: {
-        contextMenu.show(root);
+        contextMenu.show(rootTweet);
     }
 }
