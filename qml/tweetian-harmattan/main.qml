@@ -248,6 +248,9 @@ ApplicationWindow {
             latitude = 0.0
             longitude = 0.0
             pendingTweet = false
+
+            /* Refresh timeline and DMs after succesfully sending tweet or DM */
+            mainPage.refreshAll();
         }
         /*
         function twitLongerOnSuccess(twitLongerId, shortenTweet) {
