@@ -66,8 +66,8 @@ property int headerHeight: 80
     // The provided Twitter OAuth cousumer key pair below are only for testing
     // The release version in Nokia Store have a different key pair
 
-    property string twitterConsumerKey: "0FB4Dd9xsgSHiGiCJ82L1g"
-    property string twitterConsumerSecret: "VgRBngFVKH9Rm2cG9OgJHACpHr6a2IvcKXxh49FvU"
+    property string twitterConsumerKey: "brxnrp9V28DRoPyEX5jbdw"
+    property string twitterConsumerSecret: "CKQ139iLxZdq7wXz6S8Na59TtRL6gktZClq2OY0xw"
 
     // Needed for uploading image to TwitPic
     property string twitpicAPIKey: ""
