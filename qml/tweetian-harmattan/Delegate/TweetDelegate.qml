@@ -43,8 +43,6 @@ AbstractDelegate {
         anchors { left: parent.left; right: parent.right }
         height: userNameText.height
 
-        // FIXME: After changing font size from small to large the username will become elided
-        // for the loaded delegate
         Text {
             id: userNameText
             anchors.left: parent.left
@@ -59,8 +57,8 @@ AbstractDelegate {
         }
 
         Text {
-            anchors { left: userNameText.right; right: favouriteIconLoader.left; margins: constant.paddingSmall }
-            font.pixelSize: constant.fontSizeMedium
+            anchors { left: userNameText.right; right: favouriteIconLoader.left; margins: constant.paddingMedium; verticalCenter: userNameText.verticalCenter }
+            font.pixelSize: constant.fontSizeSmall
 
             font.family: Theme.fontFamily
             color: highlighted ? constant.colorHighlighted : constant.colorMid
@@ -71,15 +69,15 @@ AbstractDelegate {
         Loader {
             id: favouriteIconLoader
             anchors.right: parent.right
-            width: sourceComponent ? item.sourceSize.height : 0
             sourceComponent: model.isFavourited ? favouriteIcon : undefined
 
             Component {
                 id: favouriteIcon
 
                 Image {
-                    sourceSize { height: titleContainer.height; width: titleContainer.height }
-                    source: "image://theme/icon-m-favorite-selected"
+                    height: constant.graphicSizeSmall
+                    width: height
+                    source: "image://theme/icon-s-favorite"
                 }
             }
         }
@@ -95,34 +93,64 @@ AbstractDelegate {
         text: model.richText
     }
 
-    Loader {
-        id: retweetLoader
+    Item {
+        id: infoContainer
         anchors { left: parent.left; right: parent.right }
-        sourceComponent: model.isRetweet ? retweetText : undefined
+        height: tweetTime.height + constant.paddingSmall
 
-        Component {
-            id: retweetText
+        Text {
+            id: tweetTime
+            anchors { left: parent.left; verticalCenter: infoContainer.verticalCenter }
+            font.pixelSize: constant.fontSizeSmall
+            font.family: Theme.fontFamily
+            color: highlighted ? constant.colorHighlighted : constant.colorMid
+            elide: Text.ElideRight
+            text: model.timeDiff + " | "
+        }
 
-            Text {
-                font.pixelSize: constant.fontSizeMedium
+        Loader {
+            id: retweetIconLoader
+            anchors.left: tweetTime.right
+            anchors.verticalCenter: tweetTime.verticalCenter
+            sourceComponent: model.isRetweet ? retweetIcon : undefined
 
-                font.family: Theme.fontFamily
-                wrapMode: Text.Wrap
-                color: highlighted ? constant.colorHighlighted : constant.colorMid
-                text: qsTr("Retweeted by %1").arg("@" + model.retweetScreenName)
+            Component {
+                id: retweetIcon
+
+                Image {
+                    height: constant.graphicSizeXSmall
+                    width: height
+                    source: "image://theme/icon-s-retweet"
+                }
             }
         }
-    }
 
-    Text {
-        anchors { left: parent.left; right: parent.right }
-        horizontalAlignment: Text.AlignRight
-        font.pixelSize: constant.fontSizeSmall
+        Loader {
+            id: retweetLoader
+            anchors { left: retweetIconLoader.right; verticalCenter: infoContainer.verticalCenter }
+            sourceComponent: model.isRetweet ? retweetText : undefined
 
-        font.family: Theme.fontFamily
-        color: highlighted ? constant.colorHighlighted : constant.colorMid
-        elide: Text.ElideRight
-        text: model.source + " | " + model.timeDiff
+            Component {
+                id: retweetText
+
+                Text {
+                    font.pixelSize: constant.fontSizeSmall
+                    font.family: Theme.fontFamily
+                    wrapMode: Text.Wrap
+                    color: highlighted ? constant.colorHighlighted : constant.colorMid
+                    text: " @" + model.retweetScreenName + " | "
+                }
+            }
+        }
+
+        Text {
+            anchors { left: retweetLoader.right; right: parent.right; verticalCenter: infoContainer.verticalCenter }
+            font.pixelSize: constant.fontSizeSmall
+            font.family: Theme.fontFamily
+            color: highlighted ? constant.colorHighlighted : constant.colorMid
+            elide: Text.ElideRight
+            text: model.source
+        }
     }
 
     RemorseItem {

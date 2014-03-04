@@ -45,6 +45,7 @@ QtObject {
 
     // graphic size
     property int graphicSizeTiny: 24
+    property int graphicSizeXSmall: 28
     property int graphicSizeSmall: 32
     property int graphicSizeMedium: 48
     property int graphicSizeLarge: 72

@@ -171,13 +171,13 @@ Page {
             Column {
                 id: mainTweetColumn
                 anchors { left: parent.left; right: parent.right }
-                height: childrenRect.height + constant.paddingMedium
-                spacing: constant.paddingMedium
+                height: childrenRect.height + constant.paddingLarge
+                spacing: constant.paddingSmall
 
                 ListItem {
                     id: userItem
                     anchors { left: parent.left; right: parent.right }
-                    height: usernameColumn.height + 2 * usernameColumn.anchors.margins
+                    height: usernameColumn.height + constant.paddingMedium
                     subItemIndicator: true
                     onClicked: pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: tweet.screenName})
                     Component.onCompleted: {
@@ -187,19 +187,42 @@ Page {
 
                     Column {
                         id: usernameColumn
-                        anchors { top: parent.top; left: userItem.imageItem.right; margins: constant.paddingMedium }
+                        anchors { top: parent.top; left: userItem.imageItem.right; leftMargin: constant.paddingMedium; right: parent.right }
                         height: childrenRect.height
 
-                        Text {
-                            font.pixelSize: constant.fontSizeMedium
-                            font.family: Theme.fontFamily
-                            color: constant.colorLight
-                            font.bold: true
-                            text: tweet.name
+                        Item {
+                            anchors { left: parent.left; right: parent.right }
+                            height: childrenRect.height
+
+                            Text {
+                                id: userNameText
+                                anchors.left: parent.left
+                                font.pixelSize: constant.fontSizeMedium
+                                font.family: Theme.fontFamily
+                                color: constant.colorLight
+                                font.bold: true
+                                text: tweet.name
+                            }
+
+                            Loader {
+                                id: iconLoader
+                                anchors { right: parent.right; rightMargin: constant.paddingMedium; verticalCenter: userNameText.verticalCenter }
+                                sourceComponent: favouritedTweet ? favouriteIcon : undefined
+
+                                Component {
+                                    id: favouriteIcon
+
+                                    Image {
+                                        height: constant.graphicSizeSmall
+                                        width: height
+                                        source: "image://theme/icon-s-favorite"
+                                    }
+                                }
+                            }
                         }
 
                         Text {
-                            font.pixelSize: constant.fontSizeSmall
+                            font.pixelSize: constant.fontSizeMedium
                             font.family: Theme.fontFamily
                             color: userItem.highlighted ? constant.colorHighlighted : constant.colorMid
                             text: "@" + tweet.screenName
@@ -227,45 +250,42 @@ Page {
                     }
                 }
 
-                Text {
-                    anchors { left: parent.left; right: parent.right; leftMargin: constant.paddingMedium; rightMargin: constant.paddingMedium  }
-                    visible: tweet.isRetweet
-                    font.pixelSize: constant.fontSizeMedium
-                    font.family: Theme.fontFamily
-                    color: constant.colorMid
-                    text: qsTr("Retweeted by %1").arg("@" + tweet.retweetScreenName)
-                }
-
                 Item {
                     anchors { left: parent.left; right: parent.right; leftMargin: constant.paddingMedium; rightMargin: constant.paddingMedium  }
                     height: timeAndSourceText.height
 
-                    Loader {
-                        id: iconLoader
-                        anchors.left: parent.left
-                        width: sourceComponent ? item.sourceSize.width : 0
-                        sourceComponent: favouritedTweet ? favouriteIcon : undefined
+                    Text {
+                        id: timeAndSourceText
+                        anchors { left: parent.left; right: parent.right; }
+                        font.pixelSize: constant.fontSizeSmall
+                        font.family: Theme.fontFamily
+                        color: constant.colorMid
+                        text: Qt.formatDateTime(tweet.createdAt, Qt.DefaultLocaleShortDate) + " | " + tweet.source
+                        elide: Text.ElideRight
+                    }
+                }
 
-                        Component {
-                            id: favouriteIcon
+                Item {
+                    anchors { left: parent.left; right: parent.right; leftMargin: constant.paddingMedium; rightMargin: constant.paddingMedium }
+                    height: childrenRect.height
+                    visible: tweet.isRetweet
 
-                            Image {
-                                sourceSize { height: timeAndSourceText.height; width: timeAndSourceText.height }
-                                source: settings.invertedTheme ? "image://theme/icon-m-common-favorite-mark"
-                                                               : "image://theme/icon-m-common-favorite-mark-inverse"
-                            }
-                        }
+                    Image {
+                        id: retweetIcon
+                        anchors { left: parent.left; verticalCenter: retweetText.verticalCenter }
+                        height: constant.graphicSizeSmall
+                        width: height
+                        source: "image://theme/icon-s-retweet"
+
                     }
 
                     Text {
-                        id: timeAndSourceText
-                        anchors { left: iconLoader.right; leftMargin: constant.paddingSmall; right: parent.right;  }
-                        font.pixelSize: constant.fontSizeSmall
+                        id: retweetText
+                        anchors { left: retweetIcon.right; right: parent.right; leftMargin: constant.paddingSmall }
+                        font.pixelSize: constant.fontSizeMedium
                         font.family: Theme.fontFamily
-                        horizontalAlignment: Text.AlignRight
                         color: constant.colorMid
-                        text: tweet.source + " | " + Qt.formatDateTime(tweet.createdAt, Qt.DefaultLocaleShortDate)
-                        elide: Text.ElideRight
+                        text: "@" + tweet.retweetScreenName
                     }
                 }
 
