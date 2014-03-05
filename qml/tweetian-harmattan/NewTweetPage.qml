@@ -102,7 +102,7 @@ Dialog {
             errorHighlight: charLeftText.text < 0 && type != "RT"
             font.pixelSize: constant.fontSizeMedium
             placeholderText: qsTr("Tap to write...")
-            focus: true
+            focus: type == "RT" ? false : true
             color: constant.colorLight
             cursorPosition: placedText.length
             text: placedText
@@ -157,12 +157,11 @@ Dialog {
                 id: rtCoverComponent
 
                 Rectangle {
-                    color: "white"
+                    color: Theme.highlightColor
                     opacity: 0.9
                     radius: constant.paddingMedium
-
                     Text {
-                        color: "black"
+                        color: Theme.primaryColor
                         anchors.centerIn: parent
                         font.pixelSize: tweetTextArea.font.pixelSize * 1.25
                         text: qsTr("Tap to Edit")
@@ -172,7 +171,7 @@ Dialog {
                         anchors.fill: parent
                         //enabled: !header.busy
                         onClicked: {
-                            tweetTextArea.forceActiveFocus()
+                            //tweetTextArea.forceActiveFocus()
                             type = "New"
                         }
                     }
