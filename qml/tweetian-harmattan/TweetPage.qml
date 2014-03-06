@@ -204,20 +204,13 @@ Page {
                                 text: tweet.name
                             }
 
-                            Loader {
-                                id: iconLoader
+                            Image {
+                                id: favouriteIcon
                                 anchors { right: parent.right; rightMargin: constant.paddingMedium; verticalCenter: userNameText.verticalCenter }
-                                sourceComponent: favouritedTweet ? favouriteIcon : undefined
-
-                                Component {
-                                    id: favouriteIcon
-
-                                    Image {
-                                        height: constant.graphicSizeSmall
-                                        width: height
-                                        source: "image://theme/icon-s-favorite"
-                                    }
-                                }
+                                height: constant.graphicSizeSmall
+                                width: height
+                                source: "image://theme/icon-s-favorite"
+                                visible: favouritedTweet
                             }
                         }
 
@@ -231,7 +224,7 @@ Page {
                 }
 
                 Text {
-                    id: tweetTextText
+                    id: tweetText
                     anchors { left: parent.left; right: parent.right; leftMargin: constant.paddingMedium; rightMargin: constant.paddingMedium  }
                     font.pixelSize: constant.fontSizeMedium
                     font.family: Theme.fontFamily

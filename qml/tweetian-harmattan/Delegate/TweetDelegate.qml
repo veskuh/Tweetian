@@ -57,7 +57,7 @@ AbstractDelegate {
         }
 
         Text {
-            anchors { left: userNameText.right; right: favouriteIconLoader.left; margins: constant.paddingMedium; verticalCenter: userNameText.verticalCenter }
+            anchors { left: userNameText.right; right: favouriteIcon.left; margins: constant.paddingMedium; verticalCenter: userNameText.verticalCenter }
             font.pixelSize: constant.fontSizeSmall
 
             font.family: Theme.fontFamily
@@ -66,20 +66,13 @@ AbstractDelegate {
             text: "@" + model.screenName
         }
 
-        Loader {
-            id: favouriteIconLoader
+        Image {
+            id: favouriteIcon
             anchors.right: parent.right
-            sourceComponent: model.isFavourited ? favouriteIcon : undefined
-
-            Component {
-                id: favouriteIcon
-
-                Image {
-                    height: constant.graphicSizeSmall
-                    width: height
-                    source: "image://theme/icon-s-favorite"
-                }
-            }
+            height: constant.graphicSizeSmall
+            width: height
+            source: "image://theme/icon-s-favorite"
+            visible: model.isFavourited
         }
     }
 
@@ -108,43 +101,30 @@ AbstractDelegate {
             text: model.timeDiff + " | "
         }
 
-        Loader {
-            id: retweetIconLoader
+        Image {
+            id: retweetIcon
             anchors.left: tweetTime.right
             anchors.verticalCenter: tweetTime.verticalCenter
-            sourceComponent: model.isRetweet ? retweetIcon : undefined
-
-            Component {
-                id: retweetIcon
-
-                Image {
-                    height: constant.graphicSizeXSmall
-                    width: height
-                    source: "image://theme/icon-s-retweet"
-                }
-            }
-        }
-
-        Loader {
-            id: retweetLoader
-            anchors { left: retweetIconLoader.right; verticalCenter: infoContainer.verticalCenter }
-            sourceComponent: model.isRetweet ? retweetText : undefined
-
-            Component {
-                id: retweetText
-
-                Text {
-                    font.pixelSize: constant.fontSizeSmall
-                    font.family: Theme.fontFamily
-                    wrapMode: Text.Wrap
-                    color: highlighted ? constant.colorHighlighted : constant.colorMid
-                    text: " @" + model.retweetScreenName + " | "
-                }
-            }
+            height: constant.graphicSizeXSmall
+            width: model.isRetweet ? height : 0
+            source: "image://theme/icon-s-retweet"
+            visible: model.isRetweet
         }
 
         Text {
-            anchors { left: retweetLoader.right; right: parent.right; verticalCenter: infoContainer.verticalCenter }
+            id: retweetText
+            anchors { left: retweetIcon.right; verticalCenter: infoContainer.verticalCenter }
+            font.pixelSize: constant.fontSizeSmall
+            font.family: Theme.fontFamily
+            wrapMode: Text.Wrap
+            width: model.isRetweet ? undefined : 0
+            color: highlighted ? constant.colorHighlighted : constant.colorMid
+            text: " @" + model.retweetScreenName + " | "
+            visible: model.isRetweet
+        }
+
+        Text {
+            anchors { left: retweetText.right; right: parent.right; verticalCenter: infoContainer.verticalCenter }
             font.pixelSize: constant.fontSizeSmall
             font.family: Theme.fontFamily
             color: highlighted ? constant.colorHighlighted : constant.colorMid
