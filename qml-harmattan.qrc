@@ -91,7 +91,6 @@
         <file>qml/tweetian-harmattan/ListPageCom/ListSubscribers.qml</file>
         <file>qml/tweetian-harmattan/ListPageCom/ListTimeline.qml</file>
         <file>qml/tweetian-harmattan/MainPageCom/DirectMessage.qml</file>
-        <file>qml/tweetian-harmattan/MainPageCom/DMDialog.qml</file>
         <file>qml/tweetian-harmattan/MainPageCom/DMThreadPage.qml</file>
         <file>qml/tweetian-harmattan/MainPageCom/StreamingHeader.qml</file>
         <file>qml/tweetian-harmattan/MainPageCom/TweetListView.qml</file>
