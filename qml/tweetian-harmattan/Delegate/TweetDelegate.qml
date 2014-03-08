@@ -87,11 +87,14 @@ AbstractDelegate {
         height: implicitHeight + Theme.paddingSmall
     }
 
-    Row {
+    Item {
+        id: infoContainer
         anchors { left: parent.left; right: parent.right }
+        height: tweetTime.height
 
         Text {
-            anchors.verticalCenter: parent.verticalCenter
+            id: tweetTime
+            anchors.left: parent.left
             font.pixelSize: constant.fontSizeSmall
             font.family: Theme.fontFamily
             color: highlighted ? constant.colorHighlighted : constant.colorMid
@@ -100,25 +103,28 @@ AbstractDelegate {
         }
 
         Image {
-            anchors.verticalCenter: parent.verticalCenter
+            id: retweetIcon
+            anchors.left: tweetTime.right
             height: constant.graphicSizeXSmall
-            width: height
+            width: model.isRetweet ? height : 0
             source: "image://theme/icon-s-retweet"
             visible: model.isRetweet
         }
 
         Text {
-            anchors.verticalCenter: parent.verticalCenter
+            id: retweetText
+            anchors.left: retweetIcon.right
             font.pixelSize: constant.fontSizeSmall
             font.family: Theme.fontFamily
             wrapMode: Text.Wrap
+            width: model.isRetweet ? undefined : 0
             color: highlighted ? constant.colorHighlighted : constant.colorMid
             text: " @" + model.retweetScreenName + " | "
             visible: model.isRetweet
         }
 
         Text {
-            anchors.verticalCenter: parent.verticalCenter
+            anchors { left: retweetText.right; right: parent.right }
             font.pixelSize: constant.fontSizeSmall
             font.family: Theme.fontFamily
             color: highlighted ? constant.colorHighlighted : constant.colorMid
