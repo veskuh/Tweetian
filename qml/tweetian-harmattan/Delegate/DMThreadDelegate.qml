@@ -56,6 +56,12 @@ AbstractDelegate {
         textFormat: Text.RichText
         text: model.richText
         height: implicitHeight + Theme.paddingSmall
+
+        onWidthChanged: {
+            // HACK: Force relayout on widht change
+            text = ""
+            text = model.richText
+        }
     }
 
     Text {

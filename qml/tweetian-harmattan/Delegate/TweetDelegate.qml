@@ -77,7 +77,9 @@ AbstractDelegate {
     }
 
     Text {
-        anchors { left: parent.left; right: parent.right }
+        anchors { left: parent.left }
+        width: parent.width
+
         textFormat: Text.RichText
         font.pixelSize: constant.fontSizeMedium
         font.family: Theme.fontFamily
@@ -85,6 +87,12 @@ AbstractDelegate {
         color: highlighted ? constant.colorHighlighted : constant.colorLight
         text: model.richText
         height: implicitHeight + Theme.paddingSmall
+
+        onWidthChanged: {
+            // HACK: Force relayout on widht change
+            text = ""
+            text = model.richText
+        }
     }
 
     Item {
