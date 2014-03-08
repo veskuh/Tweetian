@@ -106,9 +106,11 @@ BackgroundItem {
     Column {
         id: contentColumn
         anchors {
-            top: parent.top; topMargin: constant.paddingMedium
-            left: profileImageMaskedItem.right; leftMargin: constant.paddingMedium
-            right: parent.right
+            top: parent.top;
+            topMargin: constant.paddingSmall;
+            left: profileImageMaskedItem.right;
+            leftMargin: constant.paddingMedium;
+            right: parent.right;
             rightMargin: constant.paddingMedium
         }
         height: childrenRect.height

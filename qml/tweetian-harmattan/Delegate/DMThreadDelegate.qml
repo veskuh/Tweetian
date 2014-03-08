@@ -40,8 +40,8 @@ AbstractDelegate {
         }
 
         Text {
-            anchors { left: userNameText.right; leftMargin: constant.paddingSmall; right: parent.right }
-            font.pixelSize: constant.fontSizeMedium
+            anchors { left: userNameText.right; leftMargin: constant.paddingMedium; right: parent.right }
+            font.pixelSize: constant.fontSizeSmall
             color: highlighted ? constant.colorHighlighted : constant.colorMid
             elide: Text.ElideRight
             text: "@" + model.screenName
@@ -57,13 +57,19 @@ AbstractDelegate {
         text: model.richText
     }
 
-    Text {
+    Item {
+        id: infoContainer
         anchors { left: parent.left; right: parent.right }
-        horizontalAlignment: Text.AlignRight
-        font.pixelSize: constant.fontSizeSmall
-        color: highlighted ? constant.colorHighlighted : constant.colorMid
-        elide: Text.ElideRight
-        text: model.timeDiff
+        height: tweetTime.height + constant.paddingSmall
+
+        Text {
+            id: tweetTime
+            anchors { left: parent.left; verticalCenter: infoContainer.verticalCenter }
+            font.pixelSize: constant.fontSizeSmall
+            color: highlighted ? constant.colorHighlighted : constant.colorMid
+            elide: Text.ElideRight
+            text: model.timeDiff
+        }
     }
 
     onClicked: {
