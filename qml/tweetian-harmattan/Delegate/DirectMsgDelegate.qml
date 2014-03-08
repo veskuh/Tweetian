@@ -54,24 +54,16 @@ AbstractDelegate {
         color: highlighted ? constant.colorHighlighted : constant.colorLight
         textFormat: Text.RichText
         text: model.richText
+        height: implicitHeight + Theme.paddingSmall
     }
 
-    Item {
-        id: infoContainer
-        anchors { left: parent.left; right: parent.right }
-        height: tweetTime.height + constant.paddingSmall
-
-        Text {
-            id: tweetTime
-            anchors { left: parent.left; verticalCenter: infoContainer.verticalCenter }
-            horizontalAlignment: Text.AlignRight
-            font.pixelSize: constant.fontSizeSmall
-            color: highlighted ? constant.colorHighlighted : constant.colorMid
-            elide: Text.ElideRight
-            text: timeDiff
-        }
-
+    Text {
+        id: tweetTime
+        anchors.left: parent.left
+        horizontalAlignment: Text.AlignRight
+        font.pixelSize: constant.fontSizeSmall
+        color: highlighted ? constant.colorHighlighted : constant.colorMid
+        elide: Text.ElideRight
+        text: timeDiff
     }
-
-    // onClicked: internal.createDMDialog(model)
 }

@@ -84,6 +84,7 @@ AbstractDelegate {
         wrapMode: Text.Wrap
         color: highlighted ? constant.colorHighlighted : constant.colorLight
         text: model.richText
+        height: implicitHeight + Theme.paddingSmall
     }
 
     Row {

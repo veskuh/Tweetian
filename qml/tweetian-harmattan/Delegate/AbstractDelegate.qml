@@ -35,20 +35,13 @@ BackgroundItem {
     contentHeight: Math.max(contentColumn.height, profileImage.height) + 2 * constant.paddingMedium
     height: contentHeight // For contextMenu override in child
 
-    Loader {
-        id: sideRectLoader
+
+    Rectangle {
         anchors { right: parent.right; top: parent.top }
-        sourceComponent: sideRectColor == "transparent" ? undefined : sideRect
-
-        Component {
-            id: sideRect
-
-            Rectangle {
-                height: root.height
-                width: constant.paddingSmall
-                color: sideRectColor
-            }
-        }
+        height: root.height
+        width: constant.paddingSmall
+        color: sideRectColor
+        visible: sideRectColor != "transparent"
     }
 
     Item {
