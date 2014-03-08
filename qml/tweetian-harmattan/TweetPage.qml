@@ -258,14 +258,17 @@ Page {
                     }
                 }
 
-                Item {
-                    anchors { left: parent.left; right: parent.right; leftMargin: constant.paddingMedium; rightMargin: constant.paddingMedium }
-                    height: childrenRect.height
+                ListItem {
+                    id: retweetItem
+                    anchors { left: parent.left; right: parent.right }
+                    height: childrenRect.height + constant.paddingMedium
                     visible: tweet.isRetweet
+                    subItemIndicator: true
+                    onClicked: pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: tweet.retweetScreenName})
 
                     Image {
                         id: retweetIcon
-                        anchors { left: parent.left; verticalCenter: retweetText.verticalCenter }
+                        anchors { left: parent.left; leftMargin: constant.paddingMedium; verticalCenter: retweetText.verticalCenter }
                         height: constant.graphicSizeSmall
                         width: height
                         source: "image://theme/icon-s-retweet"
@@ -274,7 +277,7 @@ Page {
 
                     Text {
                         id: retweetText
-                        anchors { left: retweetIcon.right; right: parent.right; leftMargin: constant.paddingSmall }
+                        anchors { left: retweetIcon.right; right: parent.right; leftMargin: constant.paddingSmall; rightMargin: constant.paddingMedium }
                         font.pixelSize: constant.fontSizeMedium
                         font.family: Theme.fontFamily
                         color: constant.colorMid
