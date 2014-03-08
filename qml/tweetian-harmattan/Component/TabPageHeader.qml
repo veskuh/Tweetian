@@ -38,10 +38,17 @@ Item {
         anchors.fill: parent
         contentHeight: parent.height
 
+        Rectangle {
+            id: backgroundColor
+            anchors.fill: parent
+            color: Qt.darker(Theme.highlightBackgroundColor, 1.6)
+            opacity: 0.92
+        }
+
         Image {
             id: background
             anchors.fill: parent
-            source: "image://theme/graphic-header"
+            source: "../Image/graphic-header-tweetian.png"
         }
 
         Row {
@@ -57,8 +64,8 @@ Item {
 
                     Image {
                         id: icon
-                        height: 36
-                        width: 36
+                        height: 40
+                        width: 40
                         anchors.centerIn: parent
                         source: modelData
                     }
@@ -84,7 +91,7 @@ Item {
 
                             Rectangle {
                                 anchors.fill: parent
-                                color: "black"
+                                color: constant.colorTextSelection
                                 opacity: 0
 
                                 Behavior on opacity { NumberAnimation { duration: 250 } }
@@ -97,7 +104,7 @@ Item {
                                     width: height
                                 }
 
-                                Component.onCompleted: opacity = 0.75
+                                Component.onCompleted: opacity = 0.6
                             }
                         }
 
@@ -125,6 +132,15 @@ Item {
             }
         }
         PushUpMenu {
+            background: Rectangle {
+                    anchors {
+                        fill: parent
+                        topMargin: parent.spacing
+                    }
+                    opacity: 0.92
+                    color: Qt.darker(Theme.highlightBackgroundColor, 1.6)
+                }
+
             MenuItem {
                onClicked: pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"), {type: "New"})
                text: qsTr("New Tweet")

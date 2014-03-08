@@ -54,7 +54,7 @@ QtObject {
 
     // other
    // property int headerHeight: inPortrait ? 65 : 55
-property int headerHeight: 80
+property int headerHeight: 90
 
     property int charReservedPerMedia: 23
     property url twitterBirdIcon: "Image/avatar_placeholder.png"

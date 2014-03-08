@@ -105,6 +105,7 @@ AbstractDelegate {
         Image {
             id: retweetIcon
             anchors.left: tweetTime.right
+            anchors.verticalCenter: tweetTime.verticalCenter
             height: constant.graphicSizeXSmall
             width: model.isRetweet ? height : 0
             source: "image://theme/icon-s-retweet"
