@@ -37,16 +37,19 @@ Dialog {
     property double latitude: internalTweet.latitude
     property double longitude: internalTweet.longitude
 
+    allowedOrientations: Orientation.Portrait | Orientation.Landscape
+
     property string imageUrl: ""
     property string imagePath: ""
 
     property bool positionRequested
     canAccept: (tweetTextArea.text.length != 0 )
     onAccepted: internalTweet.postTweet(tweetId, type, screenName, tweetTextArea.text, imagePath, latitude, longitude)
-    onStatusChanged: if (status === PageStatus.Activating) preventTouch.enabled = false
 
     SilicaFlickable {
         anchors.fill: parent
+
+        contentHeight: Math.max(childrenRect.height, newTweetPage.height + 1) // Needs to be scrollable for vkb
 
         PullDownMenu {
             MenuItem {
@@ -106,7 +109,6 @@ Dialog {
             color: constant.colorLight
             cursorPosition: placedText.length
             text: placedText
-            height: Math.max(implicitHeight, 120)
             onTextChanged: updateAutoCompleter()
 
             Text {
@@ -171,7 +173,6 @@ Dialog {
                         anchors.fill: parent
                         //enabled: !header.busy
                         onClicked: {
-                            //tweetTextArea.forceActiveFocus()
                             type = "New"
                         }
                     }
@@ -250,133 +251,7 @@ Dialog {
                 fillMode: Image.PreserveAspectFit
                 anchors.horizontalCenter: parent.horizontalCenter
                 source: newTweetPage.imagePath
-            }
-            /*
-            Row {
-                id: newTweetButtonRow
-                anchors { left: parent.left; right: parent.right }
-                height: childrenRect.height
-                spacing: constant.paddingMedium
-                visible: type == "New" || type == "Reply"
-
-                Button {
-                    id: locationButton
-                    //iconSource: settings.invertedTheme ? "Image/add_my_location_inverse.svg" : "Image/add_my_location.svg"
-                    width: (parent.width - constant.paddingMedium) / 2
-                    text: qsTr("Add")
-                    enabled: !header.busy
-                    states: [
-                        State {
-                            name: "loading"
-                            PropertyChanges {
-                                target: locationButton
-                                text: qsTr("Updating...")
-                            //    checked: false
-                            }
-                        },
-                        State {
-                            name: "done"
-                            PropertyChanges {
-                                target: locationButton
-                                text: qsTr("View/Remove")
-                      //          iconSource: settings.invertedTheme ? "Image/location_mark_inverse.svg"
-                        //                                           : "Image/location_mark.svg"
-                          //      checked: true
-                            }
-                        }
-                    ]
-                    onClicked: {
-                        if (state == "done") locationDialog.open()
-                        else {
-                            positionSource.start()
-                            state = "loading"
-                        }
-                    }
-                }
-
-                Button {
-                    id: addImageButton
-                 //   iconSource: settings.invertedTheme ? "Image/photos_inverse.svg" : "Image/photos.svg"
-                    width: (parent.width - constant.paddingMedium) / 2
-                    text: checked ? qsTr("View/Remove") : qsTr("Add")
-                    enabled: !header.busy
-                   // checked: imagePath != ""
-                    onClicked: {
-                        if (checked) imageDialogComponent.createObject(newTweetPage)
-                        else pageStack.push(Qt.resolvedUrl("SelectImagePage.qml"), {newTweetPage: newTweetPage})
-                    }
-                }
-            }
-
-           // SectionHeader { text: qsTr("Quick Tweet"); visible: newTweetButtonRow.visible }
-
-            /*Button {
-                anchors { left: parent.left; right: parent.right }
-                visible: newTweetButtonRow.visible
-                enabled: !header.busy
-                text: qsTr("Music Player: Now Playing")
-                onClicked: harmattanUtils.getNowPlayingMedia()
-            }
-        }*/
-
-
-
-            // This menu can't be dynamically load as it will cause "Segmentation fault" when loading MapPage
-            /*ContextMenu {
-            id: locationDialog
-
-            MenuLayout {
-                MenuItem {
-                    text: qsTr("View location")
-                    onClicked: {
-                        preventTouch.enabled = true
-                        pageStack.push(Qt.resolvedUrl("MapPage.qml"), {"latitude": latitude, "longitude": longitude})
-                    }
-                }
-                MenuItem {
-                    text: qsTr("Remove location")
-                    onClicked: {
-                        latitude = 0
-                        longitude = 0
-                        locationButton.state = ""
-                    }
-                }
-            }
-        }*/
-
-            /*Component {
-            id: imageDialogComponent
-
-            Menu {
-                id: imageDialog
-                property bool __isClosing: false
-                MenuLayout {
-                    MenuItem {
-                        text: qsTr("View image")
-                        onClicked: Qt.openUrlExternally(imageUrl)
-                    }
-                    MenuItem {
-                        text: qsTr("Remove image")
-                        onClicked: {
-                            imageUrl = ""
-                            imagePath = ""
-                        }
-                    }
-                }
-                Component.onCompleted: open()
-                onStatusChanged: {
-                    if (status === DialogStatus.Closing) __isClosing = true
-                    else if (status === DialogStatus.Closed && __isClosing) imageDialog.destroy(250)
-                }
-            }*/
-        }
-
-        // this is to prevent any interaction in this page when loading the MapPage
-        MouseArea {
-            id: preventTouch
-            anchors.fill: parent
-            z: 1
-            enabled: false
+            }            
         }
     }
 
