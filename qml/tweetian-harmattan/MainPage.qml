@@ -43,7 +43,7 @@ Page {
         itemHeight: height
 
         clip:true
-        anchors { top: parent.top; bottom: parent.bottom; left: parent.left; right: parent.right }
+        anchors { top: parent.top; bottom: mainPageHeader.top; left: parent.left; right: parent.right }
         model: VisualItemModel {
             TweetListView { id: timeline; type: "Timeline" }
             TweetListView { id: mentions; type: "Mentions" }

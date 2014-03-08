@@ -41,7 +41,7 @@ Item {
         Rectangle {
             id: backgroundColor
             anchors.fill: parent
-            color: Qt.darker(Theme.highlightBackgroundColor, 1.6)
+            color: Qt.darker(Theme.highlightBackgroundColor, 1.8)
             opacity: 0.92
         }
 
@@ -138,7 +138,7 @@ Item {
                         topMargin: parent.spacing
                     }
                     opacity: 0.92
-                    color: Qt.darker(Theme.highlightBackgroundColor, 1.6)
+                    color: Qt.darker(Theme.highlightBackgroundColor, 1.8)
                 }
 
             MenuItem {
