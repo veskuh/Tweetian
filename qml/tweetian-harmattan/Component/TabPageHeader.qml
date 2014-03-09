@@ -30,11 +30,13 @@ Item {
     // method - positionAtTop()
     property SlideshowView listView: null
     property variant iconArray: []
+    property int visibleHeight: flickable.contentY + height
 
     anchors { bottom: parent.bottom; left: parent.left; right: parent.right }
     height: constant.headerHeight
 
     SilicaFlickable {
+        id: flickable
         anchors.fill: parent
         contentHeight: parent.height
 
