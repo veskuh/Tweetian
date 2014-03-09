@@ -59,8 +59,8 @@ Item {
 
                     Image {
                         id: icon
-                        height: 36
-                        width: 36
+                        height: 40
+                        width: 40
                         anchors.centerIn: parent
                         source: modelData
                     }
