@@ -18,7 +18,6 @@
 
 import QtQuick 2.1
 import Sailfish.Silica 1.0
-import QtMobility.location 1.2
 import "Services/Twitter.js" as Twitter
 import "Utils/Calculations.js" as Calculate
 import "Component"
@@ -111,21 +110,6 @@ Page {
             }
             header.busy = false
         }
-    }
-
-    PositionSource {
-        id: positionSource
-        updateInterval: 1000
-        onActiveChanged: if (active) header.busy = true
-
-        onPositionChanged: {
-            nearbyTweetsPage.latitude = position.coordinate.latitude
-            nearbyTweetsPage.longitude = position.coordinate.longitude
-            stop()
-            internal.refresh("all")
-        }
-
-        Component.onDestruction: stop()
     }
 
     QtObject {

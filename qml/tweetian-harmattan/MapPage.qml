@@ -18,7 +18,6 @@
 
 import QtQuick 2.1
 import Sailfish.Silica 1.0
-import QtLocation 5.0
 import "Dialog"
 import "Utils/Calculations.js" as Calculate
 
@@ -53,35 +52,6 @@ Page {
             }
         }
     } */
-
-    Coordinate {
-        id: tweetCoordinates
-        latitude: mapPage.latitude
-        longitude: mapPage.longitude
-    }
-
-    Map {
-        id: map
-        anchors.fill: parent
-        size.width: parent.width
-        size.height: parent.height
-        zoomLevel: 10
-        center: tweetCoordinates
-        plugin: Plugin {
-            name: "nokia"
-            parameters: [
-                PluginParameter { name: "app_id"; value: constant.nokiaMapsAppId },
-                PluginParameter { name: "app_code"; value: constant.nokiaMapsAppToken }
-            ]
-        }
-
-        MapImage {
-            coordinate: tweetCoordinates
-            source: "Image/location_mark_blue.png"
-            offset.x: -24
-            offset.y: -48
-        }
-    }
 
     PinchArea {
         id: pincharea

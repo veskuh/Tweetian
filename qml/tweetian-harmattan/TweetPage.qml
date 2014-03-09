@@ -233,7 +233,6 @@ Page {
                     wrapMode: Text.Wrap
                     text: tweet.richText
                     onLinkActivated: {
-                        basicHapticEffect.play()
                         if (link.indexOf("@") === 0)
                             pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: link.substring(1)})
                         else if (link.indexOf("http") === 0)

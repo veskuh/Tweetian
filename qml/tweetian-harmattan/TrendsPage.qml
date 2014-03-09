@@ -155,11 +155,6 @@ Item {
             }
 
             MenuItem {
-                text: "Tweets nearby"
-                onClicked: pageStack.push(Qt.resolvedUrl("NearbyTweetsPage.qml"))
-            }
-
-            MenuItem {
                 text: "Suggested users to follow"
                 onClicked: pageStack.push(Qt.resolvedUrl("UserCategoryPage.qml"))
             }

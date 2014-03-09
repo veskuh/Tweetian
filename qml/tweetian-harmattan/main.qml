@@ -18,7 +18,6 @@
 
 import QtQuick 2.1
 import Sailfish.Silica 1.0
-import QtFeedback 5.0
 import harbour.tweetian.Uploader 1.0
 import "Services/Twitter.js" as Twitter
 
@@ -34,8 +33,6 @@ ApplicationWindow {
 
     Cache { id: cache }
     Constant { id: constant }
-
-    ThemeEffect { id: basicHapticEffect; effect: ThemeEffect.Appear }
 
     Rectangle {
         id: infoBanner

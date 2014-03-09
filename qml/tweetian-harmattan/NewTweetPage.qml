@@ -18,8 +18,6 @@
 
 import QtQuick 2.1
 import Sailfish.Silica 1.0
-import QtLocation 5.0
-import QtPositioning 5.0
 
 import "Services/Twitter.js" as Twitter
 import "Services/TwitLonger.js" as TwitLonger
@@ -67,18 +65,6 @@ Dialog {
                         newTweetPage.imagePath = imagePicker.selectedContent;
                      });
                 }
-            }
-
-            MenuItem {
-                text: qsTr("Remove Location")
-                onClicked: { latitude = 0; longitude = 0; }
-                visible: latitude && longitude
-            }
-
-            MenuItem {
-                text: qsTr("Attach Location")
-                onClicked: { positionRequested = true; positionSource.update() }
-                visible: !latitude && !longitude
             }
         }
 
@@ -264,18 +250,4 @@ Dialog {
     }
 
     WorkerScript { id: autoCompleterWorkerScript; source: "WorkerScript/AutoCompleter.js" }
-
-    PositionSource {
-        id: positionSource
-        active: false
-
-        onPositionChanged: {
-            if (positionRequested) {
-                latitude = position.coordinate.latitude
-                longitude = position.coordinate.longitude
-                positionRequested = false
-            }
-        }
-    }
-
 }

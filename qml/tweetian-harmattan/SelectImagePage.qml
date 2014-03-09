@@ -18,7 +18,7 @@
 
 import QtQuick 2.1
 import Sailfish.Silica 1.0
-import QtMobility.gallery 1.1
+//import QtMobility.gallery 1.1
 import "Component"
 
 Page {
@@ -79,24 +79,6 @@ Page {
         title: qsTr("Select Image")
     }
 
-    DocumentGalleryModel {
-        id: galleryModel
-
-        property bool ready: status === DocumentGalleryModel.Idle || status === DocumentGalleryModel.Finished
-
-        autoUpdate: true
-        properties: ["filePath", "url"]
-        sortProperties: ["-lastModified"]
-        rootType: DocumentGallery.Image
-        onStatusChanged: {
-            if (status === DocumentGalleryModel.Active) header.busy = true
-            else if (status === DocumentGalleryModel.Error) {
-                header.busy = false
-                infoBanner.showText(qsTr("Error loading image from gallery"))
-            }
-            else header.busy = false
-        }
-    }
 
     Component {
         id: imageDelegate
