@@ -61,7 +61,7 @@ Item {
             Item {
                 id: headerItem
                 anchors { left: parent.left; right: parent.right }
-                height: (window.height - constant.headerHeight) / 3.25
+                height: constant.bannerHeight
 
                 Image {
                     id: headerImage
@@ -71,7 +71,7 @@ Item {
                     clip: true
                     source: {
                         if (user.profileBannerUrl)
-                            return user.profileBannerUrl.concat(userPage.isPortrait ? "/web" : "/mobile_retina")
+                            return user.profileBannerUrl.concat(userPage.isPortrait ? "/mobile_retina" : "/web_retina")
                         else
                             return "Image/banner_empty.png"
                     }

@@ -52,6 +52,8 @@ QtObject {
 
     property int thumbnailSize: 200
 
+    property int bannerHeight: 270
+
     // other
    // property int headerHeight: inPortrait ? 65 : 55
     property int headerHeight: 90

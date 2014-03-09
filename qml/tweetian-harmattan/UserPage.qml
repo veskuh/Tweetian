@@ -62,7 +62,7 @@ Page {
             Item {
                 id: headerItem
                 anchors { left: parent.left; right: parent.right }
-                height: userPage.isPortrait ? width / 2 : width / 4
+                height: constant.bannerHeight
 
                 Image {
                     id: headerImage
@@ -72,7 +72,7 @@ Page {
                     clip: true
                     source: {
                         if (user.profileBannerUrl)
-                            return user.profileBannerUrl.concat(userPage.isPortrait ? "/web" : "/mobile_retina")
+                            return user.profileBannerUrl.concat(userPage.isPortrait ? "/mobile_retina" : "/web_retina")
                         else
                             return "Image/banner_empty.png"
                     }
