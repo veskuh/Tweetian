@@ -91,7 +91,7 @@ Page {
 
         function deleteDMOnSuccess(data) {
             removeDM(data.id_str)
-            mainPage.directMsg.removeDM(data.id_str)
+            mainPage.directMsg.removeDM(data.id_str, screenName)
             infoBanner.showText(qsTr("Direct message deleted successfully"))
         }
 

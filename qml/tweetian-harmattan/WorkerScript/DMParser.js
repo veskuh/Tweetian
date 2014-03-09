@@ -47,6 +47,21 @@ WorkerScript.onMessage = function(msg) {
                 break;
             }
         }
+
+        var index = getIndex(msg.screenName, msg.threadModel);
+
+        if (index >= 0) {
+            if (msg.model.count > 0) {
+                var lastMsg = msg.model.get(msg.model.count - 1);
+                var dmThread = msg.threadModel.get(index);
+                msg.threadModel.set(index, lastMsg);
+                dmThread.isUnread = lastMsg.isReceiveDM ? true : false;
+                dmThread.timeDiff = timeDiff(lastMsg.createdAt);
+            }
+            else {
+                msg.threadModel.remove(index);
+            }
+        }
         break;
     case "setReaded":
         var index = msg.index;
