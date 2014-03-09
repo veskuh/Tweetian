@@ -61,7 +61,7 @@ Item {
             Item {
                 id: headerItem
                 anchors { left: parent.left; right: parent.right }
-                height: mainView.height / 3.25
+                height: (window.height - constant.headerHeight) / 3.25
 
                 Image {
                     id: headerImage
