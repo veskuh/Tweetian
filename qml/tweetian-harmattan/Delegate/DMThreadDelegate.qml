@@ -40,8 +40,8 @@ AbstractDelegate {
         }
 
         Text {
-            anchors { left: userNameText.right; leftMargin: constant.paddingSmall; right: parent.right }
-            font.pixelSize: constant.fontSizeMedium
+            anchors { left: userNameText.right; leftMargin: constant.paddingMedium; right: parent.right }
+            font.pixelSize: constant.fontSizeSmall
             color: highlighted ? constant.colorHighlighted : constant.colorMid
             elide: Text.ElideRight
             text: "@" + model.screenName
@@ -55,11 +55,18 @@ AbstractDelegate {
         color: highlighted ? constant.colorHighlighted : constant.colorLight
         textFormat: Text.RichText
         text: model.richText
+        height: implicitHeight + Theme.paddingSmall
+
+        onWidthChanged: {
+            // HACK: Force relayout on widht change
+            text = ""
+            text = model.richText
+        }
     }
 
     Text {
-        anchors { left: parent.left; right: parent.right }
-        horizontalAlignment: Text.AlignRight
+        id: tweetTime
+        anchors.left: parent.left
         font.pixelSize: constant.fontSizeSmall
         color: highlighted ? constant.colorHighlighted : constant.colorMid
         elide: Text.ElideRight

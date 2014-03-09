@@ -51,7 +51,7 @@ ContextMenu {
         id: deleteTweetButton
         text: qsTr("Delete tweet")
         visible: tweet.retweetScreenName === settings.userScreenName
-        onClicked: remorse.execute(titleContainer, qsTr("Delete tweet"), function() {  Twitter.postDeleteStatus(tweet.id, tweetPageHelper.deleteTweetOnSuccess, tweetPageHelper.commonOnFailure) })
+        onClicked: remorse.execute(rootTweet, qsTr("Delete tweet"), function() {  Twitter.postDeleteStatus(tweet.id, tweetPageHelper.deleteTweetOnSuccess, tweetPageHelper.commonOnFailure) })
     }
 
     MenuItem {

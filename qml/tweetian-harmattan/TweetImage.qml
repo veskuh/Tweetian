@@ -201,5 +201,5 @@ Page {
         }
     }
 
-    //ScrollDecorator { flickableItem: imageFlickable }
+    //VerticalScrollDecorator { flickableItem: imageFlickable }
 }

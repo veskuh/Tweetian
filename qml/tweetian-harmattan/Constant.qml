@@ -45,15 +45,18 @@ QtObject {
 
     // graphic size
     property int graphicSizeTiny: 24
+    property int graphicSizeXSmall: 28
     property int graphicSizeSmall: 32
     property int graphicSizeMedium: 48
     property int graphicSizeLarge: 72
 
     property int thumbnailSize: 200
 
+    property int bannerHeight: 270
+
     // other
    // property int headerHeight: inPortrait ? 65 : 55
-property int headerHeight: 80
+    property int headerHeight: 90
 
     property int charReservedPerMedia: 23
     property url twitterBirdIcon: "Image/avatar_placeholder.png"

@@ -72,7 +72,7 @@ Page {
         visible: galleryModel.ready && galleryModel.count == 0
     }
 
-    // ScrollDecorator { flickableItem: galleryModel.ready ? galleryGridView : null }
+    // VerticalScrollDecorator { flickableItem: galleryModel.ready ? galleryGridView : null }
 
     PageHeader {
         id: header

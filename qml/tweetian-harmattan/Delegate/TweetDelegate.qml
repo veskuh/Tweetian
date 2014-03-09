@@ -22,8 +22,8 @@ import Sailfish.Silica 1.0
 import "../Component"
 
 AbstractDelegate {
-    id: root
-    height: contextMenu.visible ? root.contentHeight + contextMenu.height : root.contentHeight
+    id: rootTweet
+    height: contextMenu.visible ? rootTweet.contentHeight + contextMenu.height : rootTweet.contentHeight
 
     sideRectColor: {
         switch (settings.userScreenName) {
@@ -43,8 +43,6 @@ AbstractDelegate {
         anchors { left: parent.left; right: parent.right }
         height: userNameText.height
 
-        // FIXME: After changing font size from small to large the username will become elided
-        // for the loaded delegate
         Text {
             id: userNameText
             anchors.left: parent.left
@@ -59,8 +57,8 @@ AbstractDelegate {
         }
 
         Text {
-            anchors { left: userNameText.right; right: favouriteIconLoader.left; margins: constant.paddingSmall }
-            font.pixelSize: constant.fontSizeMedium
+            anchors { left: userNameText.right; right: favouriteIcon.left; margins: constant.paddingMedium; verticalCenter: userNameText.verticalCenter }
+            font.pixelSize: constant.fontSizeSmall
 
             font.family: Theme.fontFamily
             color: highlighted ? constant.colorHighlighted : constant.colorMid
@@ -68,70 +66,89 @@ AbstractDelegate {
             text: "@" + model.screenName
         }
 
-        Loader {
-            id: favouriteIconLoader
+        Image {
+            id: favouriteIcon
             anchors.right: parent.right
-            width: sourceComponent ? item.sourceSize.height : 0
-            sourceComponent: model.isFavourited ? favouriteIcon : undefined
-
-            Component {
-                id: favouriteIcon
-
-                Image {
-                    sourceSize { height: titleContainer.height; width: titleContainer.height }
-                    source: "image://theme/icon-m-favorite-selected"
-                }
-            }
+            height: constant.graphicSizeSmall
+            width: height
+            source: "image://theme/icon-s-favorite"
+            visible: model.isFavourited
         }
     }
 
     Text {
-        anchors { left: parent.left; right: parent.right }
+        anchors { left: parent.left }
+        width: parent.width
+
         textFormat: Text.RichText
         font.pixelSize: constant.fontSizeMedium
         font.family: Theme.fontFamily
         wrapMode: Text.Wrap
         color: highlighted ? constant.colorHighlighted : constant.colorLight
         text: model.richText
+        height: implicitHeight + Theme.paddingSmall
+
+        onWidthChanged: {
+            // HACK: Force relayout on widht change
+            text = ""
+            text = model.richText
+        }
+    }
+
+    Item {
+        id: infoContainer
+        anchors { left: parent.left; right: parent.right }
+        height: tweetTime.height
+
+        Text {
+            id: tweetTime
+            anchors.left: parent.left
+            font.pixelSize: constant.fontSizeSmall
+            font.family: Theme.fontFamily
+            color: highlighted ? constant.colorHighlighted : constant.colorMid
+            elide: Text.ElideRight
+            text: model.timeDiff + " | "
+        }
+
+        Image {
+            id: retweetIcon
+            anchors.left: tweetTime.right
+            anchors.verticalCenter: tweetTime.verticalCenter
+            height: constant.graphicSizeXSmall
+            width: model.isRetweet ? height : 0
+            source: "image://theme/icon-s-retweet"
+            visible: model.isRetweet
+        }
+
+        Text {
+            id: retweetText
+            anchors.left: retweetIcon.right
+            font.pixelSize: constant.fontSizeSmall
+            font.family: Theme.fontFamily
+            wrapMode: Text.Wrap
+            width: model.isRetweet ? undefined : 0
+            color: highlighted ? constant.colorHighlighted : constant.colorMid
+            text: " @" + model.retweetScreenName + " | "
+            visible: model.isRetweet
+        }
+
+        Text {
+            anchors { left: retweetText.right; right: parent.right }
+            font.pixelSize: constant.fontSizeSmall
+            font.family: Theme.fontFamily
+            color: highlighted ? constant.colorHighlighted : constant.colorMid
+            elide: Text.ElideRight
+            text: model.source
+        }
     }
 
     RemorseItem {
         id: remorse
     }
 
-    Loader {
-        id: retweetLoader
-        anchors { left: parent.left; right: parent.right }
-        sourceComponent: model.isRetweet ? retweetText : undefined
-
-        Component {
-            id: retweetText
-
-            Text {
-                font.pixelSize: constant.fontSizeMedium
-
-                font.family: Theme.fontFamily
-                wrapMode: Text.Wrap
-                color: highlighted ? constant.colorHighlighted : constant.colorMid
-                text: qsTr("Retweeted by %1").arg("@" + model.retweetScreenName)
-            }
-        }
-    }
-
-    Text {
-        anchors { left: parent.left; right: parent.right }
-        horizontalAlignment: Text.AlignRight
-        font.pixelSize: constant.fontSizeSmall
-
-        font.family: Theme.fontFamily
-        color: highlighted ? constant.colorHighlighted : constant.colorMid
-        elide: Text.ElideRight
-        text: model.source + " | " + model.timeDiff
-    }
-
     onClicked: pageStack.push(Qt.resolvedUrl("../TweetPage.qml"), { tweet: model })
 
     onPressAndHold: {
-        contextMenu.show(root);
+        contextMenu.show(rootTweet);
     }
 }

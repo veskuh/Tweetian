@@ -30,18 +30,17 @@ TweetianIf::TweetianIf(QGuiApplication *parent, QQuickView *view) :
 
 void TweetianIf::mention()
 {
-    Q_ASSERT(false);
-    //m_view->activateWindow();
-    if (!qmlMainView)
+    m_view->raise();
+
+/*  if (!qmlMainView)
         qmlMainView = m_view->rootObject()->findChild<QQuickItem*>("mainView");
-    QMetaObject::invokeMethod(qmlMainView, "moveToColumn", Q_ARG(QVariant, 1));
+    QMetaObject::invokeMethod(qmlMainView, "moveToColumn", Q_ARG(QVariant, 1));*/
 }
 
 void TweetianIf::message()
 {
-    Q_ASSERT(false);
-    //m_view->activateWindow();
-    if (!qmlMainView)
+    m_view->raise();
+/*    if (!qmlMainView)
         qmlMainView = m_view->rootObject()->findChild<QQuickItem*>("mainView");
-    QMetaObject::invokeMethod(qmlMainView, "moveToColumn", Q_ARG(QVariant, 2));
+    QMetaObject::invokeMethod(qmlMainView, "moveToColumn", Q_ARG(QVariant, 2)); */
 }

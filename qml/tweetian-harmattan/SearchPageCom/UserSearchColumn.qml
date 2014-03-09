@@ -65,7 +65,7 @@ AbstractSearch {
         visible: userSearchListView.count == 0 && !busy
     }
 
-    ScrollDecorator { flickable: userSearchListView }
+    VerticalScrollDecorator { flickable: userSearchListView }
 
     WorkerScript {
         id: userSearchParser

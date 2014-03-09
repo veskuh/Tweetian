@@ -230,7 +230,7 @@ Page {
         }
     }
 
-    ScrollDecorator { flickable: mainFlickable }
+    VerticalScrollDecorator { flickable: mainFlickable }
 
 
    /* SelectionDialog {

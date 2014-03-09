@@ -18,10 +18,22 @@
 
 import QtQuick 2.1
 import Sailfish.Silica 1.0
+import "../Services/Twitter.js" as Twitter
 
 AbstractDelegate {
     id: root
+    height: contextMenu.visible ? root.contentHeight + contextMenu.height : root.contentHeight
     imageSource: model.isReceiveDM ? model.profileImageUrl : settings.userProfileImage
+
+    ContextMenu {
+        id: contextMenu
+
+        MenuItem {
+            id: deleteDMMenuItem
+            text: qsTr("Delete DM")
+            onClicked: remorse.execute(root, qsTr("Deleting DM"), function() {  Twitter.postDeleteDirectMsg(model.id, internal.deleteDMOnSuccess, internal.deleteDMOnFailure) })
+        }
+    }
 
     Item {
         anchors { left: parent.left; right: parent.right }
@@ -39,8 +51,8 @@ AbstractDelegate {
         }
 
         Text {
-            anchors { left: userNameText.right; leftMargin: constant.paddingSmall; right: parent.right }
-            font.pixelSize: constant.fontSizeMedium
+            anchors { left: userNameText.right; leftMargin: constant.paddingMedium; right: parent.right }
+            font.pixelSize: constant.fontSizeSmall
             color: highlighted ? constant.colorHighlighted : constant.colorMid
             elide: Text.ElideRight
             text: "@" + (model.isReceiveDM ? model.screenName : settings.userScreenName)
@@ -54,10 +66,12 @@ AbstractDelegate {
         color: highlighted ? constant.colorHighlighted : constant.colorLight
         textFormat: Text.RichText
         text: model.richText
+        height: implicitHeight + Theme.paddingSmall
     }
 
     Text {
-        anchors { left: parent.left; right: parent.right }
+        id: tweetTime
+        anchors.left: parent.left
         horizontalAlignment: Text.AlignRight
         font.pixelSize: constant.fontSizeSmall
         color: highlighted ? constant.colorHighlighted : constant.colorMid
@@ -65,5 +79,5 @@ AbstractDelegate {
         text: timeDiff
     }
 
-    // onClicked: internal.createDMDialog(model)
+    onPressAndHold: if(!model.isReceiveDM) contextMenu.show(root)
 }

@@ -73,8 +73,8 @@ Item {
         dmParser.sendMessage(msg)
     }
 
-    function removeDM(id) {
-        dmParser.sendMessage({type: "delete", model: fullModel, id: id})
+    function removeDM(id, screenName) {
+        dmParser.sendMessage({type: "delete", model: fullModel, threadModel: directMsgView.model, screenName: screenName, id: id})
         dmRemoved(id)
     }
 
