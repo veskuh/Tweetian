@@ -52,10 +52,10 @@ WorkerScript.onMessage = function(msg) {
 
         if (index >= 0) {
             if (msg.model.count > 0) {
-                var lastMsg = msg.model.get(msg.model.count - 1);
+                var lastMsg = msg.model.get(0);
                 var dmThread = msg.threadModel.get(index);
                 msg.threadModel.set(index, lastMsg);
-                dmThread.isUnread = lastMsg.isReceiveDM ? true : false;
+                dmThread.isUnread = false;
                 dmThread.timeDiff = timeDiff(lastMsg.createdAt);
             }
             else {
