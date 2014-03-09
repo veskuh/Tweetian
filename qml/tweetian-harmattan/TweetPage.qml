@@ -261,7 +261,7 @@ Page {
                 ListItem {
                     id: retweetItem
                     anchors { left: parent.left; right: parent.right }
-                    height: childrenRect.height + constant.paddingMedium
+                    height: retweetText.height + constant.paddingMedium
                     visible: tweet.isRetweet
                     subItemIndicator: true
                     onClicked: pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: tweet.retweetScreenName})
@@ -338,7 +338,7 @@ Page {
         }
     }
 
-    //ScrollDecorator { flickableItem: tweetPageFlickable }
+    //VerticalScrollDecorator { flickableItem: tweetPageFlickable }
 
 
 

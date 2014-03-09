@@ -62,7 +62,7 @@ Page {
         }
     }
 
-    ScrollDecorator { flickable: listView }
+    VerticalScrollDecorator { flickable: listView }
 
     Text {
         anchors.centerIn: parent

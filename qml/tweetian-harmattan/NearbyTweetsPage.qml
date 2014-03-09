@@ -89,7 +89,7 @@ Page {
         visible: searchListView.count == 0 && !header.busy
     }
 
-   // ScrollDecorator { flickableItem: searchListView }
+   // VerticalScrollDecorator { flickableItem: searchListView }
 
     PageHeader {
         id: header

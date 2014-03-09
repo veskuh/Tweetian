@@ -81,7 +81,7 @@ Item {
         text: root.emptyText
     }
 
-    ScrollDecorator { flickable: tweetView }
+    VerticalScrollDecorator { flickable: tweetView }
 
     WorkerScript {
         id: workerScript

@@ -253,7 +253,7 @@ Page {
         }
     }
 
-    ScrollDecorator { flickable: userFlickable }
+    VerticalScrollDecorator { flickable: userFlickable }
 
     QtObject {
         id: internal

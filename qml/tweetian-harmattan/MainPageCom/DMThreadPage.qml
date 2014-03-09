@@ -63,7 +63,7 @@ Page {
         }
     }
 
-    ScrollDecorator { flickable: dMConversationView }
+    VerticalScrollDecorator { flickable: dMConversationView }
 
     WorkerScript {
         id: dmConversationParser
