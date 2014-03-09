@@ -18,10 +18,22 @@
 
 import QtQuick 2.1
 import Sailfish.Silica 1.0
+import "../Services/Twitter.js" as Twitter
 
 AbstractDelegate {
     id: root
+    height: contextMenu.visible ? root.contentHeight + contextMenu.height : root.contentHeight
     imageSource: model.isReceiveDM ? model.profileImageUrl : settings.userProfileImage
+
+    ContextMenu {
+        id: contextMenu
+
+        MenuItem {
+            id: deleteDMMenuItem
+            text: qsTr("Delete DM")
+            onClicked: remorse.execute(root, qsTr("Deleting DM"), function() {  Twitter.postDeleteDirectMsg(model.id, internal.deleteDMOnSuccess, internal.deleteDMOnFailure) })
+        }
+    }
 
     Item {
         anchors { left: parent.left; right: parent.right }
@@ -66,4 +78,6 @@ AbstractDelegate {
         elide: Text.ElideRight
         text: timeDiff
     }
+
+    onPressAndHold: if(!model.isReceiveDM) contextMenu.show(root)
 }

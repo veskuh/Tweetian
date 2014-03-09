@@ -32,6 +32,10 @@ Page {
 
     Component.onCompleted: internal.insertDMs(mainPage.directMsg.fullModel.count)
 
+    RemorseItem {
+        id: remorse
+    }
+
     PullDownListView {
         id: dMConversationView
         anchors.fill: parent
@@ -84,36 +88,15 @@ Page {
         id: internal
 
         property bool workerScriptRunning: false
-        property Component __dmDialog: null
 
         function deleteDMOnSuccess(data) {
             removeDM(data.id_str)
-            mainPage.directMsg.removeDM(data.id_str)
+            mainPage.directMsg.removeDM(data.id_str, screenName)
             infoBanner.showText(qsTr("Direct message deleted successfully"))
-            header.busy = false
         }
 
         function deleteDMOnFailure(status, statusText) {
             infoBanner.showHttpError(status, statusText)
-            header.busy = false
-        }
-
-        function createDMDialog(model) {
-            var prop = {
-                id: model.id,
-                screenName: (model.sentMsg ? settings.userScreenName : model.screenName),
-                dmText: model.richText
-            }
-            if (!__dmDialog) __dmDialog = Qt.createComponent("DMDialog.qml")
-            __dmDialog.createObject(dMThreadPage, prop)
-        }
-
-        function createDeleteDMDialog(id) {
-            var message = qsTr("Do you want to delete this direct message?")
-            dialog.createQueryDialog(qsTr("Delete Message"), "", message, function() {
-                Twitter.postDeleteDirectMsg(id, deleteDMOnSuccess, deleteDMOnFailure)
-                header.busy = true
-            })
         }
 
         function insertDMs(count) {
