@@ -24,8 +24,11 @@ Item {
 
     property string text: ""
     property alias maximumValue: slider.maximumValue
+    property alias minimumValue: slider.minimumValue
     property alias stepSize: slider.stepSize
     property alias value: slider.value
+    property alias fontSize: mainText.font.pixelSize
+    property string valueText: (slider.value == 0) ? qsTr("Off") : value
 
     signal released
 
@@ -45,7 +48,7 @@ Item {
         anchors { top: mainText.bottom; left: parent.left; right: parent.right; margins: constant.paddingSmall }
         enabled: root.enabled
         minimumValue: 0
-        valueText: value == 0 ? "Off" : value
+        valueText: root.valueText
         onPressedChanged: if (!pressed) root.released()
     }
 }

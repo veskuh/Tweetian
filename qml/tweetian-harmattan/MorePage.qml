@@ -123,6 +123,16 @@ Page {
                             text: "General settings"
                         }
 
+            SettingSlider {
+                text: qsTr("Tweets font change")
+                minimumValue: -10
+                maximumValue: 10
+                valueText: (value == 0) ? qsTr("Off") : qsTr("%1 px.").arg(value)
+                stepSize: 1
+                value: settings.tweetsFontChange
+                onReleased: settings.tweetsFontChange = value
+            }
+
             SettingSwitch {
                 id: enableTwitLongerSwitch
                 text: qsTr("Enable TwitLonger")
