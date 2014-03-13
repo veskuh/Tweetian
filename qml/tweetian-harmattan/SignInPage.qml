@@ -82,8 +82,38 @@ Click the button below will launch an external web browser for you to sign in to
                     anchors.verticalCenter: parent.verticalCenter
                     text: qsTr("Sign In")
                     enabled: !header.busy
-                    onClicked: internal.signInButtonClicked()
+                    onClicked: {
+                        if (consKey.text.length > 0 && consSec.text.length > 0) {
+                            settings.consumerKey = consKey.text
+                            settings.consumerSecret = consSec.text
+                            Twitter.OAUTH_CONSUMER_KEY = settings.consumerKey
+                            Twitter.OAUTH_CONSUMER_SECRET = settings.consumerSecret
+                        }
+                        else {
+                            Twitter.OAUTH_CONSUMER_KEY = constant.twitterConsumerKey
+                            Twitter.OAUTH_CONSUMER_SECRET = constant.twitterConsumerSecret
+                        }
+                        internal.signInButtonClicked()
+                    }
+                    onPressAndHold: {
+                        consKey.visible = true
+                        consSec.visible = true
+                    }
                 }
+            }
+
+            TextField {
+                id: consKey
+                width: parent.width
+                placeholderText: qsTr("Consumer key")
+                visible: false
+            }
+
+            TextField {
+                id: consSec
+                width: parent.width
+                placeholderText: qsTr("Consumer secret")
+                visible: false
             }
 
             Text {
@@ -139,7 +169,7 @@ below and click done.")
                 console.log("Launching web browser with url:", signInUrl);
              }, function(status, statusText) {
                  if (status === 401)
-                     console.log(qsTr("Error: Unable to authorize with Twitter. \
+                     infoBanner.showText(qsTr("Error: Unable to authorize with Twitter. \
 Make sure the time/date of your phone is set correctly."))
                  else
                      infoBanner.showHttpError(status, statusText);
