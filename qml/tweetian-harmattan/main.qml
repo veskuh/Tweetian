@@ -68,7 +68,7 @@ ApplicationWindow {
             x: Theme.paddingMedium
             width: parent.width - 2 * Theme.paddingMedium
             color: Theme.highlightColor
-            maximumLineCount: 2
+            //maximumLineCount: 2
             horizontalAlignment: Text.AlignHCenter
             wrapMode: Text.Wrap
         }
@@ -77,8 +77,16 @@ ApplicationWindow {
 
         Timer {
             id: closeTimer
-            interval: 2000
+            interval: 3000
             onTriggered: infoBanner.opacity = 0.0
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                closeTimer.stop()
+                infoBanner.opacity = 0.0
+            }
         }
     }
 
