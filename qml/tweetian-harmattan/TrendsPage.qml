@@ -89,10 +89,7 @@ Item {
                     id: searchButton
                     anchors { top: parent.top; bottom: parent.bottom; right: parent.right; margins: constant.paddingMedium }
                     width: height
-                    // the following line will cause the button can not be clicked when there is pre-edit text
-                    // in textField because it will set enabled to false when keyboard closing
-                    //enabled: searchTextField.text || searchTextField.platformPreedit
-                    //opacity: enabled ? 1 : 0.25
+                    enabled: searchTextField.text
                     icon.source: "image://theme/icon-m-search"
                     onClicked: pageStack.push(Qt.resolvedUrl("SearchPageCom/TweetSearchPage.qml"), { searchString: searchTextField.text })
                 }
