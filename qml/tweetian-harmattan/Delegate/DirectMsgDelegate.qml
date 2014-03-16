@@ -43,7 +43,7 @@ AbstractDelegate {
             id: userNameText
             anchors.left: parent.left
             width: Math.min(implicitWidth, parent.width)
-            font.pixelSize: constant.fontSizeMedium
+            font.pixelSize: constant.fontSizeMedium + settings.tweetsFontChange
             font.bold: true
             color: highlighted ? constant.colorHighlighted : constant.colorLight
             elide: Text.ElideRight
@@ -52,7 +52,7 @@ AbstractDelegate {
 
         Text {
             anchors { left: userNameText.right; leftMargin: constant.paddingMedium; right: parent.right }
-            font.pixelSize: constant.fontSizeSmall
+            font.pixelSize: constant.fontSizeSmall + settings.tweetsFontChange
             color: highlighted ? constant.colorHighlighted : constant.colorMid
             elide: Text.ElideRight
             text: "@" + (model.isReceiveDM ? model.screenName : settings.userScreenName)
@@ -61,7 +61,7 @@ AbstractDelegate {
 
     Text {
         anchors { left: parent.left; right: parent.right }
-        font.pixelSize: constant.fontSizeMedium
+        font.pixelSize: constant.fontSizeMedium + settings.tweetsFontChange
         wrapMode: Text.Wrap
         color: highlighted ? constant.colorHighlighted : constant.colorLight
         textFormat: Text.RichText
@@ -73,7 +73,7 @@ AbstractDelegate {
         id: tweetTime
         anchors.left: parent.left
         horizontalAlignment: Text.AlignRight
-        font.pixelSize: constant.fontSizeSmall
+        font.pixelSize: constant.fontSizeSmall + settings.tweetsFontChange
         color: highlighted ? constant.colorHighlighted : constant.colorMid
         elide: Text.ElideRight
         text: timeDiff

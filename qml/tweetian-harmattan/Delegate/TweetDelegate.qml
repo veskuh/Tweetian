@@ -47,7 +47,7 @@ AbstractDelegate {
             id: userNameText
             anchors.left: parent.left
             width: Math.min(parent.width, implicitWidth)
-            font.pixelSize: constant.fontSizeMedium
+            font.pixelSize: constant.fontSizeMedium + settings.tweetsFontChange
             font.bold: true
             font.family: Theme.fontFamily
 
@@ -58,7 +58,7 @@ AbstractDelegate {
 
         Text {
             anchors { left: userNameText.right; right: favouriteIcon.left; margins: constant.paddingMedium; verticalCenter: userNameText.verticalCenter }
-            font.pixelSize: constant.fontSizeSmall
+            font.pixelSize: constant.fontSizeSmall + settings.tweetsFontChange
 
             font.family: Theme.fontFamily
             color: highlighted ? constant.colorHighlighted : constant.colorMid
@@ -81,7 +81,7 @@ AbstractDelegate {
         width: parent.width
 
         textFormat: Text.RichText
-        font.pixelSize: constant.fontSizeMedium
+        font.pixelSize: constant.fontSizeMedium + settings.tweetsFontChange
         font.family: Theme.fontFamily
         wrapMode: Text.Wrap
         color: highlighted ? constant.colorHighlighted : constant.colorLight
@@ -103,7 +103,7 @@ AbstractDelegate {
         Text {
             id: tweetTime
             anchors.left: parent.left
-            font.pixelSize: constant.fontSizeSmall
+            font.pixelSize: constant.fontSizeSmall + settings.tweetsFontChange
             font.family: Theme.fontFamily
             color: highlighted ? constant.colorHighlighted : constant.colorMid
             elide: Text.ElideRight
@@ -123,7 +123,7 @@ AbstractDelegate {
         Text {
             id: retweetText
             anchors.left: retweetIcon.right
-            font.pixelSize: constant.fontSizeSmall
+            font.pixelSize: constant.fontSizeSmall + settings.tweetsFontChange
             font.family: Theme.fontFamily
             wrapMode: Text.Wrap
             width: model.isRetweet ? undefined : 0
@@ -134,7 +134,7 @@ AbstractDelegate {
 
         Text {
             anchors { left: retweetText.right; right: parent.right }
-            font.pixelSize: constant.fontSizeSmall
+            font.pixelSize: constant.fontSizeSmall + settings.tweetsFontChange
             font.family: Theme.fontFamily
             color: highlighted ? constant.colorHighlighted : constant.colorMid
             elide: Text.ElideRight
