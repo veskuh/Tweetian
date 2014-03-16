@@ -162,7 +162,7 @@ ApplicationWindow {
         }
 
         function followOnFailure(status, statusText) {
-            console.log(statusText)
+            infoBanner.showText(statusText)
         }
     }
     QtObject {
