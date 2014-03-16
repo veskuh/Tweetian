@@ -255,11 +255,7 @@ Page {
                 text: qsTr("Follow %1").arg("@" + screenName)
                 visible: !userPageHelper.isFollowing
                 enabled: screenName !== settings.userScreenName
-                onClicked: remorse.execute(menuFollow.text, function()
-                {
-                    Twitter.postFollow(screenName, userPageHelper.followOnSuccess, userPageHelper.followOnFailure)
-                })
-
+                onClicked: Twitter.postFollow(screenName, userPageHelper.followOnSuccess, userPageHelper.followOnFailure)
             }
 
             MenuItem {
