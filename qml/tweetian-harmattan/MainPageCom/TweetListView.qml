@@ -169,7 +169,7 @@ Item {
         id: toTop
         visible: false
         z: 1
-        y: Theme.paddingLarge
+        y: Theme.paddingLarge + Theme.paddingSmall
         x: (Screen.width/2) - 60; // hcenter
         width: 120
         height: 120
