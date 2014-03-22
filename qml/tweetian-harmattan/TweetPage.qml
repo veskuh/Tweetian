@@ -130,19 +130,18 @@ Page {
                 visible: favouritedTweet
             }
 
-
             MenuItem {
-                text: qsTr("Reply")
+                text: qsTr("Retweet")
                 onClicked: {
-                    var prop = { type: "Reply", placedText: JS.constructReplyText(tweet), tweetId: tweet.id }
+                    var prop = { type: "RT", placedText: JS.constructRetweetText(tweet), tweetId: tweet.id }
                     pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), prop)
                 }
             }
 
             MenuItem {
-                text: qsTr("Retweet")
+                text: qsTr("Reply")
                 onClicked: {
-                    var prop = { type: "RT", placedText: JS.constructRetweetText(tweet), tweetId: tweet.id }
+                    var prop = { type: "Reply", placedText: JS.constructReplyText(tweet), tweetId: tweet.id }
                     pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), prop)
                 }
             }
