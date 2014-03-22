@@ -161,5 +161,6 @@
         <file>qml/tweetian-harmattan/Image/banner_empty.png</file>
         <file>qml/tweetian-harmattan/Image/search.svg</file>
         <file>qml/tweetian-harmattan/Image/avatar_placeholder.png</file>
+        <file>icons/icon-ll-up.png</file>
     </qresource>
 </RCC>
