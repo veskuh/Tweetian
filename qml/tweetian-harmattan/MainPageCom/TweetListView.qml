@@ -186,13 +186,13 @@ Item {
                 id: timerVisibleFor
                 repeat: false
                 running: false
-                interval: 700
+                interval: 500
                 onTriggered: toTop.visible = false
         }
         Connections{
             target: tweetView
-            onFlickStarted: toTop.visible = true
-            onFlickEnded: timerVisibleFor.start();
+            onFlickStarted: { timerVisibleFor.stop(); toTop.visible = true; }
+            onFlickEnded: timerVisibleFor.start()
         }
     }
 
