@@ -165,7 +165,22 @@ Item {
         }
     }
 
-    VerticalScrollDecorator { flickable: tweetView }
+    IconButton { id: toTop; visible: false; z: 1; y: Theme.paddingMedium; x: (Screen.width/2) - 48; width: 96; height: 96; icon.source: "image://theme/icon-l-up"; onClicked: { tweetView.scrollToTop(); visible: false; }}
+    Timer {
+            id: timerVisibleFor
+            repeat: false
+            running: false
+            interval: 1000
+            onTriggered: { toTop.visible = false; }
+          }
+    VerticalScrollDecorator {
+        flickable: tweetView;
+        Connections{
+            target: tweetView
+            onMovementStarted: { toTop.visible = true; }
+            onMovementEnded: { timerVisibleFor.start(); }
+        }
+    }
 
    // FastScroll { listView: tweetView }
 
