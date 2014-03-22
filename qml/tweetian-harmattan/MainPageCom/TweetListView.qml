@@ -151,7 +151,7 @@ Item {
         onCountChanged: {
             if (lastCount && settings.keepPosition) {
                 /* Move to one item before newer items */
-                root.positionViewAtIndex(count - lastCount, ListView.Center);
+                positionViewAtIndex(count - lastCount, ListView.Center);
             }
 
             lastCount = count;
