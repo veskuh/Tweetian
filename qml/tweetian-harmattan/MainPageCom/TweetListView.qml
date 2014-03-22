@@ -151,7 +151,7 @@ Item {
         onCountChanged: {
             if (lastCount && settings.keepPosition) {
                 /* Move to one item before newer items */
-                positionViewAtIndex(count - lastCount, ListView.Center);
+                root.positionViewAtIndex(count - lastCount, ListView.Center);
             }
 
             lastCount = count;
@@ -165,20 +165,34 @@ Item {
         }
     }
 
-    IconButton { id: toTop; visible: false; z: 1; y: Theme.paddingMedium; x: (Screen.width/2) - 60; width: 120; height: 120; icon.source: "qrc:/icons/icon-ll-up.png"; onClicked: { tweetView.scrollToTop(); visible: false; }}
-    Timer {
-            id: timerVisibleFor
-            repeat: false
-            running: false
-            interval: 700
-            onTriggered: { toTop.visible = false; }
-          }
+    IconButton {
+        id: toTop
+        visible: false
+        z: 1
+        y: Theme.paddingLarge
+        x: (Screen.width/2) - 60; // hcenter
+        width: 120
+        height: 120
+        icon.source: "qrc:/icons/icon-ll-up.png";
+        onClicked: {
+                        visible: false;
+                        tweetView.positionViewAtIndex(0, ListView.Top);
+                    }
+    }
+
     VerticalScrollDecorator {
         flickable: tweetView;
+        Timer {
+                id: timerVisibleFor
+                repeat: false
+                running: false
+                interval: 700
+                onTriggered: toTop.visible = false
+        }
         Connections{
             target: tweetView
-            onMovementStarted: { toTop.visible = true; }
-            onMovementEnded: { timerVisibleFor.start(); }
+            onFlickStarted: toTop.visible = true
+            onFlickEnded: timerVisibleFor.start();
         }
     }
 
