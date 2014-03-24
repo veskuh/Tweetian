@@ -163,39 +163,76 @@ Item {
             repeat: false
             onTriggered: root.unreadCount = Math.min(tweetView.indexAt(0, tweetView.contentY + 5), root.unreadCount)
         }
-    }
 
-    IconButton {
-        id: toTop
-        visible: false
-        z: 1
-        y: Theme.paddingLarge + Theme.paddingSmall
-        x: (Screen.width/2) - 60; // hcenter
-        width: 120
-        height: 120
-        icon.source: "qrc:/icons/icon-ll-up.png";
-        onClicked: {
-                        visible: false;
-                        tweetView.positionViewAtIndex(0, ListView.Top);
-                    }
-    }
+        IconButton {
+            id: toTop
+            visible: opacity != 0.0
+            opacity: 0.0
+            z: 1
+            y: Theme.paddingLarge + Theme.paddingSmall
+            x: Screen.width - width - Theme.paddingLarge
+            width: 120
+            height: 120
+            icon.source: "qrc:/icons/icon-ll-up.png";
+            onClicked: {
+                opacity: 0.0;
+                // this seems work better than scrollToTop()
+                tweetView.positionViewAtIndex(0, ListView.Top);
+            }
 
-    VerticalScrollDecorator {
-        flickable: tweetView;
+            Behavior on opacity {
+                FadeAnimation {}
+            }
+        }
+
+        IconButton {
+            id: toBottom
+            visible: opacity != 0.0
+            opacity: 0.0
+            z: 1
+            y: Theme.paddingLarge + Theme.paddingSmall
+            x: Screen.width - width - Theme.paddingLarge
+            width: 120
+            height: 120
+            icon.rotation: 180
+            icon.source: "qrc:/icons/icon-ll-up.png";
+            onClicked: {
+                opacity: 0.0;
+                tweetView.scrollToBottom()
+            }
+
+            Behavior on opacity {
+                FadeAnimation {}
+            }
+        }
+
         Timer {
-                id: timerVisibleFor
-                repeat: false
-                running: false
-                interval: 500
-                onTriggered: toTop.visible = false
+            id: timerVisibleFor
+            repeat: false
+            running: false
+            interval: 500
+            onTriggered: { toTop.opacity = 0.0; toBottom.opacity = 0.0; }
         }
-        Connections{
-            target: tweetView
-            onFlickStarted: { timerVisibleFor.stop(); toTop.visible = true; }
-            onFlickEnded: timerVisibleFor.start()
-        }
-    }
 
+        VerticalScrollDecorator {
+            flickable: tweetView;
+        }
+
+        onFlickStarted: {
+            timerVisibleFor.stop()
+            if (verticalVelocity < 0)
+            {
+                toBottom.opacity = 0.0;
+                toTop.opacity = 1.0;
+            }
+            else
+            {
+                toTop.opacity = 0.0;
+                toBottom.opacity = 1.0;
+            }
+        }
+        onFlickEnded: timerVisibleFor.start()
+    }
    // FastScroll { listView: tweetView }
 
     // Timer used for refresh the timestamp of every tweet every minute. triggeredOnStart is set to true
