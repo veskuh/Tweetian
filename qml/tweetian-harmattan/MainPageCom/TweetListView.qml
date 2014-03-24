@@ -166,7 +166,36 @@ Item {
         }
     }
 
-    VerticalScrollDecorator { flickable: tweetView }
+    IconButton {
+        id: toTop
+        visible: false
+        z: 1
+        y: Theme.paddingLarge + Theme.paddingSmall
+        x: (Screen.width/2) - 60; // hcenter
+        width: 120
+        height: 120
+        icon.source: "qrc:/icons/icon-ll-up.png";
+        onClicked: {
+                        visible: false;
+                        tweetView.positionViewAtIndex(0, ListView.Top);
+                    }
+    }
+
+    VerticalScrollDecorator {
+        flickable: tweetView;
+        Timer {
+                id: timerVisibleFor
+                repeat: false
+                running: false
+                interval: 500
+                onTriggered: toTop.visible = false
+        }
+        Connections{
+            target: tweetView
+            onFlickStarted: { timerVisibleFor.stop(); toTop.visible = true; }
+            onFlickEnded: timerVisibleFor.start()
+        }
+    }
 
    // FastScroll { listView: tweetView }
 
