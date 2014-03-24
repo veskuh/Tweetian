@@ -122,6 +122,7 @@ Item {
         property Item contextMenu
 
         PullDownMenu {
+            z: 10000
             MenuItem {
                visible: !pendingTweet
                onClicked: pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"), {type: "New"})
