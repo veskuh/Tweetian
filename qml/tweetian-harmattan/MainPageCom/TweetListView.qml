@@ -169,15 +169,21 @@ Item {
             visible: opacity != 0.0
             opacity: 0.0
             z: 1
-            y: Theme.paddingLarge + Theme.paddingSmall
+            y: Theme.paddingLarge
+//            y: Screen.height * 0.40 // middle of screen
             x: Screen.width - width - Theme.paddingLarge
             width: 120
             height: 120
             icon.source: "qrc:/icons/icon-ll-up.png";
             onClicked: {
-                opacity: 0.0;
+                // for someuknown reason we don't get onFlickEnded when doing this so we  turn on
+                // timer here to make sure button dissapears after 500ms
+                // Since setting opacity 0.0 fails, we also prevent interactive scroll when call move to top
+                timerVisibleFor.start()
+                tweetView.interactive = false;
                 // this seems work better than scrollToTop()
                 tweetView.positionViewAtIndex(0, ListView.Top);
+                tweetView.interactive = true;
             }
 
             Behavior on opacity {
@@ -190,15 +196,21 @@ Item {
             visible: opacity != 0.0
             opacity: 0.0
             z: 1
-            y: Theme.paddingLarge + Theme.paddingSmall
+            y: Theme.paddingLarge
+//            y: Screen.height * 0.40  // middle of screen
             x: Screen.width - width - Theme.paddingLarge
             width: 120
             height: 120
             icon.rotation: 180
             icon.source: "qrc:/icons/icon-ll-up.png";
             onClicked: {
-                opacity: 0.0;
+                // for someuknown reason we don't get onFlickEnded when doing this so we  turn on
+                // timer here to make sure button dissapears after 500ms
+                // Since setting opcity 0.0 fails
+                timerVisibleFor.start()
+                tweetView.interactive = false;
                 tweetView.scrollToBottom()
+                tweetView.interactive = true;
             }
 
             Behavior on opacity {
@@ -219,7 +231,6 @@ Item {
         }
 
         onFlickStarted: {
-            timerVisibleFor.stop()
             if (verticalVelocity < 0)
             {
                 toBottom.opacity = 0.0;
@@ -233,7 +244,6 @@ Item {
         }
         onFlickEnded: timerVisibleFor.start()
     }
-   // FastScroll { listView: tweetView }
 
     // Timer used for refresh the timestamp of every tweet every minute. triggeredOnStart is set to true
     // so that the timestamp is refreshed when the app is switch from background to foreground.
