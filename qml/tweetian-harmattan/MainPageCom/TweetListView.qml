@@ -210,7 +210,7 @@ Item {
                 // Since setting opcity 0.0 fails
                 timerVisibleFor.start()
                 tweetView.interactive = false;
-                tweetView.scrollToBottom()
+                tweetView.positionViewAtEnd()
                 tweetView.interactive = true;
             }
 
