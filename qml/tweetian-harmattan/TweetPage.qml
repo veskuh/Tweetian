@@ -263,6 +263,25 @@ Page {
                     }
                 }
 
+                Row {
+                    anchors { left: parent.left; margins: constant.paddingMedium }
+                    spacing: constant.paddingSmall
+                    Label {
+                        text: tweet.retweet_count + " Retweeted"
+                        visible: tweet.retweet_count? tweet.retweet_count > 0 : false
+                        font.pixelSize: constant.fontSizeSmall
+                        font.family: Theme.fontFamily
+                        color: constant.colorMid
+                    }
+                    Label {
+                        text: tweet.favorite_count + " Favorited"
+                        visible: tweet.favorite_count? tweet.favorite_count > 0 : false
+                        font.pixelSize: constant.fontSizeSmall
+                        font.family: Theme.fontFamily
+                        color: constant.colorMid
+                    }
+                }
+
                 ListItem {
                     id: retweetItem
                     anchors { left: parent.left; right: parent.right }
