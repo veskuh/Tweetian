@@ -59,6 +59,12 @@ Page {
     SilicaFlickable {
         id: tweetPageFlickable
 
+        onContentHeightChanged: {
+            if (ancestorRepeater.count > 0) {
+                tweetPageFlickable.contentY = tweetPageFlickable.contentHeight - tweetPageFlickable.height
+            }
+        }
+
         PageHeader {
             id: header
             title: qsTr("Tweet")
