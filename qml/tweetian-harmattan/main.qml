@@ -126,6 +126,7 @@ ApplicationWindow {
                 dialog.addToPocketClicked.connect(pocketCallback)
                 dialog.addToInstapaperClicked.connect(instapaperCallback)
             }*/
+            infoBanner.showText(qsTr("Launching external web browser..."))
             Qt.openUrlExternally(link)
         }
 
