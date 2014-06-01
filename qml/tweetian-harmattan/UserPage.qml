@@ -41,6 +41,11 @@ Page {
 
     /* TODO
       MenuItem {
+                text: qsTr("Block user")
+                enabled: screenName !== settings.userScreenName
+                onClicked: internal.createBlockUserDialog();
+            }
+            MenuItem {
                 text: qsTr("Report user as spammer")
                 enabled: screenName !== settings.userScreenName
                 onClicked: internal.createReportSpamDialog()
@@ -309,6 +314,19 @@ Page {
             if (status === 404) console.log(qsTr("The user %1 does not exist").arg("@" + userPage.screenName))
             else console.log(statusText)
             loadingRect.visible = false
+        }
+
+        function reportBlockOnSuccess(data) {
+            infoBanner.showText(qsTr("Blocked %1").arg("@" + data.screen_name))
+            loadingRect.visible = false
+        }
+
+        function createBlockUserDialog() {
+            var message = qsTr("Do you want to block %1?").arg("@" + screenName)
+            dialog.createQueryDialog(qsTr("Block User"), "", message, function() {
+                Twitter.postBlockUser(screenName, reportBlockOnSuccess, reportSpamOnFailure)
+                loadingRect.visible = true
+            })
         }
 
         function reportSpamOnSuccess(data) {
