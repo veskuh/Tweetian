@@ -158,6 +158,7 @@ Page {
     }
 
     function refreshAll() {
-        StreamScript.refreshAll();
+        if (!userStream.connected)
+            StreamScript.refreshAll();
     }
 }
