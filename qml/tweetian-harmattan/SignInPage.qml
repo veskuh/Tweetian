@@ -134,7 +134,7 @@ below and click done.")
                 tokenSecretTempo = tokenSecret;
                 var signInUrl = "https://api.twitter.com/oauth/authorize?oauth_token=" + tokenTempo;
                 Qt.openUrlExternally(signInUrl);
-                infoBanner.showText("Launching external web browser...");
+                infoBanner.showText(qsTr("Launching external web browser..."));
                 header.busy = false;
                 console.log("Launching web browser with url:", signInUrl);
              }, function(status, statusText) {

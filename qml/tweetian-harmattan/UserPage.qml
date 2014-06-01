@@ -28,7 +28,6 @@ Page {
 
     property string screenName
     property variant user: ({})
-    property bool isFollowing: false
 
     Component.onCompleted: {
         if (user.hasOwnProperty("screenName"))
@@ -42,6 +41,11 @@ Page {
 
     /* TODO
       MenuItem {
+                text: qsTr("Block user")
+                enabled: screenName !== settings.userScreenName
+                onClicked: internal.createBlockUserDialog();
+            }
+            MenuItem {
                 text: qsTr("Report user as spammer")
                 enabled: screenName !== settings.userScreenName
                 onClicked: internal.createReportSpamDialog()
@@ -49,6 +53,7 @@ Page {
         }
     }*/
 
+    RemorsePopup {id: remorse}
     SilicaFlickable {
         id: userFlickable
         anchors.fill: parent
@@ -197,7 +202,7 @@ Page {
                     subItemIndicator: model.clickedString
                     enabled: (!subItemIndicator || title === "Website")
                              || !user.isProtected
-                             || isFollowing
+                             || userPageHelper.isFollowing
                              || userPage.screenName === settings.userScreenName
                     onClicked: if (model.clickedString) eval(model.clickedString)
                     // TODO: Remove eval() if possible
@@ -239,10 +244,23 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: user.isFollowing ? qsTr("Unfollow %1").arg("@" + screenName)
-                                             : qsTr("Follow %1").arg("@" + screenName)
+                id: menuUnfollow
+                text: qsTr("Unfollow %1").arg("@" + screenName)
+                visible: userPageHelper.isFollowing
                 enabled: screenName !== settings.userScreenName
-                onClicked: internal.createFollowUserDialog()
+                onClicked: remorse.execute(menuUnfollow.text, function()
+                {
+                    Twitter.postUnfollow(screenName, userPageHelper.followOnSuccess, userPageHelper.followOnFailure)
+                })
+
+            }
+
+            MenuItem {
+                id: menuFollow
+                text: qsTr("Follow %1").arg("@" + screenName)
+                visible: !userPageHelper.isFollowing
+                enabled: screenName !== settings.userScreenName
+                onClicked: Twitter.postFollow(screenName, userPageHelper.followOnSuccess, userPageHelper.followOnFailure)
             }
 
             MenuItem {
@@ -281,7 +299,7 @@ Page {
                                     "internal.pushUserPage(\"UserPageCom/UserSubscribedListsPage.qml\")")
             userInfoRepeater.append(qsTr("Listed"), user.listedCount.toString(),
                                     "internal.pushUserPage(\"UserPageCom/UserListedPage.qml\")")
-            isFollowing = user.isFollowing;
+            userPageHelper.isFollowing = user.isFollowing;
         }
 
         function userInfoOnSuccess(data) {
@@ -298,16 +316,17 @@ Page {
             loadingRect.visible = false
         }
 
-        function followOnSuccess(data, following) {
-            isFollowing = following;
-            if (isFollowing) console.log(qsTr("Followed the user %1 successfully").arg("@" + data.screen_name))
-            else console.log(qsTr("Unfollowed the user %1 successfully").arg("@" + data.screen_name))
+        function reportBlockOnSuccess(data) {
+            infoBanner.showText(qsTr("Blocked %1").arg("@" + data.screen_name))
             loadingRect.visible = false
         }
 
-        function followOnFailure(status, statusText) {
-            console.log(statusText)
-            loadingRect.visible = false
+        function createBlockUserDialog() {
+            var message = qsTr("Do you want to block %1?").arg("@" + screenName)
+            dialog.createQueryDialog(qsTr("Block User"), "", message, function() {
+                Twitter.postBlockUser(screenName, reportBlockOnSuccess, reportSpamOnFailure)
+                loadingRect.visible = true
+            })
         }
 
         function reportSpamOnSuccess(data) {
@@ -324,19 +343,6 @@ Page {
             var message = qsTr("Do you want to report and block the user %1?").arg("@" + screenName)
             dialog.createQueryDialog(qsTr("Report Spammer"), "", message, function() {
                 Twitter.postReportSpam(screenName, reportSpamOnSuccess, reportSpamOnFailure)
-                loadingRect.visible = true
-            })
-        }
-
-        function createFollowUserDialog() {
-            var title = isFollowing ? qsTr("Unfollow user") : qsTr("Follow user")
-            var message = isFollowing ? qsTr("Do you want to unfollow the user %1?").arg("@" + screenName)
-                                                 : qsTr("Do you want to follow the user %1?").arg("@" + screenName)
-            dialog.createQueryDialog(title, "", message, function() {
-                if (isFollowing)
-                    Twitter.postUnfollow(screenName, followOnSuccess, followOnFailure)
-                else
-                    Twitter.postFollow(screenName, followOnSuccess, followOnFailure)
                 loadingRect.visible = true
             })
         }

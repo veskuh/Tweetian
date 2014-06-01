@@ -68,7 +68,7 @@ ApplicationWindow {
             x: Theme.paddingMedium
             width: parent.width - 2 * Theme.paddingMedium
             color: Theme.highlightColor
-            maximumLineCount: 2
+            //maximumLineCount: 2
             horizontalAlignment: Text.AlignHCenter
             wrapMode: Text.Wrap
         }
@@ -77,8 +77,16 @@ ApplicationWindow {
 
         Timer {
             id: closeTimer
-            interval: 2000
+            interval: 3000
             onTriggered: infoBanner.opacity = 0.0
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                closeTimer.stop()
+                infoBanner.opacity = 0.0
+            }
         }
     }
 
@@ -118,6 +126,7 @@ ApplicationWindow {
                 dialog.addToPocketClicked.connect(pocketCallback)
                 dialog.addToInstapaperClicked.connect(instapaperCallback)
             }*/
+            infoBanner.showText(qsTr("Launching external web browser..."))
             Qt.openUrlExternally(link)
         }
 
@@ -139,6 +148,24 @@ ApplicationWindow {
         }
     }
 
+    QtObject {
+        id: userPageHelper
+        /* This object is used by UserPage.qml by the RemorsePopup when follow/unfollow executes
+           We make this global to prevent error if user swipe away after follow/unfollow
+        */
+        property bool isFollowing: false
+        function followOnSuccess(data, following) {
+            isFollowing = following;
+            if (isFollowing)
+                infoBanner.showText(qsTr("Followed the user %1 successfully").arg("@" + data.screen_name))
+            else
+                infoBanner.showText(qsTr("Unfollowed the user %1 successfully").arg("@" + data.screen_name))
+        }
+
+        function followOnFailure(status, statusText) {
+            infoBanner.showText(statusText)
+        }
+    }
     QtObject {
         id: tweetPageHelper
         function deleteTweetOnSuccess(data) {

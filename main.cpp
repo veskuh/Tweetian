@@ -61,10 +61,14 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     }
     app->installTranslator(&translator);
 
-    app->setApplicationName("Tweetian");
+    QString appName("Tweetian");
+    app->setApplicationName(appName);
     app->setOrganizationName("harbour-tweetian");
     app->setApplicationVersion(APP_VERSION);
     QScopedPointer<QQuickView> view(SailfishApp::createView());
+
+    view->setTitle(appName);
+
     TweetianIf* tweetianIf = new TweetianIf(app.data(), view.data());
     QDBusConnection bus = QDBusConnection::sessionBus();
     bus.registerService("com.tweetian");

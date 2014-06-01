@@ -46,6 +46,12 @@ Dialog {
     canAccept: (tweetTextArea.text.length != 0 )
     onAccepted: internalTweet.postTweet(tweetId, type, screenName, tweetTextArea.text, imagePath, latitude, longitude)
 
+    onStatusChanged: {
+        if (status == DialogStatus.Opened) {
+            tweetTextArea.cursorPosition = tweetTextArea.text.length
+        }
+    }
+
     SilicaFlickable {
         anchors.fill: parent
 

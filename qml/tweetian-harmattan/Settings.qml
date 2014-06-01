@@ -58,6 +58,7 @@ QtObject {
         instapaperToken = ""
         instapaperTokenSecret = ""
         muteString = ""
+        tweetsFontChange = 0
         Database.clearTable("settings")
     }
 
@@ -113,4 +114,7 @@ QtObject {
 
     property string muteString: ""
     onMuteStringChanged: Database.setSetting({"muteString": muteString})
+
+    property int tweetsFontChange: 0
+    onTweetsFontChangeChanged: Database.setSetting({"tweetsFontChange": tweetsFontChange})
 }

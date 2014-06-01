@@ -59,6 +59,12 @@ Page {
     SilicaFlickable {
         id: tweetPageFlickable
 
+        onContentHeightChanged: {
+            if (ancestorRepeater.count > 0) {
+                tweetPageFlickable.contentY = tweetPageFlickable.contentHeight - tweetPageFlickable.height
+            }
+        }
+
         PageHeader {
             id: header
             title: qsTr("Tweet")
@@ -130,19 +136,18 @@ Page {
                 visible: favouritedTweet
             }
 
-
             MenuItem {
-                text: qsTr("Reply")
+                text: qsTr("Retweet")
                 onClicked: {
-                    var prop = { type: "Reply", placedText: JS.constructReplyText(tweet), tweetId: tweet.id }
+                    var prop = { type: "RT", placedText: JS.constructRetweetText(tweet), tweetId: tweet.id }
                     pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), prop)
                 }
             }
 
             MenuItem {
-                text: qsTr("Retweet")
+                text: qsTr("Reply")
                 onClicked: {
-                    var prop = { type: "RT", placedText: JS.constructRetweetText(tweet), tweetId: tweet.id }
+                    var prop = { type: "Reply", placedText: JS.constructReplyText(tweet), tweetId: tweet.id }
                     pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), prop)
                 }
             }
@@ -255,6 +260,25 @@ Page {
                         color: constant.colorMid
                         text: Qt.formatDateTime(tweet.createdAt, Qt.DefaultLocaleShortDate) + " | " + tweet.source
                         elide: Text.ElideRight
+                    }
+                }
+
+                Row {
+                    anchors { left: parent.left; margins: constant.paddingMedium }
+                    spacing: constant.paddingSmall
+                    Label {
+                        text: tweet.retweet_count + " Retweeted"
+                        visible: tweet.retweet_count? tweet.retweet_count > 0 : false
+                        font.pixelSize: constant.fontSizeSmall
+                        font.family: Theme.fontFamily
+                        color: constant.colorMid
+                    }
+                    Label {
+                        text: tweet.favorite_count + " Favorited"
+                        visible: tweet.favorite_count? tweet.favorite_count > 0 : false
+                        font.pixelSize: constant.fontSizeSmall
+                        font.family: Theme.fontFamily
+                        color: constant.colorMid
                     }
                 }
 
