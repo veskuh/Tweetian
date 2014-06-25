@@ -123,6 +123,7 @@ Item {
 
         PullDownMenu {
             z: 10000
+            busy: root.busy
             MenuItem {
                visible: !pendingTweet
                onClicked: pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"), {type: "New"})
