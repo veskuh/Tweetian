@@ -47,6 +47,7 @@ ApplicationWindow {
         opacity: 0.0
         // On top of everything
         z: 1
+        visible: opacity > 0.0
 
         function showText(text) {
             infoText.text = text

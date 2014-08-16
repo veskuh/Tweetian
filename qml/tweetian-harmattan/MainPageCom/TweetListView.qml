@@ -122,7 +122,6 @@ Item {
         property Item contextMenu
 
         PullDownMenu {
-            z: 10000
             busy: root.busy
             MenuItem {
                visible: !pendingTweet
