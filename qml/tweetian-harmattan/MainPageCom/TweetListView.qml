@@ -122,7 +122,7 @@ Item {
         property Item contextMenu
 
         PullDownMenu {
-            z: 10000
+            busy: root.busy
             MenuItem {
                visible: !pendingTweet
                onClicked: pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"), {type: "New"})
@@ -232,18 +232,23 @@ Item {
         }
 
         onFlickStarted: {
-            if (verticalVelocity < 0)
-            {
-                toBottom.opacity = 0.0;
-                toTop.opacity = 1.0;
-            }
-            else
-            {
-                toTop.opacity = 0.0;
-                toBottom.opacity = 1.0;
-            }
+            if (!tweetView.hasOwnProperty("quickScroll") || !tweetView.quickScroll) {
+	            if (verticalVelocity < 0)
+	            {
+	                toBottom.opacity = 0.0;
+	                toTop.opacity = 1.0;
+	            }
+	            else
+	            {
+	                toTop.opacity = 0.0;
+	                toBottom.opacity = 1.0;
+	            }
+	        }
         }
-        onFlickEnded: timerVisibleFor.start()
+        onFlickEnded: {
+        	if (toTop.visible || toBottom.visible)
+        		timerVisibleFor.start()
+        }
     }
 
     // Timer used for refresh the timestamp of every tweet every minute. triggeredOnStart is set to true
