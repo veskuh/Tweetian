@@ -111,6 +111,7 @@ Item {
         anchors.fill: parent
 
         delegate: DMThreadDelegate {}
+        header: Item { height: Theme.paddingSmall; width: 1 }
         model: ListModel {}
         onPulledDown: if (!userStream.connected) refresh("newer")
 
