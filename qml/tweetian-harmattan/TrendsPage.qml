@@ -19,7 +19,6 @@
 import QtQuick 2.1
 import Sailfish.Silica 1.0
 import "Services/Twitter.js" as Twitter
-import "Component"
 import "Dialog"
 
 Item {
@@ -88,7 +87,7 @@ Item {
                 anchors {
                     verticalCenter: parent.verticalCenter
                     left: parent.left; right: parent.right
-                    margins: constant.paddingLarge
+                    margins: constant.paddingMedium
                 }
                 font.pixelSize: constant.fontSizeMedium
                 color: constant.colorLight
