@@ -376,13 +376,20 @@ Page {
     Component {
         id: inReplyToHeading
 
-        SectionHeader { width: mainColumn.width; text: qsTr("In-reply-to") }
+        SectionHeader {
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: tweetPage.width - constant.paddingMedium; text: qsTr("In-reply-to")
+        }
     }
 
     Component {
         id: replyHeading
 
-        SectionHeader { width: mainColumn.width; text: qsTr("Reply") }
+        SectionHeader {
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: tweetPage.width - constant.paddingMedium;
+            text: qsTr("Reply")
+        }
     }
 
     Component {

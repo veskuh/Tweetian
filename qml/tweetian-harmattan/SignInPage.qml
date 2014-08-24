@@ -27,12 +27,6 @@ Page {
     property string tokenTempo: ""
     property string tokenSecretTempo: ""
 
-    TextField {
-        id:test
-        height:0
-        width:0
-    }
-
     SilicaFlickable {
         id: flickable
         anchors.fill: parent
