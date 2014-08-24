@@ -142,6 +142,7 @@ Item {
         model: ListModel {}
         section.property: "timeDiff" // for FastScroll
         delegate: TweetDelegate {}
+        header: Item { height: Theme.paddingSmall; width: 1 }
         footer: LoadMoreButton {
             visible: tweetView.count > 0
             enabled: !busy
