@@ -1,9 +1,10 @@
 import QtQuick 2.1
 import Sailfish.Silica 1.0
 
-import "Component"
+/*
+import "Component" as Tweetian
 import "Services/Translation.js" as Translation
-import "SettingsPageCom"
+import "SettingsPageCom" */
 
 Page {
     id: settingGeneralPage
@@ -82,57 +83,52 @@ Page {
                 }
             } */
 
-
-            SectionHeader {
-                            text: "Refresh settings"
-                        }
-
-            SettingSwitch {
+            TextSwitch {
                 id: streamingSwitch
                 text: qsTr("Enable streaming")
+                description: qsTr("Streaming enables Tweetian to deliver real-time updates of timeline, mentions \
+and direct messages without the needs of refreshing periodically. Auto refresh and manual refresh will be disabled \
+when streaming is connected. It is not recommended to enable streaming when you are on a weak internet connection \
+(eg. mobile data).")
                 checked: settings.enableStreaming
-                infoButtonVisible: true
                 onCheckedChanged: settings.enableStreaming = checked
-                onInfoClicked: dialog.createMessageDialog(qsTr("Streaming"), infoText.streaming)
             }
 
-            SettingSlider {
+            Slider {
                 enabled: !streamingSwitch.checked
-                text: qsTr("Auto refresh interval: %1")
-                .arg(enabled ? (value === 0 ? qsTr("Off") : qsTr("%n min(s)", "", value)) : qsTr("Disabled"))
+                label: qsTr("Auto refresh interval")
                 maximumValue: 30
                 stepSize: 5
                 value: settings.autoRefreshInterval
+                valueText: (enabled ? (value === 0 ? qsTr("Off") : qsTr("%n min(s)", "", value)) : qsTr("Disabled"))
                 onReleased: settings.autoRefreshInterval = value
+                width: parent.width
             }
 
-
-            SettingSwitch {
+            TextSwitch {
                 text: qsTr("Enable notification for mentions and DMs")
                 checked: settings.enableNotification
                 onCheckedChanged: settings.enableNotification = checked
             }
 
-            SettingSwitch {
+            TextSwitch {
                 text: qsTr("Keep position after refreshing")
                 checked: settings.keepPosition
                 onCheckedChanged: settings.keepPosition = checked
             }
 
-            SectionHeader {
-                            text: "General settings"
-                        }
-
-            SettingSlider {
-                text: qsTr("Tweets font change")
+            Slider {
+                label: qsTr("Tweet font size adjustment")
                 minimumValue: -10
                 maximumValue: 10
                 valueText: (value == 0) ? qsTr("Off") : qsTr("%1 px.").arg(value)
                 stepSize: 1
                 value: settings.tweetsFontChange
                 onReleased: settings.tweetsFontChange = value
+                width: parent.width
             }
 
+            /*
             SettingSwitch {
                 id: enableTwitLongerSwitch
                 text: qsTr("Enable TwitLonger")
@@ -141,6 +137,7 @@ Page {
                 onInfoClicked: dialog.createMessageDialog(qsTr("About TwitLonger"), infoText.twitLonger)
                 onCheckedChanged: settings.enableTwitLonger = checked
             }
+
 
             Item {
                 anchors { left: parent.left; right: parent.right }
@@ -199,10 +196,11 @@ Page {
                     text: settings.translateLangName
                     onClicked: internal.createTranslationLangDialog()
                 }
-            }
+            } */
         }
     }
 
+    /*
     QtObject {
         id: internal
 
@@ -263,7 +261,7 @@ Page {
     Component {
         id: translationLangDialog
 
-        SelectionDialog {
+        Tweetian.SelectionDialog {
             id: dialog
             property bool __isClosing: false
             titleText: qsTr("Translate to")
@@ -291,7 +289,7 @@ Page {
     Component {
         id: chooseServiceDialogComponent
 
-        SelectionDialog {
+        Tweetian.SelectionDialog {
             id: chooseServiceDialog
             property bool __isClosing: false
             titleText: qsTr("Image Upload Service")
@@ -312,8 +310,6 @@ Page {
         ListElement { name: "TwitPic" }
         ListElement { name: "MobyPicture" }
         ListElement { name: "img.ly" }
-    }
-
-
+    }*/
 }
 
