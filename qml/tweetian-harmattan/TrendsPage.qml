@@ -42,30 +42,23 @@ Item {
         id: trendsPageListView
         anchors.fill: parent
 
-        header: Column {
-            height: header.height + searchTextField.height
-            PageHeader {
-                id: header
-                title: qsTr("Trends & Search")
+        header: SearchField {
+            id: searchTextField
+            width: trendsPageListView.width
+            placeholderText: qsTr("Search")
+
+            EnterKey.enabled: searchTextField.text
+            EnterKey.text: qsTr("Search")
+            EnterKey.onClicked:{
+                parent.focus = true // remove activeFocus on searchTextField
+                pageStack.push(Qt.resolvedUrl("SearchPageCom/TweetSearchPage.qml"), { searchString: searchTextField.text })
             }
-            Item {
-                height: searchTextField.height
-                width: trendsPageListView.width
 
-                TextField {
-                    id: searchTextField
-                    anchors { top: parent.top; left: parent.left; right: searchButton.left; margins: constant.paddingMedium }
-                    placeholderText: qsTr("Search for tweets or users")
-                    label: qsTr("Search")
-
-                    EnterKey.enabled: searchTextField.text
-                    EnterKey.text: qsTr("Search")
-                    EnterKey.onClicked:{
-                        parent.focus = true // remove activeFocus on searchTextField
-                        pageStack.push(Qt.resolvedUrl("SearchPageCom/TweetSearchPage.qml"), { searchString: searchTextField.text })
-                    }
-                    /*
-                    onActiveFocusChanged: {
+            // If trendsPageListView.model is immediately switch to trendsModel, the trendsPageListView.delegate
+            // clicked action can not be trigger because the model changed and that pressed delegate is destroyed
+            // Therefore, a dirty timer is used for delay switching to trendsModel if the delegate is pressed
+        }
+        /*    onActiveFocusChanged: {
                         if (activeFocus) trendsPageListView.model = autoCompleterModel
                         else if (internal.pressedOnListItem) {
                             switchToTrendsModelDelayTimer.start()
@@ -74,31 +67,16 @@ Item {
                         else trendsPageListView.model = cache.trendsModel
                     }
                     onTextChanged: internal.updateAutoCompleter()
-                    onPlatformPreeditChanged: internal.updateAutoCompleter() */
-                }
-
-                // If trendsPageListView.model is immediately switch to trendsModel, the trendsPageListView.delegate
-                // clicked action can not be trigger because the model changed and that pressed delegate is destroyed
-                // Therefore, a dirty timer is used for delay switching to trendsModel if the delegate is pressed
-                Timer {
-                    id: switchToTrendsModelDelayTimer
-                    interval: 250
-                    onTriggered: trendsPageListView.model = cache.trendsModel
-                }
-
-                IconButton {
-                    id: searchButton
-                    anchors { top: parent.top; bottom: parent.bottom; right: parent.right; margins: constant.paddingMedium }
-                    width: height
-                    enabled: searchTextField.text
-                    icon.source: "image://theme/icon-m-search"
-                    onClicked: pageStack.push(Qt.resolvedUrl("SearchPageCom/TweetSearchPage.qml"), { searchString: searchTextField.text })
-                }
-            }
+                    onPlatformPreeditChanged: internal.updateAutoCompleter()
         }
 
+        Timer {
+            id: switchToTrendsModelDelayTimer
+            interval: 250
+            onTriggered: trendsPageListView.model = cache.trendsModel
+        } */
+
         model: cache.trendsModel
-      //  lastUpdate: cache.trendsLastUpdate
         section.property: model == cache.trendsModel ? "type" : ""
         section.delegate: SectionHeader { text: section }
         delegate: ListItem {
