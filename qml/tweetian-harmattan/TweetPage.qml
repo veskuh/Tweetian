@@ -36,13 +36,12 @@ Page {
     objectName: "tweetPage"
     property variant tweet
 
-    property bool favouritedTweet: false
+    property bool favouritedTweet: tweet && tweet.isFavourited
 
     property ListModel ancestorModel: ListModel {}
     property ListModel descendantModel: ListModel {}
 
     Component.onCompleted: {
-        favouritedTweet = tweet.isFavourited
         //TODO: Use plain QML instead of JS to show RT and Fav count
         JS.createPicThumb()
         JS.createMapThumb()
@@ -362,15 +361,12 @@ Page {
         }
     }
 
-    //VerticalScrollDecorator { flickableItem: tweetPageFlickable }
-
-
+    VerticalScrollDecorator { flickable: tweetPageFlickable }
 
     WorkerScript {
         id: conversationParser
         source: "WorkerScript/ConversationParser.js"
         onMessage: {
-            // backButton.enabled = true
             // header.busy = false
             ancestorRepeater.model = ancestorModel
             descendantRepeater.model = descendantModel
