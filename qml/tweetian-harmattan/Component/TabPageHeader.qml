@@ -127,6 +127,7 @@ Item {
             }
         }
         PushUpMenu {
+            busy: listView.currentIndex < 3 ? listView.model.children[listView.currentIndex].busy : false
             MenuItem {
                onClicked: pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"), {type: "New"})
                text: qsTr("New Tweet")
