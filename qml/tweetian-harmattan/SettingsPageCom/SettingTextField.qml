@@ -34,22 +34,22 @@ Item {
     Column {
         id: column
         anchors {
-            left: parent.left; leftMargin: constant.paddingMedium
-            right: parent.right; rightMargin: constant.paddingLarge
+            left: parent.left
+            right: parent.right
         }
-        height: childrenRect.height
-        spacing: constant.paddingMedium
+        height: childrenRect.height + constant.paddingMedium
 
         Text {
-            anchors { left: parent.left; right: parent.right }
+            anchors { left: parent.left; leftMargin: textField.textLeftMargin; right: parent.right }
             font.pixelSize: constant.fontSizeMedium
-            color: constant.colorLight
+            color: constant.colorHighlighted
             text: settingText
         }
 
         TextField {
             id: textField
             anchors { left: parent.left; right: parent.right }
+            labelVisible: false
         }
     }
 }

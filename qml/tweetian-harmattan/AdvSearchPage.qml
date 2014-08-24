@@ -35,8 +35,8 @@ Page {
             query += anyOfTheseWordsField.textFieldText.replace(/ /g, " OR ") + " "
         if (noneOfTheseWordsField.textFieldText && noneOfTheseWordsField.acceptableInput)
             query += "-" + noneOfTheseWordsField.textFieldText.replace(/ /g, " -") + " "
-        //if (languageSelectionDialog.model.get(languageSelectionDialog.selectedIndex).code)
-        //    query += "lang:" + languageSelectionDialog.model.get(languageSelectionDialog.selectedIndex).code + " "
+        if (languageModel.get(languageSelection.currentIndex).code)
+            query += "lang:" + languageModel.get(languageSelection.currentIndex).code + " "
         if (fromTheseUsersField.textFieldText && fromTheseUsersField.acceptableInput)
             query += "from:" + fromTheseUsersField.textFieldText.replace(/@/g, "").replace(/ /g, " OR from:") + " "
         if (toTheseUsersField.textFieldText && toTheseUsersField.acceptableInput)
@@ -82,13 +82,11 @@ Page {
             id: mainColumn
             anchors { left: parent.left; right: parent.right }
             height: childrenRect.height
-            spacing: constant.paddingLarge
+
             PageHeader {
                 id: header
-
                 title: qsTr("Advanced Search")
             }
-
 
             SectionHeader { text: qsTr("Words") }
 
@@ -97,6 +95,7 @@ Page {
                 settingText: qsTr("All of these words")
                 validator: RegExpValidator { regExp: /(^$|^\S$|^\S.*\S$)/ }
                 placeHolderText: qsTr("eg. %1").arg("Tweetian Symbian Harmattan")
+                width: parent.width
             }
 
             SettingTextField {
@@ -104,6 +103,7 @@ Page {
                 settingText: qsTr("Exact phrase")
                 validator: RegExpValidator { regExp: /(^$|^\S$|^\S.*\S$)/ }
                 placeHolderText: qsTr("eg. %1").arg("Tweetian is amazing")
+                width: parent.width
             }
 
             SettingTextField {
@@ -111,6 +111,7 @@ Page {
                 settingText: qsTr("Any of these words")
                 validator: RegExpValidator { regExp: /(^$|^\S$|^\S.*\S$)/ }
                 placeHolderText: qsTr("eg. %1").arg("Symbian Harmattan")
+                width: parent.width
             }
 
             SettingTextField {
@@ -118,6 +119,68 @@ Page {
                 settingText: qsTr("None of these words")
                 validator: RegExpValidator { regExp: /(^$|^\S$|^\S.*\S$)/ }
                 placeHolderText: qsTr("eg. %1").arg("iPhone Android")
+                width: parent.width
+            }
+
+            ComboBox {
+                id: languageSelection
+                width: parent.width
+                label: qsTr("Language")
+
+                menu: ContextMenu {
+                    MenuItem { text: "Any Language"; }
+                    MenuItem { text: "Amharic"; } // "am" }
+                    MenuItem { text: "Arabic"; } // "ar" }
+                    MenuItem { text: "Armenian"; } // "hy" }
+                    MenuItem { text: "Bengali"; } // "bn" }
+                    MenuItem { text: "Bulgarian"; } // "bg" }
+                    MenuItem { text: "Cherokee"; } // "chr" }
+                    MenuItem { text: "Chinese"; } // "zh" }
+                    MenuItem { text: "Danish"; } // "da" }
+                    MenuItem { text: "Dutch"; } // "nl" }
+                    MenuItem { text: "English"; } // "en" }
+                    MenuItem { text: "Finnish"; } // "fi" }
+                    MenuItem { text: "French"; } // "fr" }
+                    MenuItem { text: "Georgian"; } // "ka" }
+                    MenuItem { text: "German"; } // "de" }
+                    MenuItem { text: "Greek"; } // "el" }
+                    MenuItem { text: "Gujarati"; } // "gu" }
+                    MenuItem { text: "Hebrew"; } // "iw" }
+                    MenuItem { text: "Hindi"; } // "hi" }
+                    MenuItem { text: "Hungarian"; } // "hu" }
+                    MenuItem { text: "Icelandic"; } // "is" }
+                    MenuItem { text: "Indonesian"; } // "in" }
+                    MenuItem { text: "Inuktitut"; } // "iu" }
+                    MenuItem { text: "Italian"; } // "it" }
+                    MenuItem { text: "Japanese"; } // "ja" }
+                    MenuItem { text: "Kannada"; } // "kn" }
+                    MenuItem { text: "Khmer"; } // "km" }
+                    MenuItem { text: "Korean"; } // "ko" }
+                    MenuItem { text: "Lao"; } // "lo" }
+                    MenuItem { text: "Lithuanian"; } // "lt" }
+                    MenuItem { text: "Malayalam"; } // "ml" }
+                    MenuItem { text: "Maldivian"; } // "dv" }
+                    MenuItem { text: "Myanmar"; } // "my" }
+                    MenuItem { text: "Nepali"; } // "ne" }
+                    MenuItem { text: "Norwegian"; } // "no" }
+                    MenuItem { text: "Oriya"; } // "or" }
+                    MenuItem { text: "Panjabi"; } // "pa" }
+                    MenuItem { text: "Persian"; } // "fa" }
+                    MenuItem { text: "Polish"; } // "pl" }
+                    MenuItem { text: "Portuguese"; } // "pt" }
+                    MenuItem { text: "Russian"; } // "ru" }
+                    MenuItem { text: "Sinhala"; } // "si" }
+                    MenuItem { text: "Spanish"; } // "es" }
+                    MenuItem { text: "Swedish"; } // "sv" }
+                    MenuItem { text: "Tamil"; } // "ta" }
+                    MenuItem { text: "Telugu"; } // "te" }
+                    MenuItem { text: "Thai"; } // "th" }
+                    MenuItem { text: "Tibetan"; } // "bo" }
+                    MenuItem { text: "Turkish"; } // "tr" }
+                    MenuItem { text: "Urdu"; } // "ur" }
+                    MenuItem { text: "Vietnamese"; } // "vi" }
+                }
+
             }
 
             /*
@@ -166,6 +229,7 @@ Page {
                 settingText: qsTr("From any of these users")
                 validator: RegExpValidator { regExp: /(^$|^\S$|^\S.*\S$)/ }
                 placeHolderText: qsTr("eg. %1").arg("user1 user2 user3")
+                width: parent.width
             }
 
             SettingTextField {
@@ -173,6 +237,7 @@ Page {
                 settingText: qsTr("To any of these users")
                 validator: RegExpValidator { regExp: /(^$|^\S$|^\S.*\S$)/ }
                 placeHolderText: qsTr("eg. %1").arg("user1 user2 user3")
+                width: parent.width
             }
 
             SettingTextField {
@@ -180,21 +245,22 @@ Page {
                 settingText: qsTr("Mentioning any of these users")
                 validator: RegExpValidator { regExp: /(^$|^\S$|^\S.*\S$)/ }
                 placeHolderText: qsTr("eg. %1").arg("user1 user2 user3")
+                width: parent.width
             }
 
             SectionHeader { text: qsTr("Filters") }
 
-            SettingSwitch {
+            TextSwitch {
                 id: linkFilterSwitch
                 text: qsTr("Contain links")
             }
 
-            SettingSwitch {
+            TextSwitch {
                 id: imageFilterSwitch
                 text: qsTr("Contain images")
             }
 
-            SettingSwitch {
+            TextSwitch {
                 id: videoFilterSwitch
                 text: qsTr("Contain videos")
             }
@@ -206,24 +272,25 @@ Page {
                 settingText: qsTr("From any of these sources")
                 validator: RegExpValidator { regExp: /(^$|^\S$|^\S.*\S$)/ }
                 placeHolderText: qsTr("eg. %1").arg("Tweetian_for_Harmattan")
+                width: parent.width
             }
 
-            SettingSwitch {
+            TextSwitch {
                 id: positiveAttitudeSwitch
                 text: qsTr("Positive attitude :)")
             }
 
-            SettingSwitch {
+            TextSwitch {
                 id: negativeAttitudeSwitch
                 text: qsTr("Negative attitude :(")
             }
 
-            SettingSwitch {
+            TextSwitch {
                 id: questionSwitch
                 text: qsTr("Question ?")
             }
 
-            SettingSwitch {
+            TextSwitch {
                 id: includeRetweetsSwitch
                 text: qsTr("Include retweets")
             }
@@ -233,7 +300,7 @@ Page {
     VerticalScrollDecorator { flickable: mainFlickable }
 
 
-   /* SelectionDialog {
+    /* SelectionDialog {
         id: languageSelectionDialog
         titleText: qsTr("Language")
         model: languageModel
