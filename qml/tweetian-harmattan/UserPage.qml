@@ -90,25 +90,15 @@ Page {
                     anchors { left: parent.left; right: parent.right }
                     height: childrenRect.height
 
-                    Rectangle {
-                        id: profileImageContainer
+                    Image {
+                        id: profileImage
                         anchors { right: parent.right; top: parent.top; margins: constant.paddingMedium }
-                        width: profileImage.width + (border.width / 2); height: width
-                        color: "black"
-                        border.width: 2
-                        border.color: profileImageMouseArea.pressed ? constant.colorTextSelection : constant.colorMid
-
-                        Image {
-                            id: profileImage
-                            anchors.centerIn: parent
-                            height: userNameText.height + screenNameText.height; width: height
-                            cache: false
-                            fillMode: Image.PreserveAspectCrop
-                            source: user.profileImageUrl ? user.profileImageUrl.replace("_normal", "_bigger") : ""
-                        }
+                        height: userNameText.height + screenNameText.height; width: height
+                        cache: false
+                        fillMode: Image.PreserveAspectCrop
+                        source: user.profileImageUrl ? user.profileImageUrl.replace("_normal", "_bigger") : ""
 
                         MouseArea {
-                            id: profileImageMouseArea
                             anchors.fill: parent
                             onClicked: {
                                 var prop = { imageUrl: user.profileImageUrl.replace("_normal", "") }
@@ -122,7 +112,7 @@ Page {
                         anchors {
                             top: parent.top
                             left: parent.left
-                            right: profileImageContainer.left
+                            right: profileImage.left
                             margins: constant.paddingMedium
                         }
                         font.bold: true
@@ -139,7 +129,7 @@ Page {
                         id: screenNameText
                         anchors {
                             top: userNameText.bottom
-                            right: profileImageContainer.left; rightMargin: constant.paddingMedium
+                            right: profileImage.left; rightMargin: constant.paddingMedium
                             left: parent.left; leftMargin: constant.paddingMedium
                         }
                         font.pixelSize: constant.fontSizeMedium
