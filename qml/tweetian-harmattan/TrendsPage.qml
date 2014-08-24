@@ -38,11 +38,12 @@ Item {
         trendsPageListView.positionViewAtBeginning();
     }
 
-    PullDownListView {
+    SilicaListView {
         id: trendsPageListView
         anchors.fill: parent
 
         header: Column {
+            height: header.height + searchTextField.height
             PageHeader {
                 id: header
                 title: qsTr("Trends & Search")
@@ -97,7 +98,7 @@ Item {
         }
 
         model: cache.trendsModel
-        lastUpdate: cache.trendsLastUpdate
+      //  lastUpdate: cache.trendsLastUpdate
         section.property: model == cache.trendsModel ? "type" : ""
         section.delegate: SectionHeader { text: section }
         delegate: ListItem {

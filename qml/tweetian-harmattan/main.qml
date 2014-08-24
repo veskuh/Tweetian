@@ -27,8 +27,6 @@ ApplicationWindow {
     initialPage: MainPage { id: mainPage }
     cover: (settings.oauthToken != "" && settings.oauthTokenSecret != "") ? Qt.resolvedUrl("CoverPage.qml") : undefined;
     property bool pendingTweet: false
-    //showStatusBar: inPortrait
-    //showToolBar: true
 
     Settings { id: settings }
 
@@ -69,7 +67,6 @@ ApplicationWindow {
             x: Theme.paddingMedium
             width: parent.width - 2 * Theme.paddingMedium
             color: Theme.highlightColor
-            //maximumLineCount: 2
             horizontalAlignment: Text.AlignHCenter
             wrapMode: Text.Wrap
         }
