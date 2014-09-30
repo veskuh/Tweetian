@@ -108,7 +108,7 @@ function storeDMs(model) {
             var sqlText = 'INSERT INTO DM VALUES(?,?,?,?,?,?,?);'
             var dm = model.get(i);
             var binding = [dm.id, dm.richText, dm.name, dm.screenName, dm.profileImageUrl,
-                           dm.createdAt.toString(), (dm.isReceiveDM ? 1 : 0)];
+                           dm.createdAt.toISOString() , (dm.isReceiveDM ? 1 : 0)];
             tx.executeSql(sqlText, binding)
         }
     })
@@ -170,7 +170,7 @@ function __storeTweetsShared(tableName, model) {
             var tweet = model.get(i);
             var binding = [tweet.id, tweet.plainText, tweet.richText, tweet.name, tweet.screenName,
                            tweet.profileImageUrl, tweet.inReplyToScreenName, tweet.inReplyToStatusId,
-                           tweet.latitude, tweet.longitude, tweet.mediaUrl, tweet.source, tweet.createdAt.toString(),
+                           tweet.latitude, tweet.longitude, tweet.mediaUrl, tweet.source, Date.parse(tweet.createdAt).toISOString(),
                            (tweet.isFavourited ? 1 : 0), (tweet.isRetweet ? 1 : 0), tweet.retweetScreenName];
             tx.executeSql(sqlText, binding)
         }

@@ -31,8 +31,65 @@ function tweetsFrequency(date, tweetsCount) {
     else return qsTr("< 1 per month")
 }
 
+function twitterDateToISOString(dateString) {
+    var months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+
+    var date = Date.parse(dateString)
+
+    if (typeof date == Date && date != "Invalid Date") {
+        return date.toISOString()
+    }
+
+    if (typeof dateString === Date) {
+        dateString.toISOString()
+    }
+
+    if (dateString === undefined || dateString == "Invalid Date") {
+        console.log("FALLBACK SINCE" +dateString)
+        return new Date().toISOString() // Fall back
+    }
+
+    var month = 0
+    var i
+    for(i in months) {
+        month++
+        if(dateString.indexOf(months[i]) > 0) {
+            break
+        }
+    }
+    var monthStr = month < 10 ? "0".concat(month) : month.toString()
+    // Twitter date format: Tue Sep 09 01:45:18 +0000 2014
+    //              index   012345678901234567890123456789
+    var retval = dateString.substring(26,30) +"-"+ monthStr + "-"+dateString.substring(8,10)+"T"+dateString.substring(11,19)+"Z"
+
+
+    var date2 = new Date(retval)
+    if (typeof date2 !== Date) {
+        console.log("FUUUCK! " + typeof Date.parse(retval))
+        console.log("OUT: " + retval)
+        if ( isNaN(date2) ) { console.log("Not a number") }
+
+        console.log("Date + " + date2.toUTCString())
+        console.log(date2.toISOString())
+    } else if ( date2.toString() == "Invalid Date") {
+        console.log("invalid!")
+    }
+
+    return retval
+}
+
+
 function timeDiff(tweetTimeStr) {
     var tweetTime = new Date(tweetTimeStr)
+
+    if (tweetTimeStr == "Invalid Date") {
+        return "Earlier"
+    }
+
+    if (tweetTime == "Invalid Date") {
+        tweetTime = new Date(twitterDateToISOString(tweetTimeStr))
+    }
+
     var diff = new Date().getTime() - tweetTime.getTime() // milliseconds
 
     if (diff <= 0) return qsTr("Now")

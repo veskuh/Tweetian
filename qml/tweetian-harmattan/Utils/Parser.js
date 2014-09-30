@@ -32,7 +32,7 @@ function parseTweet(tweetJson) {
     var tweet = {
         id: tweetJson.id_str,
         source: tweetJson.source.replace(/<[^>]+>/ig, ""),
-        createdAt: new Date(tweetJson.created_at),
+        createdAt: Date.parse(twitterDateToISOString(tweetJson.created_at)),
         isFavourited: tweetJson.favorited,
         isRetweet: false,
         retweetScreenName: tweetJson.user.screen_name,
@@ -78,7 +78,7 @@ function parseDM(dmJson, isReceiveDM) {
         name: (isReceiveDM ? dmJson.sender.name : dmJson.recipient.name),
         screenName: (isReceiveDM ? dmJson.sender_screen_name : dmJson.recipient_screen_name),
         profileImageUrl: (isReceiveDM ? dmJson.sender.profile_image_url : dmJson.recipient.profile_image_url),
-        createdAt: new Date(dmJson.created_at),
+        createdAt: new Date(twitterDateToISOString(dmJson.created_at)),
         isReceiveDM: isReceiveDM
     }
     return dm;
@@ -93,7 +93,7 @@ function parseUser(userJson) {
         url: userJson.url || "",
         profileImageUrl: userJson.profile_image_url,
         profileBannerUrl: userJson.profile_banner_url || "",
-        createdAt: new Date(userJson.created_at),
+        createdAt: new Date(twitterDateToISOString(userJson.created_at)),
         tweetsCount: userJson.statuses_count,
         followersCount: userJson.followers_count,
         followingCount: userJson.friends_count,

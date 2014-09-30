@@ -175,7 +175,7 @@ function appendTweetsFromDB(tweetsDB, model) {
 
     tweetsDB.forEach(function(tweetDB) {
         var tweet = tweetDB;
-        tweet.createdAt = new Date(tweet.createdAt);
+        tweet.createdAt = new Date(twitterDateToISOString(tweet.createdAt));
         tweet.isFavourited = (tweet.isFavourited == 1 ? true : false);
         tweet.isRetweet = (tweet.isRetweet == 1 ? true : false);
         tweet.timeDiff = timeDiff(tweet.createdAt);
