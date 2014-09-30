@@ -20,6 +20,7 @@ PkgConfigBR:
 - sailfishapp
 - Qt5Location
 - Qt5Positioning
+- mlite5
 Requires:
 - qt5-qtlocation
 - sailfishsilica-qt5
