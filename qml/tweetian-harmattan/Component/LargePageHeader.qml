@@ -38,25 +38,25 @@ Item {
 
     Text {
         id: firstLineText
-        anchors { left: profileImage.right; top: parent.top; right: protectedIcon.left; margins: constant.paddingMedium }
+        anchors { right: profileImage.left; top: parent.top; left: parent.left; margins: constant.paddingMedium }
         font.pixelSize: constant.fontSizeLarge
         font.bold: true
         color: "white"
         text: primaryText
-        elide: Text.ElideRight
+        horizontalAlignment: Text.AlignRight
     }
 
     Text {
         id: secondLineText
         anchors {
             top: firstLineText.bottom
-            left: profileImage.right; leftMargin: constant.paddingMedium
-            right: protectedIcon.left
+            right: profileImage.left; rightMargin: constant.paddingMedium
+            left: parent.left
         }
+        horizontalAlignment: Text.AlignRight
         font.pixelSize: constant.fontSizeMedium
         color: "white"
         text: secondaryText
-        elide: Text.ElideRight
     }
 
     Image {
@@ -74,7 +74,7 @@ Item {
 
     Image {
         id: profileImage
-        anchors { left: parent.left; margins: constant.paddingMedium; verticalCenter: parent.verticalCenter }
+        anchors { right: parent.right; margins: constant.paddingMedium; verticalCenter: parent.verticalCenter }
         height: 50; width: 50
         cache: false
         source: root.imageSource

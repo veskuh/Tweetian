@@ -57,6 +57,7 @@ Page {
         highlightRangeMode: ListView.StrictlyEnforceRange
         snapMode: ListView.SnapOneItem
         orientation: ListView.Horizontal
+        clip: true
         boundsBehavior: Flickable.StopAtBounds
         model: VisualItemModel {
             ListInfo { id: listInfo }
