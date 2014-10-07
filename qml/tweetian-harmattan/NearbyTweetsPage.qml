@@ -18,7 +18,7 @@
 
 import QtQuick 2.1
 import Sailfish.Silica 1.0
-import QtMobility.location 1.2
+import QtPositioning 5.0
 import "Services/Twitter.js" as Twitter
 import "Utils/Calculations.js" as Calculate
 import "Component"
@@ -69,24 +69,24 @@ Page {
         delegate: TweetDelegate {}
         model: ListModel {}
         onPulledDown: internal.refresh("newer")
-        onAtYBeginningChanged: if (atYBeginning) header.countBubbleValue = 0
-        onContentYChanged: refreshUnreadCountTimer.running = true
+     //   onAtYBeginningChanged: if (atYBeginning) header.countBubbleValue = 0
+      //  onContentYChanged: refreshUnreadCountTimer.running = true
 
-        Timer {
+       /* Timer {
             id: refreshUnreadCountTimer
             interval: 250
             repeat: false
             onTriggered: header.countBubbleValue = Math.min(searchListView.indexAt(0, searchListView.contentY + 5) + 1,
                                                             header.countBubbleValue)
-        }
+        }*/
     }
 
     Text {
         anchors.centerIn: parent
         font.pixelSize: constant.fontSizeXXLarge
         color: constant.colorMid
-        text: qsTr("No tweet")
-        visible: searchListView.count == 0 && !header.busy
+        text: qsTr("No tweets")
+        visible: searchListView.count == 0 // && !header.busy
     }
 
    // VerticalScrollDecorator { flickableItem: searchListView }
@@ -100,7 +100,7 @@ Page {
         id: searchParser
         source: "WorkerScript/SearchParser.js"
         onMessage: {
-            backButton.enabled = true
+       /*     backButton.enabled = true
             if (internal.reloadType === "newer") {
                 header.countBubbleVisible = true
                 header.countBubbleValue = messageObject.count
@@ -108,15 +108,15 @@ Page {
             else {
                 header.countBubbleVisible = false
                 header.countBubbleValue = 0
-            }
-            header.busy = false
+            }*/
+            //header.busy = false
         }
     }
 
     PositionSource {
         id: positionSource
         updateInterval: 1000
-        onActiveChanged: if (active) header.busy = true
+    //    onActiveChanged: if (active) header.busy = true
 
         onPositionChanged: {
             nearbyTweetsPage.latitude = position.coordinate.latitude
@@ -145,12 +145,12 @@ Page {
             }
             internal.reloadType = type
             Twitter.getNearbyTweets(latitude, longitude, sinceId, Calculate.minusOne(maxId), onSuccess, onFailure)
-            header.busy = true
+            //header.busy = true
         }
 
         function onSuccess(data) {
             if (reloadType != "older") searchListView.lastUpdate = new Date().toString()
-            backButton.enabled = false
+        //    backButton.enabled = false
             searchParser.sendMessage({ type: reloadType, model: searchListView.model, data: data})
         }
 
