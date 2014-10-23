@@ -121,6 +121,13 @@ Item {
         property int lastCount: 0
         property Item contextMenu
 
+        Component.onCompleted: {
+            if (hasOwnProperty("quickScroll")) {
+                quickScroll = false
+                quickScroll = true
+            }
+        }
+
         PullDownMenu {
             busy: root.busy
             MenuItem {

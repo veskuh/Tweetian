@@ -24,4 +24,11 @@ SilicaListView {
 
     property string lastUpdate: ""
     signal pulledDown()
+
+    Component.onCompleted: {
+        if (hasOwnProperty("quickScroll")) {
+            quickScroll = false
+            quickScroll = true
+        }
+    }
 }
