@@ -59,7 +59,7 @@ function parseTweet(tweetJson) {
     tweet.longitude = "";
     tweet.mediaUrl = "";
 
-    if (originalTweetJson.geo) {
+    if (originalTweetJson.geo && originalTweetJson.geo.coordinates && originalTweetJson.geo.coordinates.length > 1) {
         tweet.latitude = originalTweetJson.geo.coordinates[0].toString();
         tweet.longitude = originalTweetJson.geo.coordinates[1].toString();
     }
