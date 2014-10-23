@@ -131,7 +131,7 @@ function insertDMFromDB(dbDMArray, dmModel, dmThreadModel) {
 
     dbDMArray.forEach(function(dbDM) {
         var dm = dbDM;
-        dm.createdAt = new Date(dbDM.createdAt);
+        dm.createdAt = dbDM.createdAt;
         dm.isReceiveDM = (dbDM.isReceiveDM == 1 ? true : false);
         dmArray.push(dm);
     })

@@ -73,8 +73,12 @@ function timeDiff(tweetTimeStr) {
     }
 
     if (tweetTime == "Invalid Date") {
-        console.log("Couldn't parse date, fallback to current time")
         tweetTime = new Date(twitterDateToISOString(tweetTimeStr))
+        if (tweetTime == "Invalid Date") {
+            console.log("tweetTimeStr: " +tweetTimeStr)
+            console.log("Couldn't parse date, fallback to current time")
+            tweetTime = new Date(twitterDateToISOString(tweetTimeStr))
+        }
     }
 
     var diff = new Date().getTime() - tweetTime.getTime() // milliseconds

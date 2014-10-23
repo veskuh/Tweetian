@@ -108,7 +108,7 @@ function storeDMs(model) {
             var sqlText = 'INSERT INTO DM VALUES(?,?,?,?,?,?,?);'
             var dm = model.get(i);
             var binding = [dm.id, dm.richText, dm.name, dm.screenName, dm.profileImageUrl,
-                           dm.createdAt.toISOString() , (dm.isReceiveDM ? 1 : 0)];
+                           dm.createdAt, (dm.isReceiveDM ? 1 : 0)];
             tx.executeSql(sqlText, binding)
         }
     })
