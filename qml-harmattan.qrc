@@ -131,6 +131,7 @@
         <file>qml/tweetian-harmattan/CoverPage.qml</file>
         <file>i18n/tweetian_ar.qm</file>
         <file>i18n/tweetian_ca.qm</file>
+        <file>i18n/tweetian_cs.qm</file>
         <file>i18n/tweetian_de.qm</file>
         <file>i18n/tweetian_el.qm</file>
         <file>i18n/tweetian_en.qm</file>
