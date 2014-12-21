@@ -149,6 +149,12 @@ Page {
                 property: "scale"
                 from: tweetImagePreview.scale
             }
+            // workaround to qt5.2 bug
+            // otherwise pincharea is ignored
+            Rectangle {
+                opacity: 0.0
+                anchors.fill: parent
+            }
         }
     }
 
