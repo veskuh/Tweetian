@@ -81,6 +81,12 @@ function parseDM(dmJson, isReceiveDM) {
         createdAt: twitterDateToISOString(dmJson.created_at),
         isReceiveDM: isReceiveDM
     }
+    if (Array.isArray(dmJson.entities.media) && dmJson.entities.media.length > 0) {
+        dm.mediaUrl = dmJson.entities.media[0].media_url;
+    } else {
+        dm.mediaUrl = "";
+    }
+
     return dm;
 }
 

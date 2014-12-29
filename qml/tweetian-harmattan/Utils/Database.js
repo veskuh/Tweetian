@@ -30,12 +30,12 @@ var QUERY = {
                            'inReplyToStatusId TEXT, latitude REAL, longitude REAL, mediaUrl TEXT, source TEXT, ' +
                            'createdAt TEXT, isFavourited INTEGER, isRetweet INTEGER, retweetScreenName TEXT);',
     CREATE_DM_TABLE: 'CREATE TABLE DM(id INTEGER UNIQUE, richText TEXT, name TEXT, ' +
-                     'screenName TEXT, profileImageUrl TEXT, createdAt TEXT, isReceiveDM INTEGER)',
+                     'screenName TEXT, profileImageUrl TEXT, createdAt TEXT, isReceiveDM INTEGER, mediaUrl TEXT)',
     CREATE_SCREEN_NAMES_TABLE: 'CREATE TABLE ScreenNames(screenNames TEXT UNIQUE);'
 }
 
 var db = Sql.LocalStorage.openDatabaseSync("Tweetian", "", "Tweetian Database", 1000000, function(db) {
-    db.changeVersion(db.version, "1.1", function(tx) {
+    db.changeVersion(db.version, "1.2", function(tx) {
         tx.executeSql(QUERY.CREATE_SETTINGS_TABLE);
         tx.executeSql(QUERY.CREATE_TIMELINE_TABLE);
         tx.executeSql(QUERY.CREATE_MENTIONS_TABLE);
@@ -44,11 +44,20 @@ var db = Sql.LocalStorage.openDatabaseSync("Tweetian", "", "Tweetian Database", 
     })
 });
 
-if (db.version === "1.0") {
-    db.changeVersion(db.version, "1.1", function(tx) {
+if (db.version === "1.0") {  // Upgrade from 1.0
+    db.changeVersion(db.version, "1.2", function(tx) {
         tx.executeSql('DROP TABLE Timeline');
         tx.executeSql('DROP TABLE Mentions');
         tx.executeSql('DROP TABLE DirectMsg');
+        tx.executeSql(QUERY.CREATE_TIMELINE_TABLE);
+        tx.executeSql(QUERY.CREATE_MENTIONS_TABLE);
+        tx.executeSql(QUERY.CREATE_DM_TABLE);
+    });
+} else if (db.version === "1.1") {  // Upgrade from 1.1
+    db.changeVersion(db.version, "1.2", function(tx) {
+        tx.executeSql('DROP TABLE Timeline');
+        tx.executeSql('DROP TABLE Mentions');
+        tx.executeSql('DROP TABLE DM');
         tx.executeSql(QUERY.CREATE_TIMELINE_TABLE);
         tx.executeSql(QUERY.CREATE_MENTIONS_TABLE);
         tx.executeSql(QUERY.CREATE_DM_TABLE);
@@ -105,10 +114,10 @@ function storeDMs(model) {
     db.transaction(function(tx) {
         tx.executeSql('DELETE FROM DM;')
         for (var i = 0; i < Math.min(model.count, 100); i++) {
-            var sqlText = 'INSERT INTO DM VALUES(?,?,?,?,?,?,?);'
+            var sqlText = 'INSERT INTO DM VALUES(?,?,?,?,?,?,?,?);'
             var dm = model.get(i);
             var binding = [dm.id, dm.richText, dm.name, dm.screenName, dm.profileImageUrl,
-                           dm.createdAt, (dm.isReceiveDM ? 1 : 0)];
+                           dm.createdAt, (dm.isReceiveDM ? 1 : 0), dm.mediaUrl];
             tx.executeSql(sqlText, binding)
         }
     })
@@ -117,7 +126,7 @@ function storeDMs(model) {
 function getDMs() {
     var dms = []
     db.readTransaction(function(tx) {
-        var rs = tx.executeSql('SELECT CAST(id as TEXT) AS id, richText, name, screenName, profileImageUrl, createdAt, isReceiveDM FROM DM ORDER BY id DESC;')
+        var rs = tx.executeSql('SELECT CAST(id as TEXT) AS id, richText, name, screenName, profileImageUrl, createdAt, isReceiveDM, mediaUrl FROM DM ORDER BY id DESC;')
         for (var i=0; i<rs.rows.length; i++) {
             dms.push(rs.rows.item(i));
         }

@@ -34,6 +34,57 @@
 #include "src/tweetianif.h"
 #include <sailfishapp.h>
 
+// To support image loading from Direct Messages we register an image provider
+// that captures the URLs "http://dm/<authorization-token>".
+// OAuth authorization token contains image url itself in the realm parameter.
+class DMImageProvider : public QQuickImageProvider
+{
+public:
+    DMImageProvider()
+        : QQuickImageProvider(QQuickImageProvider::Image,
+                              QQuickImageProvider::ForceAsynchronousImageLoading)
+    {
+    }
+
+    QImage requestImage(const QString &id, QSize *size, const QSize &requestedSize)
+    {
+        const QString authToken = QUrl::fromPercentEncoding(id.toLatin1());
+
+        // We expect a fixed format of the token: real containing URL of the
+        // image is in the real parameter which comes first in the list.
+        QRegExp realmRe("^OAuth realm=\"([^\"]+)\"");
+        if (realmRe.indexIn(authToken) != 0) {
+            return QImage();
+        }
+
+        const QString url = QUrl::fromPercentEncoding(realmRe.cap(1).toLatin1());
+
+        QImage image;
+        QEventLoop loop;
+        QNetworkAccessManager mgr;
+
+        QObject::connect(&mgr, &QNetworkAccessManager::finished, [&] (QNetworkReply* reply) {
+            if (!reply->error()) {
+                image.loadFromData(reply->readAll());
+                if (size) {
+                    *size = image.size();
+                }
+            }
+
+            loop.quit();
+            reply->deleteLater();
+        });
+
+        QNetworkRequest request;
+        request.setUrl(QUrl(url));
+        request.setRawHeader("Authorization", authToken.toUtf8());
+        request.setRawHeader("User-Agent", QMLUtils::userAgent().toLatin1());
+        mgr.get(request);
+        loop.exec();
+        return image;
+    }
+};
+
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
@@ -68,6 +119,8 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QScopedPointer<QQuickView> view(SailfishApp::createView());
 
     view->setTitle(appName);
+    DMImageProvider* dmImageProvider = new DMImageProvider;
+    view->engine()->addImageProvider(QLatin1String("dm"), dmImageProvider);
 
     TweetianIf* tweetianIf = new TweetianIf(app.data(), view.data());
     QDBusConnection bus = QDBusConnection::sessionBus();

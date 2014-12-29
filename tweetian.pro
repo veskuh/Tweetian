@@ -96,6 +96,7 @@ OTHER_FILES += qtc_packaging/debian_harmattan/* \
     qml/tweetian-harmattan/Services/*.js
 
 CONFIG += link_pkgconfig
+CONFIG += c++11
 packagesExist(sailfishapp) {
 message("sailfishapp")
     PKGCONFIG += sailfishapp mlite5
