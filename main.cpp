@@ -50,8 +50,8 @@ public:
     {
         const QString authToken = QUrl::fromPercentEncoding(id.toLatin1());
 
-        // We expect a fixed format of the token: real containing URL of the
-        // image is in the real parameter which comes first in the list.
+        // We expect a fixed format of the token: URL of the requested image is
+        // in the realm parameter which comes first.
         QRegExp realmRe("^OAuth realm=\"([^\"]+)\"");
         if (realmRe.indexIn(authToken) != 0) {
             return QImage();
