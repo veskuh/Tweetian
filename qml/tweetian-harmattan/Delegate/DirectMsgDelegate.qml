@@ -19,6 +19,7 @@
 import QtQuick 2.1
 import Sailfish.Silica 1.0
 import "../Services/Twitter.js" as Twitter
+import "../Component"
 
 AbstractDelegate {
     id: root
@@ -77,6 +78,46 @@ AbstractDelegate {
         color: highlighted ? constant.colorHighlighted : constant.colorMid
         elide: Text.ElideRight
         text: timeDiff
+    }
+
+
+    ThumbnailItem {
+        function hasMedia() {
+            return (typeof model.mediaUrl !== "undefined") &&
+                   (model.mediaUrl.indexOf("http") === 0);
+        }
+
+        function getImageProviderUrl() {
+            return "image://dm/" + encodeURIComponent(Twitter.getTwitterImageDownloadAuthHeader(model.mediaUrl));
+        }
+
+        visible: {
+            return hasMedia()
+        }
+
+        width: {
+            return hasMedia() ? constant.thumbnailSize : 0
+        }
+
+        height: {
+            return hasMedia() ? constant.thumbnailSize : 0
+        }
+
+        imageSource: {
+            return hasMedia() ? getImageProviderUrl() : "";
+        }
+
+        iconSource: {
+            return settings.invertedTheme ? "../Image/photos_inverse.svg"
+                                          : "../Image/photos.svg"
+        }
+
+        onClicked: {
+            pageStack.push(Qt.resolvedUrl("../TweetImage.qml"), {
+                imageLink: model.mediaUrl,
+                imageUrl: getImageProviderUrl()
+            })
+        }
     }
 
     onPressAndHold: if(!model.isReceiveDM) contextMenu.show(root)

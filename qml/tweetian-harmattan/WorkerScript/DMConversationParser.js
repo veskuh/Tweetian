@@ -35,7 +35,8 @@ WorkerScript.onMessage = function(msg) {
                 screenName: dm.screenName,
                 profileImageUrl: dm.profileImageUrl,
                 createdAt: dm.createdAt,
-                isReceiveDM: dm.isReceiveDM
+                isReceiveDM: dm.isReceiveDM,
+                mediaUrl: dm.mediaUrl
             }
             toBeInsertDM.timeDiff = timeDiff(dm.createdAt)
             msg.model.insert(count, toBeInsertDM)

@@ -541,3 +541,18 @@ function getOAuthEchoAuthHeader() {
     OAuth.completeRequest(message, accessor)
     return OAuth.getAuthorizationHeader(message.action, message.parameters)
 }
+
+function getTwitterImageDownloadAuthHeader(url) {
+    var accessor = {
+        consumerKey: OAUTH_CONSUMER_KEY,
+        consumerSecret: OAUTH_CONSUMER_SECRET,
+        token: OAUTH_TOKEN,
+        tokenSecret: OAUTH_TOKEN_SECRET
+    }
+    var message = {
+        action: url,
+        method: "GET"
+    }
+    OAuth.completeRequest(message, accessor)
+    return OAuth.getAuthorizationHeader(message.action, message.parameters)
+}
