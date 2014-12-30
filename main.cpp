@@ -23,6 +23,7 @@
 #include <QtCore/QFile>
 #include <QGuiApplication>
 #include <QtQml>
+#include <QQuickImageProvider>
 #include "src/qmlutils.h"
 #include "src/imageuploader.h"
 #include "src/thumbnailcacher.h"
@@ -48,6 +49,7 @@ public:
 
     QImage requestImage(const QString &id, QSize *size, const QSize &requestedSize)
     {
+        Q_UNUSED(requestedSize)
         const QString authToken = QUrl::fromPercentEncoding(id.toLatin1());
 
         // We expect a fixed format of the token: URL of the requested image is
