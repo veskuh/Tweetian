@@ -182,7 +182,7 @@ function __linkHashtags(text, hashtagsEntities) {
     hashtagsArray.forEach(function(hashtag) {
         var linkedHashtag = linkText("#" + hashtag.text, "#" + hashtag.text, false);
         linkedText = linkedText.substring(0, hashtag.indices[0] + offset) +
-            linkedHashtag + linkedText.substring(hashtag.indices[1] + offset);
+            linkedHashtag + linkedText.substring(linkedText.indexOf(hashtag.text, offset + hashtag.indices[0]) + hashtag.text.length);
         offset = (offset - (hashtag.indices[1] - hashtag.indices[0])) + linkedHashtag.length;
     })
 
