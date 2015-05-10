@@ -45,6 +45,8 @@ function parseTweet(tweetJson) {
     if (tweetJson.retweeted_status) {
         originalTweetJson = tweetJson.retweeted_status;
         tweet.isRetweet = true;
+        tweet.createdAt = twitterDateToISOString(originalTweetJson.created_at);
+        tweet.timeDiff = timeDiff(originalTweetJson.created_at);
     }
     else originalTweetJson = tweetJson;
 
