@@ -44,19 +44,19 @@ QtObject {
     property int fontSizeXXLarge: Theme.fontSizeExtraLarge
 
     // graphic size
-    property int graphicSizeTiny: 24
-    property int graphicSizeXSmall: 28
-    property int graphicSizeSmall: 32
-    property int graphicSizeMedium: 48
-    property int graphicSizeLarge: 72
+    property int graphicSizeTiny: Theme.iconSizeSmall
+    property int graphicSizeXSmall: Theme.iconSizeSmall
+    property int graphicSizeSmall: Theme.iconSizeSmall
+    property int graphicSizeMedium: Theme.iconSizeMedium
+    property int graphicSizeLarge: Theme.iconSizeLarge
 
-    property int thumbnailSize: 200
+    property int thumbnailSize: Theme.itemSizeMedium * 2
 
-    property int bannerHeight: 270
+    property int bannerHeight: Theme.itemSizeExtraLarge * 2
 
     // other
    // property int headerHeight: inPortrait ? 65 : 55
-    property int headerHeight: 90
+    property int headerHeight: Theme.itemSizeMedium
 
     property int charReservedPerMedia: 23
     property url twitterBirdIcon: "Image/avatar_placeholder.png"
