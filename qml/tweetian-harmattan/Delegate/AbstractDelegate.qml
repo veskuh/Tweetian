@@ -109,7 +109,7 @@ BackgroundItem {
         height: childrenRect.height
     }
 
-    Timer {
+    /* Timer {
         id: pause
         interval: 250
         onTriggered: contentHeight = __originalHeight
@@ -122,15 +122,18 @@ BackgroundItem {
         duration: 250
         from: 0.25; to: 1
         easing.type: Easing.OutBack
+    } */
+
+    AddAnimation {
+        id: add
+        target: root
     }
 
     ListView.onAdd: {
         if (root.ListView.view.stayAtCurrentPosition) {
             if (root.ListView.view.atYBeginning) root.ListView.view.contentY += 1
-            __originalHeight = contentHeight
-            contentHeight = 0
-            pause.start()
+        } else {
+            add.start()
         }
-        else onAddAnimation.start()
     }
 }
