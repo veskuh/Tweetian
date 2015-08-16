@@ -44,7 +44,7 @@ Page {
     Component.onCompleted: {
         //TODO: Use plain QML instead of JS to show RT and Fav count
         JS.createPicThumb()
-        JS.createMapThumb()
+        // JS.createMapThumb()
         if (networkMonitor.online) {
             JS.createYoutubeThumb()
             JS.expandTwitLonger()
@@ -333,7 +333,8 @@ Page {
                                 if (model.type === "image")
                                     pageStack.push(Qt.resolvedUrl("TweetImage.qml"), {"imageLink": model.link,"imageUrl": model.full})
                                 else if (model.type === "map")
-                                    pageStack.push(Qt.resolvedUrl("MapPage.qml"), {latitude: tweet.latitude, longitude: tweet.longitude})
+                                    Qt.openUrlExternally("geo:" + tweet.latitude + "," + tweet.longitude)
+                                    //pageStack.push(Qt.resolvedUrl("MapPage.qml"), {latitude: tweet.latitude, longitude: tweet.longitude})
                                 else {
                                     if (model.link) {
                                         var success = Qt.openUrlExternally(model.link)
