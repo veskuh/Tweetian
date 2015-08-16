@@ -18,7 +18,7 @@
 
 import QtQuick 2.1
 import Sailfish.Silica 1.0
-import QtLocation 5.0
+//import QtLocation 5.0
 import QtPositioning 5.0
 
 import "Services/Twitter.js" as Twitter

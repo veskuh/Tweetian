@@ -18,7 +18,7 @@
 
 import QtQuick 2.1
 import Sailfish.Silica 1.0
-import QtLocation 5.0
+//import QtLocation 5.0
 import "Dialog"
 import "Utils/Calculations.js" as Calculate
 
@@ -54,12 +54,13 @@ Page {
         }
     } */
 
-    Coordinate {
+/*    Coordinate {
         id: tweetCoordinates
         latitude: mapPage.latitude
         longitude: mapPage.longitude
-    }
+    } */
 
+    /*
     Map {
         id: map
         anchors.fill: parent
@@ -81,7 +82,7 @@ Page {
             offset.x: -24
             offset.y: -48
         }
-    }
+    }*/
 
     PinchArea {
         id: pincharea

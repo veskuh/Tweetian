@@ -18,13 +18,10 @@ PkgConfigBR:
 - Qt5Qml
 - Qt5Quick
 - sailfishapp
-- Qt5Location
 - Qt5Positioning
 - mlite5
 Requires:
-- qt5-qtlocation
 - sailfishsilica-qt5
-- qt5-qtdeclarative-import-location
 - qt5-qtdeclarative-import-positioning
 - qt5-qtsvg
 - qt5-plugin-imageformat-gif
