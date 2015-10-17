@@ -48,7 +48,7 @@ QtObject {
     property int graphicSizeXSmall: Theme.iconSizeSmall
     property int graphicSizeSmall: Theme.iconSizeSmall
     property int graphicSizeMedium: Theme.iconSizeMedium
-    property int graphicSizeLarge: Theme.iconSizeLarge
+    property int graphicSizeLarge: Screen.sizeCategory >= Screen.Large ? Theme.iconSizeExtraLarge : Theme.iconSizeLarge
 
     property int thumbnailSize: Theme.itemSizeMedium * 2
 

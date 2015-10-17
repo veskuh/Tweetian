@@ -93,7 +93,7 @@ Page {
                     Image {
                         id: profileImage
                         anchors { right: parent.right; top: parent.top; margins: constant.paddingMedium }
-                        height: userNameText.height + screenNameText.height; width: height
+                        height: constant.graphicSizeLarge; width: height
                         cache: false
                         fillMode: Image.PreserveAspectCrop
                         source: user.profileImageUrl ? user.profileImageUrl.replace("_normal", "_bigger") : ""
