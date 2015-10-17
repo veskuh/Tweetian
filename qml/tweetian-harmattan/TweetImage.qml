@@ -21,10 +21,9 @@ import Sailfish.Silica 1.0
 
 Page {
     id: tweetImagePage
-
+    allowedOrientations: Orientation.All
     property string imageLink: ""
     property url imageUrl: ""
-    allowedOrientations: Orientation.All
 
     /*tools: ToolBarLayout {
         ToolIcon {

@@ -23,7 +23,7 @@ import "Utils/Database.js" as Database
 
 Page {
     id: settingPage
-
+    allowedOrientations: Orientation.All
    /*
 
     Menu {

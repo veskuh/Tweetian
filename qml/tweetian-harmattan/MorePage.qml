@@ -9,6 +9,8 @@ import "SettingsPageCom" */
 Page {
     id: settingGeneralPage
 
+    allowedOrientations: Orientation.All
+
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: title.height + switchColumn.height + 2 * Theme.paddingLarge

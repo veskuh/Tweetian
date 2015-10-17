@@ -28,6 +28,7 @@ Page {
     property double latitude: 0
     property double longitude: 0
 
+    allowedOrientations: Orientation.All
   /*  tools: ToolBarLayout {
         ToolIcon {
             platformIconId: "toolbar-back"

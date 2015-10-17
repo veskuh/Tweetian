@@ -22,7 +22,7 @@ import "../Component"
 
 Page {
     id: root
-
+    allowedOrientations: Orientation.All
     property string headerText
     property int headerNumber: 0
     property string emptyText

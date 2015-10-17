@@ -23,7 +23,7 @@ import "Component"
 
 Page {
     id: textPage
-
+    allowedOrientations: Orientation.All
     property alias text: mainText.text
     property string headerText: ""
     property url headerIcon: ""

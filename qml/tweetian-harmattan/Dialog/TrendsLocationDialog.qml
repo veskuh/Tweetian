@@ -23,7 +23,7 @@ import ".."
 
 Dialog {
     id: root
-
+    allowedOrientations: Orientation.All
     property bool __isClosing: false
 
     property alias selectedIndex: trendsLocationList.currentIndex

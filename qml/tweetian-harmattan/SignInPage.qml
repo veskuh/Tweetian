@@ -24,6 +24,7 @@ import "Component"
 Page {
     id: signInPage
 
+    allowedOrientations: Orientation.All
     property string tokenTempo: ""
     property string tokenSecretTempo: ""
 

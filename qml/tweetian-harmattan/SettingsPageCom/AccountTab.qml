@@ -25,7 +25,7 @@ import "AccountTabScript.js" as Script
 
 Page {
     id: accountTab
-
+    allowedOrientations: Orientation.All
     Column {
         anchors { top: parent.top; topMargin: constant.paddingMedium; left: parent.left; right: parent.right }
         height: childrenRect.height

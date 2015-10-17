@@ -22,6 +22,7 @@ import "../Component"
 
 Page {
     id: root
+    allowedOrientations: Orientation.All
 
     Flickable {
         anchors.fill: parent

@@ -36,13 +36,11 @@ Dialog {
     property string placedText: internalTweet.tweetText
     property double latitude: internalTweet.latitude
     property double longitude: internalTweet.longitude
-
-    allowedOrientations: Orientation.Portrait | Orientation.Landscape
-
     property string imageUrl: ""
     property string imagePath: ""
 
     property bool positionRequested
+    allowedOrientations: Orientation.All
     canAccept: (tweetTextArea.text.length != 0 )
     onAccepted: internalTweet.postTweet(tweetId, type, screenName, tweetTextArea.text, imagePath, latitude, longitude)
 

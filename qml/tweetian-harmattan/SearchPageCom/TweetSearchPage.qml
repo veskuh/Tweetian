@@ -23,6 +23,7 @@ import Sailfish.Silica 1.0
 
 Page {
     id: searchPage
+    allowedOrientations: Orientation.All
 
     property string searchString
 

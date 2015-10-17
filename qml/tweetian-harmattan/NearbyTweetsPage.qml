@@ -30,6 +30,7 @@ Page {
     property double latitude
     property double longitude
 
+    allowedOrientations: Orientation.All
     Component.onCompleted: positionSource.start()
 
    /* tools: ToolBarLayout {

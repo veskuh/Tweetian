@@ -23,6 +23,7 @@ import "SettingsPageCom"
 
 Page {
     id: advSearchPage
+    allowedOrientations: Orientation.All
 
     function __contructQuery() {
         var query = ""

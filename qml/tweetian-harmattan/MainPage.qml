@@ -28,6 +28,7 @@ import "Utils/Parser.js" as Parser
 Page {
     id: mainPage
 
+    allowedOrientations: Orientation.All
     property Item timeline: timeline
     property Item mentions: mentions
     property Item directMsg: directMsg
@@ -41,7 +42,7 @@ Page {
 
         itemWidth: width
         itemHeight: height
-        height: window.height - mainPageHeader.visibleHeight
+        height: parent.height - mainPageHeader.visibleHeight
         clip:true
 
         anchors { top: parent.top; left: parent.left; right: parent.right }

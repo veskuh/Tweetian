@@ -24,6 +24,7 @@ import "Services/Twitter.js" as Twitter
 Page {
     id: userCategoryPage
 
+    allowedOrientations: Orientation.All
     Component.onCompleted: script.refresh()
 
     SilicaListView {

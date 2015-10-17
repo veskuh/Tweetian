@@ -25,6 +25,8 @@ import "ListPageCom"
 Page {
     id: listPage
 
+    allowedOrientations: Orientation.All
+
     property string listName: ""
     property string listId: ""
     property string listDescription: ""

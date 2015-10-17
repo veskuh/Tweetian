@@ -23,6 +23,7 @@ import "../Services/Translation.js" as Translation
 
 Page {
     id: settingGeneralPage
+    allowedOrientations: Orientation.All
 
     Flickable {
         anchors.fill: parent

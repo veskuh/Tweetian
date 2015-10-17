@@ -26,7 +26,7 @@ Page {
     id: suggestedUserPage
 
     property string slug: ""
-
+    allowedOrientations: Orientation.All
     Component.onCompleted: script.refresh()
 
     SilicaListView {

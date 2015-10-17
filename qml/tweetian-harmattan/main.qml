@@ -24,6 +24,7 @@ import "Services/Twitter.js" as Twitter
 
 ApplicationWindow {
     id: window
+    allowedOrientations: Orientation.All
     initialPage: MainPage { id: mainPage }
     cover: (settings.oauthToken != "" && settings.oauthTokenSecret != "") ? Qt.resolvedUrl("CoverPage.qml") : undefined;
     property bool pendingTweet: false
@@ -38,7 +39,31 @@ ApplicationWindow {
     Rectangle {
         id: infoBanner
 
-        width: parent.width
+        width: mainPage.width
+        transformOrigin: Item.TopLeft
+
+        rotation: switch (window.orientation) {
+                  case Orientation.Portrait: return 0;
+                  case Orientation.Landscape: return 90;
+                  case Orientation.PortraitInverted: return 180;
+                  case Orientation.LandscapeInverted: return 270;
+                  }
+
+
+        x: switch (window.orientation) {
+           case Orientation.Portrait: return 0;
+           case Orientation.Landscape: return mainPage.height;
+           case Orientation.PortraitInverted: return window.width;
+           case Orientation.LandscapeInverted: 0;
+           }
+
+        y: switch (window.orientation) {
+           case Orientation.Portrait: return 0;
+           case Orientation.Landscape: return 0;
+           case Orientation.PortraitInverted: return window.height;
+           case Orientation.LandscapeInverted: return mainPage.width;
+           }
+
         height: infoText.height + 2 * Theme.paddingMedium
 
         color: Theme.highlightBackgroundColor

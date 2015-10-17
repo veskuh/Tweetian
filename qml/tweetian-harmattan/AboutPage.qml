@@ -23,6 +23,7 @@ import "Services/Twitter.js" as Twitter
 
 Page {
     id: aboutPage
+    allowedOrientations: Orientation.All
 
     SilicaFlickable {
         id: aboutPageFlickable

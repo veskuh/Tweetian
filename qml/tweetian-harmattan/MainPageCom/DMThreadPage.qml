@@ -30,6 +30,7 @@ Page {
 
     property string screenName: ""
 
+    allowedOrientations: Orientation.All
     Component.onCompleted: internal.insertDMs(mainPage.directMsg.fullModel.count)
 
     RemorseItem {

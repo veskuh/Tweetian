@@ -21,6 +21,7 @@ import Sailfish.Silica 1.0
 
 Page {
     id: muteTab
+    allowedOrientations: Orientation.All
 
     PageHeader {
         id: header

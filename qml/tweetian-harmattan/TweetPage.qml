@@ -32,7 +32,7 @@ import "TweetPageJS.js" as JS
 
 Page {
     id: tweetPage
-
+    allowedOrientations: Orientation.All
     objectName: "tweetPage"
     property variant tweet
 

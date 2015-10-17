@@ -25,6 +25,7 @@ import "Utils/Parser.js" as Parser
 
 Page {
     id: userPage
+    allowedOrientations: Orientation.All
 
     property string screenName
     property variant user: ({})

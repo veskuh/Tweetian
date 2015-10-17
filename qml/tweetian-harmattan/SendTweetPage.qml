@@ -25,6 +25,7 @@ Page {
     property bool loaded
 
     backNavigation: false
+    allowedOrientations: Orientation.All
 
     onStatusChanged: {
         if (status === PageStatus.Active)
