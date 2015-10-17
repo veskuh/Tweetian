@@ -19,6 +19,7 @@
 #include "harmattanutils.h"
 
 #include <QtCore/QTimer>
+#include <QDebug>
 
 #ifdef Q_OS_HARMATTAN
 //#include <MDataUri>
@@ -82,6 +83,10 @@ void HarmattanUtils::shareLink(const QString &url, const QString &title)
 void HarmattanUtils::publishNotification(const QString &eventType, const QString &summary, const QString &body,
                                          const int count)
 {
+    if (count == 0) {
+        qWarning() << "Empty notification: " << body;
+        return;
+    }
     emit newNotification();
 
     if (eventType == "tweetian.mention" ? mentionColddown->isActive() : messageColddown->isActive())

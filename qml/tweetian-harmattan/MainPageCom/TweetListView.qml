@@ -163,7 +163,7 @@ Item {
             id: refreshUnreadCountTimer
             interval: 250
             repeat: false
-            onTriggered: root.unreadCount = Math.min(tweetView.indexAt(0, tweetView.contentY + 5), root.unreadCount)
+            onTriggered: root.unreadCount = Math.max(0, Math.min(tweetView.indexAt(0, tweetView.contentY + 5), root.unreadCount))
         }
 
         IconButton {
