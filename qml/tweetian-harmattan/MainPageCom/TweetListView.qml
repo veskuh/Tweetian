@@ -148,7 +148,6 @@ Item {
             enabled: !busy
             onClicked: refresh("older")
         }
-       // onPulledDown: if (userStream.status === 0) refresh("newer")
         onContentYChanged: refreshUnreadCountTimer.running = true
         onCountChanged: {
             if (lastCount && settings.keepPosition) {

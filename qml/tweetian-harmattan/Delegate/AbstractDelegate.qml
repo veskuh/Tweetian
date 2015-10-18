@@ -26,15 +26,11 @@ BackgroundItem {
     property color sideRectColor: "transparent"
     property string imageSource: profileImageUrl
     property bool subItemIndicator: false
-
     property bool highlighted: pressed // read-only
-
-    property int __originalHeight: contentHeight // private
 
     implicitWidth: ListView.view ? ListView.view.width : 0
     contentHeight: Math.max(contentColumn.height, profileImage.height) + 2 * constant.paddingMedium
     height: contentHeight // For contextMenu override in child
-
 
     Rectangle {
         anchors { right: parent.right; top: parent.top }
@@ -108,21 +104,6 @@ BackgroundItem {
         }
         height: childrenRect.height
     }
-
-    /* Timer {
-        id: pause
-        interval: 250
-        onTriggered: contentHeight = __originalHeight
-    }
-
-    NumberAnimation {
-        id: onAddAnimation
-        target: root
-        property: "scale"
-        duration: 250
-        from: 0.25; to: 1
-        easing.type: Easing.OutBack
-    } */
 
     AddAnimation {
         id: add

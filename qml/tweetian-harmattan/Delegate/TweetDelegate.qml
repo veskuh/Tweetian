@@ -47,10 +47,11 @@ AbstractDelegate {
             id: userNameText
             anchors.left: parent.left
             width: Math.min(parent.width, implicitWidth)
-            font.pixelSize: constant.fontSizeMedium + settings.tweetsFontChange
-            font.bold: true
-            font.family: Theme.fontFamily
-
+            font {
+                pixelSize: constant.fontSizeMedium + settings.tweetsFontChange
+                bold: true
+                family: Theme.fontFamily
+            }
             color: highlighted ? constant.colorHighlighted : constant.colorLight
             elide: Text.ElideRight
             text: model.name
@@ -59,7 +60,6 @@ AbstractDelegate {
         Text {
             anchors { left: userNameText.right; right: favouriteIcon.left; margins: constant.paddingMedium; verticalCenter: userNameText.verticalCenter }
             font.pixelSize: constant.fontSizeSmall + settings.tweetsFontChange
-
             font.family: Theme.fontFamily
             color: highlighted ? constant.colorHighlighted : constant.colorMid
             elide: Text.ElideRight
@@ -79,7 +79,6 @@ AbstractDelegate {
     Text {
         anchors { left: parent.left }
         width: parent.width
-
         textFormat: Text.RichText
         font.pixelSize: constant.fontSizeMedium + settings.tweetsFontChange
         font.family: Theme.fontFamily

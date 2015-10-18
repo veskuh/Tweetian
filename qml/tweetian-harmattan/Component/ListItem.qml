@@ -26,9 +26,8 @@ BackgroundItem {
     property bool subItemIndicator: false
     property url imageSource: ""
 
-    // READ-ONLY
-    property Item imageItem: imageLoader
-    property int listItemRightMargin: 0
+    readonly property Item imageItem: imageLoader
+    readonly property int listItemRightMargin: 0
 
     signal pressAndHold
 

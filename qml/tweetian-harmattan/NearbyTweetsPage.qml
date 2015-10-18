@@ -69,17 +69,6 @@ Page {
         }
         delegate: TweetDelegate {}
         model: ListModel {}
-        onPulledDown: internal.refresh("newer")
-     //   onAtYBeginningChanged: if (atYBeginning) header.countBubbleValue = 0
-      //  onContentYChanged: refreshUnreadCountTimer.running = true
-
-       /* Timer {
-            id: refreshUnreadCountTimer
-            interval: 250
-            repeat: false
-            onTriggered: header.countBubbleValue = Math.min(searchListView.indexAt(0, searchListView.contentY + 5) + 1,
-                                                            header.countBubbleValue)
-        }*/
     }
 
     Text {
@@ -117,7 +106,6 @@ Page {
     PositionSource {
         id: positionSource
         updateInterval: 1000
-    //    onActiveChanged: if (active) header.busy = true
 
         onPositionChanged: {
             nearbyTweetsPage.latitude = position.coordinate.latitude
@@ -125,8 +113,6 @@ Page {
             stop()
             internal.refresh("all")
         }
-
-        Component.onDestruction: stop()
     }
 
     QtObject {

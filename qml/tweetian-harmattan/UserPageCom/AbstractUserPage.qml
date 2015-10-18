@@ -56,10 +56,6 @@ Page {
                 reload()
             }
         }
-        onPulledDown: {
-            reloadType = "all"
-            reload()
-        }
     }
 
     VerticalScrollDecorator { flickable: listView }

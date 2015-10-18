@@ -141,14 +141,6 @@ ApplicationWindow {
         property Component __tweetLongPressMenu: null
 
         function createOpenLinkDialog(link, pocketCallback, instapaperCallback) {
-            /*if (!__openLinkDialog) __openLinkDialog = Qt.createComponent("Dialog/OpenLinkDialog.qml")
-            var showAddPageServices = pocketCallback && instapaperCallback ? true : false
-            var prop = { link: link, showAddPageServices: showAddPageServices }
-            var dialog = __openLinkDialog.createObject(pageStack.currentPage, prop)
-            if (showAddPageServices) {
-                dialog.addToPocketClicked.connect(pocketCallback)
-                dialog.addToInstapaperClicked.connect(instapaperCallback)
-            }*/
             infoBanner.showText(qsTr("Launching external web browser..."))
             Qt.openUrlExternally(link)
         }
@@ -251,7 +243,6 @@ ApplicationWindow {
 
     QtObject {
         id: internalTweet
-//        property string twitLongerId: ""
         property bool exit: false
         property string tweetType: "New"
         property string screenName: ""
@@ -302,37 +293,14 @@ ApplicationWindow {
             /* Refresh timeline and DMs after succesfully sending tweet or DM */
             mainPage.refreshAll();
         }
-        /*
-        function twitLongerOnSuccess(twitLongerId, shortenTweet) {
-            internal.twitLongerId = twitLongerId
-            Twitter.postStatus(shortenTweet, tweetId ,latitude, longitude,
-                               postTwitLongerStatusOnSuccess, commonOnFailure)
-        }
 
-        function postTwitLongerStatusOnSuccess(data) {
-            TwitLonger.postIDCallback(constant, twitLongerId, data.id_str)
-            switch (tweetType) {
-            case "New": infoBanner.showText(qsTr("Tweet sent successfully")); break;
-            case "Reply": infoBanner.showText(qsTr("Reply sent successfully")); break;
-            }
-            pendingTweet = false
-        }
-        function postTweetLonger()
-        {
-            var replyScreenName = placedText ? placedText.substring(1, placedText.indexOf(" ")) : ""
-            TwitLonger.postTweet(constant, settings.userScreenName, tweetTextArea.text, tweetId, replyScreenName,
-                                 twitLongerOnSuccess, commonOnFailure)
-        }
-*/
         function commonOnFailure(status, statusText) {
             infoBanner.showHttpError(status, statusText)
             pendingTweet = false
             pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"))
         }
 
-
-        function postTweet(tweetid, tweettype, screenname, tweettext, tweetimage, lat, lon)
-        {
+        function postTweet(tweetid, tweettype, screenname, tweettext, tweetimage, lat, lon) {
             tweetId = tweetid
             tweetType = tweettype
             screenName = screenname

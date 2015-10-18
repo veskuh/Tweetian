@@ -25,16 +25,12 @@
         <file>qml/tweetian-harmattan/UserCategoryPage.qml</file>
         <file>qml/tweetian-harmattan/UserPage.qml</file>
         <file>qml/tweetian-harmattan/Component/AboutPageItem.qml</file>
-        <file>qml/tweetian-harmattan/Component/FastScroll.js</file>
-        <file>qml/tweetian-harmattan/Component/FastScroll.qml</file>
-        <file>qml/tweetian-harmattan/Component/FastScrollStyle.qml</file>
         <file>qml/tweetian-harmattan/Component/LargePageHeader.qml</file>
         <file>qml/tweetian-harmattan/Component/ListItem.qml</file>
         <file>qml/tweetian-harmattan/Component/LoadMoreButton.qml</file>
         <file>qml/tweetian-harmattan/Component/TwPageHeader.qml</file>
         <file>qml/tweetian-harmattan/Component/PaneIndicator.qml</file>
         <file>qml/tweetian-harmattan/Component/PullDownListView.qml</file>
-        <file>qml/tweetian-harmattan/Component/PullToRefreshHeader.qml</file>
         <file>qml/tweetian-harmattan/Component/SelectionDialog.qml</file>
         <file>qml/tweetian-harmattan/Component/TabPageHeader.qml</file>
         <file>qml/tweetian-harmattan/Component/ThumbnailItem.qml</file>
@@ -47,7 +43,6 @@
         <file>qml/tweetian-harmattan/Dialog/CommonDialog.qml</file>
         <file>qml/tweetian-harmattan/Dialog/DynamicQueryDialog.qml</file>
         <file>qml/tweetian-harmattan/Dialog/MessageDialog.qml</file>
-        <file>qml/tweetian-harmattan/Dialog/OpenLinkDialog.qml</file>
         <file>qml/tweetian-harmattan/Dialog/SignInDialog.qml</file>
         <file>qml/tweetian-harmattan/Dialog/TrendsLocationDialog.qml</file>
         <file>qml/tweetian-harmattan/Image/add_my_location.svg</file>
@@ -103,9 +98,6 @@
         <file>qml/tweetian-harmattan/Services/TwitLonger.js</file>
         <file>qml/tweetian-harmattan/Services/Twitter.js</file>
         <file>qml/tweetian-harmattan/Services/Youtube.js</file>
-        <file>qml/tweetian-harmattan/SettingsPageCom/AccountItem.qml</file>
-        <file>qml/tweetian-harmattan/SettingsPageCom/AccountTab.qml</file>
-        <file>qml/tweetian-harmattan/SettingsPageCom/AccountTabScript.js</file>
         <file>qml/tweetian-harmattan/SettingsPageCom/MuteTab.qml</file>
         <file>qml/tweetian-harmattan/SettingsPageCom/SettingSlider.qml</file>
         <file>qml/tweetian-harmattan/SettingsPageCom/SettingSwitch.qml</file>

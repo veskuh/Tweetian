@@ -23,5 +23,4 @@ SilicaListView {
     id: root
 
     property string lastUpdate: ""
-    signal pulledDown()
 }

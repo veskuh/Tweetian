@@ -113,8 +113,6 @@ Item {
         delegate: DMThreadDelegate {}
         header: Item { height: Theme.paddingSmall; width: 1 }
         model: ListModel {}
-        onPulledDown: if (!userStream.connected) refresh("newer")
-
     }
 
     VerticalScrollDecorator { flickable: directMsgView }
