@@ -84,7 +84,7 @@ Page {
                 cache: false
                 asynchronous: true
                 source: imageUrl
-                sourceSize.height: 1000
+                sourceSize.height: Screen.height
                 smooth: !imageFlickable.moving
 
                 onStatusChanged: {

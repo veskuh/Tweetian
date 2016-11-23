@@ -346,6 +346,19 @@ Page {
                         }
                     }
                 }
+
+                Image {
+                    id: media
+                    visible: tweet.mediaUrl !== ""
+                    source: tweet.mediaUrl
+                    sourceSize.width: parent.width - Theme.paddingMedium * 2
+                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: pageStack.push(Qt.resolvedUrl("TweetImage.qml"), {"imageLink": tweet.mediaUrl,"imageUrl": tweet.mediaUrl})
+                    }
+                }
             }
 
             Loader { id: translatedTweetLoader; height: sourceComponent ? undefined : 0 }

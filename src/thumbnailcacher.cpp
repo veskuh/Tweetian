@@ -71,6 +71,8 @@ QString ThumbnailCacher::get(const QString &id)
 
 void ThumbnailCacher::store(const QString &id, QQuickItem *imageObj)
 {
+    Q_UNUSED(imageObj)
+
     QString thumbFile = getThumbFilePath(id);
 
     if (QFile::exists(thumbFile))

@@ -94,6 +94,19 @@ AbstractDelegate {
         }
     }
 
+    Image {
+        id: media
+        visible: model.mediaUrl !== ""
+        source: model.mediaUrl
+        sourceSize.width: parent.width - Theme.paddingMedium
+    }
+
+    Item {
+        visible: media.visible
+        width: 1
+        height: Theme.paddingSmall
+    }
+
     Item {
         id: infoContainer
         anchors { left: parent.left; right: parent.right }

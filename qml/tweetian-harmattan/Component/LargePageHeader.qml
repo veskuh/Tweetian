@@ -30,12 +30,6 @@ Item {
     anchors { left: parent.left; right: parent.right; top: parent.top }
     height: firstLineText.height + secondLineText.height + 2 * constant.paddingMedium
 
-    Image {
-        id: background
-        anchors.fill: parent
-        source: "image://theme/graphic-header"
-    }
-
     Text {
         id: firstLineText
         anchors { right: profileImage.left; top: parent.top; left: parent.left; margins: constant.paddingMedium }

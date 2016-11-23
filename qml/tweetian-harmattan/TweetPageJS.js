@@ -163,17 +163,6 @@ function createPicThumb() {
     if (tweet.richText.indexOf("href=\"http") < 0)
         return
 
-    // Twitter pic
-    if (tweet.mediaUrl) {
-        var twitterPic = {
-            type: "image",
-            full: tweet.mediaUrl,
-            thumb: tweet.mediaUrl + ":thumb",
-            link: "http://" + tweet.richText.match(/pic.twitter.com\/\w+/)[0]
-        }
-        thumbnailModel.append(twitterPic)
-    }
-
     // Flickr pic
     var flickrLinks = tweet.richText.match(Flickr.FLICKR_LINK_REGEXP)
     if (flickrLinks !== null) {

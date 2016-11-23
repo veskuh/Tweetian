@@ -40,12 +40,6 @@ Item {
         anchors.fill: parent
         contentHeight: parent.height
 
-        Image {
-            id: background
-            anchors.fill: parent
-            source: "image://theme/graphic-header"
-        }
-
         Row {
             anchors.fill: parent
 
