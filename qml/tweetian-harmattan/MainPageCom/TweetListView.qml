@@ -165,90 +165,10 @@ Item {
             onTriggered: root.unreadCount = Math.max(0, Math.min(tweetView.indexAt(0, tweetView.contentY + 5), root.unreadCount))
         }
 
-        IconButton {
-            id: toTop
-            visible: opacity != 0.0
-            opacity: 0.0
-            z: 1
-            y: Theme.paddingLarge
-//            y: Screen.height * 0.40 // middle of screen
-            x: Screen.width - width - Theme.paddingLarge
-            width: 120
-            height: 120
-            icon.source: "qrc:/icons/icon-ll-up.png";
-            onClicked: {
-                // for someuknown reason we don't get onFlickEnded when doing this so we  turn on
-                // timer here to make sure button dissapears after 500ms
-                // Since setting opacity 0.0 fails, we also prevent interactive scroll when call move to top
-                timerVisibleFor.start()
-                tweetView.interactive = false;
-                // this seems work better than scrollToTop()
-                tweetView.positionViewAtIndex(0, ListView.Top);
-                tweetView.interactive = true;
-            }
-
-            Behavior on opacity {
-                FadeAnimation {}
-            }
-        }
-
-        IconButton {
-            id: toBottom
-            visible: opacity != 0.0
-            opacity: 0.0
-            z: 1
-            y: Theme.paddingLarge
-//            y: Screen.height * 0.40  // middle of screen
-            x: Screen.width - width - Theme.paddingLarge
-            width: 120
-            height: 120
-            icon.rotation: 180
-            icon.source: "qrc:/icons/icon-ll-up.png";
-            onClicked: {
-                // for someuknown reason we don't get onFlickEnded when doing this so we  turn on
-                // timer here to make sure button dissapears after 500ms
-                // Since setting opcity 0.0 fails
-                timerVisibleFor.start()
-                tweetView.interactive = false;
-                tweetView.positionViewAtEnd()
-                tweetView.interactive = true;
-            }
-
-            Behavior on opacity {
-                FadeAnimation {}
-            }
-        }
-
-        Timer {
-            id: timerVisibleFor
-            repeat: false
-            running: false
-            interval: 500
-            onTriggered: { toTop.opacity = 0.0; toBottom.opacity = 0.0; }
-        }
-
         VerticalScrollDecorator {
             flickable: tweetView;
         }
 
-        onFlickStarted: {
-            if (!tweetView.hasOwnProperty("quickScroll") || !tweetView.quickScroll) {
-	            if (verticalVelocity < 0)
-	            {
-	                toBottom.opacity = 0.0;
-	                toTop.opacity = 1.0;
-	            }
-	            else
-	            {
-	                toTop.opacity = 0.0;
-	                toBottom.opacity = 1.0;
-	            }
-	        }
-        }
-        onFlickEnded: {
-        	if (toTop.visible || toBottom.visible)
-        		timerVisibleFor.start()
-        }
     }
 
     // Timer used for refresh the timestamp of every tweet every minute. triggeredOnStart is set to true
