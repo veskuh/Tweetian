@@ -29,7 +29,7 @@
 #include "src/thumbnailcacher.h"
 #include "src/userstream.h"
 #include "src/networkmonitor.h"
-#include "src/harmattanutils.h"
+#include "src/notificationutils.h"
 
 #include <QtDBus/QDBusConnection>
 #include "src/tweetianif.h"
@@ -137,10 +137,10 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     view->rootContext()->setContextProperty("networkMonitor", &networkMonitor);
     view->rootContext()->setContextProperty("APP_VERSION", APP_VERSION);
 
-    HarmattanUtils harmattanUtils;
-    view->rootContext()->setContextProperty("harmattanUtils", &harmattanUtils);
+    NotificationUtils notificationUtils;
+    view->rootContext()->setContextProperty("notificationUtils", &notificationUtils);
 
-    QObject::connect(&harmattanUtils, SIGNAL(newNotification()), tweetianIf, SLOT(sNewNotification()));
+    QObject::connect(&notificationUtils, SIGNAL(newNotification()), tweetianIf, SLOT(sNewNotification()));
 
     qmlRegisterType<ImageUploader>("harbour.tweetian.Uploader", 1, 0, "ImageUploader");
     qmlRegisterType<UserStream>("harbour.tweetian.UserStream", 1, 0, "UserStream");

@@ -36,7 +36,7 @@ Item {
     signal dmParsed(int newDMCount)
     signal dmRemoved(string id)
 
-    onUnreadCountChanged: if (unreadCount === 0) harmattanUtils.clearNotification("tweetian.message")
+    onUnreadCountChanged: if (unreadCount === 0) notificationUtils.clearNotification("tweetian.message")
 
     function initialize() {
         var msg = {
@@ -200,8 +200,8 @@ Item {
             }
             else {
                 if (settings.enableNotification) {
-                    harmattanUtils.clearNotification("tweetian.message")
-                    harmattanUtils.publishNotification("tweetian.message", "Tweetian", body, unreadCount)
+                    notificationUtils.clearNotification("tweetian.message")
+                    notificationUtils.publishNotification("tweetian.message", "Tweetian", body, unreadCount)
                 }
             }
         }

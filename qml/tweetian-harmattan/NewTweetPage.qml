@@ -259,14 +259,6 @@ Dialog {
         }
     }
 
-    Connections {
-        target: harmattanUtils
-        onMediaReceived: {
-            if (mediaName) tweetTextArea.text = mediaName
-            else infoBanner.showText(qsTr("No music is playing currently or music player is not running"))
-        }
-    }
-
     WorkerScript { id: autoCompleterWorkerScript; source: "WorkerScript/AutoCompleter.js" }
 
     PositionSource {

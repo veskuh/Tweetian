@@ -180,7 +180,6 @@ Item {
                 model: ListModel {}
                 delegate: ListItem {
                     id: listItem
-                    parent: userInfoRepeater
                     height: Math.max(listItemColumn.height + 2 * constant.paddingMedium, 80)
                     subItemIndicator: model.clickedString
                     enabled: (!subItemIndicator || title === "Website")

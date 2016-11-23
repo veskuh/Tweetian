@@ -112,7 +112,7 @@ Item {
     }
 
     onUnreadCountChanged: {
-        if (unreadCount === 0 && type === "Mentions") harmattanUtils.clearNotification("tweetian.mention")
+        if (unreadCount === 0 && type === "Mentions") notificationUtils.clearNotification("tweetian.mention")
     }
 
     SilicaListView {
@@ -334,8 +334,8 @@ Item {
             }
             else {
                 if (settings.enableNotification) {
-                    harmattanUtils.clearNotification("tweetian.mention")
-                    harmattanUtils.publishNotification("tweetian.mention", "Tweetian", body, unreadCount)
+                    notificationUtils.clearNotification("tweetian.mention")
+                    notificationUtils.publishNotification("tweetian.mention", "Tweetian", body, unreadCount)
                 }
             }
         }

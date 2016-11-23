@@ -16,21 +16,18 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef HARMATTANUTILS_H
-#define HARMATTANUTILS_H
+#ifndef NOTIFICATIONUTILS_H
+#define NOTIFICATIONUTILS_H
 
 #include <QtCore/QObject>
 
 class QTimer;
 
-class HarmattanUtils : public QObject
+class NotificationUtils : public QObject
 {
     Q_OBJECT
 public:
-    explicit HarmattanUtils(QObject *parent = 0);
-
-    // Share a link using the integrated ShareUI
-    Q_INVOKABLE void shareLink(const QString &url, const QString &title = QString());
+    explicit NotificationUtils(QObject *parent = 0);
 
     // Create a system notification based on eventType
     Q_INVOKABLE void publishNotification(const QString &eventType, const QString &summary, const QString &body,
@@ -38,22 +35,14 @@ public:
     // Clear system notifications based on eventType
     Q_INVOKABLE void clearNotification(const QString &eventType);
 
-    // Get now playing media name. The media name will be return through the mediaReceived() signal
-    // in the form of "{Artist} - {MediaName}"
-    Q_INVOKABLE void getNowPlayingMedia();
-
 signals:
-    void mediaReceived(const QString &mediaName);
     void newNotification();
 
-private slots:
-    void processMediaName(const QStringList &media);
-
 private:
-    Q_DISABLE_COPY(HarmattanUtils)
+    Q_DISABLE_COPY(NotificationUtils)
 
     QTimer *mentionColddown;
     QTimer *messageColddown;
 };
 
-#endif // HARMATTANUTILS_H
+#endif // NotificationUtils_H

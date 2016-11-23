@@ -30,15 +30,8 @@
 #include <QtNetwork/QNetworkAccessManager>
 
 static const QString IMAGE_SAVING_PATH = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
-#if defined(Q_OS_HARMATTAN)
+// TODO come up with proper useragent
 static const QString USER_AGENT = "Tweetian/" + QLatin1String(APP_VERSION) + " (Nokia; Qt; MeeGo/1.2; Harmattan)";
-#elif defined(Q_OS_SYMBIAN)
-static const QString USER_AGENT = "Tweetian/" + QLatin1String(APP_VERSION) + " (Nokia; Qt; Symbian/3)";
-#elif defined(Q_WS_SIMULATOR)
-static const QString USER_AGENT = "Tweetian/" + QLatin1String(APP_VERSION) + " (Qt; QtSimulator)";
-#else
-static const QString USER_AGENT = "Tweetian/" + QLatin1String(APP_VERSION) + " (Qt; Unknown)";
-#endif
 
 QMLUtils::QMLUtils(QQuickView *view, QObject *parent) :
     QObject(parent), m_view(view), clipboard(QGuiApplication::clipboard())

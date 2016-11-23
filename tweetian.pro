@@ -18,32 +18,18 @@ HEADERS += \
     src/thumbnailcacher.h \
     src/userstream.h \
     src/networkmonitor.h \
-    src/imageuploader.h
+    src/imageuploader.h \
+    src/notificationutils.h
 
 SOURCES += main.cpp \
     src/qmlutils.cpp \
     src/thumbnailcacher.cpp \
     src/userstream.cpp \
     src/networkmonitor.cpp \
-    src/imageuploader.cpp
+    src/imageuploader.cpp \
+    src/notificationutils.cpp
 
-contains(MEEGO_EDITION,harmattan){
-    QT += dbus
-    CONFIG += qdeclarative-boostable shareuiinterface-maemo-meegotouch share-ui-plugin share-ui-common mdatauri sailfishapp
-    DEFINES += Q_OS_HARMATTAN
-    RESOURCES += qml-harmattan.qrc
-
-    include(notifications/notifications.pri)
-    splash.files = splash/tweetian-splash-portrait.jpg splash/tweetian-splash-landscape.jpg
-    splash.path = /opt/tweetian/splash
-    INSTALLS += splash
-
-    HEADERS += src/tweetianif.h src/harmattanutils.h
-    SOURCES += src/tweetianif.cpp src/harmattanutils.cpp
-}
-
-OTHER_FILES += qtc_packaging/debian_harmattan/* \
-    i18n/tweetian_*.ts \
+OTHER_FILES += i18n/tweetian_*.ts \
     harbour-tweetian.desktop \
     README.md \
     qml/tweetian-harmattan/*.qml \
@@ -61,16 +47,14 @@ OTHER_FILES += qtc_packaging/debian_harmattan/* \
 CONFIG += link_pkgconfig
 CONFIG += c++11
 packagesExist(sailfishapp) {
-message("sailfishapp")
     PKGCONFIG += sailfishapp mlite5
+    CONFIG += qdeclarative-boostable mdatauri
 
     include(notifications/notifications.pri)
 
     desktopfile.files = $${TARGET}.desktop
     desktopfile.path = /usr/share/applications
-
     export (desktopfile)
-
     target.path = /usr/bin
 
     sailfish_icon.files = harbour-tweetian.png
@@ -80,21 +64,14 @@ message("sailfishapp")
 
     INSTALLS += target sailfish_icon desktopfile
     QT += dbus quick qml
-    CONFIG += qdeclarative-boostable shareuiinterface-maemo-meegotouch share-ui-plugin share-ui-common mdatauri
-    DEFINES += Q_OS_HARMATTAN
+
     RESOURCES += qml-harmattan.qrc
 
     HEADERS += src/tweetianif.h
     SOURCES += src/tweetianif.cpp
 
-    HEADERS += src/harmattanutils.h
-    SOURCES += src/harmattanutils.cpp
     OTHER_FILES += rpm/* \
                    qml/tweetian-harmattan/WorkerScript/* \
                    qml/tweetian-harmattan/SettingsPageCom/*qml
 
-} else {
-    # Please do not modify the following two lines. Required for deployment.
-    include(qmlapplicationviewer/qmlapplicationviewer.pri)
-    qtcAddDeployment()
 }
