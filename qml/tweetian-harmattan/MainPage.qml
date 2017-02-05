@@ -58,7 +58,7 @@ Page {
     Connections {
         target: settings
         onSettingsLoaded: {
-            Twitter.init(constant, settings.oauthToken, settings.oauthTokenSecret)
+            Twitter.init(constant, settings.oauthToken, settings.oauthTokenSecret, settings.consumerKey, settings.consumerSecret)
             if (settings.oauthToken === "" || settings.oauthTokenSecret === "") {
                 pageStack.push(Qt.resolvedUrl("SignInPage.qml"))
             }

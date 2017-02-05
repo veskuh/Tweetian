@@ -57,6 +57,8 @@ QtObject {
         pocketPassword = ""
         instapaperToken = ""
         instapaperTokenSecret = ""
+        consumerKey = ""
+        consumerSecret = ""
         muteString = ""
         tweetsFontChange = 0
         Database.clearTable("settings")
@@ -111,6 +113,11 @@ QtObject {
     onInstapaperTokenChanged: Database.setSetting({"instapaperToken": instapaperToken})
     property string instapaperTokenSecret: ""
     onInstapaperTokenSecretChanged: Database.setSetting({"instapaperTokenSecret": instapaperTokenSecret})
+
+    property string consumerKey: ""
+    onConsumerKeyChanged: Database.setSetting({"consumerKey": consumerKey})
+    property string consumerSecret: ""
+    onConsumerSecretChanged: Database.setSetting({"consumerSecret": consumerSecret})
 
     property string muteString: ""
     onMuteStringChanged: Database.setSetting({"muteString": muteString})

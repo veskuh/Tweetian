@@ -79,9 +79,9 @@ var POST_UNSUBSCRIBE_LIST_URL = "https://api.twitter.com/1.1/lists/subscribers/d
 var POST_DELETE_LIST_URL = "https://api.twitter.com/1.1/lists/destroy.json"
 var TWITTER_IMAGE_UPLOAD_URL = "https://api.twitter.com/1.1/statuses/update_with_media.json"
 
-function init(constant, token, tokenSecret) {
-    OAUTH_CONSUMER_KEY = constant.twitterConsumerKey
-    OAUTH_CONSUMER_SECRET = constant.twitterConsumerSecret
+function init(constant, token, tokenSecret, consumerKey, consumerSecret) {
+    OAUTH_CONSUMER_KEY = consumerKey ? consumerKey : constant.twitterConsumerKey
+    OAUTH_CONSUMER_SECRET = consumerSecret ? consumerSecret : constant.twitterConsumerSecret
     OAUTH_TOKEN = token
     OAUTH_TOKEN_SECRET = tokenSecret
     USER_AGENT = constant.userAgent
